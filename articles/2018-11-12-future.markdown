@@ -1,0 +1,97 @@
+---
+layout: post
+title: Future&lt;Value, Error&gt;
+description: Future – a streamlined Future&lt;Value, Error&gt; implementation with functional interface
+date: 2018-11-12 9:00:00 +0300
+category: programming
+tags: programming
+permalink: /post/future
+uuid: b1b94ee1-c736-4e89-85a9-69cfe5ab6880
+---
+
+Inspired by the Swift core team's recent activity in the [proposal to add `Result<Value, Error>`](https://github.com/apple/swift-evolution/blob/master/proposals/0235-add-result.md) to the Swift Standard Library, I started working on a new version of [Future](https://github.com/kean/Future) – a `Future` implementation. The initial goal was to provide a small and simple `Future<Value, Error>` class with typed errors, but eventually, I challenged myself to code the `Future` that would feel like a part of the Swift Standard Library. For me, that meant building an idiomatic Swift implementation with a streamlined functional API and good performance.
+
+{% include ad-hor.html %}
+
+## Future
+
+A future represents a result of computation which may be available now, or in the future, or never. Essentially, a future is an object to which you attach callbacks, instead of passing them into a function that performs a computation.
+
+Futures are easily composable. For example, `Future<Value, Error>` in FutureX provides a set of functions like `map`, `flatMap`, `zip`, `reduce` and more to compose futures (more on it later).
+
+## Prior Art
+
+There are plenty of great Future implementations available in Swift. I've looked at [mxcl/PromiseKit](https://github.com/mxcl/PromiseKit), [google/Promises](https://github.com/google/promises), [SwiftNIO/EventLoopFuture](https://apple.github.io/swift-nio/docs/current/NIO/Classes/EventLoopFuture.html), [BrightFutures](https://github.com/Thomvis/BrightFutures), [khanlou/Promise](https://github.com/khanlou/Promise) and many more. Most don't provide typed errors. And many are just too big which makes including them in a project a hard sell. So I still decided to continue working on Pill because none of them "were quite my tempo".
+
+## Future&lt;Value, Error&gt;
+
+The first change was an addition of typed errors: instead of `Promise<T>` we now have `Future<Value, Error>` (and also `Promise<Value, Error>` which is now a separate struct). The typed errors give you extra confidence when dealing with errors.
+
+There seem to be an opinion that typed errors are inconvenient and just add unnecessary complexity. I used to share this opinion but after working with typed errors for a while I found the opposite to be true. Typed errors are not only safer, but they often make error handling more ergonomic since you no longer need to cast them.
+
+## Streamlined Functional API
+
+I reviewed all of the terminology used in `FutureX`: `resolve`, `fulfill`, `reject`, `then`, `recover` – I didn't feel that Swift developers were accustomed to these terms. So I decided to replace them with a set of functional methods that we all know and love.
+
+### Map and FlatMap
+
+Instead of `then` there is `map` and `flatMap`:
+
+```swift
+// Before
+func then<U>(on queue: DispatchQueue = .main, _ closure: @escaping (T) throws -> U) -> Promise<U>
+func then<U>(on queue: DispatchQueue = .main, _ closure: @escaping (T) throws -> Promise<U>) -> Promise<U>
+
+// After
+func map<NewValue>(_ closure: @escaping (Value) -> NewValue) -> Future<NewValue, Error>
+func flatMap<NewValue>(_ closure: @escaping (Value) -> Future<NewValue, Error>) -> Future<NewValue, Error>
+```
+
+Transforming values and chaining futures is now as Swifty as it gets:
+
+```swift
+let avatar = user
+    .map { $0.avatarURL }
+    .flatMap(loadAvatar)
+```
+
+### Zip and Reduce
+
+I decided not to stop there and added two other incredibly useful functions: `zip` and `reduce`. 
+
+Use `zip` to combine the result of up to three futures into a single tuple:
+
+```swift
+let user: Future<User, Error>
+let avatar: Future<UIImage, Error>
+
+Future.zip(user, avatar).on(success: { user, avatar in
+    // use both values
+})
+```
+
+Or to wait for the result of multiple futures:
+
+```swift
+Future.zip([future1, future2]).on(success: { values in
+    // use an array of values
+})
+```
+
+Use `reduce` to combine the results of multiple futures:
+
+```swift
+let future1 = Future<Int, Error>(value: 1)
+let future2 = Future<Int, Error>(value: 2)
+
+Future.reduce(0, [future1, future2], +).on(success: { value in
+    print(value) // prints "3"
+})
+```
+
+## What's Next
+
+Working on `Future<Value, Error>` was a lot of fun, especially implementing functional parts like `zip` and `reduce`. I'm extremely satisfied with the result and the fact that even with the new additions it is still just under 150 lines of code – this truly shows the power of composition.
+
+If you'd like to give `Future<Value, Error>` a try, [`FutureX`](https://github.com/kean/FutureX) is a great place to start.
+
