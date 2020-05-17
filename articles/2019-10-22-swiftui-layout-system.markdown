@@ -498,7 +498,7 @@ When you don't pass any parameters, you get adaptive behavior in the same way th
 
 SwiftUI also makes it easy to react to the changes to the environment. Every view in SwiftUI gets access to the system [environment settings](https://developer.apple.com/documentation/swiftui/environmentvalues) like content size category, device size classes, layout direction, and more. So, for example, if you want to set custom spacings for each size category, you can do that easily with SwiftUI.
 
-By using [@Environment](https://developer.apple.com/documentation/swiftui/environment) property wrapper, you can read the environment values and subscribe to their changes. Technically, the environemnt is not part of the layout system, but I think it was worth mentioning it.
+By using [@Environment](https://developer.apple.com/documentation/swiftui/environment) property wrapper, you can read the environment values and subscribe to their changes. Technically, the environment is not part of the layout system, but I think it was worth mentioning it.
 
 ```swift
 struct ContentView: View {
