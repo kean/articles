@@ -15,9 +15,9 @@ It's been two years since [Network Extension, Part 1 - Introduction]({{ site.url
 
 > - [Let's Build a VPN Protocol]({{ site.url }}/post/lets-build-vpn-protocol) (You are here)
 > - [VPN, Part 1: VPN Configurations]({{ site.url }}/post/vpn-configuration-manager)
-> - [VPN, Part 2: Packet Tunnel Provider]({{ site.url }}/post/packet-tunnel-provider) (**Coming Soon**)
-> - [VPN, Part 3: Server]({{ site.url }}/vpn-server) (**Coming Soon**)
-> - [VPN, Part 4: Split Tunnel and Custom DNS Protocol (Bonus)]({{ site.url }}/tbd) (**Coming Soon**)
+> - VPN, Part 2: Packet Tunnel Provider (**Coming Soon**)
+> - VPN, Part 3: Server (**Coming Soon**)
+> - VPN, Part 4: Split Tunnel and Custom DNS Protocol (Bonus) (**Coming Soon**)
 
 {% include ad-hor.html %}
 
