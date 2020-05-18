@@ -29,7 +29,7 @@ If that sounds a bit too abstract, then you are in the right place. In this seri
 
 > **Requirements**.
 >
-> To run the sample code in this series, you are going to need a physical device to run an an Apple Developer Account to get proper entitlements.
+> To run the sample code in this series, you are going to need a physical device and an Apple Developer Account to get proper entitlements.
 {:.warning}
 
 ## Network Extension Framework
