@@ -14,7 +14,7 @@ disable_comments: true
 It's been two years since [Network Extension, Part 1 - Introduction]({{ site.url }}/post/network-extensions-into). You've been asking for Part 2. Here it finally is.
 
 > - [Let's Build a VPN Protocol]({{ site.url }}/post/lets-build-vpn-protocol) (You are here)
-> - [VPN, Part 1: VPN Configurations]({{ site.url }}/post/vpn-configuration-manager)
+> - [VPN, Part 1: VPN Profiles]({{ site.url }}/post/vpn-configuration-manager)
 > - VPN, Part 2: Packet Tunnel Provider (**Coming Soon**)
 > - VPN, Part 3: Server (**Coming Soon**)
 > - VPN, Part 4: Split Tunnel and Custom DNS Protocol (Bonus) (**Coming Soon**)

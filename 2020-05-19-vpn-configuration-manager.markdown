@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "VPN, Part 1: VPN Configurations"
-description: Using NETunnelProviderManager to create and manage VPN configurations
+title: "VPN, Part 1: VPN Profiles"
+description: Using Network Extension framework to create and manage VPN configurations
 date: 2020-05-19 9:00:00 -0400
 category: programming
 tags: programming

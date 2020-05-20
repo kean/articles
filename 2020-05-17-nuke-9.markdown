@@ -1,15 +1,15 @@
 ---
 layout: post
 title: "Nuke 9"
-description: Reflecting on the five years of the gradual performance improvements
+description: Reflecting on the five years of the performance improvements
 date: 2020-05-17 9:00:00 -0400
 category: programming
 tags: programming
 permalink: /post/nuke-9
-uuid: 46fc2e71-267a-43ba-bf90-4af5ab949c96
+uuid: 3f0ab615-9905-4fb9-9480-0ffe1952422a
 ---
 
-[Nuke 9](https://github.com/kean/Nuke) is a culmination of *five years* of development. The project started soon after Swift release, as a continuation of [DFImageManager](https://github.com/kean/DFImageManager), an Objective-C image loading framework[^1]. I put a lot of effort and care into each and every iteration of Nuke, but Nuke 9 feels special. It feels like the end of the long journey.
+[Nuke 9](https://github.com/kean/Nuke/releases/tag/9.0.0) is a culmination of *five years* of development. The project started soon after Swift release, as a continuation of [DFImageManager](https://github.com/kean/DFImageManager), an Objective-C image loading framework[^1]. I put a lot of effort and care into each and every iteration of Nuke, but Nuke 9 feels special.
 
 {% include ad-hor.html %}
 
@@ -87,11 +87,11 @@ Thanks to coalescing, the pipeline avoids doing any duplicated work when loading
 ```swift
 let url = URL(string: "http://example.com/image")
 pipeline.loadImage(with: ImageRequest(url: url, processors: [
-    ImageProcessor.Resize(size: CGSize(width: 44, height: 44)),
-    ImageProcessor.GaussianBlur(radius: 8)
+    ImageProcessors.Resize(size: CGSize(width: 44, height: 44)),
+    ImageProcessors.GaussianBlur(radius: 8)
 ]))
 pipeline.loadImage(with: ImageRequest(url: url, processors: [
-    ImageProcessor.Resize(size: CGSize(width: 44, height: 44))
+    ImageProcessors.Resize(size: CGSize(width: 44, height: 44))
 ]))
 ```
 
@@ -130,7 +130,7 @@ Getting progressive decoding right was quite a challenge. It required a complete
 
 ## Rate Limiting
 
-`Nuke.loadImage(with:into:)` family of methods supports cell reuse. Before loading a new image, the target view is prepared for reuse by canceling any outstanding requests and removing a previously displayed image. It can happen very quickly if the user quickly scrolls a scroll view. It was a problem, as it would sometimes trash the underlying data loading system (`Foundation.URLSession`) to the point that it would crash. To mitigate this issue, [Nuke 4.0](https://github.com/kean/Nuke/releases/tag/4.0) introduces a `RateLimiter` class.
+`Nuke.loadImage(with:into:)` family of methods supports cell reuse. Before loading a new image, the target view is prepared for reuse by canceling any outstanding requests and removing a previously displayed image. It can happen very quickly if the user quickly scrolls a scroll view. It was a problem, as it would sometimes trash the underlying data loading system (`Foundation.URLSession`) to the point that it would crash. To mitigate this issue, [Nuke 4.0](https://github.com/kean/Nuke/releases/tag/4.0) introduces[^3] a `RateLimiter` class.
 
 `RateLimiter` limits the rate at which `URLSessionTasks` are created. `RateLimiter` uses a classic [token bucket](https://en.wikipedia.org/wiki/Token_bucket) algorithm. The implementation supports quick bursts of requests which can be executed without any delays when "the bucket is full". This is important to make sure `RateLimiter` only kicks in when needed, but when the user just opens the screen, all of the requests are fired immediately.
 
@@ -157,7 +157,7 @@ Nuke is packed with performance optimizations. There a [benchmark](https://githu
 
 How does Nuke achieve its performance? It's not just one optimization, it's a whole range of optimizations across the board. I'll give just a few examples.
 
-- **CoW**. The primary type in Nuke is `ImageRequest`. It has multiple options, so the struct is quite large. To make sure that passing it around is as efficient as possible, `ImageRequest`  employes a Copy-on-Write technique.
+- **CoW**. The primary type in Nuke is `ImageRequest`. It has multiple options, so the struct is quite large. To make sure that passing it around is as efficient as possible, `ImageRequest`  employs a Copy-on-Write technique. This, and many other optimizations, was introduced in [Nuke 4.1](https://github.com/kean/Nuke/releases/tag/4.1) which was the first purely performance-focused release.
 - **ImageRequest.CacheKey**. A typical framework would use strings to uniquely identify a request. But string manipulations are expensive, this is why in Nuke, there is a special internal type, `ImageRequest.CacheKey`, which allows for efficient equality checks for image requests with no string attached.
 - **Thread Confinement**. Nuke knows that `Nuke.loadImage()` family of methods only uses `ImageTask` on the main thread. It means that it can skip some synchronizations.
 
@@ -176,9 +176,10 @@ With all of these features in place, it can be quite challenging to understand t
 
 I'm proud of what I was able to achieve with Nuke. It is used by thousands of apps and has been widely recognized on GitHub. There are two tutorials on Nuke on [raywenderlich.com](https://www.raywenderlich.com/library?q=nuke&sort_order=relevance). GitHub named Nuke 7 one of the best releases in May 2018. Nuke was on the list of top trending frameworks on GitHub many times.
 
-Over the years Nuke has grown from a tiny 500 lines of code project to a complete and mature library which so many people rely on. In the recent `master`, only unit tests take 5000 lines of code. There is so much care and details which went into the recent iteration of Nuke. With [Nuke 9](https://github.com/kean/Nuke/releases/tag/9.0.0), it finally reaches its full potential.
+Over the years Nuke has grown from a tiny 500 lines of code project to a complete and mature library which so many people rely on. In the recent `master`, only unit tests take 5000 lines of code. There is so much care and details which went into each iteration of Nuke. With [Nuke 9](https://github.com/kean/Nuke/releases/tag/9.0.0), it finally reaches its full potential.
 
 <div class="FootnotesSection" markdown="1">
 
 [^1]: DFImageManager was one of the only [SDWebImage](https://github.com/SDWebImage/SDWebImage) competitors at the time. It was the first image loading framework to use [NSURLSession](https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSURLSession_class/) with [HTTP/2](https://en.wikipedia.org/wiki/HTTP/2) support, to feature [AFNetworking](https://github.com/AFNetworking/AFNetworking) and [FLAnimatedImage](https://github.com/Flipboard/FLAnimatedImage) integration, and have intelligent prefetching/coalescing support.
-[^2]: There are a few reasons why `NSCache` was replaced. Primarily, because the caching algorithm for `NSCache` is not documented and there was evidence that it wasn't LRU. Another reason for replacing it was to have more control over caching, add support for features like Time-to-Live.
+[^2]: There are a few reasons why `NSCache` was replaced. The caching algorithm for `NSCache` is not documented and there was evidence that it wasn't LRU. `ImageCache` also has more control over caching, add support for features like Time-to-Live. Another problematic aspect of `NSCache` is that keys must be objects which isn't optimal.
+[^3]: [Nuke 4.0](https://github.com/kean/Nuke/releases/tag/4.0) also introduced some questionable new APIs. For example, it included a public `Promise` implementation *in the framework* and replaced the closure based APIs with promises. I don't remember exactly why I made this change, but just a couple of weeks later it was clear it was a mistake. Nuke 4.0 also went way too far on abstractions, protocols, and single responsibility principle, making the code harder, not easier to reason about. It took three major releases, [Nuke 5.0](https://github.com/kean/Nuke/releases/tag/5.0), [6.0](https://github.com/kean/Nuke/releases/tag/6.0), and [7.0](https://github.com/kean/Nuke/releases/tag/7.0) to gradually undo the damage that Nuke 4.0 done. Fortunately, not a lot of people were using Nuke at the time.
