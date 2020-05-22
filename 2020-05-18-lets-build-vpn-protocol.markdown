@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Let's Build a VPN Protocol
-description: How to implement a custom VPN client and server using <a href="https://developer.apple.com/documentation/networkextension/packet_tunnel_provider">Packet Tunner Provider</a>
+description: How to implement a custom VPN client and server using Packet Tunner Provider
 date: 2020-05-18 9:00:00 -0400
 category: programming
 tags: programming
