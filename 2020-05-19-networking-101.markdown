@@ -1,0 +1,269 @@
+---
+layout: post
+title: "How Does VPN Work?"
+description: Coming Soon
+date: 2020-05-19 9:00:00 -0400
+category: programming
+tags: programming
+permalink: /post/networking-101
+uuid: da352fcc-4ed4-41a1-b58e-e6daf292bc9e
+---
+
+Before jumping into the Network Extension framework, you need to know a bit of theory about VPN and networking in general. If you are already familiar with networking and VPN, feel free to skip this article. If you are not, this article has a quick overview/refresher on the network protocols, it outlines the problem that VPN is aimed to solve, and then analyzes one of the existing VPN protocols.
+
+{% include ad-hor.html %}
+
+> **Prerequisites**
+>
+> There are no prerequisites for going through this article, but the general knowledge of the networking protocols is going to be a plus. This article makes heavy use of [Wireshark](https://www.wireshark.org). If you are not familiar with this tool, I would suggest installing it (it is free), and inspecting one or two [sample captures](https://wiki.wireshark.org/SampleCaptures).
+{:.warning}
+
+## Networking
+
+What happens when you open your browser and type in a URL? Let's open [Wireshark](https://www.wireshark.org) and find out.
+
+### DNS, HTTP (Application Layer)
+
+First, the browser needs to send a [DNS](https://www.cloudflare.com/learning/dns/what-is-dns/) request to resolve an IP address for the given domain name, for example `www.example.com`.
+
+<div id="tabs-01">
+<div class="SwiftUITab">
+  <button class="SwiftUITabLink active" onclick="openTab(event, 'tabs-01', 'page-01')">DNS Request</button>
+  <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-01', 'page-02')">DNS Response</button>
+</div>
+
+<div id="page-01" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+The browser sends a DNS query with a domain name `www.example.com`.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-01.png">
+</div>
+
+<div id="page-02" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+The DNS server returns an *answer* – `93.184.216.34`.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-02.png">
+</div>
+</div>
+
+[**The Domain Name System (DNS)**](https://www.cloudflare.com/learning/dns/what-is-dns/) is the phonebook of the Internet. Humans access information through domain names, such as `apple.com` or `nshipster.com`. Browsers interact through IP addresses. DNS translates domain names to IP addresses[^5].
+
+> A browser has to know an IP address to send requests to `www.example.com`. How was it able to send the requests to the DNS server? Typically, an IP address (or addresses) of the DNS server is provided to the computer by [DHCP](https://en.wikipedia.org/wiki/Dynamic_Host_Configuration_Protocol) when connecting to the router.
+{:.info}
+
+Now that the browser has an IP address, it is ready to start sending HTTP requests to `www.example.com (93.184.216.34)`.
+
+<div id="tabs-02">
+<div class="SwiftUITab">
+  <button class="SwiftUITabLink active" onclick="openTab(event, 'tabs-02', 'page-03')">HTTP Request</button>
+  <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-02', 'page-04')">HTTP Response</button>
+</div>
+
+<div id="page-03" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+The browser takes the resolved IP address and initiates an HTTP request to fetch the content of the page at the root path (`/`).
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-03.png">
+</div>
+
+<div id="page-04" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+The server returns some HTML content in the HTTP body.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-04.png">
+</div>
+</div>
+
+Let's now spend too much time talking about the application layer protocols. I'm assuming you are already familiar with HTTP and DNS. The reason I used these two examples is that HTTP typically works on top of TCP[^3], and DNS on top of UDP[^4].
+
+> If you want to learn more, MDN has a great [section on HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP), and Cloudflare – [on DNS](https://www.cloudflare.com/learning/dns/what-is-dns/). If you want to dig a bit deeper, I would recommend reading RFCs. You can find the list of [HTTP](https://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol) and [DNS](https://en.wikipedia.org/wiki/Domain_Name_System#RFC_documents) RFCs on the respective wiki pages.
+{:.info}
+
+### UDP, TCP (Transport Layer)
+
+HTTP and DNS solve specific application-level problems. But when a computer receives a message, how does it know which application to deliver it to? This is where *transport layer* protocols, such as [User Datagram Protocol (UDP)](https://en.wikipedia.org/wiki/User_Datagram_Protocol) and [Transmission Control Protocol (TCP)](https://en.wikipedia.org/wiki/Transmission_Control_Protocol), come in.
+
+When a server is started, it typically creates a [socket](https://en.wikipedia.org/wiki/Network_socket), an internal endpoint addressable using a combination of an [IP address](https://en.wikipedia.org/wiki/IP_address) and a [port number](https://en.wikipedia.org/wiki/Port_(computer_networking)) (a 16-bit unsigned integer ranging from 0 to 65535), and starts *listening* for messages arriving on this socket.
+
+When a browser needs to send a message, it also needs a socket and creates one using one of the system APIs.
+
+> On Apple platforms, there is a variety of APIs for working with ports/sockets, ranging from [`CFSocket`](https://developer.apple.com/documentation/corefoundation/cfsocket-rg7) to recently introduced [`Network` framework](https://developer.apple.com/documentation/network/nwconnection).
+{:.info}
+
+Transport layer protocols, such as TCP and UDP, transfer data using protocol data units. For TCP, the PDU is a [segment](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_segment_structure), and a [datagram](https://en.wikipedia.org/wiki/Datagram) for UDP. Both protocols use a header field for recording the source and destination port number.
+
+The DNS messages are typically sent using [UDP](https://tools.ietf.org/html/rfc768) (other options exist, even including things like [DNS over HTTPS](https://en.wikipedia.org/wiki/DNS_over_HTTPS)). The UDP datagram header is extremely. simple When a system needs to send a DNS message, it takes the message (the protocol of the message is irrelevant, for DNS it's just raw bytes), and prepends 4 bytes of the UDP datagram header. If we go back to our browser example, here is what the UDP header looks like:
+
+<img class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/vpn-05.png">
+
+The *source* port is `63802`, which is the port that the browser reserved for itself, and the *destination* port is `53`, which is one of the [well-known](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) ports.
+
+Obviously, UDP and TCP are completely different. TCP protocol has its own [segment structure](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_segment_structure). TCP is connection-oriented, it provides reliable, ordered, and error-checked delivery of a stream of octets. UDP, on the other hand, uses a simple connectionless communication model, it's very minimalistic.
+
+### IP (Internet Layer)
+
+Now, to know which computers on the network to send the messages to, the TCP/UDP are wrapped yet again, this time using IP protocol. Let's get back to our Wireshark capture to see what information an IP header typically contains.
+
+<img class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/vpn-06.png">
+
+All of this information that you saw in the [Wireshark](https://www.wireshark.org) captures recorded from my `en0` *network inteface* (WiFi), is also visible to my [ISP](https://en.wikipedia.org/wiki/Internet_service_provider) and to the services to which the requests are sent. They know my IP address, they know which port I'm using, etc. Using this information they can identify and track me. And both HTTP and DNS protocols do not have ny encryption, so anyone in between my computer and the destintion can read all of my communications. And this is a problem that VPN is designed to solve.
+
+> **Network interface** is a point of connection between the computer and the network. A computer can have multiple network interfaces: Wi-Fi, Ethernet, etc.
+>
+> There are *physical* network interfaces, such as `en0` (which is your WiFi module on macOS). You can list all of those using `networksetup -listallhardwareports` command. Each physical inteface has an associated Ethernet Address and a hardware device, for example:
+>
+>     > networksetup -listallhardwareports
+>    
+>     Hardware Port: Wi-Fi
+>     Device: en0
+>     Ethernet Address: f0:18:98:2a:43:67
+>     ...
+>
+> And then there are *virtual* network interfaces, such as `lo0` (a [loopback](https://askubuntu.com/questions/247625/what-is-the-loopback-device-and-how-do-i-use-it) interface which computer uses to communicate with itself) and `utun` (which are typically used by VPN, more on this later). You can use `ifconfig` to see all of the network interfaces, including both physical and virtual.
+>
+>     > ifconfig
+>     
+>     lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
+>     options=1203<RXCSUM,TXCSUM,TXSTATUS,SW_TIMESTAMP
+>     inet 127.0.0.1 netmask 0xff000000
+>     ...
+>	  
+{:.info}
+
+## VPN
+
+What is VPN? Originally, VPN (Virtual Private Network) was designed to establish secure connections between a computer and a protected or private corporate network, using an otherwise insecure public network (such as the Internet). This typically involved "making" a computer part of the private network so that the computers within the network could address it. 
+
+In recent years, VPNs also blown up in popularity in the consumer market as a way to stay secure and anonymous when going online, and also enjoying unrestricted network access by hiding the source of traffic. I'm going to focus primarily on this use case as it typically involves a bit less complexity.
+
+### How Does It Works?
+
+The key idea behind VPN is surprisingly simple: 
+
+> **VPN Implementation**
+>
+> - Take all of the IP packets[^1] coming from the system
+> - Encrypt them
+> - Encapsulated encrypted items in the VPN packets (specific to the VPN protocol)
+> - Send the VPN packets to the VPN server using UDP, TCP, or other standard transport layer protocol
+
+The IP packets end up being wrapped into another IP packets, a networking version of a Russian nesting doll.
+
+<img class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/vpn-matryoshka.png" style="width: 240px; border-radius: 44px;">
+
+This is a simple idea, yet it achieves all of our goals. The original IP packets can be fully encrypted. You can't see neither application, nor even Internet layer contents. The only thing ISP or other observers are going to see are communication between a VPN client and a server.
+
+Now, how do you implement this? This is what I'm going to cover in the upcoming articles. But on a high level, it is going to involve directly manipulating IP packets, encryption, virtual network interfaces, and more.
+
+### Example: OpenVPN
+
+Before designing our own VPN protocol in the upcoming articles, it is worth exploring an existing VPN protocol, such as [OpenVPN](https://openvpn.net).
+
+The [description](https://openvpn.net/community-resources/openvpn-protocol/) of the protocol is surprisingly simple. First, the client **establishes the session** with the server and exchanges cryptographic information.
+
+<div id="tabs-03">
+<div class="SwiftUITab">
+  <button class="SwiftUITabLink active" onclick="openTab(event, 'tabs-03', 'page-05')">Reset Client</button>
+  <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-03', 'page-06')">Reset Server</button>
+  <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-03', 'page-07')">Acknowledge</button>
+</div>
+
+<div id="page-05" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+The client sends a *control* (`P_CONTROL`) packet with `P_CONTROL_HARD_RESET_CLIENT_V2` type which prepares a new session.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-01.png">
+</div>
+
+<div id="page-06" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+The server responds with a control packet with `P_CONTROL_HARD_RESET_SERVER_V2` type.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-02.png">
+</div>
+
+<div id="page-07" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+The client acknowledges that it received the packets form "reset" type from the server.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-03.png">
+</div>
+</div>
+
+When the session is ready, the client and the server exchange cryptographic information using TLS protocol.
+
+<div id="tabs-04">
+<div class="SwiftUITab">
+  <button class="SwiftUITabLink active" onclick="openTab(event, 'tabs-04', 'page-08')">Control Message</button>
+  <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-04', 'page-09')">TLS Payload</button>
+</div>
+
+<div id="page-08" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+The client sends another control (`P_CONTROL`) packet.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-04.png">
+</div>
+
+<div id="page-09" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+This packet has TLS payload.
+<img class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-05.png">
+</div>
+</div>
+
+I'm not going to go into detail regarding TLS exchange. The point is that after a few control messages, the client becomes ready to encrypt and send messages to the server. And this is what `P_DATA_V1` message type is for – data channel packet containing actual tunnel data ciphertext.
+
+<img class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-06.png">
+
+And this wraps up an overview of OpenVPN. Naturally, it's a simplified view, there are more options that OpenVPN offer. But the main takeaways are:
+
+- OpenVPN is a binary protocol that has multiple message types: control (`P_CONTROL_V1`), acknowledgment (`P_ACK_V1`) and data (`P_DATA_V1`)
+- The messages are send over UDP[^2]. The control messages (`P_CONTROL_V1`) have a delivery guarantee and require acknowledgment (`P_ACK_V1`). The data messages (`P_DATA_V1`) don't require an acknowledgment and don't have a delivery guarantees, the underlying protocol of the original messages is responsible for providing the needed guarantees.
+
+With this in mind, we are ready to move forward.
+
+<div class="Any-vertInsets">
+<a href="{{ site.url }}/post/vpn-configuration-manager">
+  <div class="PrimaryButton">
+    Continue Reading »
+  </div>
+</a>
+</div>
+
+
+<div class="References" markdown="1">
+
+## References
+
+1. Apple Developer Documentation, [**NetworkExtension Framework**](https://developer.apple.com/documentation/networkextension)
+2. WWDC 2017, [**Session 707: Advances in Networking, Part 1**](https://developer.apple.com/videos/play/wwdc2017/707)
+3. WWDC 2017, [**Session 709: Advances in Networking, Part 2**](https://developer.apple.com/videos/play/wwdc2017/709/)
+4. WWDC 2015, [**Session 717: What's New in NetworkExtension and VPN**](https://developer.apple.com/videos/wwdc/2015/?id=717)
+5. Wireshark, [**OpenVPN Sample Captures**](https://wiki.wireshark.org/OpenVPN)
+6. OpenVPN, [**OpenVPN Protocol**](https://openvpn.net/community-resources/openvpn-protocol/)
+7. Cloudflare, [**What is DNS?**](https://www.cloudflare.com/learning/dns/what-is-dns/)
+8. Mozilla, [**HTTP**](https://developer.mozilla.org/en-US/docs/Web/HTTP) 
+
+</div>
+
+
+<div class="FootnotesSection" markdown="1">
+
+[^1]: The packets that are configured to go through the VPN tunnel. A *split* tunnel can be configured, such that only packets with the predefined destination addressed are routed via the tunnel, and the rest go through the normal physical network interfaces.
+[^2]: OpenVPN uses UDP by default, but also [supports TCP](https://openvpn.net/faq/why-does-openvpn-use-udp-and-tcp/).
+[^3]: HTTP/3 seems to be [replacing TCP with UDP](https://thenewstack.io/http-3-replaces-tcp-with-udp-to-boost-network-speed-reliability/)
+[^4]: That's not always the case and it depends on your browser. For example, [Firefox now uses](https://blog.mozilla.org/blog/2020/02/25/firefox-continues-push-to-bring-dns-over-https-by-default-for-us-users/) DNS over HTTPS by default.
+[^5]: You could memorize an IPv4 address, but try memorizing `2400:cb00:2048:1::c629:d7a2` (IPv6).
+
+</div>
+
+
+
+<!-- All of this stuff is currently specific for this invividual post. I will make it part of the intrastructure later. -->
+<script type="text/javascript">
+function openTab(evt, tabsId, pageId) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementById(tabsId).getElementsByClassName("SwiftUITabContent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementById(tabsId).getElementsByClassName("SwiftUITabLink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(pageId).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>

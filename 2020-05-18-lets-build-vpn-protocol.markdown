@@ -14,6 +14,7 @@ disable_comments: true
 It's been two years since [Network Extension, Part 1 - Introduction]({{ site.url }}/post/network-extensions-into). You've been asking for Part 2. Here it finally is.
 
 > - [Let's Build a VPN Protocol]({{ site.url }}/post/lets-build-vpn-protocol) (You are here)
+> - [Prologue: How Does VPN Work?]({{ site.url }}/post/networking-101)
 > - [VPN, Part 1: VPN Profiles]({{ site.url }}/post/vpn-configuration-manager)
 > - VPN, Part 2: Packet Tunnel Provider (**Coming Soon**)
 > - VPN, Part 3: Server (**Coming Soon**)
@@ -48,7 +49,7 @@ The solution is going to consist of the three major parts:
 {:.info}
 
 <div class="Any-vertInsets">
-<a href="{{ site.url }}/post/vpn-configuration-manager">
+<a href="{{ site.url }}/post/networking-101">
   <div class="PrimaryButton">
     Continue Reading »
   </div>

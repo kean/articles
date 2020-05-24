@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Network Extension, Part 1 - Introduction
-description: Introduction to a series of posts about the Network Extension framework which allows apps to customize core networking features of the OS.
+description: Introduction to a series of posts about the Network Extension framework
 date: 2018-05-22 18:00:00 +0300
 category: programming
 tags: programming

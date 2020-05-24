@@ -533,6 +533,8 @@ Swift dominance didn't come from the server, it just might from the UI.
 1. WWDC 2019, [**Building Custom Views with SwiftUI**](https://developer.apple.com/videos/play/wwdc2019/237/)
 2. Apple, [**SwiftUI Tutorials**](https://developer.apple.com/tutorials/swiftui)
 
+</div>
+
 <div class="FootnotesSection" markdown="1">
 
 [^1]: Unfortunately, there is no way to [examine the view hierarchy](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/ExaminingtheViewHierarchy.html) in Xcode Previews yet. I hope this is something that will be added in the future. For now, Apple recommends you add [borders](https://developer.apple.com/documentation/swiftui/view/3288984-border) to the views for debugging purposes.
@@ -546,6 +548,8 @@ Swift dominance didn't come from the server, it just might from the UI.
 [^5]: Stacks in SwiftUI are extremely simple, especially compared to `UIStackView` which has a lot of options, some of which I doubt anyone even uses. One of the examples is `.fillProprtionally` distribution. I've personally never used it. I did [partially implement it]({{ site.url }}/post/lets-build-uistackview#fillproportionally) when building a `UIStackView` replacement. One of the limitations was the fact that `UIStackView` uses a neat private method `_intrinsicContentSize` `invalidatedForChildView` to monitor when one of its children updates its intrinsic content size. How Apple decided that this distribution needed to be built in the first is unclear.
 
 [^6]: This Is The Way.
+
+</div>
 
 <!-- All of this stuff is currently specific for this invividual post. I will make it part of the intrastructure later. -->
 <script type="text/javascript">
