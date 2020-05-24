@@ -289,7 +289,7 @@ Delivering software is easy, maintaining quality and velocity is hard. Continuou
 
 <div class="FootnotesSection" markdown="1">
 
-[^1]: Not counting [Matt](https://github.com/mattt) since he hasn't been actively involved in the project since 2015.
+[^1]: Not counting [Mattt](https://github.com/mattt) since he hasn't been actively involved in the project since 2015.
 [^2]: Large companies typically want to run their software on-premise and the obvious choice for them is [Jenkins](https://jenkins.io) which provides flexibility and scalability. Jenkins is free but not every company can afford running it – you need to invest time and money in maintaining it. For smaller companies, cloud solutions are often the best choice. For example, I had been using [BuddyBuild](https://www.buddybuild.com) when working for a startup in 2018. [BuddyBuild](https://techcrunch.com/2018/01/02/apple-buys-app-development-service-buddybuild/) was acquired by Apple in 2018 and they have not been accepting new customers since. The future of BuddyBuild within Apple is still unclear.
 [^3]: Travis CI is not the only free cloud CI service. Some project has already started using [GitHub Actions](https://github.com/features/actions) which is currently in beta. There is also [Circle CI](https://circleci.com) and other tools.
 [^4]: In case you want to build pushes to branches, I would suggest filtering which branches to build. In Nuke, I currently build only `master` branch: `branches: only: - master`.
