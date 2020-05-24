@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Let's Build UIStackView"
-description: "Explores how <a href='https://developer.apple.com/reference/uikit/uistackview'>UIStackView</a> works under the hood to build its open source replacement - <a href='https://github.com/kean/Arranged'>Arranged</a>"
+description: "Explores how UIStackView works under the hood to build its open source replacement - Arranged"
 date: 2017-01-16 10:00:00 +0300
 category: programming
 tags: ios

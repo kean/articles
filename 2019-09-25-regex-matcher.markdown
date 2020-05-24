@@ -245,6 +245,8 @@ That's all folks! I hope you enjoyed this series as much as I did. I've learned 
 6. The IEEE and The Open Group (2004), [**The Open Group Base Specifications Issue 6
 IEEE Std 1003.1, Part 9, Regular Expressions**](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html)
 
+</div>
+
 <div class="FootnotesSection" markdown="1">
 
 [^1]: To check whether the *entire* input string matches the regex you normally use Start of String and End of String [anchors](https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions).
@@ -254,3 +256,5 @@ IEEE Std 1003.1, Part 9, Regular Expressions**](https://pubs.opengroup.org/onlin
 [^5]: Apart from the tools like lazy and possessive quantifiers, almost every NFA language has some other fail-safe mechanism to deal with backtracking. For example, [ICU](http://userguide.icu-project.org/strings/regexp) (which `NSRegularExpression`) sets the limit to the amount of heap usage. [.NET Regex](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions) has a huge guide about how to optimize backtracking. They also offer tools like timeouts intervals and even disable backtracking completely.
 [^6]: Not all regex engines are POSIX compliant, for example, [.NET regex engine isn't](https://docs.microsoft.com/en-us/dotnet/standard/base-types/details-of-regular-expression-behavior)
 [^7]: To prove that, try running the "evil" regex from the backtracking section of the article and select the flavor of regex without backtracking. If you are using regex101.com, that would be either [ECMAScript](https://regex101.com/r/dH6qNG/1) or Golang flavors. They both return the result in a matter of milliseconds even on large inputs.
+
+</div>
