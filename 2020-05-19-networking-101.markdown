@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "How Does VPN Work?"
-description: A Russian nesting doll of network protocols
+subtitle: A Russian nesting doll of network protocols
+description: "Using Wireshark to examine some of the common network protocols, such as HTTP, DNS, UDP, TCP, IP. Exploring what problems VPN solve and how some of the VPN protocols, such as OpenVPN, are implemented."
 date: 2020-05-19 9:00:00 -0400
 category: programming
 tags: programming
