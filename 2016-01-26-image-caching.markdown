@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Image Caching"
-description: "In-depth look at <a href='https://tools.ietf.org/html/rfc7234'>HTTP cache</a> and <a href='https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/URLLoadingSystem/URLLoadingSystem.html'>Foundation's URL Loading System</a> to cache images on disk"
+subtitle: "In-depth look at HTTP cache and Foundation's URL Loading System to cache images on disk"
+description: Using URLCache (HTTP cache) and Foundation's URL Loading System to cache and validate images. Storing images in memory using NSCache.
 date: 2016-01-26 15:30:05 +0300
 category: programming
 tags: swift, ios, http, nsurlsession

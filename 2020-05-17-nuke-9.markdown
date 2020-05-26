@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Nuke 9"
-description: Reflecting on the five years of the performance improvements
+subtitle: Reflecting on the five years of the performance improvements
+description: Overview of Nuke 9, a new iteration of an image loading and caching framework for iOS. Reflecting on performance features introduced over the years.
 date: 2020-05-17 9:00:00 -0400
 category: programming
 tags: programming

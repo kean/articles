@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Immutability and Builder Pattern"
-description: "Modelling large <a href='https://www.objc.io/issues/7-foundation/value-objects/'>immutable objects</a> in Objective-C without creating telescoping initializers"
+description: "Modelling large immutable objects in Objective-C without creating telescoping initializers"
 date: 2016-01-10 19:30:05 +0300
 category: programming
 tags: objective-c, ios, patterns

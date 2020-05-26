@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "CI for Swift Frameworks"
-description: How I went from manually testing my frameworks to having hundreds of unit tests and multiple automatic checks running on every change
+subtitle: How I went from manually testing my frameworks to having hundreds of unit tests and multiple automatic checks running on every change
+description: Setting up Travis CI for a Swift framework. Ideas for the jobs, including SwiftLint validation, multiple environments, test suites, validating demo projects and packages.
 date: 2019-11-13 10:00:00 -0500
 category: programming
 tags: programming

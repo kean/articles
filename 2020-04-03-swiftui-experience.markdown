@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "SwiftUI Experience"
-description: Is SwiftUI delivering on its promises?
+subtitle: Is SwiftUI delivering on its promises?
+description: Using SwiftUI to build a cross-platform (iOS and macOS) app. Is SwiftUI delivering on its promises?
 date: 2020-04-03 10:00:00 -0500
 category: programming
 tags: programming

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Preheating Images"
-description: "<a href='https://en.wikipedia.org/wiki/Prefetching'>Preheating</a> is an effective way to improve user experience by downloading data ahead of time in anticipation of its use"
+description: "Preheating is an effective way to improve user experience by downloading data ahead of time in anticipation of its use"
 date: 2016-01-12 20:30:05 +0300
 category: programming
 tags: swift, ios, nuke

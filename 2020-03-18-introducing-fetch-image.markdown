@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Introducing FetchImage"
-description: FetchImage makes it easy to download images using Nuke and display them in SwiftUI apps
+subtitle: FetchImage makes it easy to download images using Nuke and display them in SwiftUI apps
+description: Introducing FetchImage, a SwiftUI extension for Nuke, and image loading and caching framework for iOS
 date: 2020-03-18 10:00:00 -0500
 category: programming
 tags: programming
