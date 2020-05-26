@@ -51,7 +51,7 @@ Many people liked this pattern, some thought [it was "exceptionally OK"](https:/
 
 I used MVVM+RxSwift in one of my projects at work and had spent more than a year with it. Back then, both of these technologies were new to me, and I ended up quite liking them.
 
-The great thing about MVVM (and MVP, but more on it later) is that it was the first pattern where I was able to finally embrace unit testing. Now, I was writing unit tests not just for a Model layer, but for most of my ViewModels as well. What I like most about MVVM is that you don't need a View to test a ViewModel. All you need is to inject a Model test double, trigger some events and [record the outputs](http://kean.github.io/post/rxswift-testing) of the ViewModel. This stuff is fantastic.
+The great thing about MVVM (and MVP, but more on it later) is that it was the first pattern where I was able to finally embrace unit testing. Now, I was writing unit tests not just for a Model layer, but for most of my ViewModels as well. What I like most about MVVM is that you don't need a View to test a ViewModel. All you need is to inject a Model test double, trigger some events and [record the outputs](https://kean.github.io/post/rxswift-testing) of the ViewModel. This stuff is fantastic.
 
 What I didn't like much was – surprisingly to me – bindings. It's really tempting to use bindings because of how nice they seem on the surface, but they have a few major problems:
 

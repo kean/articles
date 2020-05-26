@@ -16,13 +16,13 @@ One of the resources that you might want to prefetch for your users is images. I
 
 {% include ad-hor.html %}
 
-**Warning: this post is a bit outdated because of the [Nuke](http://kean.github.io/Nuke/) and [Preheat](https://github.com/kean/Preheat) changes.** 
+**Warning: this post is a bit outdated because of the [Nuke](https://kean.github.io/Nuke/) and [Preheat](https://github.com/kean/Preheat) changes.** 
 
 > ## TL;DR
 - Preheating (prefetching/precaching) means loading data ahead of time in anticipation of its use
 - It's possible to automate preheating in a `UICollectionView` and `UITableView`
 - The actual implementation detects when the user scrolls the content, calculates the preheat window, finds out which cells are going to be displayed in it, and calls a handler that starts/stops image requests
- - [Preheat](https://github.com/kean/Preheat) & [Nuke](http://kean.github.io/Nuke/) provide a set of tools for preheating images
+ - [Preheat](https://github.com/kean/Preheat) & [Nuke](https://kean.github.io/Nuke/) provide a set of tools for preheating images
 
 ## Preheating in a UICollectionView
 
@@ -142,6 +142,6 @@ The idea of automating preheating was inspired by Apple's Photos framework [samp
 ## References
 
 1. [Apple's Photos framework sample](https://developer.apple.com/library/ios/samplecode/UsingPhotosFramework/Introduction/Intro.html)
-2. [Nuke](http://kean.github.io/Nuke/)
+2. [Nuke](https://kean.github.io/Nuke/)
 3. [Preheat](https://github.com/kean/Preheat)
 4. [PHImageManager](https://developer.apple.com/library/prerelease/ios/documentation/Photos/Reference/PHImageManager_Class/index.html)
