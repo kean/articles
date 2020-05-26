@@ -14,7 +14,7 @@ I've migrated our app to [Codable](https://developer.apple.com/documentation/swi
 
 > <a href="{{ site.url }}/playgrounds/codable.playground.zip">Swift Playground</a> with all of the code from this article:
 
-<img src="{{ site.url }}/images/posts/codable_screen_01.png" class="Screenshot">
+<img alt="Xcode screenshot showing Codable example" src="{{ site.url }}/images/posts/codable_screen_01.png" class="Screenshot">
 
 {% include ad-hor.html %}
 

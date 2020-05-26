@@ -82,7 +82,7 @@ Now, what this all means is that by making property `@Published`, you are able t
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-			<img src="{{ site.url }}/images/posts/swiftui-data-flow/published.png">
+			<img alt="Xcode screenshot" src="{{ site.url }}/images/posts/swiftui-data-flow/published.png">
         </div>
     </div>
 </div>

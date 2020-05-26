@@ -11,7 +11,7 @@ uuid: 687bb115-e04c-4c6f-9990-786793ba8685
 
 I'm excited to introduce a new addition to Nuke - [RxNuke](https://github.com/kean/RxNuke) which brings the power of [RxSwift](https://github.com/ReactiveX/RxSwift) to your image loading pipelines.
 
-<img src="{{ site.url }}/images/posts/introducing_rxnuke_01.png" class="Screenshot">
+<img alt="RxNuke logo" src="{{ site.url }}/images/posts/introducing_rxnuke_01.png" class="Screenshot">
 
 {% include ad-hor.html %}
 

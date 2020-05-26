@@ -18,7 +18,7 @@ This is a story of how I went from manually testing my frameworks to having hund
 
 {% include ad-hor.html %}
 
-<img src="{{ site.url }}/images/posts/ci-for-oss/travis-ci.png">
+<img alt="Travis CI screenshot demonstrating multiple jobs" src="{{ site.url }}/images/posts/ci-for-oss/travis-ci.png">
 
 ## What is CI
 
@@ -163,11 +163,11 @@ jobs:
 
 It's a good idea to put installation code into an `install` script. It shows in a separate contracted section in the logs. If it fails, it [breaks a build](https://docs.travis-ci.com/user/job-lifecycle/#breaking-the-build) in a different way than `script` does.
 
-<img class="Any-responsiveCard" src="{{ site.url }}/images/posts/ci-for-oss/install_phase.png">
+<img alt="Travis CI screeshot" class="Any-responsiveCard" src="{{ site.url }}/images/posts/ci-for-oss/install_phase.png">
 
 Running validations in separate jobs allow you to [parallelize the work](https://docs.travis-ci.com/user/speeding-up-the-build/#parallelizing-your-builds-across-virtual-machines) across multiple virtual machines. And if the job fails, it won't fail the rest of the build, which I think is important. You don't want a single SwiftLint warning to stop all the rest of the validations from running, it could slow down the feedback cycle. You want to surface all of the issues with the build in one go.
 
-<img class="Any-responsiveCard" src="{{ site.url }}/images/posts/ci-for-oss/job-failed.png">
+<img alt="Travis CI screenshot" class="Any-responsiveCard" src="{{ site.url }}/images/posts/ci-for-oss/job-failed.png">
 
 ### Environments
 
@@ -205,7 +205,7 @@ jobs:
 
 [Nuke](https://github.com/kean/Nuke) has more than one test suit.
 
-<img class="Any-responsiveCard" style="max-height: 120px" src="{{ site.url }}/images/posts/ci-for-oss/nuke-schemes.png">
+<img alt="Xcode screenshot with multiple schemes" class="Any-responsiveCard" style="max-height: 120px" src="{{ site.url }}/images/posts/ci-for-oss/nuke-schemes.png">
 
 So what I do as part of each build is run these two of the additional test suites which I don't normally run: Thread Safety Tests and Performance Tests.
 
@@ -263,7 +263,7 @@ Let's briefly talk about a holy grail of modern software engineering, [Continuou
 
 Build stages is a way to group jobs, and run jobs in each stage in parallel, but run one stage after another sequentially. The simplest and most common use case of stages is to test your framework by running all the validation jobs that you configured in parallel. And then release your package only if all tests have passed and completed successfully.
 
-<img class="Any-responsiveCard" src="{{ site.url }}/images/posts/ci-for-oss/stages.gif">
+<img alt="Travis CI demonstration" class="Any-responsiveCard" src="{{ site.url }}/images/posts/ci-for-oss/stages.gif">
 
 This is something that I keep in mind but I haven’t yet configured for Nuke. But when you know how to set up jobs, working with stages is a breeze. All you need to do is follow the official [tutorial](https://docs.travis-ci.com/user/build-stages/#what-are-build-stages).
 

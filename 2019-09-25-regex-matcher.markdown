@@ -78,7 +78,7 @@ You can find many different names and descriptions of both of these algorithms. 
 
 Let's revisit an NFA from the [previous article]({{ site.url }}/post/regex-compiler#one-or-more-quantifier):
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-ore-more-extended.png" style="max-height:170px;">
+<img alt="A diagram showing NFA" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-ore-more-extended.png" style="max-height:170px;">
 
 Does it remind you of something? There are nodes – states. There are edges which connect nodes – transitions. Yes, it is a [directed graph](https://en.wikipedia.org/wiki/Directed_graph) (or *digraph*). Which means that *any* algorithm that can be performed on a graph can also be performed on this state machine! Or does it?
 
@@ -98,7 +98,7 @@ DFS would normally keep track of the already encountered nodes. This works when 
 
 Let's take the NFA from the example above and the input string "aaab".
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-ore-more-extended.png" style="max-height:170px;">
+<img alt="A diagram showing NFA" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-ore-more-extended.png" style="max-height:170px;">
 
 If you were to use DFS search, you would end performing the following steps:
 
@@ -225,7 +225,7 @@ We've already established in the [previous article](http://localhost:4000/post/r
 
 ARC turned out to be one of the challenging parts to optimize. ARC has a huge impact on performance. And it is very hard to reason about. I had to drop to SIL level to make sure my changes have the desired effect. There is no easy way to do that from Xcode. I hope to make it a topic of one of the upcoming articles.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/regex-matcher/sil.jpeg">
+<img alt="Xcode screenshot with SIL code" class="Screenshot" src="{{ site.url }}/images/posts/regex-matcher/sil.jpeg">
 
 Fortunately, Swift team is working hard on [optimizing ARC](https://github.com/apple/swift/blob/master/docs/ARCOptimization.rst). There are even more optimizations to come in the future, like [SIL ownership](https://forums.swift.org/t/proposal-sil-ownership-model-verifier/4665) model, and potentially [more control](https://github.com/apple/swift/blob/master/docs/OwnershipManifesto.md) over memory management on the Swift code level. The current version of the compiler is quite generous in terms of how many `retain` and `release` calls it adds throughout your code. I can't wait to see more improvements in that area.
 

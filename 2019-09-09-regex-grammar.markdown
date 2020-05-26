@@ -43,7 +43,7 @@ Noun ::= "car" | "sky"
 
 A diagram generated using [Railroad Diagram Generator](https://www.bottlecaps.de/rr/ui) for this grammar:
 
-<img class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/modified_noun.png" style="max-height: 137.5px;">
+<img alt="Formal grammar of a modified noun" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/modified_noun.png" style="max-height: 137.5px;">
 
 But what does it mean for grammar to be *generative*? You can think of a generative grammar as a recipe for constructing sentences in the language. Let's see an example. You start with `ModifiedNoun` – it's the first symbol on the list. Then you begin substituting:
 
@@ -128,7 +128,7 @@ I think we are now ready to define an actual regex grammar! You can start either
 	
 The regex begins with an optional [Start of String of Line Anchor](https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions#Start) followed the expression.
 
-<img class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_regex.png" style="max-height:115px">
+<img alt="Regex formal grammar" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_regex.png" style="max-height:115px">
 
 ```swift
 Regex ::= StartOfStringAnchor? Expression
@@ -139,9 +139,9 @@ Now goes probably the most challenging part. How to define an expression? An exp
 
 Let's formalize it:
 
-<img class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_expression.png" style="max-height:98px;">
+<img alt="Regex formal grammar: subexpression" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_expression.png" style="max-height:98px;">
 
-<img class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_expression_item.png" style="max-height:220px;">
+<img alt="Regex formal grammar: subexpression item" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_expression_item.png" style="max-height:220px;">
 
 ```swift
 /* Anything that can be on one side of the alternation. */
@@ -155,7 +155,7 @@ SubexpressionItem
 
 I'm not going to go through all of the possible expression items but here are a few examples. Let's start with `Group`. Group is a recursive construct – a group may contain other groups, or actually any subexpression.
 
-<img class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_group.png" style="max-height:115px;">
+<img alt="Regex formal grammar: group" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_group.png" style="max-height:115px;">
 
 ```swift
 Group ::= "(" GroupNonCapturingModifier? Expression ")" Quantifier?

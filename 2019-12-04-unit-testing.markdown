@@ -12,7 +12,7 @@ uuid: 4a6eb769-e0c6-4507-a45f-f73abece8a5b
 
 As engineers, we are always looking for ways to reduce costs and still satisfy all of the project requirements. We have to be very careful to only invest the engineering time into things that truly matter. This is just basic economics. And that's where the debate about unit testing comes in. Is it worth it?
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/effective-unit-testing/unit-testing.png">
+<img alt="Travis CI screenshot" class="Screenshot" src="{{ site.url }}/images/posts/effective-unit-testing/unit-testing.png">
 
 Proponents of unit testing claim that tests help you understand the requirements, give you confidence during refactoring, serve as executable documentation, reduce defects, facilitate good design, and reduce global warming. So what's there not to love?
 
@@ -32,7 +32,7 @@ Code coverage is an instrument. It shows what areas of the app are not tested ye
 I do have high test coverage in my frameworks, like <a href="https://github.com/kean/Nuke">Nuke</a>. But frameworks are a different animal: a lot of consumers, APIs don't change as often, no dedicated QA team, and no time pressure. I talk more about unit tests and frameworks in <a href="{{ site.url }}/post/ci-for-frameworks)">CI for Swift Frameworks</a>.
         </div>
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/effective-unit-testing/nuke-coverage.png">
+            <img alt="Xcode screenshot showing test coverage" src="{{ site.url }}/images/posts/effective-unit-testing/nuke-coverage.png">
         </div>
     </div>
 </div>

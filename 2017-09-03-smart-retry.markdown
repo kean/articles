@@ -133,7 +133,7 @@ extension ObservableType {
         -> Observable<E>
 ```
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/misc/retryWhen.f.png" style="max-width:500px;">
+<img alt="RxSwift retryWhen marble diagram" class="AdaptiveImage" src="{{ site.url }}/images/misc/retryWhen.f.png" style="max-width:500px;">
 
 The documentation describes it really nicely. The basic idea is the `retryWhen` gives you an observable sequence of errors over which you can then for example `flatMap` over to handle each of the individual errors.
 

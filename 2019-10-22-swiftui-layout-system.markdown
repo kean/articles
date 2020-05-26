@@ -38,7 +38,7 @@ struct ContentView: View {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/case-01.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/case-01.png">
         </div>
     </div>
 </div>
@@ -83,7 +83,7 @@ There are three steps in SwiftUI layout process.
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/case-01-layout.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/case-01-layout.png">
         </div>
     </div>
 </div>
@@ -125,7 +125,7 @@ struct Frame: View {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/frame-01.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/frame-01.png">
         </div>
     </div>
 </div>
@@ -164,7 +164,7 @@ struct Frame: View {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/frame-02.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/frame-02.png">
         </div>
     </div>
 </div>
@@ -199,7 +199,7 @@ struct Frame: View {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/frame-03.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/frame-03.png">
         </div>
     </div>
 </div>
@@ -225,7 +225,7 @@ struct Frame: View {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/frame-04.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/frame-04.png">
         </div>
     </div>
 </div>
@@ -280,7 +280,7 @@ By default, stack view uses <code>.center</code> alignment. That's not quite wha
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right2">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-01.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-01.png">
         </div>
     </div>
 </div>
@@ -307,7 +307,7 @@ Alright, that worked. But now we need to align the stack itself to the leading e
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right2">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-02.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-02.png">
         </div>
     </div>
 </div>
@@ -340,7 +340,7 @@ Spacer fills all the space on the right side of the horizontal stack view.
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right2">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-03.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-03.png">
         </div>
     </div>
 </div>
@@ -373,7 +373,7 @@ You can also customize the spacing between items by passing <code>spacing</code>
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right2">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-04.png">
+            <img alt="Xcode canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-04.png">
         </div>
     </div>
 </div>
@@ -419,8 +419,8 @@ struct Frame_Previews: PreviewProvider {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-01.png">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-02.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-01.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-02.png">
         </div>
     </div>
 </div>
@@ -457,8 +457,8 @@ struct Frame_Previews: PreviewProvider {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-03.png">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-04.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-03.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-04.png">
         </div>
     </div>
 </div>
@@ -484,7 +484,7 @@ In the second example (bottom) we give the stack a little bit more space. So the
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-            <img src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-05.png">
+            <img alt="Xcode Canvas screenshot" src="{{ site.url }}/images/posts/swiftui-layout/stack-uth-05.png">
         </div>
     </div>
 </div>

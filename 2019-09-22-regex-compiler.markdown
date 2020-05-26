@@ -65,13 +65,13 @@ Let's start with probably the simplest possible regex pattern consisting of a si
 
 This regular expression can be represented using a state machine with an initial state (1), an accepting state (2) and a transition between them with the condition that the input character must match `"a"`.
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/match_single_character.png" style="max-height:90px;">
+<img alt="NFA diagram: match character" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/match_single_character.png" style="max-height:90px;">
 
 How do you "run" this state machine? You take the input string, starting from the first character. Then you check what transitions are possible from the initial state. In this case, there is only one transition – a transition to state 2 if the input matches "a". You check the condition, and if it returns `true`, you perform a transition to the next state. State "2" is an accepting state. If the machine enters this state, the match is found.
 
 What if instead of one there were two characters in the pattern, e.g. "ab"? You add a new state and a new transition to the state machine.
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/match-two-characters.png" style="max-height:90px;">
+<img alt="NFA diagram: match two consequetive characters" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/match-two-characters.png" style="max-height:90px;">
 
 > [**String-Searching Algorithms**](https://en.wikipedia.org/wiki/String-searching_algorithm) *(Additional Reading)*
 >
@@ -97,13 +97,13 @@ One of the ways to represent character classes in Swift is with [`CharacterSet`]
 
 *One or more* quantifier (or "+") matches the input one or more times. Here is a state machine that represents a "`a+`" pattern:
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-or-more-quantifier.png" style="max-height:170px;">
+<img alt="NFA diagram: match character one or more times" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-or-more-quantifier.png" style="max-height:170px;">
 
 We took a simple [Match Character]({{ site.url }}/post/regex-compiler#match-character) state machine and added a single epsilon transition to turn it into "match character *a* one or more times" state machine. Now, how does this work? A new transition creates a loop (or cycle) in the state machine. When you reach state 2, you now have an option to go back to state 1 and consume character "a" one more time. And then repeat.
 
 In the current state diagram, "2" is the accepting state. But nothing prevents us from extending it. Let's say we add a letter "b" to the pattern: "a+b".
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-ore-more-extended.png" style="max-height:170px;">
+<img alt="NFA diagram" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/one-ore-more-extended.png" style="max-height:170px;">
 
 This state machine accepts strings like "a", or "aab", or "aaab". It works because when you reach state 2 and the next character in the input is not "b" yet, you still have an option to go back and try consuming more characters "a".
 
@@ -111,7 +111,7 @@ This state machine accepts strings like "a", or "aab", or "aaab". It works becau
 
 *Zero or one* quantifier (or “?”) matches the input zero or one times. I personally call it ["optional"](https://developer.apple.com/documentation/swift/optional) quantifier. The state machine that represents it is very similar to the previous ones:
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/zero-or-one-quantifier.png" style="max-height:150px;">
+<img alt="NFA diagram: match character zero or one times" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/zero-or-one-quantifier.png" style="max-height:150px;">
 
 The difference here is that the epsilon transition allows you to skip matching the character "a" entirely. And keep in mind, I use simple [Match Character]({{ site.url }}/post/regex-compiler#match-character) patterns here only as an example. You can put *any* state machine between states 1 and 2 to have "zero or one" quantifier applied to them.
 
@@ -119,7 +119,7 @@ The difference here is that the epsilon transition allows you to skip matching t
 
 *Zero or more* quantifier (or “\*”) matches the input zero or more times. The state machine that implements it looks like a combination of the previous two. There is one epsilon transition that allows you to skip the match, and one that adds a loop.
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/zero-or-more-quantifier.png" style="max-height:220px;">
+<img alt="NFA diagram: match character zero or more times" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/zero-or-more-quantifier.png" style="max-height:220px;">
 
 > **Greedy and Lazy Quantifiers**
 >
@@ -134,7 +134,7 @@ The difference here is that the epsilon transition allows you to skip matching t
 - On parser level, by preprocessing the pattern and expending every instance of range quantifier into a simple combination of characters and other quantifiers
 - On compiler level, by repeatedly compiling the quantified expression to produce more than one instance of it, and applying quantifiers when necessary
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/range-quantifier.png" style="max-height:175px;">
+<img alt="NFA diagram: range quantifier" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/range-quantifier.png" style="max-height:175px;">
 
 > If you've noticed, this state machine doesn't actually represent "`aaa?a?`". It is closer to the form of "`aa((a)?a)?`". And this is important, especially if the regex engine uses backtracking and you want to reduce the amount of it. We will talk more on the subject in the next article, stay tuned. 
 
@@ -142,7 +142,7 @@ The difference here is that the epsilon transition allows you to skip matching t
 
 [Alternation construct](https://docs.microsoft.com/en-us/dotnet/standard/base-types/alternation-constructs-in-regular-expressions) (the vertical bar "`|`") matches the expression either on the left or the right side of it. For example, "`a|b`" pattern can be represented with the following state machine:
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/alternation.png" style="max-height:190px;">
+<img alt="NFA diagram: alternation" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/alternation.png" style="max-height:190px;">
 
 Just like with quantifiers, the left and the right side of the alternation is not limited to simple [Match Character]({{ site.url }}/post/regex-compiler#match-character) patterns, it can be any pattern. And just like quantifiers, it poses some challenges in terms of how to "run" the state machine with multiple choices, which we will focus on in the next article.
 
@@ -156,7 +156,7 @@ A [grouping construct](https://docs.microsoft.com/en-us/dotnet/standard/base-typ
 
 Here is how I ended up implementing groups in [Regex](https://github.com/kean/Regex):
 
-<img class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/capture-groups.png" style="max-height:230px;">
+<img alt="NFA diagram: regex group" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/capture-groups.png" style="max-height:230px;">
 
 The idea is that you "sandwich" a state machine delineated by the group between two "technical states" (in this case, states 1 and 4). The engine remembers which states are the *start* and the *end* states of the group. Every time the matcher enters the state which is an end state of the group, it captures the part of the input string beginning from the position on which the "start" state was previously encountered. If the group has a quantifier like *zero or more* quantifier applied to it, the matcher only captures the last match.
 

@@ -23,7 +23,7 @@ It's best to read this series when you're already familiar with the basics of ne
 
 > Wireshark is one of my favorite developer tools, I would definitely recommend trying it. It's a perfect instrument that would give you a good understanding of how internet protocols work together and what actually goes over the wire. And it's free!
 
-<img src="{{ site.url }}/images/posts/network-extensions/wireshark_sample.png">
+<img alt="Wireshark sample capture" src="{{ site.url }}/images/posts/network-extensions/wireshark_sample.png">
 
 ## Network Extensions Overview
 
