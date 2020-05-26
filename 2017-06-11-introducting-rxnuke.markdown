@@ -25,7 +25,7 @@ Each app has a different idea about how to configure their image loading pipelin
 
 > Check out <a href="{{ site.url }}/post/api-client">**API Client in Swift**</a> for more awesome use-cases of RxSwift. You could also find <a href="{{ site.url }}/post/smart-retry">**Smart Rerty**</a> useful. It can automatically retry image requests for you.
 
-# Introduction
+## Introduction
 
 In order to get started with RxNuke you should be familiar with the basics of RxSwift. Even if you don't you can already start taking advantage of RxNuke powerful features thanks to a number of [examples of common use cases](https://github.com/kean/RxNuke#use-cases) available in a RxNuke documentation.
 
@@ -54,7 +54,7 @@ The first thing that `Nuke.Manager` does when you subscribe to an observable is 
 
 This looks simple enough. Now let's see what makes this new addition to Nuke so powerful.
 
-# Use Cases
+## Use Cases
 
 I'm going to go throught a number of real world uses case and see how they can be implemented using `RxNuke`:
 
@@ -198,13 +198,13 @@ final class ImageCell: UICollectionViewCell {
 ```
 
 
-# Conclusion
+## Conclusion
 
 I hope that `RxNuke` becomes a valuable addition to Nuke. It brings power to solve many common use cases which are hard to implement without Rx. `RxNuke` is still very early stage. As it evolves it's going to bring some new powerful features made possible by Rx, more examples of common use cases, and more `Nuke` extensions to give you the power to build the exact image loading pipelines that you want.
 
 > If you have any questions, additions or corrections to the examples from the article please feel free to leave a comment below, or hit me up on [Twitter](https://twitter.com/a_grebenyuk).
 
-# Links
+## Links
 
 - [RxSwift](https://github.com/ReactiveX/RxSwift)
 - [RxNuke](https://github.com/kean/RxNuke)
