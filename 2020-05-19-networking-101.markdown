@@ -179,7 +179,7 @@ The client acknowledges that it received the "reset" from the server.
 </div>
 </div>
 
-When the session is ready, the client and the server exchange cryptographic information using TLS protocol[^7].
+When the session is ready, the client and the server need to exchange cryptographic data to agree on a key. The exchange, called the “handshake” in TLS[^7]. 
 
 <div id="tabs-04">
 <div class="SwiftUITab">
@@ -198,7 +198,7 @@ This packet has TLS payload.
 </div>
 </div>
 
-I'm not going to go into detail regarding the TLS exchange. The point is that after a few control messages, the client becomes ready to encrypt and send messages to the server. And this is what `P_DATA_V1` message type is for – data channel packet containing actual tunnel data ciphertext.
+I'm not going to go into detail regarding the TLS exchange. The Wireshark session only shows the first messages of the TLS "handshake". The entire handshake requires a few round-trips. The point is that after a few control messages, the client and the server are ready to encrypt and send messages to the server, regardless of which version of TLS and which encryption model was used. And this is what `P_DATA_V1` message type is for – data channel packet containing actual tunnel data ciphertext.
 
 <img alt="Wireshark capture: OpenVPN sending data" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-06.png">
 
@@ -235,7 +235,7 @@ This is enough information to start working on our toy VPN protocol.
 
 [^1]: The packets that are configured to go through the VPN tunnel. A *split* tunnel can be configured, such that only packets with the predefined destination addressed are routed via the tunnel, and the rest go through the normal physical network interfaces.
 [^2]: OpenVPN uses UDP by default, but also [supports TCP](https://openvpn.net/faq/why-does-openvpn-use-udp-and-tcp/).
-[^3]: HTTP/3 seems to be [replacing TCP with UDP](https://thenewstack.io/http-3-replaces-tcp-with-udp-to-boost-network-speed-reliability/)
+[^3]: HTTP/3 seems to be [replacing TCP with QUIC](https://thenewstack.io/,http-3-replaces-tcp-with-udp-to-boost-network-speed-reliability/), a new transport layer protocol based on UDP
 [^4]: That's not always the case and it depends on your browser. For example, [Firefox now uses](https://blog.mozilla.org/blog/2020/02/25/firefox-continues-push-to-bring-dns-over-https-by-default-for-us-users/) DNS over HTTPS by default.
 [^5]: You could memorize an IPv4 address, but try memorizing `2400:cb00:2048:1::c629:d7a2` (IPv6).
 [^6]: If you are using HTTPS, you are generally good. Only the destination server is going to be able to read HTTP headers and body of your requests.
