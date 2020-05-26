@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Let's Build a Regex Engine
-description: How to understand the language of <code><\/?[\w\s]*>|<.+[\W]></code>
+description: How to understand the language of <code>&lt;\/?[\w\s]*&gt;|&lt;.+[\W]&gt;</code>
 date: 2019-08-20 9:00:00 +0300
 category: programming
 tags: programming
@@ -11,7 +11,7 @@ disable_suggested_articles: true
 disable_comments: true
 ---
 
-> How to understand the language of <code><\/?[\w\s]*>|<.+[\W]></code>
+> How to understand the language of <code>&lt;\/?[\w\s]*&gt;|&lt;.+[\W]&gt;</code>
 
 Ever wondered how regex works under the hood? How does it understand an incantation like `"<\/?[\w\s]*>|<.+[\W]>"` and magically produces a desired result? This series is going to describe exactly how it works and how to implement a feature-rich regex engine.
 
