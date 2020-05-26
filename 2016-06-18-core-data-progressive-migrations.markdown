@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Core Data Progressive Migrations"
-description: "Using <a href='https://developer.apple.com/library/mac/documentation/Cocoa/Reference/CoreDataFramework/Classes/NSPersistentStoreCoordinator_Class/'>NSPersistentStoreCoordinator</a> and <a href='https://developer.apple.com/library/ios/documentation/Cocoa/Reference/NSMigrationManager_class/#//apple_ref/occ/instm/NSMigrationManager/migrateStoreFromURL:type:options:withMappingModel:toDestinationURL:destinationType:destinationOptions:error:'>NSMigrationManager</a> for progressive <a href='https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/Introduction.html#//apple_ref/doc/uid/TP40004399-CH1-SW1'>schema migrations</a> in Core Data"
+description: "Using NSPersistentStoreCoordinato and NSMigrationManager for progressive schema migrations in Core Data"
 date: 2016-06-18 10:00:00 +0300
 category: programming
 tags: ios
