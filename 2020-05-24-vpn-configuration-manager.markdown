@@ -13,7 +13,7 @@ minutes: 10
 
 Every [App Extension](https://developer.apple.com/app-extensions/) requires an app, and Network Extensions are no exception. Before we jump into the nitty-gritty details of the packet tunnel itself, let me walk you through the app. 
 
-<!-- {% include ad-hor.html %} -->
+{% include ad-hor.html %}
 
 ## Introduction
 
@@ -327,11 +327,10 @@ I encourage you to test whether you are able to attach the debug to the extensio
 
 Congratulations, if you reached this point, you know how to install a VPN configuration, enable it, start a VPN tunnel, and attach a debugger to it. This a great progress! In the next part, I'm going to cover the Packet Tunnel itself.
 
-<!-- <div class="Any-vertInsets">
+<div class="Any-vertInsets">
 <a href="{{ site.url }}/post/packet-tunnel-provider">
   <div class="PrimaryButton">
     Continue Reading »
   </div>
 </a>
 </div>
- -->
