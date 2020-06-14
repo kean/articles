@@ -3,7 +3,7 @@ layout: post
 title: "VPN, Part 2: Packet Tunnel Provider"
 subtitle: Using NEPacketTunnelProvider to implement a VPN client
 description: A tutorial on NEPacketTunnelProvider usage to implement an iOS client for a custom tunneling protocol
-date: 2020-06-01 9:00:00 -0400
+date: 2020-06-14 9:00:00 -0400
 category: programming
 tags: programming
 permalink: /post/packet-tunnel-provider
