@@ -12,14 +12,12 @@ disable_suggested_articles: true
 disable_comments: true
 ---
 
-It's been two years since [Network Extension, Part 1 - Introduction]({{ site.url }}/post/network-extensions-into). You've been asking for Part 2. Here it finally is.
+It's been two years since [Network Extension, Part 1 - Introduction](/post/network-extensions-into). You've been asking for Part 2. Here it finally is.
 
-> - [Let's Build a VPN Protocol]({{ site.url }}/post/lets-build-vpn-protocol) (You are here)
-> - [Prologue: How Does VPN Work?]({{ site.url }}/post/networking-101)
-> - [VPN, Part 1: VPN Profiles]({{ site.url }}/post/vpn-configuration-manager)
-> - VPN, Part 2: Packet Tunnel Provider (**Coming Soon**)
-> - VPN, Part 3: Server (**Coming Soon**)
-> - VPN, Part 4: Split Tunnel and Custom DNS Protocol (Bonus) (**Coming Soon**)
+> - [Let's Build a VPN Protocol](/post/lets-build-vpn-protocol) (You are here)
+> - [Prologue: How Does VPN Work?](/post/networking-101)
+> - [VPN, Part 1: VPN Profiles](/post/vpn-configuration-manager)
+> - [VPN, Part 2: Packet Tunnel Provider](/post/packet-tunnel-provider)
 
 {% include ad-hor.html %}
 
@@ -40,17 +38,11 @@ You are going to learn how the iOS manages VPN configuration, how to create cust
 
 The primary topic of this series is going to be [Network Extension](https://developer.apple.com/documentation/networkextension) framework. Among many of its features, it has extensive support for virtual private networks (VPN). The client side of the custom protocol implementation is implemented as a [Packet Tunnel Provider](https://developer.apple.com/documentation/networkextension/packet_tunnel_provider) extension. The Packet Tunnel Provider extension’s containing app uses `NETunnelProviderManager` to create and manage VPN configurations that use the custom protocol, and to control the VPN connections specified by the configurations.
 
-The solution is going to consist of the three major parts:
-
-1. A [Packet Tunnel Provider](https://developer.apple.com/documentation/networkextension/packet_tunnel_provider) extension for iOS
-2. A containing app built in SwiftUI which is also going to be used for creating and managing a VPN configuration
-3. A custom VPN server also built in Swift
-
 > The entire app source code is available at [kean/VPN](https://github.com/kean/VPN).
 {:.info}
 
 <div class="Any-vertInsets">
-<a href="{{ site.url }}/post/networking-101">
+<a href="/post/networking-101">
   <div class="PrimaryButton">
     Continue Reading »
   </div>
