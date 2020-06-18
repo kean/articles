@@ -71,7 +71,7 @@ I scraped the idea of augmenting the existing methods and decided to introduce n
 <!-- <img class="Screenshot" src="https://user-images.githubusercontent.com/1567433/84966617-f30afa80-b0df-11ea-8f62-0abd95eea4ef.png" alt="pin edges" width="400px"/> -->
 
 
-Just to give you a taste of what these semantic APIs look like, here is an example of `pin()` which by far my favorite API in Align.
+Just to give you a taste of what these semantic APIs look like, here is an example of `pin()` which is by far my favorite API in Align.
 
 ```swift
 view.anchors.edges.pin(insets: 20, alignment: .center)
