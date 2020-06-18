@@ -1,7 +1,8 @@
 ---
 layout: post
 title: "Introducing Align 2"
-description: TBD
+subtitle: Layout anchors, reimagined
+description: An Auto Layout library in Swift that introduces an improved version of Auto Layout anchors
 date: 2020-06-18 9:00:00 -0400
 category: programming
 tags: programming
