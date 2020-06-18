@@ -58,6 +58,9 @@ view.anchors.edges.lessThanOrEqual(superview.anchors.edges)
 view.pinEdgesToSuperview(relation: .greaterThanOrEqual)
 ```
 
+> To activate all of the constraints at the same time, wrap the code that creates the constraints into `Constraints {}` closure. Internally, it will keep track of all of the constraints that you create, and when you are done, it will use [`NSLayoutConstraints.activate()`](https://developer.apple.com/documentation/uikit/nslayoutconstraint/1526955-activate) to activate them all at the same time, which is faster than doing it one by one.
+{:.info}
+
 The other problem with this design is that if you try to generalize it, the implementation complexity grows dramatically. If you look at some of the other open source Auto Layout frameworks that follow this design, it's hard to read and understand them.
 
 I also quickly realized that this approach would hurt discoverability using Xcode code completion. And one of my primary goals was to make an API so clear that it would be easy to discover all of its features just using code completion. So this was a non-starter to me.
