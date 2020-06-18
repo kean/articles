@@ -27,7 +27,10 @@ The core idea is still the same: introducing a better, safer, more ergonomic ver
 - A bulky API
 - The API is still too low-level
 
-The first three items are easy to solve. Align does it by introducing a custom `Anchor` implementation that works just as you would expect.
+The first three items are easy to solve. Align does it by introducing a custom `Anchor` type that works just as you would expect.
+
+> `Anchor` is a generic type. Align uses [**phantom types**](/post/phantom-types) to parameterize it with an anchor type and an axis.
+{:.info}
 
 ```swift
 // Align two views along one of the edges
