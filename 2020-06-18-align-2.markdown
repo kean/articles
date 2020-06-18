@@ -1,0 +1,258 @@
+---
+layout: post
+title: "Introducing Align 2"
+description: TBD
+date: 2020-06-18 9:00:00 -0400
+category: programming
+tags: programming
+permalink: /post/align-2
+uuid: 63031829-f890-4724-895e-57632ef67870
+---
+
+<a href="https://github.com/kean/Align">
+<img alt="Align, logo" class="Screenshot Any-responsiveCard" src="/images/posts/align_logo.png">
+</a>
+
+This weekend, I decided to revisit one of my early frameworks - [Align](https://github.com/kean/Align). I thought it had some good ideas behind it, but there was still a lot of room for improvement. I ended up re-engineering major parts of it, even taking some inspiration from SwiftUI. I'm thrilled with the results and I can't wait to show it to you now.
+
+{% include ad-hor.html %}
+
+## Introduction
+
+The core idea is still the same: introducing a better, safer, more ergonomic version of Auto Layout anchors. Anchors are great, but they have some unfortunate design decisions:
+
+- `translatesAutoresizingMaskIntoConstraints`
+- You have to manually activate constraints
+- A bulky API
+- The API is still too low-level
+
+The first three items are easy to solve. Align does it by introducing a custom `Anchor` implementation that works just as you would expect.
+
+```swift
+// Align two views along one of the edges
+a.anchors.leading.equal(b.anchors.leading)
+
+// Other options are available:
+// a.anchors.leading.greaterThanOrEqual(b.anchors.leading)
+// a.anchors.leading.greaterThanOrEqual(b.anchors.leading, constant: 10)
+
+// Set height to the given value (CGFloat)
+a.anchors.height.equal(30)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84966617-f30afa80-b0df-11ea-8f62-0abd95eea4ef.png" alt="pin edges" width="400px"/>
+
+> Every view that you manipulate using Align has `translatesAutoresizingMaskIntoConstraints` automatically set to `false` so you no longer have to worry about. Align also automatically activates all of the created constraints.
+{:.info}
+
+The last item – *the API is still too low-level* – is harder to address. What most frameworks end up doing is *augmenting* the meaning of the core `equal`, `greaterThanOrEqual`, `lessThanOrEqual` APIs. However, I found that I was almost immediately hitting some roadblocks with this design. For example, if you try to do the following, what does it really do? It is not clear from the API.
+
+```swift
+view.anchors.edges.greaterThanOrEqual(superview.anchors.edges)
+
+// And this?
+view.anchors.edges.lessThanOrEqual(superview.anchors.edges)
+
+// From PureLayout, even without anchors
+view.pinEdgesToSuperview(relation: .greaterThanOrEqual)
+```
+
+The other problem with this design is that if you try to generalize it, the implementation complexity grows dramatically. If you look at some of the other open source Auto Layout frameworks that follow this design, it's hard to read and understand them.
+
+I also quickly realized that this approach would hurt discoverability using Xcode code completion. And one of my primary goals was to make an API so clear that it would be easy to discover all of its features just using code completion. So this was a non-starter to me.
+
+I scraped the idea of augmenting the existing methods and decided to introduce new, *semantic* APIs. Align APIs fit in the following quadrant.
+
+<a href="https://github.com/kean/Align">
+<img alt="Align, logo" class="Screenshot Any-responsiveCard" src="/images/posts/align_quadrant.png">
+</a>
+
+<!-- <img class="Screenshot" src="https://user-images.githubusercontent.com/1567433/84966617-f30afa80-b0df-11ea-8f62-0abd95eea4ef.png" alt="pin edges" width="400px"/> -->
+
+
+Just to give you a taste of what these semantic APIs look like, here is an example of `pin()` which by far my favorite API in Align.
+
+```swift
+view.anchors.edges.pin(insets: 20, alignment: .center)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84931836-5cb7e400-b0a1-11ea-8342-ce76b151fcad.png" alt="pin edges with center alignmnet" width="400px"/>
+
+Not bad, huh? Barely any code, six constraints created covering one of the common UI use cases. And this is just one example. `Alignment` parameter in `pin()` is extremely powerful. It has two components: vertical and horizontal. It covers a lot of possible layouts that you'll might want to create.
+
+Let me give you a brief tour of some other APIs in Align.
+
+## Anchors
+
+### Core API
+
+You've already seen some of the Core APIs, but just to reiterate.
+
+```swift
+// Align two views along one of the edges
+a.anchors.leading.equal(b.anchors.leading)
+
+// Other options are available:
+// a.anchors.leading.greaterThanOrEqual(b.anchors.leading)
+// a.anchors.leading.greaterThanOrEqual(b.anchors.leading, constant: 10)
+
+// Set height to the given value (CGFloat)
+a.anchors.height.equal(30)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84966617-f30afa80-b0df-11ea-8f62-0abd95eea4ef.png" alt="pin edges" width="400px"/>
+
+> **Note**. Every view that you manipulate using Align has `translatesAutoresizingMaskIntoConstraints` set to `false`. Align also automatically activates all of the created constraints.
+>
+> Align has full test coverage. If you'd like to learn about which constraints (`NSLayoutConstraint`) Align creates each time you call one of its methods, test cases are a great place to start.
+{:.info}
+
+Align also allows you to offset and multiple anchors.
+
+```swift
+// Offset one of the anchors, creating a "virtual" anchor
+b.anchors.leading.equal(a.anchors.trailing + 20)
+
+// Set aspect ration for a view
+b.anchors.height.equal(a.anchors.width * 2)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84966337-4df02200-b0df-11ea-9bfe-e9c333cb09ef.png" alt="pin edges" width="400px"/>
+
+### Semantic API
+
+```swift
+// Set spacing between two views
+a.anchors.bottom.spacing(20, to: b.anchors.top)
+
+// Pin of the edges of the view to the superview
+a.anchors.trailing.pin(inset: 20)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84966505-b3441300-b0df-11ea-8c83-cd9436e09abd.png" alt="pin edges" width="400px"/>
+
+
+## Anchor Collections
+
+With Align, you can manipulate multiple edges at the same time, creating more than one constraint at a time. 
+
+### Edges
+
+`pin()` is probably the most powerful and flexible API in Align.
+
+```swift
+view.anchors.edges.pin(insets: 20)
+
+// Same as the following:
+view.anchors.edges.pin(
+    to: view.superview!
+    insets: EdgeInsets(top: 20, left: 20, bottom: 20, trailing: 20),
+    alignment: .fill
+)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84931360-b10e9400-b0a0-11ea-937b-eb4fbb97a6f7.png" alt="pin edges" width="400px"/>
+
+By default, `pin()` method pin the edges to the superview of the current view. However, you can select any target view or layout guide:
+
+```swift
+// Pin to superview
+view.anchors.edges.pin()
+
+// Pin to layout margins guide
+view.anchors.edges.pin(to: container.layoutMarginsGuide)
+
+// Pin to safe area
+view.anchors.edges.pin(to: container.safeAreaLayoutGuide)
+```
+
+> Align also provides a convenient way to access anchors of the layout guide: `view.anchors.safeArea.top`.
+{:.info}
+
+By default, `pin()` users `.fill` alignment. There are variety of other alignments available (81 if you combine all possible options).
+
+```swift
+view.anchors.edges.pin(insets: 20, alignment: .center)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84931836-5cb7e400-b0a1-11ea-8342-ce76b151fcad.png" alt="pin edges with center alignmnet" width="400px"/>
+
+You can create constraint along the given axis.
+
+```swift
+view.anchors.edges.pin(insets: 20, axis: .horizontal, alignment: .center)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84932039-af919b80-b0a1-11ea-9798-43a944f4b681.png" alt="pin edges with center alignmnet for horizontal axis" width="400px"/>
+
+
+Or pin the view to to a corner.
+
+```swift
+view.anchors.edges.pin(insets: 20, alignment: .topLeading)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84932173-e36cc100-b0a1-11ea-9a5d-b6381cde2df7.png" alt="pin edges with center alignmnet for horizontal axis" width="400px"/>
+
+You can create custom alignments (see `Alignment` type) by providing a vertical and horizontal component.
+
+```swift
+let alignment = Alignment(vertical: .center, horizontal: .leading) 
+anchors.edges.pin(insets: 20, alignment: alignment)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84932264-0b5c2480-b0a2-11ea-9574-d32a6de77fb7.png" alt="pin edges with center alignmnet for horizontal axis" width="400px"/>
+
+### Center
+
+```swift
+a.anchors.center.align()
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84965361-bc7fb080-b0dc-11ea-8353-389f05888470.png" alt="size equal" width="400px"/>
+
+### Size
+
+```swift
+a.anchors.size.equal(CGSize(width: 120, height: 40))
+```
+
+> `greaterThanEqual` and `lessThanOrEqual` options are also available
+
+<img src="https://user-images.githubusercontent.com/1567433/84965098-f7351900-b0db-11ea-9e22-09f017f6c730.png" alt="size equal" width="400px"/>
+
+```swift
+a.anchors.size.equal(b)
+```
+
+<img src="https://user-images.githubusercontent.com/1567433/84965233-54c96580-b0dc-11ea-8200-0e7741801432.png" alt="size equal other view" width="400px"/>
+
+## Advanced Stuff
+
+By default, Align automatically activates created constraints. Using `Constraints` API, constraints are activated all of the same time when you exit from the closure. It gives you a chance to change `priority` of the constraints.
+
+```swift
+Constraints(for: title, subtitle) { title, subtitle in
+    // Align one anchor with another
+    subtitle.top.spacing(10, to: title.bottom + 10)
+
+    // Manipulate dimensions
+    title.width.equal(100)
+
+    // Change a priority of constraints inside a group:
+    subtitle.bottom.pin().priority = UILayoutPriority(999)
+}
+```
+
+`Constraints` also give you an easy access to Align anchors (notice, there is no `.anchors` call in the example). And if you want Align to not activate constraints, there is an option for that:
+
+```swift
+Constraints(activate: false) {
+    // Create your constraints here
+}
+```
+
+## Final Thoughts
+
+I hope you are as excited as I am about Align 2. It has a powerful, easy to learn, and easily discoverable API. To give it a try, please visit the [Align repository](https://github.com/kean/Align).
+
