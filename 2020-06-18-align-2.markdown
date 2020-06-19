@@ -175,7 +175,7 @@ view.anchors.edges.pin(to: container.safeAreaLayoutGuide)
 > Align also provides a convenient way to access anchors of the layout guide: `view.anchors.safeArea.top`.
 {:.info}
 
-By default, `pin()` users `.fill` alignment. There are variety of other alignments available (81 if you combine all possible options).
+By default, `pin()` users `.fill` alignment. There are variety of other alignments available.
 
 ```swift
 view.anchors.edges.pin(insets: 20, alignment: .center)
