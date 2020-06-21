@@ -86,6 +86,12 @@ view.anchors.edges.pin(insets: 20, alignment: .center)
 
 Not bad, huh? Barely any code, six constraints created covering one of the common UI use cases. And this is just one example. `Alignment` parameter in `pin()` is extremely powerful. It has two components: vertical and horizontal. It covers a lot of possible layouts that you'll might want to create.
 
+There are multiple ways to learn Align APIs. The APIs surface is small and easily discoverable using Xcode code completion. The [README](https://github.com/kean/Align) consains an illustrated guide. There is even a <a href="https://github.com/kean/Align/files/4809887/align-cheat-sheet.pdf">cheat sheet</a> available.
+
+<a href="https://github.com/kean/Align/files/4809887/align-cheat-sheet.pdf">
+<img alt="Align cheat sheet" class="Screenshot Any-responsiveCard" src="/images/posts/align/align-cheat-sheet.png">
+</a>
+
 Let me give you a brief tour of some other APIs in Align.
 
 ## Anchors
