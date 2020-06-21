@@ -67,11 +67,13 @@ The other problem with this design is that if you try to generalize it, the impl
 
 I also quickly realized that this approach would hurt discoverability using Xcode code completion. And one of my primary goals was to make an API so clear that it would be easy to discover all of its features just using code completion. So this was a non-starter to me.
 
-I scraped the idea of augmenting the existing methods and decided to introduce new, *semantic* APIs. Align APIs fit in the following quadrant.
+I scraped the idea of augmenting the existing methods and decided to split the API into two parts: **Core** and **Semantic**. Align APIs fit in the following quadrant.
 
 <a href="https://github.com/kean/Align">
 <img alt="Align, logo" class="Screenshot Any-responsiveCard" src="/images/posts/align_quadrant.png">
 </a>
+
+The idea is to make **Core API** as dumb and as close to constraints as possible. **Semantic API**, on the other hand, is a high-level API that focuses on your goals rather than the constraints. This gives me freedom to choose method names and arguments that fit my needs.
 
 <!-- <img class="Screenshot" src="https://user-images.githubusercontent.com/1567433/84966617-f30afa80-b0df-11ea-8f62-0abd95eea4ef.png" alt="pin edges" width="400px"/> -->
 
