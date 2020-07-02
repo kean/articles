@@ -234,7 +234,7 @@ final class SearchViewModel: ObservableObject {
 }
 ```
 
-Where did `@Published` go? Turns out, the views in SwiftUI don't subscribe to the publishers projected by `@Published`. All they need is `objectWillChange` publisher from `ObservableObject`.
+Where did `@Published` go? Turns out, the views in SwiftUI don't subscribe to the individual publishers projected by `@Published`. All they need is `objectWillChange` publisher from `ObservableObject`.
 
 The final piece of the puzzle is `@ObservedObject` property wrapper. All it does is subscribe to an `ObservableObject` automatically invalidating the view when it changes. That's it! No magic involved. Except for one small thing... How does SwiftUI know when to update the view?
 
@@ -552,7 +552,7 @@ I missed `@`. I'm glad SwiftUI finally brings it back, and in a big way. On a mo
 
 Most of the current complaints about SwiftUI come with regards to its incomplete component library. There are some glaring gaps there. SwiftUI in its current form seems more like a proof of concept which goal is to show that Apple's platonic ideal of a UI framework can be brought to reality. It has the best syntax, the best data flow, and the best layout system. The only thing that is lacking is the component library and it's surely just a matter of time when it becomes complete like UIKit (or hopefully better than UIKit!).
 
-> **Update (Jul 1, 2020)**. On WWDC20, Apple introduced an enormous number of changes to SwiftUI. Fortunately, most of them are addictive and don't invalidate anything that I covered in this article, or the [layout system overview](/post/post/swiftui-layout-system). There are some new convenience data-related property wrappers too, such as [@SceneStorage](https://developer.apple.com/documentation/swiftui/scenestorage) and [@AppStorage](https://developer.apple.com/documentation/swiftui/appstorage). They, as well as the existing [@FetchRequest](https://developer.apple.com/documentation/swiftui/fetchrequest) property wrapper, are not as fundamental to SwiftUI, so I'm not covering them in this article.
+> **Update (Jul 1, 2020)**. On WWDC20, Apple introduced an enormous number of changes to SwiftUI. Fortunately, most of them are additive and don't invalidate anything that I covered in this article, or the [layout system overview](/post/post/swiftui-layout-system). There are some new convenience data-related property wrappers too, such as [@SceneStorage](https://developer.apple.com/documentation/swiftui/scenestorage) and [@AppStorage](https://developer.apple.com/documentation/swiftui/appstorage). They, as well as the existing [@FetchRequest](https://developer.apple.com/documentation/swiftui/fetchrequest) property wrapper, are not as fundamental to SwiftUI, so I'm not covering them in this article.
 
 It seems mind-boggling just how many language features were needed to make SwiftUI possible: reflection, complex generics system, property wrappers, function builders, opaque return types, dynamic member lookup. There is a lot to learn! Fortunately, if you ever used reactive programming and MVVM before, your investment was fully worth it. SwiftUI is the closest thing to it as you can get. This new direction for development for Apple platforms makes me excited for its future.
 
