@@ -234,7 +234,7 @@ final class SearchViewModel: ObservableObject {
 }
 ```
 
-Where did `@Published` go? Turns out, the views in SwiftUI don't subscribe to the individual publishers projected by `@Published`. All they need is `objectWillChange` publisher from `ObservableObject`.
+Where did `@Published` go? Turns out, the views in SwiftUI don't subscribe to the individual publishers projected by `@Published`[^4]. All they need is `objectWillChange` publisher from `ObservableObject`.
 
 The final piece of the puzzle is `@ObservedObject` property wrapper. All it does is subscribe to an `ObservableObject` automatically invalidating the view when it changes. That's it! No magic involved. Except for one small thing... How does SwiftUI know when to update the view?
 
@@ -573,5 +573,6 @@ It seems mind-boggling just how many language features were needed to make Swift
 [^1]: For simplicity, I'm exposing model objects (`Song`) from the view model. If you are closely following MVVM, you would typically want to to create a separate view model for each song instead.
 [^2]: Property Wrappers are not an exclusive feature of SwiftUI and can be introduced in ReactiveSwift. There is already a [pull request](https://github.com/ReactiveCocoa/ReactiveSwift/pull/762) with a proposed changed. It introduces a new `@Observable` property wrapper. In reality, I think it should completely replace the existing `Property` and `MutableProperty` types.
 [^3]: SwiftUI also closes the debate which is often found in [`RxSwift`](https://github.com/ReactiveX/RxSwift) community whether to make ViewModel pure (aka "pure transformation of inputs to outputs") or allow views to modify the ViewModels. The former sounds cleaner but it is impractical because it requires you to always create your ViewModels after you create a View. I think SwiftUI makes the right decision and goes with a more pragmatic and flexible approach which allows for "late binding" of ViewModels. 
+[^4]: "By default an `ObservableObject` synthesizes an objectWillChange publisher that emits the changed value before any of its `@Published` properties changes.", [Apple Developer Documentation: ObservableObject](https://developer.apple.com/documentation/combine/observableobject).
 
 </div>
