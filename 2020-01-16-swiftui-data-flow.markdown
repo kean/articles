@@ -10,22 +10,33 @@ permalink: /post/swiftui-data-flow
 uuid: c5358288-8c59-41e0-a790-521b52f89921
 ---
 
+<div class="UpdatesSections" markdown="1">
+**Updates**
+
+- Jul 1, 2020. Add @StateObject section. Expand @State section with more speculation about the render tree. Add @SceneStorage and @AppStorage.
+</div>
+
+
+What makes SwiftUI different from UIKit? For one, it's the *layout system*. I covered it in one of my [previous articles](/post/swiftui-layout-system). Another, and probably an even more dramatic change, is the *data flow*. 
+
 <blockquote class="quotation">
 <p>SwiftUI is the shortest path to a great app.</p>
 <a href="https://developer.apple.com/videos/play/wwdc2019/226/">WWDC 2019</a>
 </blockquote>
 
-What makes SwiftUI different from UIKit? For one, it's the *layout system*, I covered it in one of my [previous articles]({{ site.url }}/post/swiftui-layout-system). Another, probably an even more dramatic difference, is the *data flow*. 
-
 In UIKit, you have a lot of decisions to make. Are you going to observe changes to data to refresh the UI (aka *views as a function of state*) or update the UI after performing every update (aka *views as a sequence of events*)? Are you going to set-up bindings using your favorite reactive programming framework or use a target-action mechanism? SwiftUI is an opinionated framework, it has answers to all of these questions.
 
-SwiftUI provides a rich set of tools for propagating data changes across the app. This article will get you from zero to fully understanding how data flow works in SwiftUI, and to writing *gorgeous* SwiftUI code like [this](#full-listing-search).
+SwiftUI offers a declarative approach to managing data. As you compose a hierarchy of views, you also indicate data dependencies for the views. When the data changes, either due to an external event or because of an action taken by the user, SwiftUI automatically updates the affected parts of the interface. As a result, the framework automatically performs most of the work traditionally done by view controllers. This approach is often referred to as *unidirectional data flow*.
+
+<img class="Any-responsiveCard Screenshot" src="/images/posts/swiftui-experience/swiftui-data-flow.png">
+
+SwiftUI provides a rich set of tools for propagating data changes across the app. This article will get you from zero to fully understanding how data flow works in SwiftUI, and to writing *gorgeous* SwiftUI code like [this](#full-listing-search). Let's go over all of the new tools, see what they do and when its best to use them, and even speculate a bit about how they are implemented under the hood.
 
 {% include ad-hor.html %}
 
 ## @Published
 
-Let's go over all of the new tools. The first and most basic one is [`@Published`](https://developer.apple.com/documentation/combine/published). `@Published` is technically a part of the [Combine](https://developer.apple.com/documentation/combine) framework but you don't have to import it because SwiftUI has its `typealias`.
+The first and most basic one is [`@Published`](https://developer.apple.com/documentation/combine/published). `@Published` is technically a part of the [Combine](https://developer.apple.com/documentation/combine) framework but you don't have to import it because SwiftUI has its `typealias`.
 
 Let's say you are implementing a search functionality in a music player. You defined a view model which you are planning to populate with the search results[^1] and get the UI to update when the results do.
 
@@ -58,6 +69,7 @@ This works, but it's not very nice. You have to create[^2] a `MutableProperty` t
 > [**Property Wrappers**](https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID617)
 >
 > Property wrappers were introduced in Swift 5.1 to allow users to add additional behavior to properties, similar to what `lazy` modifier does. You can read more about property wrappers in the [documentation](https://docs.swift.org/swift-book/LanguageGuide/Properties.html#ID617), and the Swift Evolution [proposal](https://github.com/apple/swift-evolution/blob/master/proposals/0258-property-wrappers.md).
+{:.info}
 
 The beauty of `@Published` as a property wrapper is that it composes well with the existing Swift access control modifiers. By marking `songs` with `private(set)` we are able to restrict write access to the property.
 
@@ -411,9 +423,7 @@ Please note that this programming style of flatMap-ing over bindings does make s
 >
 >You can get a binding from a state with the `binding` property, or by using the `$` prefix operator.
 
-[`@State`](https://developer.apple.com/documentation/swiftui/state) is probably the most situational property wrapper of the bunch. You will only use for some transient state local to a particular view. You might use it more often if your views talk directly to the model, but as long as you are using MVVM (and I think you should), you won't find a lot of use cases for `@State`.
-
-One of the common scenarios for using `@State` is presenting some temporary screens like alerts. SwiftUI insists that you do it declaratively.
+One of the common scenarios for using [`@State`]((https://developer.apple.com/documentation/swiftui/state)) is presenting some temporary screens like alerts. SwiftUI wants you to do this declaratively.
 
 ```swift
 struct ContentView: View {
@@ -429,9 +439,21 @@ struct ContentView: View {
 }
 ```
 
-If you think about how `@State` might be implemented, you will notice that the way it works is almost identical to `@ObservedObject`. The only major difference is that *you* provide the storage for `@ObservedObject`, and in the case of `@State` SwiftUI automatically creates storage for you.
+`@State` might seem simple, but if you think about its lifetime and about how it might be implemented, you will notice that things are more complicated than it initially seems. `@State` is somewhat similar to `@ObservedObject` – it also automatically invalidates the view when the data changes. But while with `@ObservedObject`, *you* provide the storage, in the case of `@State`, SwiftUI automatically creates storage for you. How is SwiftUI able to do that?
 
-Again, we don't know how it is actually implemented, but we can easily extend the [`_ViewRendererHost`](#_ViewRendererHost) prototype to support `@State`. The moment SwiftUI creates an instance of `_ViewRendererHost` to represent a view in a view graph, it scans through the view's properties using reflection to find the ones which are `@State`. For each of the properties, it creates a storage that probably also implements `ObservableObject` protocol. It then subscribes to the changes to the newly created observable objects.
+View structs in SwiftUI are ephemeral. SwiftUI uses them to get the body to know what to render, and then discards the structs. But what happens to the `@State`? `@State` clearly has an identity, it is able to outline view structs. We don't know exactly how SwiftUI manages the identity of the views that it renders, but you can make an educated guess that there are two separate hierarchies in SwiftUI:
+
+- A *data tree*: ephemeral hierarchy of view structs
+- A *render tree* where nodes have an identity and persist as long as the view is part of the visible view hierarchy
+
+When anything in a data tree changes, SwiftUI recomputes the state of the render tree. Each new generation of the data tree is diff-ed against the current state of what render tree is displaying on screen. SwiftUI applies the diff as efficiently as possible, adding and removing nodes from the render tree as needed.
+
+> Never make assumptions about the lifetime of view structs (structs conforming to [View](https://developer.apple.com/documentation/swiftui/view) protocol), and never make assumptions about when and how many times [body](https://developer.apple.com/documentation/swiftui/view/body-swift.property) gets called.
+{:.warning}
+
+So view structs don't have an identity, but nodes in a render tree do. And that's where the backing storage for your SwiftUI views is allocated. Again, this is just speculation, but it is the most likely explanation and it is similar to the ["reconciliation"](https://reactjs.org/docs/reconciliation.html) process used by React. In fact, we can easily extend the [`_ViewRendererHost`](#_ViewRendererHost) prototype to support `@State`.
+
+The moment SwiftUI creates an instance of `_ViewRendererHost` to represent a view in a view graph, it scans through the view's properties using reflection to find the ones which are `@State`. For each of the properties, it creates a storage that probably also implements `ObservableObject` protocol. It then subscribes to the changes to the newly created observable objects.
 
 In fact, if you use reflection to inspect what stored properties `@State` has, you can see it does have some reference-type `StoredLocation` type:
 
@@ -455,6 +477,29 @@ In fact, if you use reflection to inspect what stored properties `@State` has, y
 ```
 
 This implementation (WARNING: this is just speculation) also explains the rules behind how long SwiftUI persists the `@State`. The `@State` is held in memory until you remove the view from the view hierarchy. At this point, SwiftUI most likely destroys the respective `_ViewRendererHost` along with all of its subscriptions and storages for `@State`. But if you simply hide the view using [`hidden()`](https://developer.apple.com/documentation/swiftui/view/3278576-hidden), the state persists.
+
+## @StateObject
+
+One of the common mistakes that people make when using SwiftUI is making assumptions about the lifetime of `@ObservedObject`. The documentation clearly states that _you_ are responsible for managing this storage, not SwiftUI. SwiftUI offers no guarantees about whether it is even going to retain it.
+
+>  <br/>
+>   
+>     struct ArtistList: View {
+>         @ObservedObject var store = ArtistStore()
+>     }
+>
+> SwiftUI will create a new instance of `ArtistStore` every time a view is re-created, and it discards of the view structs quickly after computing the `body`. It might lead to loss of data or to the very least, performance inefficiencies.
+{:.error}
+
+New on Apple platforms is [@StateObject](https://developer.apple.com/documentation/swiftui/stateobject) property wrapper. The wrapped value must be an [observable object](https://developer.apple.com/documentation/combine/observableobject). `@StateObject` observed the changes to the wrapped object, similar to `@ObservedObject`. The key difference is that `@StateObject` manages the lifetime of the wrapped object for you. SwiftUI keeps the object alive for all lifetime of the view – same as `@State`.
+
+```swift
+struct ArtistList: View {
+    @StateObject private var store = ArtistStore()
+}
+```
+
+By using `@StateObject`, the store is instantiated only once per view, right before `body` runs. SwiftUI keeps the store around for the entire view lifecycle. You can pass the store deeper into the view hierarchy via `@ObservedObject`, `@Binding`, or `@EnvironmentObject`, just as you would expect
 
 ## @Environment
 
@@ -493,13 +538,13 @@ This is where Apple probably went a little bit too far with their idea of "the s
 
 ## Final Thoughts
 
-I've missed you, `@`. I'm glad SwiftUI finally brings you back, and in a big way. On a more serious note, I think data flow together with the [layout system]({{ site.url }}/post/post/swiftui-layout-system) is the strongest side of SwiftUI. Both systems are powerful, elegant, and robust.
+I've missed you, `@`. I'm glad SwiftUI finally brings you back, and in a big way. On a more serious note, I think data flow together with the [layout system](/post/post/swiftui-layout-system) is the strongest side of SwiftUI. Both systems are powerful, elegant, and robust.
 
 Most of the current complaints about SwiftUI come with regards to its incomplete component library. There are some glaring gaps there. I wish Apple was more clear in their communication. We've already been there in 2014 when Swift 1.0 was presented as a production-ready language (spoiler alert: it wasn’t). A similar thing is happening with SwiftUI.
 
 SwiftUI in its current form seems more like a proof of concept which goal is to show that Apple's platonic ideal of a UI framework can be brought to reality. It has the best syntax, the best data flow, and the best layout system. The only thing that is lacking is the component library and it's surely just a matter of time when it becomes complete like UIKit (or hopefully better than UIKit!).
 
-Some people also raised performance concerns regarding SwiftUI data flow. I don't necessarily share them. In my experience working on large apps using reactive programming frameworks, I haven't found this to be an issue. And SwiftUI has even more potential for optimization. Views are lightweight. When Apple finishes optimizing SwiftUI, I think you should be able to re-create the entire view graph of you application 60 times a second and the framework should be able to handle it. This might sound outlandish, but not to someone who has written a computer game before.
+> **Update (Jul 1, 2020)**. On WWDC20, Apple introduced an enormous number of changes to SwiftUI. Fortunately, most of them are addictive and don't invalidate anything that I covered in this article, or the [layout system overview](/post/post/swiftui-layout-system). There are some new convenience data-related property wrappers too, such as [@SceneStorage](https://developer.apple.com/documentation/swiftui/scenestorage) and [@AppStorage](https://developer.apple.com/documentation/swiftui/appstorage). They, as well as the existing [@FetchRequest](https://developer.apple.com/documentation/swiftui/fetchrequest) property wrapper, are not as fundamental to SwiftUI, so I'm not covering them in this article.
 
 It seems mind-boggling just how many language features were needed to make SwiftUI possible: reflection, complex generics system, property wrappers, function builders, opaque return types, dynamic member lookup. There is a lot to learn! Fortunately, if you ever used reactive programming and MVVM before, your investment was fully worth it. SwiftUI is the closest thing to it as you can get. This new direction for development for Apple platforms makes me excited for its future.
 
@@ -508,6 +553,8 @@ It seems mind-boggling just how many language features were needed to make Swift
 ## References
 
 - WWDC 2019, [**Data Flow Through SwiftUI**](https://developer.apple.com/videos/play/wwdc2019/226/)
+- WWDC 2020, [**Data Essentials in SwiftUI**](https://developer.apple.com/videos/play/wwdc2020/10040/)
+- Apple Documentation, [**SwiftUI: State and Data Flow**](https://developer.apple.com/documentation/swiftui/state-and-data-flow)
 - Swift Evolution, [**Dynamic Member Lookup**](https://github.com/apple/swift-evolution/blob/master/proposals/0252-keypath-dynamic-member-lookup.md)
 - Swift Evolution, [**Property Wrappers**](https://github.com/apple/swift-evolution/blob/master/proposals/0258-property-wrappers.md)
 
