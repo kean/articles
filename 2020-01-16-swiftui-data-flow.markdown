@@ -481,7 +481,7 @@ There are two separate hierarchies in SwiftUI:
 - A **view tree**, an ephemeral hierarchy of view structs that you create
 - A **render tree** managed by the system where nodes have an identity and persist as long as the view is part of the view hierarchy
 
-When there is a change in a *view tree*, SwiftUI recomputes the state of the render tree. Each new generation of the view tree is diff-ed against the current state of what render tree. SwiftUI applies the diff as efficiently as possible, adding and removing nodes from the render tree as needed.
+When there is a change in a *view tree*, SwiftUI recomputes the state of the render tree. Each new generation of the view tree is diff-ed against the current state of the render tree. SwiftUI applies the diff as efficiently as possible, adding and removing nodes from the render tree as needed.
 
 > Never make assumptions about the lifetime of view structs (structs conforming to [View](https://developer.apple.com/documentation/swiftui/view) protocol), and never make assumptions about when and how many times [body](https://developer.apple.com/documentation/swiftui/view/body-swift.property) gets called.
 {:.warning}
@@ -512,6 +512,14 @@ In fact, if you use reflection to inspect what stored properties `@State` has, y
 ```
 
 This explains the rules behind the lifetime of `@State` properties. The backing storage for `@State` properties is linked to the lifetime of the nodes in the render tree. It is held in memory until the view is removed from the view hierarchy. At this point, SwiftUI most likely destroys the respective `_ViewRendererHost` along with all of its subscriptions and storages for `@State`. But if you simply hide the view using [`hidden()`](https://developer.apple.com/documentation/swiftui/view/3278576-hidden), the state persists.
+
+The way `@StateObject` is implemented must be similar to `@State`. The key is `@autoclosure` in `@StateObject` initializer.
+
+```swift
+init(wrappedValue thunk: @autoclosure @escaping () -> ObjectType)
+```
+
+SwiftUI uses this initializer only once per view lifecycle. When a new view struct is created which linked to the existing view, SwiftUI doesn't call the initializer and instead injects the existing instance of the wrapped object.
 
 ## @Environment
 
