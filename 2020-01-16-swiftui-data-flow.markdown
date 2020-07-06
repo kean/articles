@@ -444,6 +444,8 @@ struct ArtistList: View {
 
 By using `@StateObject`, the store is instantiated only once per view, right before `body` runs. SwiftUI keeps the store around for the entire view lifecycle. You can pass the store deeper into the view hierarchy via `@ObservedObject`, `@Binding`, or `@EnvironmentObject`, just as you would expect.
 
+Should you use `@StateObject` everywhere instead of `@ObservedObject`? The [answer is no](https://twitter.com/luka_bernardi/status/1280224429637681152?s=20). Technically, it should work, but semantically these two primitives are different.
+
 ## @State
 
 When you fill that creating an `ObservableObject` is a bit too much for your use case, there is another tool called [`@State`]((https://developer.apple.com/documentation/swiftui/state)).
