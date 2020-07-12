@@ -16,7 +16,7 @@ Design and product teams are often focused on the product and are not necessaril
 
 {% include ad-hor.html %}
 
-It takes a special kind of geek to follow every little platform update, both from a developer and the design perspective. Fortunately, I am this geek. I watched the videos and prepared a <a href="/assets/wwdc20-summary.key.zip"><strong>WWDC20 Summary</strong></a> to make it easy to communicate all of the latest platform updates to your product and design teams.
+It takes a special kind of geek to follow every little platform update, both from a developer and the design perspective. Fortunately, I am this geek. I watched the videos and prepared a <a href="/assets/wwdc20-summary.key.zip"><strong>WWDC20 Summary</strong></a> (iPhone and iPad only) to make it easy to communicate all of the latest platform updates to your product and design teams.
 
 <a href="/assets/wwdc20-summary.key.zip">
 	<img alt="WWDC20 Summary Keynote screenshot" class="Screenshot Any-responsiveCard" src="/images/posts/wwdc20-summary/wwdc-summary.png">
