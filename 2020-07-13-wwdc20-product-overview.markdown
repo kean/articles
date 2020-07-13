@@ -24,8 +24,9 @@ It takes a special kind of geek to follow every little platform update, both fro
 
 <div class="References" markdown="1">
 
-## References
+## Downloads
 
-- [WWDC20 Session Videos](https://developer.apple.com/videos/)
+- [**WWDC20 Summary (Keynote)**](/assets/wwdc20-summary.key.zip)
+- [**WWDC20 Summary (PDF)**](/assets/wwdc20-summary.pdf)
 
 </div>
