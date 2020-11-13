@@ -68,7 +68,7 @@ There are three steps in SwiftUI layout process.
 
             <h4>1. Parent Proposes Size for Child</h4>
 
-            <p>First, the root view offers the text a proposed size – in this case, the entire safe area of the screen, represeted by an orange rectangle.</p>
+            <p>First, the root view offers the text a proposed size – in this case, the entire safe area of the screen, represented by an orange rectangle.</p>
             <br/>
 
             <h4>2. Child Chooses its Size</h4>
