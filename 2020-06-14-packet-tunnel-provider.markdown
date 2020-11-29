@@ -12,7 +12,7 @@ uuid: d3d4d400-70f3-40a1-a8d3-bcfe9df881f8
 
  With most of the groundwork covered in ["How Does VPN Work?"](/post/networking-101), let's go ahead and design a protocol.
 
- {% include ad-hor.html %}
+{% include ad-hor.html %}
 
 ## Designing a Protocol
 
