@@ -12,7 +12,7 @@ uuid: 3fc81326-49ae-4daf-894f-1a3d49f457c0
 
 How do you localizale a text label that has rich formatting?
 
-<img alt="Formatting Example" src="/images/posts/formatting/formatting.png">
+<img alt="Formatting Example" width="400px" src="/images/posts/formatting/formatting.png">
 
 Unforunately, there are not a lot of built-in options in the Apple SDKs, so people often end up using sub-optimal appoaches.
 
@@ -22,7 +22,7 @@ Unforunately, there are not a lot of built-in options in the Apple SDKs, so peop
 
 ### Concatenated Strings
 
-One of the common approaches is to split the text into several keys and then concatenate them later in code.
+One of the common approaches is to split the text into several keys and concatenate them later in code.
 
 ```swift
 // BAD EXAMPLE
@@ -107,18 +107,18 @@ If you search online, one of the common suggestions is to use HTML. You can eith
     performance than the <a href='%@'>previous generation.</a>";
 
 // Usage.swift
-let format =  NSLocalizedString("macbook.title")
+let format = NSLocalizedString("macbook.title")
 let string = String(format: format, "https://support.apple.com/kb/SP799")
 label.attributedText = try? NSAttributedString(
-	data: string.data(using: .utf8) ?? Data(),
-	options: [.documentType: NSAttributedString.DocumentType.html],
-	documentAttributes: nil
+    data: string.data(using: .utf8) ?? Data(),
+    options: [.documentType: NSAttributedString.DocumentType.html],
+    documentAttributes: nil
 )
 ```
 
 Now, this is better, but there are some issues that you should be aware of. First, it doesn't quite produce the result we want. By default, it uses WebKit text styles.
 
-<img alt="Formatting Example" class="Screenshot Any-responsiveCard" src="/images/posts/formatting/html.png">
+<img alt="Formatting Example" width="400px" src="/images/posts/formatting/html.png">
 
 One of the ways you can customize styles is by using CSS.
 
@@ -167,18 +167,21 @@ Now it matches the expected design. There are still at least four major issues y
 ```
 M1 delivers up to {
     NSColor = "kCGColorSpaceModelRGB 0 0 0 1 ";
-    NSFont = "<UICTFont: 0x7ff6c6c11d80> font-family: \".SFUI-Regular\"; font-weight: normal; font-style: normal; font-size: 15.00pt";
+    NSFont = "<UICTFont: 0x7ff6c6c11d80> font-family: \".SFUI-Regular\"; 
+        font-weight: normal; font-style: normal; font-size: 15.00pt";
     NSKern = 0;
-    NSParagraphStyle = "Alignment 4, LineSpacing 0, ParagraphSpacing 0, ParagraphSpacingBefore 0, HeadIndent 0, TailIndent 0, FirstLineHeadIndent 0, LineHeight 0/0, LineHeightMultiple 0, LineBreakMode 0, Tabs (\n), DefaultTabInterval 36, Blocks (\n), Lists (\n), BaseWritingDirection 0, HyphenationFactor 0, TighteningForTruncation NO, HeaderLevel 0 LineBreakStrategy 0";
+    NSParagraphStyle = "Alignment 4, LineSpacing 0, ParagraphSpacing 0,
+        ParagraphSpacingBefore 0, HeadIndent 0, TailIndent 0, FirstLineHeadIndent 0,
+        LineHeight 0/0, LineHeightMultiple 0, LineBreakMode 0, Tabs (\n),
+        DefaultTabInterval 36, Blocks (\n), Lists (\n), BaseWritingDirection 0,
+        HyphenationFactor 0, TighteningForTruncation NO, LineBreakStrategy 0";
     NSStrokeColor = "kCGColorSpaceModelRGB 0 0 0 1 ";
     NSStrokeWidth = 0;
 } ...
 ```
 
 2. It only supports a subset of HTML and it is not documented which
-
 3. It can hang or [crash](http://www.openradar.me/20978452) with certain inputs. I've experienced hanging. Without documentation, it's next to impossible to properly sanitize the input. So make sure you have full control over the HTML you are feeding it.
-
 4. If you think using HTML for this is overkill, you are right. It is very very slow. How slow? On iPhone 11 Pro parsing the HTML from this article takes 11 ms. You *will* lose frames if you use it.
 
 ## Proposed Solution
@@ -206,17 +209,23 @@ label.attributedText = NSAttributedString(formatting: text, style: style)
 
 Result using standard `UILabel`[^1]:
 
-<img alt="Formatting Example" src="/images/posts/formatting/formatting.png">
+<img alt="Formatting Example" width="400px" src="/images/posts/formatting/formatting.png">
 
-How fast is it? ~250 times faster than an HTML-based solution[^2].
+How fast is it? ~200 times faster than the HTML-based solution[^2].
 
-<img alt="Formatting Example" class="Screenshot Any-responsiveCard" src="/images/posts/formatting/performance.png">
+<img alt="Formatting Example" width="600px" class="Any-responsiveCard" src="/images/posts/formatting/performance.png">
+
+Typically I would be skeptical when I see a performance difference like this, but not in this case. If you profile and see what it's doing, there is WebView, DOM, CSS engine – all sorts of things just to apply two string attributes.
+
+<img alt="Formatting Example" width="600px" class="Any-responsiveCard" src="/images/posts/formatting/performance-2.png">
+
+[Formatting](https://github.com/kean/Formatting), on the other hand, only does two things: parses XML and directly applies the attributes.
 
 You can use [Formatting](https://github.com/kean/Formatting) as is or modify it to fit your needs. You have full control to determine which tags you want to support and in which way. You also get the performance that makes it viable to use it even in scroll views. No compromises.
 
 <div class="References" markdown="1">
 
-## References
+<h2 class="PostLink SectionTitle">References</h2>
 
 - [**10 Common Mistakes in Software Localization and How to Avoid Them**](https://phrase.com/blog/posts/10-common-mistakes-in-software-localization/)
 - [Hacking with Swift: **How to convert HTML to an NSAttributedString**](https://www.hackingwithswift.com/example-code/system/how-to-convert-html-to-an-nsattributedstring)
@@ -224,6 +233,6 @@ You can use [Formatting](https://github.com/kean/Formatting) as is or modify it 
 <div class="FootnotesSection" markdown="1">
 
 [^1]: To make links clickable, use `UITextView`.
-[^2]: Measured on iPhone 11 Pro using Xcode 12.2, -Os.
+[^2]: Measured on iPhone 11 Pro using Xcode 12.2, -Os. I also had to disable system logging by setting `OS_ACTIVITY_MODE` to `disable` because WebKit was spending half of its time doing logging. You can find the tests in the [repo](https://github.com/kean/Formatting).
 
 </div>
