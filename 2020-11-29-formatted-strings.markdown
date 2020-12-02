@@ -24,9 +24,10 @@ Unforunately, there are not a lot of built-in options in the Apple SDKs, so peop
 
 One of the common approaches is to split the text into several keys and concatenate them later in code.
 
-```swift
-// BAD EXAMPLE
+> BAD EXAMPLE
+{:.error}
 
+```swift
 // Localizable.strings
 "macbook.title-p1" = "M1 delivers up to ";
 "macbook.title-p2" = "2.8x faster ";
@@ -64,9 +65,10 @@ The granularity of keys will also cause confusion during the translation. Nobody
 
 Another (bad) approach is to use substring lookup to apply attributes.
 
-```swift
-// BAD EXAMPLE
+> BAD EXAMPLE
+{:.error}
 
+```swift
 // Localizable.strings
 "macbook.title" = "M1 delivers up to 2.8x faster processing
     performance than the previous generation";
@@ -161,7 +163,11 @@ public extension NSAttributedString {
 }
 ```
 
+
 Now it matches the expected design. There are still at least four major issues you should be aware of.
+
+> WARNING
+{:.warning}
 
 1. It produces attributes you might not necessarily want, such as `.kern`, `.paragraphStyle`, etc. You might want to remove those. 
 ```
