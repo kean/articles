@@ -229,8 +229,8 @@ Typically I would be skeptical when I see a performance difference like this, bu
 
 > If you are already sold, you should also be aware of the following caveats of using an XML parser:
 >
-> - You can't put arbitrary text in it. For example, `<`, `>`, and other reserved symbols need to be escaped.
-> - If you were previously using HTML, make sure to replace the following notation `&copy;` with characters supported in XML. You can simply put a character inline, e.g. `©`.
+> - You can't put arbitrary text in it. For example, `<`, `>`, and other reserved symbols need to be [escaped](https://www.advancedinstaller.com/user-guide/xml-escaped-chars.html).
+> - Some [character entities](https://www.w3schools.com/html/html_entities.asp) that are supported in HTML, such as `&copy;`, are not supported in XML. In case of "copyright" symbol, you can simply put `©` directly in your strings.
 > - XML is much more strict than HTML. If you were previously using HTML, the migration can be painful. For example, in XML you can't use ampersands (`&`) in attributes. This can be a problem for href links with multiple query parameters. They have to be replaced with `&amp;`. Strictly speaking, HTML also [doesn't allow](https://t.co/sVqlfH1TCz?amp=1) the use of `&`. But the browsers have workarounds. If you want another example, `href=https://example.com` is allowed in HTML, but in XML attributes must have quotes, `href="https://example.com"`
 {:.warning}
 
