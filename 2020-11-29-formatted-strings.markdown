@@ -227,6 +227,13 @@ Typically I would be skeptical when I see a performance difference like this, bu
 
 [Formatting](https://github.com/kean/Formatting), on the other hand, only does two things: parses XML and directly applies the attributes.
 
+> If you are already sold, you should also be aware of the following pitfals of usig XML parser:
+>
+> - You can't put arbitraty text in it. For example, `<`, `>`, and other reserved symbols need to be escaped.
+> - If you were previously using HTML, make sure to replace the following notation `&copy;` with characters supported in XML. You can simply put a character inline, e.g. `©`.
+> - Unlike HTML, you can't use ampersands (`&`) in XML attributes. This can be a problem for href links which have multiple query parameters. They have to be replaced with `&amp;`. Strickly speaking, HTML also [doesn't allow](https://t.co/sVqlfH1TCz?amp=1) the use of `&`. But the browsers have workaround. [Formatting](https://github.com/kean/Formatting) also does.
+{:.warning}
+
 You can use [Formatting](https://github.com/kean/Formatting) as is or modify it to fit your needs. You have full control to determine which tags you want to support and in which way. You also get the performance that makes it viable to use it even in scroll views. No compromises.
 
 <div class="References" markdown="1">
