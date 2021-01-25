@@ -520,7 +520,7 @@ This and the following alignment (.trailing) is very similar to a [leading align
 
 The `.firstBaseline` and the `.lastBaseline` alignments only make sense for views like `UILabel` which has some content with actual baselines (like text).
 
-This alignment is again very similar to the previous ones. It uses an auxilary spacer, it connects spacer to the stack view, etc. The only constraints that stick out are new **UISV-text-width-disambiguation** constraints. This is quite surprising. There is no trace of this behavior neither in the [UIStackView documentation](https://developer.apple.com/reference/uikit/uistackview) not in headers. You can see what those constraints do, but why and when does `UIStackView` add those constraints remains mystery to me. Those constraints are not implemented in [Arranged](https://github.com/kean/Arranged) for the above reasons.
+The set of constraints is similar to the previous scenario: it uses an auxiliary spacer, connects the spacer to the stack view, etc. But there is one discrepancy – **UISV-text-width-disambiguation** constraints. Without these constraints, the layout would be ambiguous – the layout system won't be able to decide which text container to prioritize. I would say that this is a user error, and it looks like Apple decided to automatically correct it to produce a layout that's not completely broken. But there is no trace of this behavior neither in the [UIStackView documentation](https://developer.apple.com/reference/uikit/uistackview) not in headers, and because of that, I decided not to implement these constraints in [Arranged](https://github.com/kean/Arranged).
 
 <a name="UIStackViewAlignment.lastBaseline"></a>
 
