@@ -10,6 +10,10 @@ permalink: /post/nuke-9
 uuid: 3f0ab615-9905-4fb9-9480-0ffe1952422a
 ---
 
+<img alt="Nuke 9.3 logo" src="{{ site.url }}/images/posts/nuke9/logo.png">
+
+<br/>
+
 [Nuke 9](https://github.com/kean/Nuke/releases/tag/9.0.0) is a culmination of *five years* of development. The project started soon after Swift release, as a continuation of [DFImageManager](https://github.com/kean/DFImageManager), an Objective-C image loading framework[^1]. I put a lot of effort and care into each and every iteration of Nuke, but Nuke 9 feels special.
 
 {% include ad-hor.html %}
@@ -163,6 +167,9 @@ How does Nuke achieve its performance? It's not just one optimization, it's a wh
 - **Thread Confinement**. Nuke knows that `Nuke.loadImage()` family of methods only uses `ImageTask` on the main thread. It means that it can skip some synchronizations.
 
 These are just some examples of the optimization techniques used in Nuke. There are many more. Every new feature in Nuke is designed with performance in mind to make sure there are no performance regressions ever.
+
+> [Nuke 9.3.0](https://github.com/kean/Nuke/releases/tag/9.3.0-beta.1) also introduces some similar performance improvements to the work that Nuke does in the background. If you measure just Nuke code, it takes about **0.004 ms** (4 *micro*seconds) on the main thread per request and about **0.03 ms** (30 microseconds) overall, as measured on iPhone 11 Pro. Virtually unnoticeable.
+{:.info}
 
 ## Signposts
 
