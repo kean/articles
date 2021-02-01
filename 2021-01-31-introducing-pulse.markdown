@@ -33,7 +33,7 @@ I recorded a short demo to show Pulse in practice:
 Pulse is not an app. It's a framework with programmatic interfaces for everything. It consists of the following parts:
 
 - [**Pulse**](https://github.com/kean/Pulse), a logging system with structured persistent storage that implements [SwiftLog](https://github.com/apple/swift-log) protocol
-- [**PulseUI**](https://github.com/kean/PulseUI), a SwiftUI-based framework with components that you can embed directly into your app, e.g. `ConsoleView`. This framework is private and is available for [**GitHub sponsors**](https://github.com/sponsors/kean).
+- [**PulseUI**](https://github.com/kean/PulseUI), a SwiftUI-based framework with components that you can embed directly into your app, e.g. `ConsoleView`. This framework is private and is available for [**GitHub sponsors**](https://github.com/sponsors/kean). It will be open sourced when there are enough sponsors behind it.
 - A macOS app based on **PulseUI**.
 
 Integrating **PulseUI** is extremely easy. You add a package to your app and configure it to record the events and metrics provided by `URLSession`. There are no certificates or VPN tunnels involved and it only sees your app's `URLSession` traffic. You can show a `PulseUI.ConsoleView` to see the requests and other logs in real-time.
