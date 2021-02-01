@@ -26,7 +26,7 @@ I recorded a short demo to show Pulse in practice:
 
 <br/>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/6zj5QQwWdXI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/17oQ9MF8Pq8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Pulse
 
