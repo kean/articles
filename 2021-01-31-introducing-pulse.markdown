@@ -12,9 +12,9 @@ uuid: a66c8ed5-555b-4755-a16a-45b7d71b9958
 
 On iOS, there is this friction when it comes to debugging apps. You can't inspect anything that happens behind the scenes unless you use special tools. You can't even see network requests.
 
-There are tools that can help. For example, [Wireshark](https://www.wireshark.org), [Charles](http://charlesproxy.com), [Proxyman](https://proxyman.io). But they are all kind of complicated. For example, to start using Proxyman you need to [install a root certificate](https://proxyman.io/blog/2019/06/How-I-use-Proxyman-to-see-HTTP-requests-responses-on-my-iPhone.html) on your iPhone. It basically performs a MITM attack to see your encrypted traffic. [Charles](http://charlesproxy.com) is closer to what I want. It has an iOS app that works by creating a local VPN tunnel. My understanding is that his contraption requires a custom implementation of a TCP/IP stack to work. I'm not sure I want that as part of my toolchain.
+There are tools that can help: [Wireshark](https://www.wireshark.org), [Proxyman](https://proxyman.io), [Charles](http://charlesproxy.com), etc. These are all phenomenal tools, but they are all kind of complicated. For example, to start using Proxyman you need to [install a root certificate](https://proxyman.io/blog/2019/06/How-I-use-Proxyman-to-see-HTTP-requests-responses-on-my-iPhone.html) on your iPhone. It basically performs a MITM attack to see your encrypted traffic. [Charles](http://charlesproxy.com) is closer to what I want. It has an iOS app that works by creating a local VPN tunnel. My understanding is has a requires a custom implementation of a TCP/IP stack to work.
 
-What I wished iOS apps had is a simple analog of [Safari Web Inspector](https://developer.apple.com/safari/tools/). So I built just that. Oh, and also a macOS app (SwiftUI 💪).
+What I wished iOS had is a simple analog of [Safari Web Inspector](https://developer.apple.com/safari/tools/). So I built just that. It also turned out to be an macOS app thanks to SwiftUI.
 
 <a href="https://github.com/kean/Pulse">
 <img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse-small.png">
