@@ -41,6 +41,8 @@ Integrating **PulseUI** is extremely easy. You add a package to your app and con
 > You can bind the presentation of the `ConsoleView` to a shake gesture. This also allows you to use `Cmd+Ctrl+Z` shortcut in a simulator to display it, convenient.
 {:.info}
 
+The main advantage of Pulse is that it is always there. You don't have to be in front of a computer to use it. And if a QA or a business person runs a nightly build and encounters an issue, all the information is recorded and can be shared using any native mechanism, such as AirDrop. It's super easy.
+
 ## SwiftUI
 
 The key to this project is SwiftUI. The speed with which I was able to develop it should not even be possible. With SwiftUI, you can program at a speed of thought (and as fast as you can type). Instant feedback is enlivening.
