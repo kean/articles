@@ -15,7 +15,7 @@ I had an idea how to improve the logging experience on iOS. I wanted a way to qu
 It took me a few weekends to finish the project. It is called [Pulse](https://github.com/kean/Pulse) and it is available for my [GitHub sponsors](https://github.com/sponsors/kean).
 
 <a href="https://github.com/kean/Pulse">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse-small.jpg">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse-small.png">
 </a>
 
 SwiftUI is great in [theory]({{ site.url }}/post/swiftui-layout-system). It looks fantastic on slides. But how good is the experience of using SwiftUI? Were it able to deliver on its promises? How much code were I able to reuse? You can learn about it in this post.
