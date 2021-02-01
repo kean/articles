@@ -75,4 +75,4 @@ And even support for Dark Mode.
 
 ## Conclusion
 
-I have a massive backlog for this project, but I'm already extremely happy with the results. It's an absolute pleasure to use. If you want to try it and support the project, please join to [GitHub sponsors](https://github.com/sponsors/kean).
+I have a massive backlog for this project, but I'm already extremely happy with the results. It's an absolute pleasure to use. If you want to try it and support the project, please join to [GitHub sponsors](https://github.com/sponsors/kean). I have a massive backlog for this project, one of the goals is to build wireless debugging.
