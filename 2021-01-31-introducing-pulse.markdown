@@ -47,7 +47,7 @@ The main advantage of Pulse is that it is always there. You don't have to be in 
 
 The key to this project is SwiftUI. The speed with which I was able to develop it should not even be possible. With SwiftUI, you can program at a speed of thought (and as fast as you can type). Instant feedback is enlivening.
 
-I used MVVM for this project. And I'm glad I did. When the time came to implement the "Share" feature to a network request, I was simply able to use the same ViewModels that I created for SwiftUI, but instead of binding them to Views, I printed all the outputs as text with no changes to ViewModels themselves. This is MVVM at its best.
+I also used MVVM. And I'm glad I did. When the time came to implement the "Share" feature, I was simply able to use the same ViewModels that I created for SwiftUI views, but instead of binding them to Views, I was able to simply print all the outputs as text. No changes to the ViewModels themselves. This is MVVM at its best.
 
 ## Screenshots
 
@@ -77,4 +77,4 @@ And even support for Dark Mode.
 
 ## Conclusion
 
-I have a massive backlog for this project, but I'm already extremely happy with the results. It's an absolute pleasure to use. If you want to try it and support the project, please join to [GitHub sponsors](https://github.com/sponsors/kean). I have a massive backlog for this project, one of the goals is to build wireless debugging.
+I have a massive backlog for this project, but I'm already extremely happy with the results. If you want to try it and support the project, please join to [GitHub sponsors](https://github.com/sponsors/kean). The plan is to open source it once there is enough sponsors.
