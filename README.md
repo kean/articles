@@ -1,6 +1,6 @@
 # Articles
 
-Articles for [kean.github.io](https://kean.github.io).
+Articles for [kean.blog](https://kean.blog).
 
 ## License
 
