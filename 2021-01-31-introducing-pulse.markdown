@@ -14,6 +14,8 @@ On iOS, there is this friction when it comes to debugging apps. You can't inspec
 
 There are tools that can help: [Wireshark](https://www.wireshark.org), [Proxyman](https://proxyman.io), [Charles](http://charlesproxy.com), etc. These are all phenomenal tools, but they are all kind of complicated. For example, to start using Proxyman you need to [install a root certificate](https://proxyman.io/blog/2019/06/How-I-use-Proxyman-to-see-HTTP-requests-responses-on-my-iPhone.html) on your iPhone. It basically performs a MITM attack to see your encrypted traffic. [Charles](http://charlesproxy.com) is closer to what I want. It has an iOS app that works by creating a local VPN tunnel. But you can't inject IP packets into network interfaces on iOS, these APIs require privileged access. So it must have an entire TCP/IP stack re-implemented inside. I don't fully trust it to work and not interfere with your network connections.
 
+*Update*: Proxyman released a [Proxyman iOS Beta](https://twitter.com/proxyman_app/status/1357314980471656450?s=20) right after this post, a great Charles alternative.
+
 What I wished iOS had is a simple analog of [Safari Web Inspector](https://developer.apple.com/safari/tools/). So I built just that. It also turned out to be a macOS app thanks to SwiftUI.
 
 <a href="https://github.com/kean/Pulse">
