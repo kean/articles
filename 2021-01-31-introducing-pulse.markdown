@@ -38,12 +38,14 @@ Pulse is not an app. It's a framework with programmatic interfaces for everythin
 - [**PulseUI**](https://github.com/kean/PulseUI), a SwiftUI-based framework with components that you can embed directly into your app, e.g. `ConsoleView`. This framework is private and is available for [**GitHub sponsors**](https://github.com/sponsors/kean). It will be open sourced when there are enough sponsors behind it.
 - A macOS app based on **PulseUI**.
 
-Integrating **PulseUI** is extremely easy. You add a package to your app and configure it to record the events and metrics provided by `URLSession`. There are no certificates or VPN tunnels involved and it only sees your app's `URLSession` traffic. You can show a `PulseUI.ConsoleView` to see the requests and other logs in real-time.
+Integrating **PulseUI** is easy. You add a package to your app and configure it to record the events and metrics provided by `URLSession`. There are no certificates or VPN tunnels involved and it only sees your app's `URLSession` traffic. You can show a `PulseUI.ConsoleView` to see the requests and other logs in real-time.
 
 > You can bind the presentation of the `ConsoleView` to a shake gesture. This also allows you to use `Cmd+Ctrl+Z` shortcut in a simulator to display it, convenient.
 {:.info}
 
-The main advantage of Pulse is that it is always there. You don't have to be in front of a computer to use it. And if a QA or a business person runs a nightly build and encounters an issue, all the information is recorded and can be shared using any native mechanism, such as AirDrop. It's super easy.
+The main advantage of Pulse is that it is always there and recording: logs, network events, metrics. And you don't have to be in front of a computer to use it. If a QA or a business person runs a nightly build and encounters an issue, all the information is recorded and can be shared using any native mechanism, such as AirDrop. It's super easy.
+
+I think the best way to think about Pulse is not as a network debugging tool but at as comprehensive logging system.
 
 ## SwiftUI
 
@@ -70,10 +72,6 @@ On iPad, it just works. I made some tiny adjustments, but for the most part, it 
 <br/>
 
 Thanks to SwiftUI, there is complete feature parity between platforms: iOS, tvOS, and even **macOS**.
-
-<img class="Screenshot" src="/images/posts/pulse/macos-light.png">
-
-And even support for Dark Mode.
 
 <img class="Screenshot" src="/images/posts/pulse/macos-dark.png">
 
