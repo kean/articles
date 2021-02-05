@@ -45,7 +45,7 @@ Integrating **PulseUI** is easy. You add a package to your app and configure it 
 
 The main advantage of Pulse is that it is always there and recording: logs, network events, metrics. And you don't have to be in front of a computer to use it. If a QA or a business person runs a nightly build and encounters an issue, all the information is recorded and can be shared using any native mechanism, such as AirDrop. It's super easy.
 
-I think the best way to think about Pulse is not as a network debugging tool but at as comprehensive logging system.
+I think the best way to think about Pulse is not as a network debugging tool but as a comprehensive logging system.
 
 ## SwiftUI
 
