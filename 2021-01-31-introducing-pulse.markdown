@@ -12,7 +12,7 @@ uuid: a66c8ed5-555b-4755-a16a-45b7d71b9958
 
 On iOS, there is this friction when it comes to debugging apps. You can't inspect anything that happens behind the scenes unless you use special tools. You can't even see network requests.
 
-There are tools that can help: [Wireshark](https://www.wireshark.org), [Proxyman](https://proxyman.io), [Charles](http://charlesproxy.com), etc. These are all phenomenal tools, but they are all kind of complicated. For example, to start using Proxyman you need to [install a root certificate](https://proxyman.io/blog/2019/06/How-I-use-Proxyman-to-see-HTTP-requests-responses-on-my-iPhone.html) on your iPhone. It basically performs a MITM attack to see your encrypted traffic. [Charles](http://charlesproxy.com) is closer to what I want. It has an iOS app that works by creating a local VPN tunnel. But you can't inject IP packets into network interfaces on iOS, these APIs require privileged access. So it must have an entire TCP/IP stack re-implemented inside. I don't fully trust it to work and not interfere with your network connections.
+There are tools that can help: [Wireshark](https://www.wireshark.org), [Proxyman](https://proxyman.io), [Charles](http://charlesproxy.com), etc. These are all phenomenal tools, but they are all kind of complicated. For example, to start using Proxyman you need to [install a root certificate](https://proxyman.io/blog/2019/06/How-I-use-Proxyman-to-see-HTTP-requests-responses-on-my-iPhone.html) on your iPhone. It basically performs a MITM attack to see your encrypted traffic. [Charles](http://charlesproxy.com) is closer to what I want. It has an iOS app that works by creating a local VPN tunnel. But you can't inject IP packets into network interfaces on iOS, these APIs require privileged access. My understanding is that is has a TCP/IP stack re-implemented inside.
 
 *Update*: Proxyman released a [Proxyman iOS Beta](https://twitter.com/proxyman_app/status/1357314980471656450?s=20) right after this post, a great Charles alternative.
 
@@ -43,7 +43,7 @@ Integrating **PulseUI** is easy. You add a package to your app and configure it 
 > You can bind the presentation of the `ConsoleView` to a shake gesture. This also allows you to use `Cmd+Ctrl+Z` shortcut in a simulator to display it, convenient.
 {:.info}
 
-The main advantage of Pulse is that it is always there and recording: logs, network events, metrics. And you don't have to be in front of a computer to use it. If a QA or a business person runs a nightly build and encounters an issue, all the information is recorded and can be shared using any native mechanism, such as AirDrop. It's super easy.
+The main advantage of Pulse is that it is always there and recording: logs, network events, metrics. And you don't have to be in front of a computer to use it. If a team member encounters an issue in one of your builds, all the information is recorded and can be shared using any native mechanism, such as AirDrop. It's super easy.
 
 I think the best way to think about Pulse is not as a network debugging tool but as a comprehensive logging system.
 
