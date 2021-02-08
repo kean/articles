@@ -18,17 +18,10 @@ There are tools that can help: [Wireshark](https://www.wireshark.org), [Proxyman
 
 What I wished iOS had is a simple analog of [Safari Web Inspector](https://developer.apple.com/safari/tools/). So I built just that. It also turned out to be a macOS app thanks to SwiftUI.
 
-<a href="https://github.com/kean/Pulse">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse-small.png">
-</a>
-
-## Demo
-
-I recorded a short demo to show Pulse in practice:
-
-<br/>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/17oQ9MF8Pq8" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-01-console.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-03-share.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-04-platforms.png">
 
 ## Pulse
 
@@ -52,28 +45,6 @@ I think the best way to think about Pulse is not as a network debugging tool but
 The key to this project is SwiftUI. The speed with which I was able to develop it should not even be possible. With SwiftUI, you can program at a speed of thought (and as fast as you can type). Instant feedback is enlivening.
 
 I also used MVVM. And I'm glad I did. When the time came to implement the "Share" feature, I was simply able to use the same ViewModels that I created for SwiftUI views, but instead of binding them to Views, I was able to simply print all the outputs as text. No changes to the ViewModels themselves. This is MVVM at its best.
-
-## Screenshots
-
-And here are a couple of screenshots to boot.
-
-<img width="325px" src="/images/posts/pulse/ios-summary.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img width="325px" src="/images/posts/pulse/ios-headers.png">
-
-All these screens are built exclusively with SwiftUI. The only exception is a JSON viewer which I build using `UITextView`/`NSTextView` and attributed strings.
-
-<img width="325px" src="/images/posts/pulse/ios-json-viewer.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img width="325px" src="/images/posts/pulse/ios-network-inspector.png">
-
-<br/>
-
-On iPad, it just works. I made some tiny adjustments, but for the most part, it was looking good the first time I ever opened it on a bigger iPad screen.
-
-<img src="/images/posts/pulse/ipad-charts.png">
-
-<br/>
-
-Thanks to SwiftUI, there is complete feature parity between platforms: iOS, tvOS, and even **macOS**.
-
-<img class="Screenshot" src="/images/posts/pulse/macos-dark.png">
 
 ## Conclusion
 
