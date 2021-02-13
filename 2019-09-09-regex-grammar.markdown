@@ -166,7 +166,7 @@ This is the first example where we used recursion. When a parser encounters an o
 
 > Note: not all parse generator support *indirect* recursion like we used here.
 
-I think you get the idea. You can find a complete regex [grammar](https://github.com/kean/Regex/blob/master/grammar.ebnf) along with a [railroad diagram](https://kean.github.io/Regex/grammar-diagram.xhtml) on GitHub.
+I think you get the idea. You can find a complete regex [grammar](https://github.com/kean/Regex/blob/master/grammar.ebnf) along with a [railroad diagram]({{ site.url }}/images/misc/grammar-diagram.xhtml) on GitHub.
 
 ## What's Next
 
