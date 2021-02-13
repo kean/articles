@@ -10,7 +10,7 @@ permalink: /post/xcframeworks-caveats
 uuid: d99799b5-aa4b-4403-8b65-aa639db7dc10
 ---
 
-This post is about how one bad assumption about XCFrameworks turned into multiple hours of needless effort. I wanted to quickly share my experience so others could avoid falling into the same pitfalls.
+This post is about how one bad assumption about XCFrameworks turned into multiple hours of needless effort. I wanted to quickly share my experience so others could avoid falling into the same pitfall. In retrospect, the problem seems obvious, but it wasn't when I just encountered it. 
 
 ## Problem Statement
 
@@ -71,7 +71,7 @@ This is where I encountered the first red flag: there was no way to specify a de
 
 <img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/04.png">
 
-But unfortunately, this picture is from the very end (`38:16`) of the [WWDC video from 2019](https://developer.apple.com/videos/play/wwdc2019/416/) which reduces its chances of me finding it on Google quite dramatically. What I found instead was [this thread](https://forums.swift.org/t/swiftpm-binary-target-with-sub-dependencies/40197) on Swift Forums which explains a workaround on how to add sub-dependencies for binary targets using fake targets. I thought OK, so you are saying there is a chance.
+But unfortunately, this picture is from the very end (`38:16`) of the [WWDC video from 2019](https://developer.apple.com/videos/play/wwdc2019/416/) which reduced its chances of me finding it on Google quite dramatically. What I found instead was [this thread](https://forums.swift.org/t/swiftpm-binary-target-with-sub-dependencies/40197) on Swift Forums which explains a workaround on how to add sub-dependencies for binary targets using fake targets which put me on a sidetrack[^1]. I thought OK, so you are saying there is a chance.
 
 I reworked the package manifest, now was the time to try and integrate it into the app. Xcode installed the package without any complaints and I was able to run the app. The run failed.
 
@@ -89,7 +89,7 @@ dyld: Symbol not found: _$s9PulseCore18NetworkLoggerEventO12taskDidStartyA2C04Ta
 
 ### Library Evolution
 
-The problem has to do with [Library Evolution](https://swift.org/blog/library-evolution/) (or lack of it). The way library evolution work is by generating a `.swiftmodule` folder for your framework.
+My understanding, and I might be wrong here, is that the problem has to do with [Library Evolution](https://swift.org/blog/library-evolution/) (or the lack thereof it). The way library evolution work is by generating a `.swiftmodule` folder for your framework.
 
 <img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/05.png">
 
@@ -126,7 +126,7 @@ These are a lot of intricacies when it comes to `.swiftinterface` but the main t
 - Xcode doesn't generate `.swiftinterface` for Swift packages, even linked dynamically as frameworks
 - Without library evolution, an XCFramework can't reference symbols from a framework built from a source Swift package
 
-It looks like we are almost there. For the sake of the experiment, I even tried combining different source-compatible versions of `Pulse.xcframework` and `PulseUI.xcframework` in a test app and it worked perfectly. I'm not entirely sure what's stopping Xcode from realizing that a binary dependency has a source dependency and compiling a source dependency with library evolution support enabled.
+But it looks like we are almost there with the tooling. For the sake of the experiment, I even tried combining different source-compatible versions of `Pulse.xcframework` and `PulseUI.xcframework` built at different times in the test app and it worked perfectly. I'm not entirely sure what's stopping Xcode from realizing that a binary dependency has a source dependency and compiling the source dependency with library evolution support enabled.
 
 ## Final Solution
 
@@ -140,11 +140,11 @@ What I ended up doing eventually is rewriting the framework so that there are no
 
 <img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/03.png">
 
-With this approach, I was finally able to ship my frameworks[^1]. As a final test, I uploaded the app with the frameworks to TestFlight.
+With this approach, I was finally able to ship my frameworks[^2]. As a final test, I uploaded the app with the frameworks to TestFlight.
 
 If I were more diligent, I would've learned about the limitations before starting my work. I'm now thinking, could Xcode do something to at least communicate the problem early? It couldn't when I was writing a manifest, initially the package dependency was in a different repo. But it could probably throw a more user-friendly error during dependency resolution saying that the configuration isn't supported.
 
-But the main thing that even with a few hiccups I was able to achieve what I needed and Pulse could now be distributed which I'm happy with.
+The main thing is that with a few hiccups but I was able to achieve what I needed and Pulse could now be distributed.
 
 <div class="References" markdown="1">
 
@@ -154,10 +154,11 @@ But the main thing that even with a few hiccups I was able to achieve what I nee
 - [**swift-create-xcframework**](https://github.com/marketplace/actions/swift-create-xcframework) (GitHub Action)
 - [**create_xcframework**](https://github.com/bielikb/fastlane-plugin-create_xcframework) (Fastlane plugin)
 - [**WWDC 2019: Binary Frameworks in Swift**](https://developer.apple.com/videos/play/wwdc2019/416/)
-- [**Library Evolution](https://swift.org/blog/library-evolution/)
+- [**Library Evolution**](https://swift.org/blog/library-evolution/)
 
 <div class="FootnotesSection" markdown="1">
 
-[^1]: Unfortunately, there was another small hiccup after I made this (massive) change. When I added `PulseUI` and `Pulse` to my app, I assumed that `PulseCore` would be automatically added as a transitive dependency. It turned out not to be the case. It worked during deployment, my guess is that all the binaries produced from Swift packages are copied to the bundle during the deployment. But it failed during Archive. And it failed when I tried dragging an product to a simulator.
+[^1]: This solution works fine if your dependencies are also distributed as Swift binary frameworks, or Objective-C frameworks for that matter.
+[^2]: Unfortunately, there was another small hiccup after I made this (massive) change. When I added `PulseUI` and `Pulse` to my app, I assumed that `PulseCore` would be automatically added as a transitive dependency. It turned out not to be the case. It worked during deployment, my guess is that all the binaries produced from Swift packages are copied to the bundle during the deployment. But it failed during Archive. And it failed when I tried dragging an product to a simulator.
 
 </div>
