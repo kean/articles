@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "RxUI"
-subtitle: Applying SwiftUI ideas to improve DX of using RxSwift
+subtitle: Applying SwiftUI ideas to improve the developer experience of using RxSwift
 description: Applying SwiftUI ideas to RxSwift
 date: 2021-02-14 10:00:00 -0500
 category: programming
@@ -10,10 +10,9 @@ permalink: /post/rxui
 uuid: 6d873c89-a3cd-4173-a73b-cd6ba2a89e15
 ---
 
-I've been using SwiftUI quite a lot lately to build [Pulse](https://github.com/kean/Pulse) and loved many of the ideas behind it. So I was thinking, can you take the same ideas and implement them to RxSwift or ReactiveSwift? We use SwiftUI and barely even think about low-level Combine. Why should it be different with RxSwift? I already spent a significant amount of time [investigating](https://kean.blog/post/swiftui-data-flow) how Swift Data Flow works under the hood before so I had a good idea of what I needed to do to make it work. So I built a quick proof-of-concept called [**RxUI**](https://github.com/kean/RxUI).
+I've been using SwiftUI a lot lately to build [Pulse](https://github.com/kean/Pulse) and loved many of the ideas behind it. So I was thinking, can we apply these ideas to the apps written with RxSwift or ReactiveSwift? SwiftUI also uses a reactive framework, Combine, for updating its views. But as a user, you don't even think about Combine when writing SwiftUI code. Why should it be different with RxSwift?
 
-> **RxUI is a proof-of-concept**
-{:.warning}
+I already spent a significant amount of time [investigating](https://kean.blog/post/swiftui-data-flow) how Swift Data Flow works under the hood last year, so I had a good idea of what I needed to do to make it work. I built a quick proof-of-concept project called [RxUI](https://github.com/kean/RxUI) to demonstrate this different way of using RxSwift. It especially suits folk who prefer to use unidirectional view models.
 
 ## DX
 
@@ -35,7 +34,7 @@ final class LoginViewModel: RxObservableObject {
     @RxPublished var password = ""
     @RxPublished private(set) var isLoading = false
 
-    var loginButtonTitle: String {
+    var title: String {
         "Welcome, \(email)"
     }
 
@@ -58,7 +57,7 @@ final class LoginViewModel: RxObservableObject {
 
 Each `RxObservableObject` has an `objectWillChange` relay. The relay is generated automatically and is automatically bound to all properties marked with `@RxPublished` property wrapper. It all happens in runtime using reflection and associated objects.
 
-You probably already noticed one of the major advantages of `RxUI` compared to a typical `RxSwift` view model: you can't even see any of the reactive code! `RxUi` allows you to express your business logic in a natural way using plain Swift properties and methods. This makes it easier to write, read, and, more importantly, debug. Forget about `CombineLatest` monstrosities.
+You probably already noticed one of the major advantages of `RxUI` compared to a typical `RxSwift` view model: you can't even see any of the reactive code! `RxUI` allows you to express your business logic in a natural way using plain Swift properties and methods. This makes it easier to write, read, and, more importantly, debug code.
 
 ### RxView
 
@@ -85,14 +84,14 @@ final class LoginViewController: UIViewController, RxView {
     // Called automatically when model changes, but no more frequently than
     // once per render cycle.
     func refreshView() {
-        titleLabel.text = model.loginButtonTitle
+        titleLabel.text = model.title
         model.isLoading ? spinner.startAnimating() : spinner.stopAnimating()
         loginButton.isEnabled = model.isLoginButtonEnabled
     }
 }
 ```
 
-When you call `bind()` method that accepts `RxObservableObject` it automatically registers for its updates (`objectWillChange` property). When the object is changed, `refreshView()` is called automatically. `RxView` hooks into the display system such that `refreshView` called only once per one render cycle.
+When you call `bind()`, the view automatically registers for the `RxObservableObject` updates delivered via `objectWillChange` property. When the object is changed, `refreshView()` is called automatically. `RxView` hooks into the display system such that `refreshView` called only once per one render cycle.
 
 Again, as you can see there is barely any explicit reactive code in this sample. If you are debugging, you can put a breakpoint right into `refreshView()` and directly query any of the view model properties.
 
@@ -100,7 +99,7 @@ Here is [a video](https://youtu.be/3_ul6DNbxDU) demonstrating that this is not j
 
 ## What Dark Sorcery is This?
 
-I'm afraid it's open source, so all the secrets are already revealed. Can you guess how much code was needed to make this proof-of-concept work? 90 lines of code. The key to the solution is reflection.
+I'm afraid it's open source, so all the secrets are already revealed. Can you guess how much code was needed to make this proof-of-concept work? 80 lines of code. The key to the solution is reflection.
 
 ### RxObservableObject
 
@@ -160,6 +159,7 @@ final class LoginViewModel: RxObservableObject {
     @RxPublished var email = ""
     @RxPublished var password = ""
     @RxPublished private(set) var isLoading = false
+}
 ```
 
 Currencty, if you change any of these properties, nothing happens yet. `objectWillChange` isn't going to fire. Now, how are we going to connect them, what are we going to do? Or, we are going to use a [super secret](https://forums.swift.org/t/property-wrappers-access-to-both-enclosing-self-and-wrapper-instance/32526) `_enclosingInstance` property wrapper subscript, right? No.
@@ -171,7 +171,7 @@ public extension RxObservableObject {
     var objectWillChange: PublishRelay<Void> {
         // ... return exsiting relay 
         registerPublishedProperties()
- 		// ... create new relay and associated it
+        // ... create new relay and associated it
     }
 }
 ```
@@ -217,7 +217,7 @@ The naive approach is easy. All you need to do is subscribe to `objectWillChange
 ```swift
 public extension RxView where Self: UIViewController {
     func bind(_ object: RxObservableObject) {
-    	refershView()
+        refershView()
         object.objectWillChange
             .subscribe(onNext: { [weak self] in self?.refershView() })
             .disposed(by: disposeBag)
@@ -225,7 +225,7 @@ public extension RxView where Self: UIViewController {
 }
 ```
 
-Well, not so fast. There are two problems with this approach. First, efficiency. We don't want `refreshView` to call on _every_ published property change, we want to coalesce updates. Second, a bit more severe, it crashes.
+Well, not so fast. There are two problems with this approach. First, efficiency. We don't want `refreshView` to be called on _every_ published property change, we want to coalesce updates. Second, a bit more severe, it crashes.
 
 ```swift
 final class LoginViewController: UIViewController, RxView {
@@ -241,35 +241,27 @@ If `refreshView()` gets called as a result of `isLoading` value change, Swift wi
 Why does `refreshView()` get called? To make sure the updated state is displayed during the next render cycle. So all we need to do hook into the render system, easy?
 
 ```swift
+// This is a slightly simplified version, the real one works with `UIView` too
 public extension RxView where Self: UIViewController {
     func bind(_ object: RxObservableObject) {
-        let emptyView = makeEmptyView(in: view)
+        let emptyView = UIView()
+        emptyView.isHidden = true
+        view.addSubview(emptyView)
 
         refreshView()
 
-    	object.objectWillChange
-        	.subscribe(onNext: { [weak emptyView] in emptyView?.setNeedsLayout() })
-        	.disposed(by: disposeBag)
+        object.objectWillChange
+            .subscribe(onNext: emptyView.setNeedsLayout)
+            .disposed(by: disposeBag)
 
-    	emptyView.rx.sentMessage(#selector(UIView.layoutSubviews))
-        	.subscribe(onNext: { [weak view] _ in view?.refreshView() })
-        	.disposed(by: disposeBag)
+        emptyView.rx.sentMessage(#selector(UIView.layoutSubviews))
+            .subscribe(onNext: { [weak self] _ in self?.refreshView() })
+            .disposed(by: disposeBag)
     }
-}
-
-private func makeEmptyView(in container: UIView) -> UIView {
-    if let emptyView = objc_getAssociatedObject(container, &emptyViewAssociatedKey) as? UIView {
-        return emptyView
-    }
-    let emptyView = UIView()
-    emptyView.isHidden = true
-    container.addSubview(emptyView)
-    objc_setAssociatedObject(container, &emptyViewAssociatedKey, emptyView, .OBJC_ASSOCIATION_RETAIN)
-    return emptyView
 }
 ```
 
-Now this is part of the solution that I'm not confident in and the reason I would like to reiterate that `RxUI` is a *proof-of-concept*.
+Now, this is part of the solution that I'm not confident in and the reason I would like to reiterate that `RxUI` is a *proof-of-concept*.
 
 The idea is to take advantage of the fact that `UIView.layoutSubviews` gets called automatically by UIKit prior to displaying a view. This is our chance to refresh the views properties.
 
@@ -280,7 +272,8 @@ One of the known disadvantages is that it introduces a window of time in which y
 `RxUI` was a fun exercise. I think it has potential due to how many DX improvements it offers compared to low-level Rx:
 
 - You can express your business logic in a natural way using plain Swift properties and methods
-- It makes it much easier to debug your views and view models
-- It's beginner-friendly. You don't need to learn `CombineLatest`, `withLatestFrom` and other complex stateful operators. One of the selling points of reactive frameworks is that they "eliminate state". That's not true. They hide the state from you making it harder to debug and reason about.
+- It makes it much easier to debug your views and view models. You can set breakpoints and query any of your view model state.
+- It’s beginner-friendly. You don’t need to learn `combineLatest`, `withLatestFrom` and other complex stateful operators to use it. You don't need `flatMap` to send a network request.
+- It is more efficient because you avoid creating massive observable chains
 
 I would like to reiterate that `RxUI` is a *proof-of-concept*, so please use it at your own risk.

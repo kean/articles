@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Formatted Localizable Strings
+title: Formatted Strings
 subtitle: Using XMLParser and NSAttributedString to add support for basic formatting in localizable strings
 description: Using XMLParser and NSAttributedString to add support for basic formatting in localizable strings
 date: 2020-11-29 9:00:00 -0400
