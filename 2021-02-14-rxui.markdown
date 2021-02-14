@@ -1,0 +1,286 @@
+---
+layout: post
+title: "RxUI"
+subtitle: Applying SwiftUI ideas to improve DX of using RxSwift
+description: Applying SwiftUI ideas to RxSwift
+date: 2021-02-14 10:00:00 -0500
+category: programming
+tags: programming
+permalink: /post/rxui
+uuid: 6d873c89-a3cd-4173-a73b-cd6ba2a89e15
+---
+
+I've been using SwiftUI quite a lot lately to build [Pulse](https://github.com/kean/Pulse) and loved many of the ideas behind it. So I was thinking, can you take the same ideas and implement them to RxSwift or ReactiveSwift? We use SwiftUI and barely even think about low-level Combine. Why should it be different with RxSwift? I already spent a significant amount of time [investigating](https://kean.blog/post/swiftui-data-flow) how Swift Data Flow works under the hood before so I had a good idea of what I needed to do to make it work. So I built a quick proof-of-concept called [**RxUI**](https://github.com/kean/RxUI).
+
+> **RxUI is a proof-of-concept**
+{:.warning}
+
+## DX
+
+I would first like to demonstrate RxUI from the developer experience. There are three major components provided by RxUI which directly map to the respective SwiftUI concepts:
+
+- `RxObservableObject`
+- `RxPublished`
+- `RxView`
+
+If you are familiar with SwiftUI, you probably already know how it's going to go.
+
+### RxObservableObject
+
+You can think of `RxObservableObject` and `RxPublished` as analogs of SwiftUI `ObservableObject` and `Published`.
+
+```swift
+final class LoginViewModel: RxObservableObject {
+    @RxPublished var email = ""
+    @RxPublished var password = ""
+    @RxPublished private(set) var isLoading = false
+
+    var loginButtonTitle: String {
+        "Welcome, \(email)"
+    }
+
+    var isLoginButtonEnabled: Bool {
+        isInputValid && !isLoading
+    }
+
+    private var isInputValid: Bool {
+        !email.isEmpty && !password.isEmpty
+    }
+
+    func login() {
+        isLoading = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
+            self.isLoading = false
+        }
+    }
+}
+```
+
+Each `RxObservableObject` has an `objectWillChange` relay. The relay is generated automatically and is automatically bound to all properties marked with `@RxPublished` property wrapper. It all happens in runtime using reflection and associated objects.
+
+You probably already noticed one of the major advantages of `RxUI` compared to a typical `RxSwift` view model: you can't even see any of the reactive code! `RxUi` allows you to express your business logic in a natural way using plain Swift properties and methods. This makes it easier to write, read, and, more importantly, debug. Forget about `CombineLatest` monstrosities.
+
+### RxView
+
+`RxView` is an analog of a SwiftUI `View`. There is one crucial difference. In `UIKit`, views are expensive, you can't simply recreate them each time. The is reflected in `RxView` design.
+
+```swift
+final class LoginViewController: UIViewController, RxView {
+    private let model = LoginViewModel()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // ... create view
+
+        disposeBag.insert(
+            emailTextField.rx.text.bind(to: model.$email),
+            passwordTextField.rx.text.bind(to: model.$password),
+            loginButton.rx.tap.subscribe(onNext: model.login)
+        )
+
+        bind(model) // Automatically registers for updates
+    }
+
+    // Called automatically when model changes, but no more frequently than
+    // once per render cycle.
+    func refreshView() {
+        titleLabel.text = model.loginButtonTitle
+        model.isLoading ? spinner.startAnimating() : spinner.stopAnimating()
+        loginButton.isEnabled = model.isLoginButtonEnabled
+    }
+}
+```
+
+When you call `bind()` method that accepts `RxObservableObject` it automatically registers for its updates (`objectWillChange` property). When the object is changed, `refreshView()` is called automatically. `RxView` hooks into the display system such that `refreshView` called only once per one render cycle.
+
+Again, as you can see there is barely any explicit reactive code in this sample. If you are debugging, you can put a breakpoint right into `refreshView()` and directly query any of the view model properties.
+
+Here is [a video](https://youtu.be/3_ul6DNbxDU) demonstrating that this is not just pseudocode, it works. You can find the demo project in [the repo](https://github.com/kean/RxUI).
+
+## What Dark Sorcery is This?
+
+I'm afraid it's open source, so all the secrets are already revealed. Can you guess how much code was needed to make this proof-of-concept work? 90 lines of code. The key to the solution is reflection.
+
+### RxObservableObject
+
+Let's start by solving the first problem. This is a definition of `RxObservableObject` protocol:
+
+```swift
+public protocol RxObservableObject: AnyObject {
+    var objectWillChange: PublishRelay<Void> { get }
+}
+```
+
+How to implement `objectWillChange` so that each class that conforms to this protocol has it auto-generated for them? This is easy, associated objects.
+
+```swift
+public extension RxObservableObject {
+    var objectWillChange: PublishRelay<Void> {
+        if let relay = objc_getAssociatedObject(self, &objectWillChangeAssociatedKey) as? PublishRelay<Void> {
+            return relay
+        }
+        let relay = PublishRelay<Void>()
+        // ... additional dark magic is hidden here and will reveal itself later ...
+        objc_setAssociatedObject(self, &objectWillChangeAssociatedKey, relay, .OBJC_ASSOCIATION_RETAIN)
+        return relay
+    }
+}
+```
+
+Now let's work on `RxPublished`. The implementation is trivial, here it is in its entirety:
+
+```swift
+@propertyWrapper
+public struct RxPublished<Value>: RxPublishedProtocol {
+    private let relay: BehaviorRelay<Value>
+    var publishedWillChange: Observable<Void> { relay.map { _ in () } }
+
+    public init(wrappedValue: Value) {
+        relay = .init(value: wrappedValue)
+    }
+
+    public var wrappedValue: Value {
+        set { relay.accept(newValue) }
+        get { relay.value }
+    }
+
+    public var projectedValue: BehaviorRelay<Value> { relay }
+}
+
+protocol RxPublishedProtocol {
+    var publishedWillChange: Observable<Void> { get }
+}
+```
+
+Let's say your view model conforms to `RxObservableObject` and has three properties marked as `RxPublished`.
+
+```swift
+final class LoginViewModel: RxObservableObject {
+    @RxPublished var email = ""
+    @RxPublished var password = ""
+    @RxPublished private(set) var isLoading = false
+```
+
+Currencty, if you change any of these properties, nothing happens yet. `objectWillChange` isn't going to fire. Now, how are we going to connect them, what are we going to do? Or, we are going to use a [super secret](https://forums.swift.org/t/property-wrappers-access-to-both-enclosing-self-and-wrapper-instance/32526) `_enclosingInstance` property wrapper subscript, right? No.
+
+When I showed `objectWillChange` implementation earlier, there was method calls that I left out.
+
+```swift
+public extension RxObservableObject {
+    var objectWillChange: PublishRelay<Void> {
+        // ... return exsiting relay 
+        registerPublishedProperties()
+ 		// ... create new relay and associated it
+    }
+}
+```
+
+Turns out, `objectWillChange` to register the published properties. And we can do that using reflection and `RxPublishedProtocol` protocol that I showed earlier.
+
+```swift
+private extension RxObservableObject {
+    func registerPublishedProperties(objectWillChange: PublishRelay<Void>) {
+        let allPublished = Mirror(reflecting: self)
+            .children
+            .compactMap { $0.value as? RxPublishedProtocol }
+        let disposeBag = getDisposeBag(for: self)
+        for published in allPublished {
+            published.publishedWillChange.bind(to: objectWillChange).disposed(by: disposeBag)
+        }
+    }
+}
+```
+
+OK, this was one piece of the puzzle. Now when you have a view model and you change any of the properties, `objectWillChange` event associated with the model itself is going to fire. Now, how do we refresh the view?
+
+### RxView
+
+The `RxView` protocol is as easy as it gets. You call the default `bind` method to register the observable object. When the observable object changes, `refreshView` is called (not really, more details later).
+
+```swift
+public protocol RxView: AnyObject {
+    func refreshView()
+}
+
+public extension RxView where Self: UIViewController {
+    func bind(_ object: RxObservableObject)
+}
+
+public extension RxView where Self: UIView {
+    func bind(_ object: RxObservableObject)
+}
+```
+
+The naive approach is easy. All you need to do is subscribe to `objectWillChange` and call `refreshView`, right?
+
+```swift
+public extension RxView where Self: UIViewController {
+    func bind(_ object: RxObservableObject) {
+    	refershView()
+        object.objectWillChange
+            .subscribe(onNext: { [weak self] in self?.refershView() })
+            .disposed(by: disposeBag)
+    }
+}
+```
+
+Well, not so fast. There are two problems with this approach. First, efficiency. We don't want `refreshView` to call on _every_ published property change, we want to coalesce updates. Second, a bit more severe, it crashes.
+
+```swift
+final class LoginViewController: UIViewController, RxView {
+    func refreshView() {
+    	// ... 
+        model.isLoading ? spinner.startAnimating() : spinner.stopAnimating()
+    }
+}
+```
+
+If `refreshView()` gets called as a result of `isLoading` value change, Swift will crash with "Simultaneous accesses to …, but modification requires exclusive access" diagnostic messafge. This is [Swift 5 Exclusivity Enforcement](https://swift.org/blog/swift-5-exclusivity/) in action. Fortunately, there is a single solution for both of these problems.
+
+Why does `refreshView()` get called? To make sure the updated state is displayed during the next render cycle. So all we need to do hook into the render system, easy?
+
+```swift
+public extension RxView where Self: UIViewController {
+    func bind(_ object: RxObservableObject) {
+        let emptyView = makeEmptyView(in: view)
+
+        refreshView()
+
+    	object.objectWillChange
+        	.subscribe(onNext: { [weak emptyView] in emptyView?.setNeedsLayout() })
+        	.disposed(by: disposeBag)
+
+    	emptyView.rx.sentMessage(#selector(UIView.layoutSubviews))
+        	.subscribe(onNext: { [weak view] _ in view?.refreshView() })
+        	.disposed(by: disposeBag)
+    }
+}
+
+private func makeEmptyView(in container: UIView) -> UIView {
+    if let emptyView = objc_getAssociatedObject(container, &emptyViewAssociatedKey) as? UIView {
+        return emptyView
+    }
+    let emptyView = UIView()
+    emptyView.isHidden = true
+    container.addSubview(emptyView)
+    objc_setAssociatedObject(container, &emptyViewAssociatedKey, emptyView, .OBJC_ASSOCIATION_RETAIN)
+    return emptyView
+}
+```
+
+Now this is part of the solution that I'm not confident in and the reason I would like to reiterate that `RxUI` is a *proof-of-concept*.
+
+The idea is to take advantage of the fact that `UIView.layoutSubviews` gets called automatically by UIKit prior to displaying a view. This is our chance to refresh the views properties.
+
+One of the known disadvantages is that it introduces a window of time in which your views are temporarily out of sync with your view models. You should make sure that all of the view state is stored in the view model. Pretend that this is SwiftUI and you don't have access to the view state.
+
+## Conclusion
+
+`RxUI` was a fun exercise. I think it has potential due to how many DX improvements it offers compared to low-level Rx:
+
+- You can express your business logic in a natural way using plain Swift properties and methods
+- It makes it much easier to debug your views and view models
+- It's beginner-friendly. You don't need to learn `CombineLatest`, `withLatestFrom` and other complex stateful operators. One of the selling points of reactive frameworks is that they "eliminate state". That's not true. They hide the state from you making it harder to debug and reason about.
+
+I would like to reiterate that `RxUI` is a *proof-of-concept*, so please use it at your own risk.
