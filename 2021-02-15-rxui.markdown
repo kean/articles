@@ -3,7 +3,7 @@ layout: post
 title: "RxUI"
 subtitle: Applying SwiftUI ideas to improve the developer experience of using RxSwift
 description: Applying SwiftUI ideas to RxSwift
-date: 2021-02-14 10:00:00 -0500
+date: 2021-02-15 10:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/rxui

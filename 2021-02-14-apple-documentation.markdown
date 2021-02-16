@@ -3,7 +3,7 @@ layout: post
 title: "Apple Documentation"
 subtitle: Everything that is wrong with Apple's documentation
 description: Everything that is wrong with Apple's documentation
-date: 2021-02-16 10:00:00 -0500
+date: 2021-02-14 10:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/apple-documentation
@@ -13,6 +13,8 @@ uuid: 97629671-7fb5-481a-a020-38e2aab4175d
 I wrote a post yesterday about [triple-column navigation](https://kean.blog/post/triple-trouble) in SwiftUI. It felt a bit awkward posting it because this really shouldn't be some obscure knowledge. This is hardly a challenging problem. But to me and to many other people, this *was* challenging.
 
 Why was it challenging? The `NavigationView` [documentation page](https://developer.apple.com/documentation/swiftui/navigationview) doesn't mention a triple-column layout or macOS at all. But the lack of content is not the only problem with Apple Documentation.
+
+The intention is not to "complain", but rather to review the modern Apple Documentation system and point out some of its issues that are clear from the user perspective but might not be obvious from the inside.
 
 ## Navigation
 
