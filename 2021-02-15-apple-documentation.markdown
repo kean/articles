@@ -3,7 +3,7 @@ layout: post
 title: "Apple Documentation"
 subtitle: Everything that is wrong with Apple's documentation
 description: Everything that is wrong with Apple's documentation
-date: 2021-02-14 10:00:00 -0500
+date: 2021-02-15 10:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/apple-documentation
@@ -14,17 +14,20 @@ I wrote a post yesterday about [triple-column navigation](https://kean.blog/post
 
 Why was it challenging? The `NavigationView` [documentation page](https://developer.apple.com/documentation/swiftui/navigationview) doesn't mention a triple-column layout or macOS at all. But the lack of content is not the only problem with Apple Documentation.
 
-The intention is not to "complain", but rather to review the modern Apple Documentation system and point out some of its issues that are clear from the user perspective but might not be obvious from the inside.
+The intention of the article isn't to complain, but rather to review the documentation system and point out some of its issues.
+
+> If you are just starting with development for Apple platforms, there are some fantastic resources available, both first and third-party. You can find them linked to [this page](https://developer.apple.com/swift/resources/).  
+{:.info}
 
 ## Navigation
 
-When you open the [root SwiftUI documentation page](https://developer.apple.com/documentation/swiftui), you see is a small list of topics. In fact, what you see on the screenshot is the entire contents of the home page (apart from the brieft introductory text).  There is no index where you can see all children pages. You need to drill down multiple pages to find what you are looking for.
+When you open the [root SwiftUI documentation page](https://developer.apple.com/documentation/swiftui), you see is a small list of topics. In fact, what you see on the screenshot is the entire contents of the home page (apart from the brieft introductory text). There is no index where you can see all children pages. You need to drill down multiple pages to find what you are looking for.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/01.png">
 
 The first item on the list is not part of this documentation, it's a link that opens the root page containing all [SwiftUI Tutorials](https://developer.apple.com/tutorials/SwiftUI).
 
-The categories are rather arbitrary. They can't be specific given how few there are. There is no way of knowing whether what you looking for is going to be in the category without opening the page first. When you drill down the navigation hierarchy the only sense of where you are in the documentation hierarchy is the tiny navigation strip at the top.
+The categories are rather arbitrary. They can't be specific given how few there are. There is no way of knowing whether what you looking for is going to be in the category without opening the page first. When you drill down the navigation hierarchy the only sense of where you are in the documentation hierarchy is a navigation strip at the top.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/02.png">
 
@@ -45,7 +48,7 @@ But this is comparing apples to oranges. The Google documentation page is what a
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/05.png">
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/04.png">
 
-The "Featured" tab is slick, minimal, but hardly useful. And the "Technologies" tab is an alphabetically sorted list of everything there is. Where should someone who is looking to build an app start from? If the answer is tutorials, these are too surface level, people are going to hit a wall once they complete them. Documentation should be a comprehensive system with multiple types of content.
+The "Featured" tab is slick, minimal, but hardly useful. And the "Technologies" tab is an alphabetically sorted list of everything there is. Documentation should be a comprehensive system with multiple types of content.
 
 ## Types of Documentation
 
@@ -63,7 +66,7 @@ Back in the Objective-C days, Apple's focus was on providing guides offering a [
 
 ### Guides
 
-Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. They mix all types of documentation in a bland mass of gray with an unconscionable amount of white space.
+Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. They different documentation types are mixed in a bland mass of gray with an unconscionable amount of white space.
 
 For example, on the screenshot below you can find a tutorial, two guides, and multiple references. This page could benefit from color differentiation.
 

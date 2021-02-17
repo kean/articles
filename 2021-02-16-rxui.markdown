@@ -3,7 +3,7 @@ layout: post
 title: "RxUI"
 subtitle: Applying SwiftUI ideas to improve the developer experience of using RxSwift
 description: Applying SwiftUI ideas to RxSwift
-date: 2021-02-15 10:00:00 -0500
+date: 2021-02-16 10:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/rxui
@@ -236,7 +236,7 @@ final class LoginViewController: UIViewController, RxView {
 }
 ```
 
-If `refreshView()` gets called as a result of `isLoading` value change, Swift will crash with "Simultaneous accesses to …, but modification requires exclusive access" diagnostic messafge. This is [Swift 5 Exclusivity Enforcement](https://swift.org/blog/swift-5-exclusivity/) in action. Fortunately, there is a single solution for both of these problems.
+If `refreshView()` gets called as a result of `isLoading` value change, Swift will crash with "Simultaneous accesses to …, but modification requires exclusive access" diagnostic message. This is [Swift 5 Exclusivity Enforcement](https://swift.org/blog/swift-5-exclusivity/) in action. Fortunately, there is a single solution for both of these problems.
 
 Why does `refreshView()` get called? To make sure the updated state is displayed during the next render cycle. So all we need to do hook into the render system, easy?
 
