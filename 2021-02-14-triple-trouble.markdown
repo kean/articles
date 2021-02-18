@@ -17,10 +17,12 @@ I needed to build triple-column navigation for [Pulse](https://github.com/kean/P
 > You can find the complete implementation [on GitHub](https://github.com/kean/ThreeColumnNavigation).
 {:.info}
 
+> This solution requires Big Sur.
+{:.warning}
+
 <img alt="Triple-column navigation macOS" class="NewScreenshot" src="{{ site.url }}/images/posts/triple-trouble/macos.png">
 
 <img alt="Triple-column navigation iPad" class="NewScreenshot" src="{{ site.url }}/images/posts/triple-trouble/ipad.png">
-
 
 ## NavigationView
 
