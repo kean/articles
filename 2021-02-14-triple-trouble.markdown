@@ -105,6 +105,14 @@ struct IndoxView: View {
 
 SwiftUI knows that the `NavigationView` is configured to a use triple-column layout. It does the right thing when each of the navigation links is invoked. If the sidebar invokes the navigation link, it is displayed in the second column. When the content view invokes one, in third.
 
+## Customizing Toolbar
+
+A toolbar can be configured with multiple different styles on macOS. For example, [`.windowToolbarStyle(UnifiedWindowToolbarStyle(showsTitle: false))`](https://developer.apple.com/documentation/swiftui/unifiedwindowtoolbarstyle) can be used to remove the title from the second column to allow more space for other toolbar items. With titles already in the sidebar, the second title is often redundant.
+
+Add [`SidebarCommands`](https://developer.apple.com/documentation/swiftui/sidebarcommands) to get the default shortcuts to manipulate the sidebar, e.g. `Command–Option–S` toggle the sidebar.
+
+You can also add a button to toggle the sidebar, but you will have to use [a bit of AppKit](https://developer.apple.com/forums/thread/651807) to implement it. To achieve different placements of the button, use [`ToolbarItemPlacement`](https://developer.apple.com/documentation/swiftui/toolbaritemplacement).
+
 ## Conclusion
 
 The same code works on both platforms. Please keep in mind that `NavigationView` is a bit limited on iPad. This is not a problem on macOS where there is basically only one sidebar configuration anyway. On iPad, the default behavior might not work for your app. And unlike `UISplitViewController` you can't configure it.
