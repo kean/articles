@@ -26,7 +26,7 @@ I needed to build triple-column navigation for [Pulse](https://github.com/kean/P
 
 ## NavigationView
 
-For this recipe, you are going to need one `NavigationView` and nothing else. The key is type system. What you used to configure in code, e.g. by passing a number of columns to `UISplitViewController`, you now configure using generic parameters. In my case, the type of the view is `NavigationView<TupleView<(Sidebar, Text, Text)>>`.
+For this recipe, you are going to need one `NavigationView` and nothing else. The key is the type system. What you used to configure in code, e.g. by passing a number of columns to `UISplitViewController`, you now configure using generic parameters. In my case, the type of the view is `NavigationView<TupleView<(Sidebar, Text, Text)>>`.
 
 ```swift
 struct ContentView: View {
