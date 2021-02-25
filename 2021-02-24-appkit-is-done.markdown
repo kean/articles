@@ -16,7 +16,7 @@ image:
 
 Well, not like Carbon. Don't be [so dramatic](https://www.youtube.com/watch?v=Cl7xQ8i3fc0)!
 
-More like [Core Foundation](https://developer.apple.com/documentation/corefoundation). It's still there behind the scenes, but programmers use high-level Objective-C and Swift wrappers from Foundation. If something is missing, you can call an underlying C API directly. The relation between SwiftUI and AppKit is the same.
+More like [Core Foundation](https://developer.apple.com/documentation/corefoundation). It's still there behind the scenes, but programmers use high-level Objective-C and Swift wrappers from Foundation. If something is missing, you can call an underlying C API. The relation between SwiftUI and AppKit is similar, for now[^6].
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/macos/cover-macos.png">
 <!-- <img class="NewScreenshot" src="{{ site.url }}/images/posts/macos/03-macos-final.png"> -->
@@ -126,6 +126,9 @@ private func toggleSidebar() {
         .tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
 }
 ```
+
+> The relationship between SwiftUI and AppKit are not documented and not guaranteed to be supported. This workaround is useful for now, but might stop working in the future.
+{:.warning}
 
 To add a "Toggle Sidebar" shortcut, use [`SidebarCommands`](https://developer.apple.com/documentation/swiftui/sidebarcommands).
 
@@ -407,7 +410,7 @@ One of the criticisms I hear a lot is: "I started using SwiftUI and it took me T
 
 Is SwiftUI a game-changer for macOS?
 
-It's economics. Choosing web technologies used to be almost a no-brainer for many companies. But the things are changing. On one hand, there is M1 which is finally powerful and energy-efficient to run Slack, rejoice! On the other hand, the calculation has changed. The main impediment, AppKit, is gone. There are millions of iOS engineers on the market. The path to delivering great native experience on Apple platforms has never been clearer[^5]. I heard you can even put Swift on a server, but was not able to reach Tim Cook for comment[^2].
+It's economics. Choosing web technologies used to be almost a no-brainer for many companies. But the things are changing. On one hand, there is M1 which is finally powerful and energy-efficient enough to run Slack, rejoice! On the other hand, the calculation has changed. The main impediment, AppKit, is gone. There are millions of iOS engineers on the market. The path to delivering great native experience on Apple platforms has never been clearer[^5]. I heard you can even put Swift on a server, but was not able to reach Tim Cook for comment[^2].
 
 <div class="FootnotesSection" markdown="1">
 
@@ -416,3 +419,4 @@ It's economics. Choosing web technologies used to be almost a no-brainer for man
 [^3]: I see many Catalyst defects reported on Twitter which can sometimes be confused with SwiftUI defects. I'm a bit surprised this configuration (SwiftUI Catalyst) is even supported. But of course, UIKit apps that chose to support Catalyst need a path forward to adopt SwiftUI, so it has to be there. For new apps, if you are writing SwiftUI, there should be no reason to use Catalyst, you should compile for macOS natively.
 [^4]: The iPhone app was developed first and it uses the simplest `TabView` and `NavigationView` configuration possible. I then jumped straight into developing a macOS app skipping iPad. The reason I did it this way is that iPhone and Mac are simply higher priorities for me. The iPad app currently looks very similar to iPhone (it has `TabView`), but it uses double-column navigation provided by `NavigationView` by default.
 [^5]: Let's not talk about Catalyst, shall we?
+[^6]: Many parts of SwiftUI don't use AppKit. The relationship between SwiftUI and AppKit are not documented and not guaranteed to be supported. AppKit might be completely removed in the future, but we don't know that.
