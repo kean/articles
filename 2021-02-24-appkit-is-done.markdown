@@ -407,12 +407,12 @@ One of the criticisms I hear a lot is: "I started using SwiftUI and it took me T
 
 Is SwiftUI a game-changer for macOS?
 
-It's economics. Choosing web technologies used to be almost a no-brainer for many companies. But the things are changing. On one hand, there is M1 which is finally powerful and energy-efficient to run Slack, rejoice! On the other hand, the calculation has changed. The main impediment, AppKit, is gone[^5]. There are millions of iOS engineers on the market. The path to delivering great native experience on Apple platforms has never been clearer. I heard you can even put Swift on a server[^2], but was not able to reach Tim Cook for comment.
+It's economics. Choosing web technologies used to be almost a no-brainer for many companies. But the things are changing. On one hand, there is M1 which is finally powerful and energy-efficient to run Slack, rejoice! On the other hand, the calculation has changed. The main impediment, AppKit, is gone. There are millions of iOS engineers on the market. The path to delivering great native experience on Apple platforms has never been clearer[^5]. I heard you can even put Swift on a server, but was not able to reach Tim Cook for comment[^2].
 
 <div class="FootnotesSection" markdown="1">
 
 [^1]: I'm positive that I can increase the amount of the shared code to at least 90%. It wasn't a priority, my main focus was on the delivery.
-[^2]: I love Swift on a server. If you haven't checked it out, go see [Vapor](https://vapor.codes). It's a vast ecosystem that keeps expanding. With coroutines in Swift 6, this is going to be insanely good.
+[^2]: I love Swift on a server. If you haven't checked it out, go see [Vapor](https://vapor.codes). It's a vast ecosystem that keeps expanding. With coroutines in Swift 6, this is going to be insanely great.
 [^3]: I see many Catalyst defects reported on Twitter which can sometimes be confused with SwiftUI defects. I'm a bit surprised this configuration (SwiftUI Catalyst) is even supported. But of course, UIKit apps that chose to support Catalyst need a path forward to adopt SwiftUI, so it has to be there. For new apps, if you are writing SwiftUI, there should be no reason to use Catalyst, you should compile for macOS natively.
 [^4]: The iPhone app was developed first and it uses the simplest `TabView` and `NavigationView` configuration possible. I then jumped straight into developing a macOS app skipping iPad. The reason I did it this way is that iPhone and Mac are simply higher priorities for me. The iPad app currently looks very similar to iPhone (it has `TabView`), but it uses double-column navigation provided by `NavigationView` by default.
 [^5]: Let's not talk about Catalyst, shall we?
