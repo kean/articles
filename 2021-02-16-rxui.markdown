@@ -10,13 +10,13 @@ permalink: /post/rxui
 uuid: 6d873c89-a3cd-4173-a73b-cd6ba2a89e15
 ---
 
-I've been using SwiftUI a lot lately to build [Pulse](https://github.com/kean/Pulse) and loved many of the ideas behind it. So I was thinking, can we apply these ideas to the apps written with RxSwift or ReactiveSwift? SwiftUI also uses a reactive framework, Combine, for updating its views. But as a user, you don't even think about Combine when writing SwiftUI code. Why should it be different with RxSwift?
+I've been using SwiftUI [a lot]({{ site.url }}/post/appkit-is-done) lately and loved many ideas behind it. So I was thinking, can we apply them to the apps written with RxSwift or ReactiveSwift? SwiftUI also uses a reactive framework, [Combine](https://developer.apple.com/documentation/combine), for updating its views. But as a user, you don't even think about Combine when writing SwiftUI code. Why should it be different with RxSwift?
 
-I already spent a significant amount of time [investigating](https://kean.blog/post/swiftui-data-flow) how Swift Data Flow works under the hood last year, so I had a good idea of what I needed to do to make it work. I built a quick proof-of-concept project called [RxUI](https://github.com/kean/RxUI) to demonstrate this different way of using RxSwift. It especially suits folk who prefer to use unidirectional view models.
+I already spent a significant amount of time investigating how Swift Data Flow works under the hood [last year]({{ site.url }}/post/swiftui-data-flow), so I had a good idea of what I needed to do to make it work. I built a quick proof-of-concept project called [RxUI](https://github.com/kean/RxUI) to demonstrate this different way of using RxSwift. It especially suits folk who prefer to use unidirectional view models.
 
-## DX
+## Developer Experience
 
-I would first like to demonstrate RxUI from the developer experience. There are three major components provided by RxUI which directly map to the respective SwiftUI concepts:
+Let's start with a developer experience. There are three major components provided by RxUI which directly map to the respective SwiftUI concepts:
 
 - `RxObservableObject`
 - `RxPublished`
@@ -162,9 +162,9 @@ final class LoginViewModel: RxObservableObject {
 }
 ```
 
-Currencty, if you change any of these properties, nothing happens yet. `objectWillChange` isn't going to fire. Now, how are we going to connect them, what are we going to do? Or, we are going to use a [super secret](https://forums.swift.org/t/property-wrappers-access-to-both-enclosing-self-and-wrapper-instance/32526) `_enclosingInstance` property wrapper subscript, right? No.
+Currently, if you change any of these properties, nothing happens yet. `objectWillChange` isn't going to fire. Now, how are we going to connect them, what are we going to do? Or, we are going to use a [super secret](https://forums.swift.org/t/property-wrappers-access-to-both-enclosing-self-and-wrapper-instance/32526) `_enclosingInstance` property wrapper subscript, right? No.
 
-When I showed `objectWillChange` implementation earlier, there was method calls that I left out.
+When I showed `objectWillChange` implementation earlier, there wa a method call that I left out.
 
 ```swift
 public extension RxObservableObject {
@@ -196,7 +196,7 @@ OK, this was one piece of the puzzle. Now when you have a view model and you cha
 
 ### RxView
 
-The `RxView` protocol is as easy as it gets. You call the default `bind` method to register the observable object. When the observable object changes, `refreshView` is called (not really, more details later).
+The `RxView` protocol is as simple as it gets. You call the default `bind` method to register the observable object. When the observable object changes, `refreshView` is called (not really, more details later).
 
 ```swift
 public protocol RxView: AnyObject {
@@ -261,9 +261,9 @@ public extension RxView where Self: UIViewController {
 }
 ```
 
-Now, this is part of the solution that I'm not confident in and the reason I would like to reiterate that `RxUI` is a *proof-of-concept*.
+Now, this is part of the solution that I'm not confident in, and the reason I would like to reiterate that `RxUI` is a *proof-of-concept*.
 
-The idea is to take advantage of the fact that `UIView.layoutSubviews` gets called automatically by UIKit prior to displaying a view. This is our chance to refresh the views properties.
+The idea is to take advantage of the fact that `UIView.layoutSubviews` gets called automatically by UIKit before displaying a view. This is our chance to refresh the views properties.
 
 One of the known disadvantages is that it introduces a window of time in which your views are temporarily out of sync with your view models. You should make sure that all of the view state is stored in the view model. Pretend that this is SwiftUI and you don't have access to the view state.
 
