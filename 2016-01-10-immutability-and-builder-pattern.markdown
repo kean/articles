@@ -10,13 +10,13 @@ redirect_from: /blog/immutability-and-builder-pattern
 uuid: 944811d2-f3f0-425c-8178-e317873e74cf
 ---
 
-We all know about the [advantages of immutable objects](https://www.objc.io/issues/7-foundation/value-objects/). Most of the immutable objects that we use are model objects that tend to have a lot or properties. The question is how to initialize those properties without creating a telescoping initializer.
+We are all aware of the [advantages of immutable objects](https://www.objc.io/issues/7-foundation/value-objects/). These is often a desire to make all or most model objects immutable, but they tend to have a lot of properties. How do you initialize such objects without creating a [telescoping initializer](https://stackoverflow.com/questions/11748682/telescoping-constructor)?
 
 {% include ad-hor.html %}
 
 ## Immutable Objects in Cocoa
 
-First idea that comes to mind is to follow the steps of the platform. `Cocoa` objects are either mutable or immutable. A good example of such object might be a `NSURLRequest` which has quite a lot of properties. We use its mutable counterpart `NSMutableURLRequest` to change the values of those properties. `NSMutableURLRequest` is a subclass of `NSURLRequest` which in turn implements `NSCopying` and `NSMutableCopying` protocols. We could do the same with our own classes.
+The first idea that comes to mind is to follow the steps of the platform. `Cocoa` objects often have an immutable and mutable counterpart. A good example of an immutable object is a `NSURLRequest` which has lots of properties. To construct it, you use its mutable counterpart `NSMutableURLRequest`. `NSMutableURLRequest` is a subclass of `NSURLRequest` which in turn implements `NSCopying` and `NSMutableCopying` protocols. We could do the same with our own classes.
 
 Let's implement a `User` class and its mutable counterpart:
 
@@ -77,7 +77,7 @@ Now we are able to use those classes the same way we use `NSURLRequest`. However
 - We had to use four lines of code for a single `name` property
 - We limited our ability to extend class hierarchy
 
-Fortunately there is an alternative way to create immutable objects which is an overlooked [builder pattern](https://en.wikipedia.org/wiki/Builder_pattern). It is a very simple pattern which addresses all those problems.
+Fortunately, there is an alternative way to create immutable objects which is an overlooked [builder pattern](https://en.wikipedia.org/wiki/Builder_pattern). It is a very simple pattern that addresses all those problems.
 
 ## Builder Pattern
 
@@ -127,7 +127,7 @@ Let's dive straight into implementation but this time we will start with a base 
 @end
 ```
 
-`Entity` class has no mutable counterpart which means that defensive copying is no longer required. We also used just two lines of code for an `ID` property.
+`Entity` class has no mutable counterpart, defensive copying is no longer required. We also used just two lines of code for an `ID` property.
 
 
 ## References
