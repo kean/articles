@@ -14,6 +14,9 @@ I've been using SwiftUI [a lot]({{ site.url }}/post/appkit-is-done) lately and l
 
 I already spent a significant amount of time investigating how Swift Data Flow works under the hood [last year]({{ site.url }}/post/swiftui-data-flow), so I had a good idea of what I needed to do to make it work. I built a quick proof-of-concept project called [RxUI](https://github.com/kean/RxUI) to demonstrate this different way of using RxSwift. It especially suits folk who prefer to use unidirectional view models.
 
+> RxUI is just a fun experiment, it is not meant to be used in production!
+{:.warning}
+
 ## Developer Experience
 
 Let's start with a developer experience. There are three major components provided by RxUI which directly map to the respective SwiftUI concepts:
