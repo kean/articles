@@ -291,6 +291,9 @@ struct ConsoleMessageListView: View {
 
 By the way, this is not the only way to navigate a list with a keyboard. By default, on macOS, List can also be navigated with "Up" and "Down" arrows!
 
+> `List` is not great. The performance with a large number of items (10000+) is unacceptable. The reason is the diff-based mechanism used for computing animations that you can't disable. If you are considering displaying a large number of items in a `List`, it most likely won't work for you.
+{:.warning}
+
 ## Text View
 
 <div class="BlogVideo NewScreenshot">
@@ -380,7 +383,7 @@ What I ended up doing – and I'm not sure I'm happy about – is pre-fetching t
 
 ## Lightning Round
 
-If that wasn't enough, here are 13 more tips.
+If that wasn't enough, here is a dozen more tips.
 
 <div class="NewList" markdown="1">
 
@@ -401,13 +404,17 @@ If that wasn't enough, here are 13 more tips.
 
 ## Conclusion
 
-Is SwiftUI perfect?
+**Is SwiftUI perfect?**
 
-No. I had to compromise in a few places. But I don't have a lot of bugs to report[^3].  Maybe I'm just getting better at avoiding things that don't quite work as expected. There are some limitations, but the AppKit integration is always there for me.
+I had to compromise in a few places. But I don't have a lot of bugs to report[^3]. Maybe I'm just getting better at avoiding things that don't quite work as expected. There are some limitations. But the AppKit integration is always there for me.
 
 One of the criticisms I hear a lot is: "I started using SwiftUI and it took me T amount of time to build X, it would've taken me a fraction of time to do that in AppKit". I voiced this criticism. SwiftUI is complex and is not magic. It is almost nothing like AppKit which I think is a good thing. But it means that you need to learn a lot before you can use it efficiently, even if you are already familiar with the core principles behind it.
 
-Is SwiftUI a game-changer for macOS?
+**Is AppKit done?**
+
+There are still a lot of things that can't be done using only SwiftUI. I can sacrifice certain features for my app, but I can't sacrifice performance. So far, `List` was the main impediment (as long as you have a decent number of items to display). Maybe it's for the best and I'll consider re-implementing the list using `NSTableView` with multiple columns and orderings.
+
+**Is SwiftUI a game-changer for macOS?**
 
 It's economics. Choosing web technologies used to be almost a no-brainer for many companies. But the things are changing. On one hand, there is M1 which is finally powerful and energy-efficient enough to run Slack, rejoice! On the other hand, the calculation has changed. The main impediment, AppKit, is gone. There are millions of iOS engineers on the market. The path to delivering great native experience on Apple platforms has never been clearer[^5]. I heard you can even put Swift on a server, but was not able to reach Tim Cook for comment[^2].
 
