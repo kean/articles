@@ -17,7 +17,7 @@ I needed to build triple-column navigation for [Pulse](https://github.com/kean/P
 > You can find the complete implementation [on GitHub](https://github.com/kean/ThreeColumnNavigation).
 {:.info}
 
-> This solution requires Big Sur.
+> This solution requires Big Sur. And on iPad, you can't customize it, which you'll probably want to. This post is focused on macOS.
 {:.warning}
 
 <img alt="Triple-column navigation macOS" class="NewScreenshot" src="{{ site.url }}/images/posts/triple-trouble/macos.png">
@@ -115,7 +115,7 @@ You can also add a button to toggle the sidebar, but you will have to use [a bit
 
 ## Conclusion
 
-The same code works on both platforms. Please keep in mind that `NavigationView` is a bit limited on iPad. This is not a problem on macOS where there is basically only one sidebar configuration anyway. On iPad, the default behavior might not work for your app. And unlike `UISplitViewController` you can't configure it.
+The same code works on both platforms. Please keep in mind that `NavigationView` it is a bit limited on iPad. This is not a problem on macOS where there is basically only one sidebar configuration anyway. On iPad, the default behavior might not work for your app. And unlike `UISplitViewController` you can't configure it.
 
 There is also one caveat when it comes to programmatic navigation. You should be able to change the value of the `isActive` binding to active a navigation link, but it doesn't always work. It does if you set it twice using good old `DispatchQueue.main.async`. Looks like a defect. I'm sure there are other workarounds, but this isn't even a problem in my case because Pulse doesn't need programmatic navigation, and the default tab selection works fine as is.
 
