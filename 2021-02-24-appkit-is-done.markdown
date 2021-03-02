@@ -37,12 +37,12 @@ Want to learn how to build macOS apps or see some videos with rad UI interaction
 ## Navigation
 
 <!-- <img alt="Triple column navigation on macOS using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/00-columns.png"> -->
-
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
   <source src="{{ site.url }}/videos/pulse/00-triple-2.mp4" type="video/mp4">
 </video>
 </div>
+
 
 The [first step](https://twitter.com/a_grebenyuk/status/1363882900136095745?s=20) was to get the navigation right. I knew I wanted to use triple-column navigation[^4]. SwiftUI makes this setup ease.
 

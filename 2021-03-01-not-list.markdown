@@ -1,0 +1,129 @@
+---
+layout: post
+title: "Not List"
+subtitle: Integrating NSTableView with SwiftUI
+description: Integrating NSTableView with SwiftUI
+date: 2021-03-01 10:00:00 -0500
+category: programming
+tags: programming
+permalink: /post/not-list
+uuid: 29cb612c-2e35-406d-a27a-a9c1b9f9c122
+---
+
+Despite the title, [the previous post]({{ site.url }}/post/appkit-is-done) wasn't about AppKit but about showing what's possible with SwiftUI on the platform where it has felt least at home so far. I tried not to make it overly-positive, but I think it ended up this way anyway. To balance it, I would like to focus on some of the issues and how I solved them.
+
+## Performance
+
+The main issue I ran into was performance. The initial test with a decently sized data set with 150 000[^1] entries was miserable, even after all possible database optimizations: junky scrolling, slow reloads.
+
+The root cause of slowness was the infamous `List` [automatic diffs](https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui) that you _still_ can't disable. The workaround from the article was not working anymore. The diff computation is slow in itself, but it also breaks [`fetchBatchSize`](https://developer.apple.com/documentation/coredata/nsfetchrequest/1506558-fetchbatchsize) making matters worse[^2].
+
+I solved it with one weird trick – rewriting the list using [`NSTableView`](https://developer.apple.com/documentation/appkit/nstableview). After the change, the app is – what's the overused term is – *blazing fast*.
+
+<br/>
+
+<div class="BlogVideo NewScreenshot">
+<video autoplay loop muted playsinline preload="auto">
+  <source src="{{ site.url }}/videos/not-list/after-2.mp4" type="video/mp4">
+</video>
+</div>
+
+
+## Not List
+
+Typically, mixing SwiftUI and AppKit is easy – just use [NSViewRepresentable](https://developer.apple.com/documentation/swiftui/nsviewrepresentable). But how do you integrate `NSTableView` with SwiftUI `NavigationView`? Fortunately, there is a way.
+
+```swift
+var body: some View {
+    ZStack {
+        NotList(
+            model: model, // NotListViewModel
+            makeRow: ConsoleView.makeRow, // Creates NSView for each cell
+            onSelectRow: model.selectRow // Changes model.details.entity
+        )
+        NavigationLink(
+            destination: ConsoleDetailsRouter(model: model.details),
+            isActive: .constant(true),
+            label: EmptyView()
+        )
+        .hidden()
+    }
+```
+
+I add a hidden [`NavigationLink`](https://developer.apple.com/documentation/swiftui/navigationlink) which is always active and then switch between details views using `ConsoleDetailsRouter: View`. It's not pretty, but it works without accessing the underlying `NSSplitViewController`.
+
+> This is not guaranteed to continue working in the future versions.
+{:.warning}
+
+With `NSTableView`, I was back in the driver's seat. To reload the view, I simply call [`reloadData`](https://developer.apple.com/documentation/appkit/nstableview/1528382-reloaddata). That took care of the reload performance issues. I also set up static cell height and proper cell reuse to resolve the scrolling issues[^3].
+
+The data flow with `NSViewRepresentable` is similar to pure `SwiftUI` views: you use [`@ObservedObject`](https://developer.apple.com/documentation/swiftui/observedobject) to communicate the data changes.
+
+```swift
+struct NotList<Element: Identifiable>: NSViewRepresentable {
+    @ObservedObject var model: NotListViewModel<Element>
+    let makeRowView: (Element, Int, NSTableView) -> NSView?
+    let onSelectRow: (Element, Int) -> Void
+
+    final class Coordinator: NSObject, NSTableViewDelegate, NSTableViewDataSource {
+        // ... standard AppKit stuff ...
+    }
+
+    // Gets called once per view "identity"
+    func makeNSView(context: Context) -> NSScrollView {
+        let tableView = NSTableView()
+        tableView.delegate = context.coordinator
+        tableView.dataSource = context.coordinator
+        // ...
+
+        let scrollView = NSScrollView()
+        scrollView.documentView = tableView
+        return scrollView
+    }
+
+    // Gets called whenever `model` changes
+    func updateNSView(_ nsView: NSScrollView, context: Context) {
+        let tableView = (nsView.documentView as! NSTableView)
+
+        if model.isReloadNeeded {
+            model.isReloadNeeded = false
+
+            tableView.reloadData()
+            // ... some basic logic to keep selection state ...
+        }
+
+        if let index = model.scrollToIndex {
+            model.scrollToIndex = nil
+
+            tableView.scrollRowToVisible(index)
+            tableView.selectRowIndexes(IndexSet(integer: index), byExtendingSelection: false)
+        }
+    }
+}
+```
+
+To communicate the changes, I set the respective flags on `NotListViewModel` and manually send [`objectWillChange`](https://developer.apple.com/documentation/combine/observableobject) event. It gives me precise control over what to update and when without breaking out from the SwiftUI data flow model.
+
+## Platform Discrepancies
+
+iOS engineers are used to lazy self-sizing table cells. Well, `NSTableView` doesn't support it, and for a good reason. `List` on macOS:
+
+<div class="BlogVideo NewScreenshot">
+<video autoplay loop muted playsinline preload="auto">
+  <source src="{{ site.url }}/videos/not-list/scroll-indicator-issue.mp4" type="video/mp4">
+</video>
+</div>
+
+Unlike iOS, macOS needs to know the size of every cell. It allows precise control using a scroll indicator. `List` attempts to implement the lazy self-sizing on top of `NSTableView`, destined to fail on macOS. If all cells have the same height, the scroll indicator works properly, even when using a `List`.
+
+## Conclusion
+
+This little maneuver cost me a few wasted hours. I had to re-implement the list using `NSTableView`, cells, and context menus – about 300 lines of AppKit. I could probably get away with using SwiftUI views as cells, but I couldn't get it to perform as fast as I wanted. The silver lining is that now I have an `NSTableView` setup, and I can take advantage of some of its more powerful features in the future. For example, I could add a horizontal view with multiple columns.
+
+There is always a risk with SwiftUI. SwiftUI is an exceptional tool for prototyping, but you never when you are going to hit a wall. Sometimes you slay the dragon, sometimes the dragon slays you.
+
+<div class="FootnotesSection" markdown="1">
+
+[^1]: Technically, 150 023... off-by-one error.
+[^2]: Databases are fast. In practice, if you measure it, there isn't much difference with or without the `fetchBatchSize`, at least with a dataset of this size. Having said that, I want every operation in the app to feel instantaneous, so I'm taking any wins possible.
+[^3]: I'm not sure what made `List` scrolling performance sluggish. If I were to guess, it's either cell height calculations or cell reuse. Does `List` even have cell reuse? I don't think so.
