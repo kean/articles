@@ -9,7 +9,6 @@ tags: programming
 permalink: /post/lets-build-vpn-protocol
 uuid: 4f4b6cb2-192f-4a1c-bafb-f1e84baee96d
 disable_suggested_articles: true
-disable_comments: true
 ---
 
 It's been two years since [Network Extension, Part 1 - Introduction](/post/network-extensions-into). You've been asking for Part 2. Here it finally is.
