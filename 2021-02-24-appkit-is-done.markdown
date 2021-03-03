@@ -412,7 +412,7 @@ One of the criticisms I hear a lot is: "I started using SwiftUI and it took me T
 
 **Is AppKit done?**
 
-There are still a lot of things that can't be done using only SwiftUI. I can sacrifice certain features for my app, but I can't sacrifice performance. So far, `List` was the main impediment (as long as you have a decent number of items to display). Maybe it's for the best and I'll consider re-implementing the list using `NSTableView` with multiple columns and orderings.
+There are still a lot of things that can't be done using only SwiftUI. I can sacrifice certain features for my app, but I can't sacrifice performance. So far, `List` was the main impediment (as long as you have a decent number of items to display). If you want to learn more about `List` limitations, see the [next post]({{ site.url }}/post/not-list).
 
 **Is SwiftUI a game-changer for macOS?**
 
