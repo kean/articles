@@ -8,9 +8,10 @@ category: programming
 tags: programming
 permalink: /post/time-to-debug
 uuid: 4559025a-577f-495f-93d8-dfc0c49f5b35
+published: false
 ---
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/time-to-debug/01.jpg">
+<img  class="NewScreenshot" src="{{ site.url }}/images/posts/time-to-debug/01.jpg">
 
 
 <img width="320px" class="NewScreenshot" src="{{ site.url }}/images/posts/time-to-debug/w1.png"><img width="320px" class="NewScreenshot" src="{{ site.url }}/images/posts/time-to-debug/w2.png">
@@ -33,9 +34,3 @@ uuid: 4559025a-577f-495f-93d8-dfc0c49f5b35
   <source src="{{ site.url }}/videos/debug/share-to-phone.mp4" type="video/mp4">
 </video>
 </div>
-
-## Pulse Documents
-
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/time-to-debug/m1.png">
-
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/time-to-debug/m2.png">
