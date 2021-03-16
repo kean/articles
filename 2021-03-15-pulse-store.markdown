@@ -34,7 +34,9 @@ The real answer is: **zip archives**. There are, however, other options and the 
 
 When you open a document, Pages unarchives it and puts it in memory. Archiving a Pages document makes a lot of sense as it saves a bit of space.
 
-You can think of a zip archive as a key/value storage, optimized for the case of write-once/read-many and a relatively small number of distinct keys. One of the main disadvantages of zip, or other binary formats, is its content is inaccessible making it impossible to use with source control.
+You can think of a zip archive as a key/value storage, optimized for the case of write-once/read-many and a relatively small number of distinct keys. Zip is easy to use, it's ubiquitous and fast.
+
+One of the main _disadvantages_ of zip, or other binary formats, is its content is inaccessible making it impossible to use with source control.
 
 ### Packages (.pbxproj, .app)
 
@@ -63,7 +65,7 @@ For Pulse, SQLite seemed like an overkill, and I already commited to using Core 
 
 ### Binary Formats
 
-`.sqlite` and `.zip` are both binary formats. Nothing stops you from defining your own, just like some people come up with custom networking protocols. And just like with networking, it's often preferred to use one of the existing formats.
+`.sqlite` and `.zip` are both binary formats. Nothing stops you from defining your own, just like some people come up with custom networking protocols. And just like with networking, it's almost always best to stick with one of the existing formats.
 
 
 ## Pulse Store (.pulse)
@@ -88,7 +90,7 @@ func copyStore(to storeURL: URL) throws {
         at: tempDirectoryURL,
         to: storeURL,
         shouldKeepParent: false,
-        compressionMethod: .deflate,
+        compressionMethod: .deflate, // You have an option not to
         progress: nil
     )
     try FileManager.default.removeItem(at: tempDirectoryURL)
@@ -133,7 +135,9 @@ private extension Archive {
 
 The great thing about zip archives is they are random access. Some archives, e.g. `.tar.gz`, have inter-file compression, but zip doesn't. It allows you to access individual files without unarchiving the whole thing. This is perfect!
 
-As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.sqlite`), and a directory for blobs. While a database is usually relatively small, blobs can grow quite a bit because that's where all the network responses are stored. I have to unarchive a manifest and a database when opening a store, but with zip I can keep the blobs in an archive and access each individual blob on-demand (see `dataForEntity`)[^1].
+As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.sqlite`), and a directory for blobs. While a database is usually relatively small, blobs can grow quite a bit because that's where all the network responses are. I have to unarchive a manifest and a database when opening a store, but with zip I can keep the blobs in an archive and access each individual blob on-demand (see `dataForEntity`)[^1].
+
+[^1]: I’m glad I initially decided not to put blobs into Core Data, it would have prevented me from implementing some of these optimizations.
 
 > Blob store has another optimization in place where responses automatically get deduplicated. It calculates a cryptographic hash (sha256) for each response. If two responses have the same hash, only one blob gets stored. This is great especially if the app keeps fetching the resource that doesn't change over and over again.
 {:.info}
@@ -155,9 +159,9 @@ struct AppView: View {
 }
 ```
 
-Another approach is to use [DocumentGroup](https://developer.apple.com/documentation/swiftui/documentgroup), but it comes with its own caveats, so for a simple scenario like this `onOpenURL()` can do.
+Another approach is to use [DocumentGroup](https://developer.apple.com/documentation/swiftui/documentgroup), but it comes with its own caveats. For a simple scenario like this `onOpenURL()` can do.
 
-Adding a custom document type is small part of the job. I'm now working on adding a document browser, [`QLPreviewingController`](https://developer.apple.com/documentation/quartz/qlpreviewingcontroller), and more.
+Adding a custom document type is just part of the job. I'm now also working on [`QLPreviewingController`](https://developer.apple.com/documentation/quartz/qlpreviewingcontroller) to offer previews with some store metadata, and more.
 
 ## Conclusion
 
@@ -179,7 +183,6 @@ A clear, concise, and easy to understand file format is a crucial part of any ap
 </div>
 
 <div class="FootnotesSection" markdown="1">
-[^1]: I’m glad I initially decided not to put blobs into Core Data, it would have prevented me from implementing some of these optimizations.
 [^2]: The primary reason was to make it easier to programmatically access the storage. I also have a branch with an SQLite re-write, but decided against it because I didn't find a lot of advantages compared to Core Data.
 [^3]: Zip archives can also work without compression if you just want to put multiple files in a single binary.
 </div>
