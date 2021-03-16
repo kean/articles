@@ -20,7 +20,9 @@ Registering your custom document type and *extension* is straightforward: you ca
 
 <img width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/01.png">
 
-Now, how do you turn it into a file? The quick answer: **zip archives**. There are, however, other options and the choice largely depends on your requirements. In this, post I want to explain the thought process behind going with zip for *my use case* and share some of the implementation details.
+Now, how do you turn a directory into a file? Science!
+
+The real answer is: **zip archives**. There are, however, other options and the choice largely depends on your requirements. In this post, I want to share the thought process behind going with zip for *my use case* and share some of the implementation details.
 
 ## Apple Document Types
 
@@ -55,7 +57,7 @@ Apple typically uses either packages or packages, but there are also a couple of
 It might sound counterintuitive at first, but [SQLite claims](https://www.sqlite.org/appfileformat.html) to be an excellent document file format. From the listed advantages, I would like to point out two things:
 
 - **Atomic Transactions**. Writes to SQLite are atomic meaning there is practically no danger of corrupting the document. This is pretty much impossible to achieve with "pile-of-files" approaches.
-- **Performance**. For relatively small files, SQLite claims to be [35% faster](https://www.sqlite.org/fasterthanfs.html) than the filesystem.
+- **Performance**. For relatively small files, SQLite claims to be [35% faster](https://www.sqlite.org/fasterthanfs.html) than the filesystem. Is SQLite faster than ZIP archives? The document doesn't say, but I'm assuming it isn't compared with uncompressed archives.
 
 For Pulse, SQLite seemed like an overkill, and I already commited to using Core Data[^2].
 
@@ -148,13 +150,14 @@ When the user double-clicks the document, the app receives an [`onOpenURL()`](ht
 struct AppView: View {
     var body: some View {
         ConsoleView()
-            .onOpenURL(model.openDatabase)
+            .onOpenURL(perform: model.openDatabase)
     }
 }
 ```
 
-> I'm also looking into [`DocumentGroup`](https://developer.apple.com/documentation/swiftui/documentgroup), but I'm not sure there are a lot of reasons for me to use it.
-{:.info}
+Another approach is to use [DocumentGroup](https://developer.apple.com/documentation/swiftui/documentgroup), but it comes with its own caveats, so for a simple scenario like this `onOpenURL()` can do.
+
+Adding a custom document type is small part of the job. I'm now working on adding a document browser, [`QLPreviewingController`](https://developer.apple.com/documentation/quartz/qlpreviewingcontroller), and more.
 
 ## Conclusion
 
