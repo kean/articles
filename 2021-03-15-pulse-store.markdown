@@ -123,7 +123,7 @@ final class LoggerStore {
 
 private extension Archive {
     func dataForEntity(_ name: String) throws -> Data {
-        guard let entity = self[name] else {
+        guard let entity = entities[name] else {
             throw // ...
         }
         var data = Data()
@@ -134,6 +134,9 @@ private extension Archive {
 ```
 
 The great thing about zip archives is they are random access. Some archives, e.g. `.tar.gz`, have inter-file compression, but zip doesn't. It allows you to access individual files without unarchiving the whole thing. This is perfect!
+
+> `Archive` doesn't implement `RandomAccessCollection` protocol, only `Sequence`. If you look at [`subscript(path: String)`](https://github.com/weichsel/ZIPFoundation/blob/cf10bbff6ac3b873e97b36b9784c79866a051a8e/Sources/ZIPFoundation/Archive.swift#L229), every time you call it, it reads and iterates over entries in the [central directory](https://en.wikipedia.org/wiki/ZIP_(file_format)#Central_directory_file_header) in a sequential fashion which is O(N). For random access, you are going to need to construct your own index in memory.
+{:.warning}
 
 As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.sqlite`), and a directory for blobs. While a database is usually relatively small, blobs can grow quite a bit because that's where all the network responses are. I have to unarchive a manifest and a database when opening a store, but with zip I can keep the blobs in an archive and access each individual blob on-demand (see `dataForEntity`)[^1].
 
