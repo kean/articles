@@ -16,29 +16,42 @@ uuid: 424b2065-a294-4311-9bc7-f85ed82d1290
 </video>
 </div>
 
-Registering your custom document type and *extension* is straightforward: you can follow the [official sample](https://developer.apple.com/documentation/uikit/view_controllers/building_a_document_browser_app_for_custom_file_formats). The problem is, only files can have extensions, directories can not. And [Pulse](https://github.com/kean/Pulse) store is a directory: it has a manifest (`.json`), a database (`.sqlite`), and a directory with blobs.
+Registering your custom document type and *extension* is straightforward: you can follow the [official sample](https://developer.apple.com/documentation/uikit/view_controllers/building_a_document_browser_app_for_custom_file_formats). The problem is, you can't just slap any extension[^4] on a directory to turn it into a file, and [Pulse](https://github.com/kean/Pulse) store is a directory containing:
+
+[^4]: Unless it's a [special](https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/DocumentPackages/DocumentPackages.html) extension of a document type registered to be a package, will talk about it later in the post.
+
+- Manifest (`.json`)
+- Database (`.sqlite`)
+- Directory with blobs
 
 <img width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/01.png">
 
 Now, how do you turn a directory into a file? Science!
 
-The real answer is: **zip archives**. There are, however, other options and the choice largely depends on your requirements. In this post, I want to share the thought process behind going with zip for *my use case* and share some of the implementation details.
+One of the potential answers is **ZIP archives**. ZIP archives? What's so interesting about ZIP archives? They appear entirely ordinary but have some characteristics that make them a common choice for some document formats. There are, of course, other options, and the choice largely depends on your requirements. In this post, I want to share the thought process behind going with ZIP for my **specific use case** and share some of the implementation details.
+
+## Use Case
+
+What's the use case? [Pulse](https://github.com/kean/Pulse) is a logging system. While running, it stores all of its files in a plain directory (optimized for writing). I primarily care about small write performance in this case. But when you are done logging and want to share or archive the logs, I wanted it to create a document that will appear as a single file with a custom extension to be easily shared and opened on another machine. In this scenario, I care about space efficiency, but not about incremental updates or atomic writes.
+
 
 ## Apple Document Types
 
 ### Archives (.pages)
 
-[Pages](https://www.apple.com/pages/) files are zip archives. You can change the extension to `.pages` to unarchive it (or use `unzip` from Terminal).
+[Pages](https://www.apple.com/pages/) files are ZIP archives[^6]. You can change the extension to `.pages` to unarchive it (or use `unzip` from Terminal).
+
+[^6]: Turns out, if your document is 500 MB or larger, you [might be asked](https://support.apple.com/en-us/HT202887) to save your document, spreadsheet, or presentation as a package.
 
 <img width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/02.png">
 
 When you open a document, Pages unarchives it and puts it in memory. Archiving a Pages document makes a lot of sense as it saves a bit of space.
 
-You can think of a zip archive as a key/value storage, optimized for the case of write-once/read-many and a relatively small number of distinct keys. Zip is easy to use, it's ubiquitous and fast.
+You can think of a ZIP archive as a key/value storage, optimized for the case of write-once/read-many and a relatively small number of distinct keys. ZIP is easy to use, it's ubiquitous and fast.
 
-One of the main _disadvantages_ of zip, or other binary formats, is its content is inaccessible making it impossible to use with source control.
+One of the main _disadvantages_ of ZIP, or other binary formats, is its content is inaccessible making it impossible to use with source control.
 
-### Packages (.pbxproj, .app)
+### Packages (.pbxproj) and Bundles (.app)
 
 Xcode project files also consist of multiple files, but they are not archives.
 
@@ -48,20 +61,20 @@ Xcode project files are [packages](https://en.wikipedia.org/wiki/Package_(macOS)
 
 Unlike archives, which are just binary blobs, packages can be added to source control, which is the main reason `.pbxproj` files are packages.
 
-There are many other documents that Apple represents as packages: apps are packages (`.app`), photo libraries are too (`.photoslibrary`). A great advantage of packages is that they don't require any special code, `FileManager` can simply directly access the files and the directory inside the package.
+There are many other document types that Apple represents as Packages or Bundles[^5]: apps (`.app`), photo libraries (`.photoslibrary`). A great advantage of packages is that they don't require any special code, `FileManager` can simply directly access the files and the directory inside the package. While packages _can_ be operated directly by `FileManager`, there's also a rich API called [`FileWrapper`](https://developer.apple.com/documentation/foundation/filewrapper) which can help working with packages and ensure data integrity.
+
+[^5]: There is a distinction between Packages and Bundles that I'm not going to cover, you can read more [online](https://en.wikipedia.org/wiki/Bundle_(macOS)).
 
 ## Other Approaches
 
-Apple typically uses either packages or packages, but there are also a couple of other approaches to consider.
+Apple typically uses packages and archives, but there are also a couple of other approaches to consider.
 
 ### SQLite
 
 It might sound counterintuitive at first, but [SQLite claims](https://www.sqlite.org/appfileformat.html) to be an excellent document file format. From the listed advantages, I would like to point out two things:
 
 - **Atomic Transactions**. Writes to SQLite are atomic meaning there is practically no danger of corrupting the document. This is pretty much impossible to achieve with "pile-of-files" approaches.
-- **Performance**. For relatively small files, SQLite claims to be [35% faster](https://www.sqlite.org/fasterthanfs.html) than the filesystem. Is SQLite faster than ZIP archives? The document doesn't say, but I'm assuming it isn't compared with uncompressed archives.
-
-For Pulse, SQLite seemed like an overkill, and I already commited to using Core Data[^2].
+- **Performance**. For relatively small files, SQLite claims to be [35% faster](https://www.sqlite.org/fasterthanfs.html) than the filesystem. SQLite excels at small atomic writes because it uses a tail-add journal which is sympathetic to the way nvram works. But this is irrelevant for my scenario where I don't care about incremental updates at all.
 
 ### Binary Formats
 
@@ -70,7 +83,7 @@ For Pulse, SQLite seemed like an overkill, and I already commited to using Core 
 
 ## Pulse Store (.pulse)
 
-As I mentioned in the beginning, I decided to go with zip archives. The primary reasons: space savings[^3] and ease of use. Logs typically have a lot of repetitive data, the savings can be massive.
+As I mentioned in the beginning, I decided to go with ZIP archives. The primary reasons: space savings[^3] and ease of use. Logs typically have a lot of repetitive data, the savings can be massive. Pulse documents are also only used for sharing, so the potential inefficiencies of ZIP incremental updates weren't a concern.
 
 ### ZIPFoundation
 
@@ -97,6 +110,9 @@ func copyStore(to storeURL: URL) throws {
 }
 ```
 
+> When I create a copy of a database, I set ["journal_mode"](https://www.sqlite.org/pragma.html#pragma_journal_mode) to "DELETE" to ensure there is no .wal file. I also use [VACUUM](https://sqlite.org/lang_vacuum.html) to reduce space.
+{:.info}
+
 Opening an archive:
 
 ```swift
@@ -107,7 +123,7 @@ final class LoggerStore {
         guard let archive = Archive(url: storeURL, accessMode: .read) else {
             throw // ...
         }
-        let manifestData = try archive.dataForEntity["manifest.json"]
+        let manifestData = try archive.dataForEntry["manifest.json"]
         let manifest = try JSONDecoder().decode(Manifest.self, manifestData)
         let unarchivedURL = FileManager.default.temporaryDirectory
             .appendingPathComponent("com.github.kean.pulse", isDirectory: true)
@@ -122,32 +138,32 @@ final class LoggerStore {
 }
 
 private extension Archive {
-    func dataForEntity(_ name: String) throws -> Data {
-        guard let entity = entities[name] else {
+    func dataForEntry(_ name: String) throws -> Data {
+        guard let entry = index[name] else { // `index` made by the app
             throw // ...
         }
         var data = Data()
-        _ = try self.extract(entity) { data.append($0) }
+        _ = try self.extract(entry) { data.append($0) }
         return data
     }
 }
 ```
 
-The great thing about zip archives is they are random access. Some archives, e.g. `.tar.gz`, have inter-file compression, but zip doesn't. It allows you to access individual files without unarchiving the whole thing. This is perfect!
+The great thing about ZIP archives is they are random access. Some archives, e.g. `.tar.gz`, have inter-file compression, but ZIP doesn't. It allows you to access individual files without unarchiving the whole thing. This is perfect!
 
-> `Archive` doesn't implement `RandomAccessCollection` protocol, only `Sequence`. If you look at [`subscript(path: String)`](https://github.com/weichsel/ZIPFoundation/blob/cf10bbff6ac3b873e97b36b9784c79866a051a8e/Sources/ZIPFoundation/Archive.swift#L229), every time you call it, it reads and iterates over entries in the [central directory](https://en.wikipedia.org/wiki/ZIP_(file_format)#Central_directory_file_header) in a sequential fashion which is O(N). For random access, you are going to need to construct your own index in memory.
+> `Archive` doesn't implement a `RandomAccessCollection` protocol (only `Sequence`) but provides a `subscript(path: String)` which can be a bit misleading. If you look at [the implementation](https://github.com/weichsel/ZIPFoundation/blob/cf10bbff6ac3b873e97b36b9784c79866a051a8e/Sources/ZIPFoundation/Archive.swift#L229), every time it gets called, `Archive` iterates over the [central directory](https://en.wikipedia.org/wiki/ZIP_(file_format)#Structure) on disk in a sequential fashion (`O(N)`). I ended up constructing my own in-memory index of entries when the store is opened.
 {:.warning}
 
-As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.sqlite`), and a directory for blobs. While a database is usually relatively small, blobs can grow quite a bit because that's where all the network responses are. I have to unarchive a manifest and a database when opening a store, but with zip I can keep the blobs in an archive and access each individual blob on-demand (see `dataForEntity`)[^1].
+As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.sqlite`), and a directory for blobs. While a database is usually relatively small, blobs can grow quite a bit because that's where all the network responses are. I have to unarchive a manifest and a database when opening a store, but with zip I can keep the blobs in an archive and access each individual blob on-demand (see `dataForEntry`)[^1].
 
-[^1]: I’m glad I initially decided not to put blobs into Core Data, it would have prevented me from implementing some of these optimizations.
+[^1]: I’m glad I initially decided not to put blobs into the database. It would have prevented me from implementing some of these optimizations.
 
 > Blob store has another optimization in place where responses automatically get deduplicated. It calculates a cryptographic hash (sha256) for each response. If two responses have the same hash, only one blob gets stored. This is great especially if the app keeps fetching the resource that doesn't change over and over again.
 {:.info}
 
 ### Opening Documents
 
-Setting the supported document type was pretty easy, I just followed the [sample code](https://developer.apple.com/documentation/uikit/view_controllers/building_a_document_browser_app_for_custom_file_formats). After adding the document type to the plist, I got the system to recognize my documents and even auto-generate an icon.
+Setting the supported document type was pretty easy. I just followed the [sample code](https://developer.apple.com/documentation/uikit/view_controllers/building_a_document_browser_app_for_custom_file_formats). After adding the document type to the plist, I got the system to recognize my documents and even auto-generate an icon.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/m1.png">
 
@@ -186,6 +202,5 @@ A clear, concise, and easy to understand file format is a crucial part of any ap
 </div>
 
 <div class="FootnotesSection" markdown="1">
-[^2]: The primary reason was to make it easier to programmatically access the storage. I also have a branch with an SQLite re-write, but decided against it because I didn't find a lot of advantages compared to Core Data.
-[^3]: Zip archives can also work without compression if you just want to put multiple files in a single binary.
+[^3]: ZIP archives can also work without compression if you just want to put multiple files in a single binary.
 </div>
