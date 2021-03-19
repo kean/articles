@@ -39,7 +39,7 @@ What's the use case? [Pulse](https://github.com/kean/Pulse) is a logging system.
 
 ### Archives (.pages)
 
-[Pages](https://www.apple.com/pages/) files are ZIP archives[^6]. You can change the extension to `.pages` to unarchive it (or use `unzip` from Terminal).
+[Pages](https://www.apple.com/pages/) files are ZIP archives[^6]. You can change the extension to `.zip` and unarchive it (or use `unzip` from Terminal).
 
 [^6]: Turns out, if your document is 500 MB or larger, you [might be asked](https://support.apple.com/en-us/HT202887) to save your document, spreadsheet, or presentation as a package.
 
