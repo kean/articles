@@ -27,7 +27,7 @@ When you open the [root SwiftUI documentation page](https://developer.apple.com/
 
 The first item on the list is not part of this documentation, it's a link that opens the root page containing all [SwiftUI Tutorials](https://developer.apple.com/tutorials/SwiftUI).
 
-The categories are rather arbitrary. They can't be specific given how few there are. There is no way of knowing whether what you looking for is going to be in the category without opening the page first. When you drill down the navigation hierarchy the only sense of where you are in the documentation hierarchy is a navigation strip at the top.
+The categories are rather arbitrary. They can't be specific given how few there are. There is no way of knowing whether what you are looking for is going to be in the category without opening the page first. When you drill down the navigation hierarchy the only sense of where you are in the documentation hierarchy is a navigation strip at the top.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/02.png">
 
@@ -43,7 +43,7 @@ There are many things that Google does right on this page. First, unlike Apple d
 - You can navigate different *types* of documentation using tabs at the top
 - There is a table of contents on the right, Apple doesn't have that
 
-But this is comparing apples to oranges. The Google documentation page is what a developer looking to build something for Android sees. It covers all topics, including basics, architecture, navigation, persistence, deployment, etc. I was compating it with the SwiftUI page. What does the home page look like?
+But this is comparing apples to oranges. The Google documentation page is what a developer looking to build something for Android sees. It covers all topics, including basics, architecture, navigation, persistence, deployment, etc. I was comparing it with the SwiftUI page. What does the home page look like?
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/05.png">
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/04.png">
@@ -62,11 +62,11 @@ There are generally three types of documentation:
 
 Tutorials are generally the easier types of documentation to write. You take a specific problem and describe the steps to solve it. They don't need to provide deep knowledge, they don't need to be complete, and they can overlook certain aspects of the technology. For example, [Triple Trouble](https://kean.blog/post/triple-trouble) took me 20 minutes to write, [SwiftUI Layout System](https://kean.blog/post/swiftui-layout-system) - more than a week.
 
-Back in the Objective-C days, Apple's focus was on providing guides offering a [deep understanding](https://developer.apple.com/library/archive/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Introduction/Introduction.html) of the topic. With SwiftUI, the focused switched to [tutorials](https://developer.apple.com/tutorials/swiftui/). These are nicely produced, but that raises concerns about prioritization issues. As a result, Apple now writes tutorials, and the community writes [The Complete Guide to NavigationView in SwiftUI](https://www.hackingwithswift.com/articles/216/complete-guide-to-navigationview-in-swiftui). The situation is backward.
+Back in the Objective-C days, Apple's focus was on providing guides offering a [deep understanding](https://developer.apple.com/library/archive/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Introduction/Introduction.html) of the topic. With SwiftUI, the focus switched to [tutorials](https://developer.apple.com/tutorials/swiftui/). These are nicely produced, but that raises concerns about prioritization issues. As a result, Apple now writes tutorials, and the community writes [The Complete Guide to NavigationView in SwiftUI](https://www.hackingwithswift.com/articles/216/complete-guide-to-navigationview-in-swiftui). The situation is backward.
 
 ### Guides
 
-Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. They different documentation types are mixed in a bland mass of gray with an unconscionable amount of white space.
+Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. There different documentation types are mixed in a bland mass of gray with an unconscionable amount of white space.
 
 For example, on the screenshot below you can find a tutorial, two guides, and multiple references. This page could benefit from color differentiation.
 
@@ -78,7 +78,7 @@ The goal of a reference is to provide a complete list of the available APIs with
 
 You often don't even need a reference as a document. To learn about APIs, you can use inline documentation in Xcode. And for a deep understanding of topics, you use guides. This is again why it's generally a good idea to separate a reference from a guide. In Apple documentation, things are more complicated.
 
-Let's take [`NavigationView`](https://developer.apple.com/documentation/swiftui/navigationview) page as an example. This page is classified as a reference which is indicated by the fact the there is no icon and it says "struct".
+Let's take [`NavigationView`](https://developer.apple.com/documentation/swiftui/navigationview) page as an example. This page is classified as a reference which is indicated by the fact that there is no icon and it says "struct".
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/10.png">
 
