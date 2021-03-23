@@ -22,9 +22,7 @@ I have some ideas why scrolling might be slow (can't specify constant cell heigh
 
 I solved all these performance issues with one simple trick – rewriting the list using [`NSTableView`](https://developer.apple.com/documentation/appkit/nstableview). After the change, the app is – what's the overused term is – *blazing fast*.
 
-<br/>
-
-<div class="BlogVideo NewScreenshot">
+<div class="BlogVideo">
 <video autoplay loop muted playsinline preload="auto">
   <source src="{{ site.url }}/videos/not-list/after-2.mp4" type="video/mp4">
 </video>

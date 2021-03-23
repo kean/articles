@@ -10,7 +10,7 @@ permalink: /post/pulse-store
 uuid: 424b2065-a294-4311-9bc7-f85ed82d1290
 ---
 
-<div class="BlogVideo NewScreenshot">
+<div class="BlogVideo">
 <video autoplay loop muted playsinline preload="auto">
   <source src="{{ site.url }}/videos/pulse-store/01.mp4" type="video/mp4">
 </video>
