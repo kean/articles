@@ -28,7 +28,7 @@ Nuke is often used during scrolling, so it has to be fast and never add unnecess
 </video>
 </div>
 
-There isn't much to say about Pulse: [you can't have]({{ site.url }}/images/misc/m1.jpg) threading issues if you don't have threading. But when you need concurrency, it's notoriously hard to get it right. So what do you do?
+There isn't much to say about Pulse: you can't have threading issues if you [don't have]({{ site.url }}/images/misc/m1.jpg) threading. But when you need concurrency, it's notoriously hard to get it right. So what do you do?
 
 ## Actor Model
 
@@ -38,7 +38,7 @@ There isn't much to say about Pulse: [you can't have]({{ site.url }}/images/misc
 
 The actor model is a pattern. It doesn't *have* to be included in the language, but the goal of the Swift team is to add to one of the main Swift strengths: safety via compile-time checks. With the actor model, you will get isolation checks at compile-time along with other safety features.
 
-In the meantime, I've been designing classes as Actors in Objective-C since [GCD](https://developer.apple.com/documentation/DISPATCH) was added in iOS 4. I'm designing Swift classes as Actors now. And I can't wait to start designing them using a formal actor model.
+I've been designing classes as Actors in Objective-C since [GCD](https://developer.apple.com/documentation/DISPATCH) was added in iOS 4. I'm designing Swift classes as Actors now. And I can't wait to start designing them using a formal actor model.
 
 I designed most of the user-facing components in Nuke that has to be thread-safe as actors: `ImagePipeline`, `ImagePrefetcher`, `DataLoader`.
 
@@ -107,7 +107,9 @@ That's a bit much and probably adds up to more than the actual work being perfor
 
 One option is to forget about background execution and thread-safety and synchronize on the main thread. But remember, prefetcher is also used during scrolling. A collection view [prefetch API](https://developer.apple.com/documentation/uikit/uicollectionviewdatasourceprefetching) can ask you to start prefetching for 20 or more cells at a time. The amount of work is significant enough to justify sending it to the background.
 
-Instead, Nuke synchronizes two actors (`ImagePipeline` and `ImagePrefetcher`) on a single dispatch queue. When `ImagePrefetcher` calls `ImagePipeline`, you are already on the syncrhonization queue, so the pipeline doesn't have to do any synchronization. And when the task is completed, `ImagePipeline` is already on its serial queue, so dispatch is not needed again. From 9 `queue.async` calls we are down to just one!
+Instead, Nuke synchronizes two actors (`ImagePipeline` and `ImagePrefetcher`) on a single dispatch queue. When `ImagePrefetcher` calls `ImagePipeline`, you are already on the synchronization queue, so the pipeline doesn't have to do any synchronization. And when the task is completed, `ImagePipeline` is already on its serial queue, so dispatch is not needed again. From 9 `queue.async` calls we are down to just one!
+
+> Can you still call this approach an actor model? I think it's a stretch, but I will let it slide. It definitely won't be able to be implemented this way with just features from [SE-0306: Actors](https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md), but [Global Actors Pitch](https://github.com/DougGregor/swift-evolution/blob/global-actors/proposals/nnnn-global-actors.md) hints at something similar.
 
 ### DataLoader
 
@@ -189,13 +191,15 @@ Will Nuke adopt [async/await](https://github.com/apple/swift-evolution/blob/main
 
 ## Locks
 
-Nuke also extensively uses locks([`NSLock`](https://developer.apple.com/documentation/foundation/nslock)) for syncrhonization. `ImageCache`, `DataCache`, `ResumableData`  – there are plenty of components that use them. They all have public synchronous APIs, so they have to be thread-safe.
+Nuke also extensively uses locks([`NSLock`](https://developer.apple.com/documentation/foundation/nslock)) for synchronization. `ImageCache`, `DataCache`, `ResumableData`  – there are plenty of components that use them. They all have public synchronous APIs, so they have to be thread-safe.
 
-There isn't much to say about locks. There are easy to use and efficient. I don't trust any of the performance benchmarks that measure the performance difference between different synchronization instruments. If there even is a measurable difference, it's irrelevant in the scenarios where I use them.
+There isn't much to say about locks. There are easy to use and fast[^6]. I don't trust any of the performance benchmarks that measure the performance difference between different synchronization instruments. If there even is a measurable difference, it's irrelevant in the scenarios where I use them.
+
+[^6]: Especially after the recent-ish performance optimizations, which I can't find a link for right now. Locks are especially efficient in situations where there isn't a lot of contention, so they don't need to go to the kernel level.
 
 ## Atomics
 
-I've been using atomic operations (`OSAtomicIncrement64`, `OSCompareAndSwap`) in a couple of places in Nuke before, for example for generating unique task IDs in the pipeline. when Thread Sanizer was introduced it started emiting fasle positive warnings to the users, so I replace all instances of CAS with locks or refactored some code to not require syncrhonization in the first place. There wasn't much impact on performance for the scenarios where I was using them.
+I've been using atomic operations (`OSAtomicIncrement64`, `OSCompareAndSwap`) in a couple of places in Nuke before, for example for generating unique task IDs in the pipeline. when Thread Sanizer was introduced it started emiting fasle positive warnings to the users, so I replace all instances of CAS with locks or refactored some code to not require synchronization in the first place. There wasn't much impact on performance for the scenarios where I was using them.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/access-race.png">
 
@@ -207,13 +211,13 @@ The expensive operations, e.g. decoding, processing, data loading, are modeled u
 
 ## Conclusion
 
-To write responsive client-side programs[^5], you often have to embrace concurrency. There are, of course, applications that barely need it. Take [Pulse](https://github.com/kean/Pulse) for example. All it does is perform database queries on the main thread, and it's fast enough. There are, of course, kinds of tasks that obviously have to be asynchronous, such as networking. But if you want to use background processing as an optimization, always measure!
+To write responsive client-side programs[^5], you often have to embrace concurrency. There are, of course, applications that barely need it. Take [Pulse](https://github.com/kean/Pulse) for example. All it does is perform database queries on the main thread, and it's fast enough. There are, of course, kinds of tasks that obviously have to be asynchronous, such as networking. But if you want to use background processing as an optimization, always measure! Performance is about doing less, not more.
 
 [^5]: And servers! Modern server-side frameworks, such as [SwiftNIO](https://github.com/apple/swift-nio) also embraced concurrency and non-blocking I/O.
 
 Your assumptions about performance often won’t match the reality. Measuring is an art on its own. Modern CPUs with different cache levels and other optimizations make it hard to reasons about performance. But at least make sure to measure in Release mode (with compiler optimizations on) and check that you are getting consistent results. The absolute measurements might not always be accurate, but the relative values should give you confidence that your changes improve performance, not degrade it. Never do premature optimizations, but also don't paint yourself into a corner where the only way to improve performance is to rewrite half of the app.
 
-Nuke has a lot of optimizations, some are not practical, so don't just go and copy them. I just finished watched [F1 Season 3](https://www.formula1.com/en/latest/article.watch-the-unmissable-trailer-for-season-3-of-netflixs-drive-to-survive.1ZMsRiYIvxZEPV9iqzatsx.html) (which was fantastic by the way) in basically two sittings. Not that's I'm a huge fan of F1, but I like things to go fast. I'm not stopping where any sane person should.
+Nuke has a lot of optimizations, some are not practical, so don't just go and copy them. I just finished watched [F1 Season 3](https://www.formula1.com/en/latest/article.watch-the-unmissable-trailer-for-season-3-of-netflixs-drive-to-survive.1ZMsRiYIvxZEPV9iqzatsx.html) (which was phenomenal by the way) in basically two sittings. Not that's I'm a huge fan of F1, but I like things to go fast. I'm not stopping where any sane person should.
 
 <div class="References" markdown="1">
 
