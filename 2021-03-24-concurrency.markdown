@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Concurrency Done Right"
-subtitle: The actor model, and other concurrency models used in Nuke
-description: The actor model, and other concurrency models used in Nuke
+subtitle: The actor model and other concurrency patterns used in Nuke
+description: The actor model and other concurrency patterns used in Nuke
 date: 2021-03-24 10:00:00 -0500
 category: programming
 tags: programming
@@ -27,10 +27,6 @@ Nuke is often used during scrolling, so it has to be fast and never add unnecess
   <source src="{{ site.url }}/videos/rate_limiter.mp4" type="video/mp4">
 </video>
 </div>
-
-Nuke only takes about **0.004 ms** (4 microseconds) on the main thread per request and about **0.023 ms** (23 microseconds) overall[^2], as measured on iPhone 11 Pro. Virtually unnoticeable. This is how the frameworks should be.
-
-[^2]: As measured after taking out system calls for decoding, processing, and download images. This is just Nuke "overhead".
 
 There isn't much to say about Pulse: [you can't have]({{ site.url }}/images/misc/m1.jpg) threading issues if you don't have threading. But when you need concurrency, it's notoriously hard to get it right. So what do you do?
 
