@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Concurrency Done Right"
+title: "Concurrency"
 subtitle: The actor model and other concurrency patterns used in Nuke
 description: The actor model and other concurrency patterns used in Nuke
 date: 2021-03-24 10:00:00 -0500
@@ -14,11 +14,7 @@ image:
   width: 640
 ---
 
-<blockquote class="quotation">
-   <p>The best way to handle concurrency is just to not do it.</p>
-</blockquote>
-
-Some apps can afford not to. The rest are the reason why books on concurrency exist[^3].
+Some apps can afford not to have concurrency. The rest are the reason why books on concurrency exist[^3].
 
 [^3]: Or are Xcode [blocking the main thread](https://twitter.com/a_grebenyuk/status/1371519070122692609?s=20) for 20+ seconds at a time when checking run destinations with WiFi deployment enabled. Sorry, Xcode, I didn't mean to be mean.
 
@@ -26,19 +22,21 @@ I have two examples from my experience. [Pulse](https://github.com/kean/Pulse) h
 
 Nuke is often used during scrolling, so it has to be fast and never add unnecessary contention to the main thread. This is why Nuke does _nothing_ on the main thread. At the same time, it requires very few context switches. And that's the key to its performance (among numerous other performance-related [features](https://kean.blog/post/nuke-9)).
 
-<div class="BlogVideo">
+<div style="max-width:540px;" class="BlogVideo">
 <video controls muted playsinline preload="auto">
   <source src="{{ site.url }}/videos/rate_limiter.mp4" type="video/mp4">
 </video>
 </div>
 
-There isn't much to say about Pulse: you can't have threading issues if you [don't have]({{ site.url }}/images/misc/m1.jpg) threading. But when you need concurrency, it's notoriously hard to get it right. So what do you do?
+There isn't much to say about Pulse: you can't have threading issues if you [don't have]({{ site.url }}/images/misc/m1.jpg) threading. But when you need it, concurrency is notoriously hard to get right. So what do you do?
 
 ## Overview
 
-As an overview, here is a high-level breakdown of the primary components in Nuke, grouped based on the concurrency primitives they are using. There isn't one pattern that dominates. Each situation requires a unique approach.
+If you group the primary components in Nuke based on the concurrency primitives they use, you'll end up with roughly four groups. There isn't one pattern that dominates. Each situation requires a unique approach.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/overview.png">
+<img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/concurrency-cover.png">
+
+There is a tiny portion of code that is not thread-safe and can only run from the main thread because it updates UI components, be it UIKit or SwiftUI. This code has assertions to catch errors early: `assert(Thread.isMainThread)`. The rest of the code operates in the background and this is what the article covers.
 
 ## Actor Model
 
@@ -50,11 +48,16 @@ The actor model is a pattern. It doesn't *have* to be included in the language, 
 
 I've been designing classes as Actors in Objective-C since [GCD](https://developer.apple.com/documentation/DISPATCH) was added in iOS 4. I'm designing Swift classes as Actors now. And I can't wait to start designing them using a formal actor model.
 
+> While the formal definition seems a bit complicated, you can simply think of an actor as a class with some private state and an associated *serial* dispatch queue[^7]. The only way to access the state is to do it on the serial queue. It ensures there are never any [data races](https://en.wikipedia.org/wiki/Race_condition#Data_race).
+{:.info}
+
+[^7]: It appears that the actual implementation in Swift won't be using dispatch queues. I'm also curious to learn more about a lighter-weight implementation of the actor runtime mentioned in the Swift Evolution proposal that _isn't_ based on serial `DispatchQueue`.
+
 I designed most of the user-facing components in Nuke that has to be thread-safe as actors: `ImagePipeline`, `ImagePrefetcher`, `DataLoader`.
 
 ### ImagePipeline
 
-[`ImagePipeline`](https://github.com/kean/Nuke#image-pipeline) is the main component you interact with as a user to fetch images. It has to be fast because you often use it during scrolling, and it has to be thread-safe. The pipeline (or most of it in the current iteration) is designed as an actor. All you need to do to implement it is create a [`DispatchQueue`](https://developer.apple.com/documentation/dispatch/dispatchqueue) and perform work exclusively in a critical section provided by it.
+[`ImagePipeline`](https://github.com/kean/Nuke#image-pipeline) is the main component you interact with as a user to fetch images. It has to be fast because you often use it during scrolling, and it has to be thread-safe. The pipeline (or most of it in the current iteration) is designed as an actor.
 
 ```swift
 /// Not the actual implementation, just a demonstration
@@ -72,13 +75,11 @@ public final class ImagePipeline {
 }
 ```
 
-Now the pipeline is fully thread-safe _and_ does its work in the background reducing contention on the main thread. Why is it important? The pipeline does quite a lot: coalescing, creating, and starting URL requests, which can take up to `0.6ms` on older devices. Apps can't afford it when scrolling a collection view with multiple images per row. Scheduling async work on a [`DispatchQueue`](https://developer.apple.com/documentation/dispatch/dispatchqueue), on the other hand, is fast – a couple of *micro*seconds. It's not free but is significantly faster than the work in this case.
-
-> In the current implementation, `ImagePipeline` also returns an `ImageTask` instance from `loadImage()` method. It won't fly with an actor model. Instead of making `ImagePipeline` itself an actor, I'll consider factoring out most of its implementation into a separate private component that can be.
+Now the pipeline is fully thread-safe _and_ does its work in the background reducing contention on the main thread. Why is it important? The pipeline does quite a lot: coalescing, creating, and starting URL requests, which can take up to `0.6ms` on older devices. Apps can't always afford it when scrolling a collection view with multiple images per row. Scheduling async work on a [`DispatchQueue`](https://developer.apple.com/documentation/dispatch/dispatchqueue), on the other hand, is relatively fast – maybe a few *micro*seconds. It's not free but is faster than the work in this case.
 
 ### ImagePrefetcher
 
-[`ImagePrefetcher`](https://github.com/kean/Nuke#image-preheating) is used for prefetching images (duh). You create one per screen to help you manage prefetching. `ImagePrefetcher` is also an Actor.
+[`ImagePrefetcher`](https://github.com/kean/Nuke#image-preheating) helps you manage image prefetching per screen and is also an Actor.
 
 ```swift
 /// Not the actual implementation, just a demonstration
@@ -89,43 +90,46 @@ public final class ImagePrefetch {
     /// Private state...
     private let tasks = [URL: ImageTask]()
 
-    public func startPrefetching(for urls: [URL]) {
+    public func startPrefetching(urls: [URL]) {
         queue.async {
             for url in urls {
-                self.tasks[url] = self.pipeline.loadImage(url: url) { [weak self] in
-                    self.queue.async {
-                        self.tasks[url] = nil
-                    }
+                self.tasks[url] = self.pipeline.loadImage(with: url) { [weak self] in
+                    self?.didCompleteTask(url: url)
                 }
             }
         }
     }
 
-    public func stopPrefetching(for urls: [URL]) {
-        // Find pending tasks associated with the given URLs and cancel them
+    private func didCompleteTask(url: URL) {
+        queue.async {
+            self.tasks[url] = nil
+        }
     }
 }
 ```
 
-Now here is a problem. Let's say you start prefetching for 4 URLs. How many `queue.async` calls can you count?
+Now here is a problem. Let's say you start prefetching images with 4 URLs. How many `queue.async` calls can you count?
 
-- 1 made by the prefetcher to access its state
-- 4 made by the pipeline to in turn access _its_ state in `loadImage(url:)`
+- 1 made by the prefetcher to access its state in `startPrefetching(urls:)`
+- 4 made by the pipeline to access _its_ state in `loadImage(url:)`
 - 4 made by the prefetcher, one per completion callback
 
-That's a bit much and probably adds up to more than the actual work being performed by these classes. Can we optimize it?
+That's a bit much. Can we optimize it?
 
-One option is to forget about background execution and thread-safety and synchronize on the main thread. But remember, prefetcher is also used during scrolling. A collection view [prefetch API](https://developer.apple.com/documentation/uikit/uicollectionviewdatasourceprefetching) can ask you to start prefetching for 20 or more cells at a time. The amount of work is significant enough to justify sending it to the background.
+One option is to forget about thread-safety and background execution and synchronize on the main thread. But prefetcher is also used during scrolling. A collection view [prefetch API](https://developer.apple.com/documentation/uikit/uicollectionviewdatasourceprefetching) can ask you to start prefetching for 20 or more cells at a time. If sending it to background is faster than executing on the main queue, I would prefer to do it. When [120Hz displays](https://www.macrumors.com/2020/12/28/120hz-promotion-display-iphone-13/) for iPhones drop, you will be happy to get any optimizations you can.
 
-Instead, Nuke synchronizes two actors (`ImagePipeline` and `ImagePrefetcher`) on a single dispatch queue. When `ImagePrefetcher` calls `ImagePipeline`, you are already on the synchronization queue, so the pipeline doesn't have to do any synchronization. And when the task is completed, `ImagePipeline` is already on its serial queue, so dispatch is not needed again. From 9 `queue.async` calls we are down to just one!
+> Always measure. Sending work to the background will often be _slower_ than executing it synchronously on the current thread and synchronizing with locks.
+{:.warning}
 
-> Can you still call this approach an actor model? I think it's a stretch, but I will let it slide. It definitely won't be able to be implemented this way with just features from [SE-0306: Actors](https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md), but [Global Actors Pitch](https://github.com/DougGregor/swift-evolution/blob/global-actors/proposals/nnnn-global-actors.md) hints at something similar.
+To avoid the excessive number of context switches, Nuke synchronizes two actors (pipleine and prefetcher) on a single dispatch queue, dropping the number of `queue.async` calls to just one!
+
+> Can you still call this approach an actor model? I think it's a stretch, but I will let it slide. I definitely won't be able to implement it this way with just features from [SE-0306: Actors](https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md), but [Global Actors Pitch](https://github.com/DougGregor/swift-evolution/blob/global-actors/proposals/nnnn-global-actors.md) hints at something similar. Regardless, I think it’s a nice optimization, but not as impactful as you can imagine. Measure!
 
 ### DataLoader
 
-I apply a similar optimization to the default data loader (`DataLoader`). When the pipeline is initialized, it injects the synchronization queue into the data loader. Nuke can't perform this optimization for custom data loaders (types that implement `DataLoading` protocol where all bets are off), but it can for the default one. And it gets even more exciting!
+I apply a similar optimization to the default data loader (`DataLoader`). When the pipeline is initialized, it injects the synchronization queue into the data loader. And it gets even more exciting!
 
-Here is the initial implementation of the `DataLoader` and the pipeline task that uses it:
+This is the initial implementation of the `DataLoader`:
 
 ```swift
 /// Not the actual implementation, just a demonstration
@@ -136,13 +140,10 @@ public final class DataLoader {
         session = URLSession(configuration:configuration, delegate: self, delegateQueue: queue)
     }
 
-    /// ...
-
     func loadData(for request: URLRequest, completion: @escaping (Data?) -> Void) {
         let task = session.dataTask(with: request)
         let handler = _Handler(didReceiveData: didReceiveData, completion: completion)
-        // Dispatch #1
-        session.delegateQueue.addOperation {
+        session.delegateQueue.addOperation { // Dispatch #1
             self.handlers[task] = handler
         }
         task.resume()
@@ -155,19 +156,20 @@ public final class DataLoader {
         }
         handler.didReceiveData(data)
     }
+
+    /// ...
 }
 
 private final class LoadDataTask {
     func didReceiveData(_ data: Data) {
-        // Dispatch #2
-        pipeline.queue.async {
+        pipeline.queue.async { // Dispatch #2
             // ...
         }
     }
 }
 ```
 
-`DataLoader` uses a background [operation queue](https://developer.apple.com/documentation/foundation/operationqueue) as a [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) delegate queue, which is great because it reduces contention on the main thread. But it is a new private queue – the same problem as with the prefetcher. But here is a trick, `OperationQueue` allows you to set an [`undelryingQueue`](https://developer.apple.com/documentation/foundation/operationqueue/1415344-underlyingqueue). In the optimized version, `DataLoader` uses the pipeline's serial queue as a delegate queue.
+`DataLoader` used a background operation queue as a [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) delegate queue, which is great because it reduces contention on the main thread. But it is a new private queue – the same problem as with the prefetcher. Here is a trick, [`OperationQueue`](https://developer.apple.com/documentation/foundation/operationqueue) allows you to set an [`underlyingQueue`](https://developer.apple.com/documentation/foundation/operationqueue/1415344-underlyingqueue). In the optimized version, `DataLoader` uses the pipeline's serial queue as a delegate queue.
 
 ```swift
 extension DataLoader {
@@ -177,57 +179,64 @@ extension DataLoader {
 }
 ```
 
-With this optimization, we can get rid of _all_ synchronization calls in `DataLoader` (see dispatch #1 and #2).
+Now the entire system is synchronized on a single serial dispatch queue!
 
 ### Main Queue?
 
-When you hear advice about synchronizing on the main queue, the important words here are "synchronizing" and "queue". The queue doesn't have to be your main queue. Using the main queue does make it easier to avoid UI updates from the background queue, but [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html) catches those immediately, so it's relatively easy to avoid.
+If you synchronize on the main queue, the important words are "synchronizing" and "queue". The queue doesn't have to be your main queue. Using the main queue does make it easier to avoid UI updates from the background queue, but [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html) catches those immediately, so it's relatively easy to avoid.
 
-There is also a major flaw in the "just synchronize on main" approach. If you do, it means none of your subsystems are thread-safe. If you accidentally call any of them from the background, you can _introduce subtle bugs_ which are much harder to find than background UI updates. And it gets worse. If your app becomes big enough that it can no longer afford to operate strickly on the main queue, you are going to be up to major rethinking of your components (been there).
+There is also a flaw in synchronizing on main. If your subsystems assume they are only called from a single queue, they are not thread-safe. If you accidentally call any of them from the background, you can _introduce subtle bugs_ which are harder to find than simple UI updates from the background, unless you fill your code with assertions. And if your app becomes big enough that it can no longer afford to operate strickly on the main queue, you are going to be up to major rethinking of your components (been there).
 
-The actor model is a great approach to achieve thread-safety and performance. One thing to keep in mind with the dispatch queues is that switching execution contexts is not free. There is such thing as too much of a good thing. Nuke solves it by synchronizing all of its subsystems on a single serial dispatch queue.
+The actor model is a great way to achieve thread-safety and keep your apps responsive.
 
 ## Tasks
 
-Nuke has an incredible number of performance [features](https://kean.blog/post/nuke-9): progressive decoding, prioritization, coalescing of tasks, cooperative cancellation, parallel processing, backpressure, prefetching. It forces Nuke to be massively concurrent. Actor Modal is just part of the solution. To manage individual image downloads, it needs something more.
+Nuke has an incredible number of performance [features](https://kean.blog/post/nuke-9): progressive decoding, prioritization, coalescing of tasks, cooperative cancellation, parallel processing, backpressure, prefetching. It forces Nuke to be massively concurrent. The actor modal is just part of the solution. To manage individual image requests, it needed a structured approach for async tasks.
 
-The solution is `Task`. `Task` is part of the internal infrastructure built specifically for Nuke. I don't want to go into too much detail on this because it's impossible to cover in one post, so I'll just throw this complex diagram here.
+The solution is [`Task`](https://github.com/kean/Nuke/blob/93c187ab98ab02f8c891d1fa40ffe92a1591f524/Sources/Tasks/Task.swift#L18), a is part of the internal infrastructure. I don't want to go into too much detail because it's impossible to cover in one post, so I'll just throw this complex diagram here.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/tasks.png">
 
-Tasks are inspired by reactive programming but are optimized for Nuke. Tasks are much simpler and faster than a typical generalized reactive programming implementation. The complete implementation takes just 237 lines.
+When you request an image, Nuke creates a dependency tree with multiple tasks. When a similar image request arrives (e.g. the same URL, but different processors), an existing subtree can serve as a dependency of another task. Nuke has to manage prioritization and cooperativ ecancellation, so I sane structured approach was a must.
 
-Will Nuke adopt [async/await](https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md) for its internal when it's available? Highly unlikely, as it won't cover all the scenarios I need. But I am considering replacing tasks with [Combine](https://developer.apple.com/documentation/combine) when Nuke drops iOS 12 support.
+Tasks perform their work incrementally (to support progressive decoding) so they are inspired by reactive programming, but are optimized for Nuke. Tasks are much simpler and faster than a typical generalized reactive programming implementation. The complete implementation takes just 237 lines.
+
+Will Nuke adopt [async/await](https://github.com/apple/swift-evolution/blob/main/proposals/0296-async-await.md) for its internal infrastructure? Unlikely, as it probably won't cover all the scenarios I need. But I am considering replacing tasks with [Combine](https://developer.apple.com/documentation/combine) when Nuke drops iOS 12 support.
 
 ## Locks
 
-Nuke also extensively uses locks([`NSLock`](https://developer.apple.com/documentation/foundation/nslock)) for synchronization. `ImageCache`, `DataCache`, `ResumableData`  – there are plenty of components that use them. They all have public synchronous APIs, so they have to be thread-safe.
+Nuke also extensively uses locks([`NSLock`](https://developer.apple.com/documentation/foundation/nslock)) for synchronization. `ImageCache`, `DataCache`, `ResumableData`  – there are a few components that use them. They all have public synchronous APIs, so they have to be thread-safe.
+
+> Locks allow you to protect a critical section of code. You [`lock()`](https://developer.apple.com/documentation/foundation/nslocking/1416318-lock) when the section starts, and [`unlock()`](https://developer.apple.com/documentation/foundation/nslocking/1418241-unlock) when you are done. Unlike semaphores, unlock has to be sent from the same thread that sent the initial lock messages.
+{:.info}
 
 There isn't much to say about locks. There are easy to use and fast[^6]. I don't trust any of the performance benchmarks that measure the performance difference between different synchronization instruments. If there even is a measurable difference, it's irrelevant in the scenarios where I use them.
 
 [^6]: Especially after the recent-ish performance optimizations, which I can't find a link for right now. Locks are especially efficient in situations where there isn't a lot of contention, so they don't need to go to the kernel level.
 
+> `DataCache` is a bit more complicated than that. It writes data asynchronously and does so in parallel to reads, while reads can also be parallel to each other. It's a bit experimental, I haven't tested the full impact of this approach on the performance.
+
 ## Atomics
 
-I've been using atomic operations (`OSAtomicIncrement64`, `OSCompareAndSwap`) in a couple of places in Nuke before, for example for generating unique task IDs in the pipeline. when Thread Sanizer was introduced it started emiting fasle positive warnings to the users, so I replace all instances of CAS with locks or refactored some code to not require synchronization in the first place. There wasn't much impact on performance for the scenarios where I was using them.
+I've been using atomic operations (`OSAtomicIncrement64`, `OSCompareAndSwap`) in a couple of places in Nuke before, for example for generating unique task IDs in the pipeline. But when Thread Sanizer was introduced it started emiting fasle positive warnings to the users.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/access-race.png">
 
-I will revisit this topic when/if [Swift Atomics](https://swift.org/blog/swift-atomics/) are part of the Standard Library.
+I replaced all atomics usages with locks or refactored some code to not require synchronization in the first place. There wasn't much impact on performance for the scenarios where I was using them. Atomics are great when you want to avoid allocating a lock. I will revisit this topic when/if [Swift Atomics](https://swift.org/blog/swift-atomics/) are part of the Standard Library.
 
 ## OperationQueues
 
-The expensive operations, e.g. decoding, processing, data loading, are modeled using operations ([`Foundation.Operation`](https://developer.apple.com/documentation/foundation/operation). Operation queues are used for parallelism with a limited number of concurrent operations to avoid a thread explosion problem. They are also used for prioritization which is crucial for some user scenarios.
+The expensive operations, e.g. decoding, processing, data loading, are modeled using [`Foundation.Operation`](https://developer.apple.com/documentation/foundation/operation). Operation [queues](https://developer.apple.com/documentation/foundation/operationqueue) are used for parallelism with a limited number of concurrent operations. They are also used for prioritization which is crucial for some user scenarios. There isn't much else to say about operation queues that haven't already been said.
 
 ## Conclusion
 
-To write responsive client-side programs[^5], you often have to embrace concurrency. There are, of course, applications that barely need it. Take [Pulse](https://github.com/kean/Pulse) for example. All it does is perform database queries on the main thread, and it's fast enough. There are, of course, kinds of tasks that obviously have to be asynchronous, such as networking. But if you want to use background processing as an optimization, always measure! Performance is about doing less, not more.
+To write responsive client-side programs[^5], you often have to embrace concurrency. There are, of course, kinds of tasks that obviously have to be asynchronous, such as networking. But if you want to use background processing as an optimization, always measure! Performance is about doing less, not more.
 
 [^5]: And servers! Modern server-side frameworks, such as [SwiftNIO](https://github.com/apple/swift-nio) also embraced concurrency and non-blocking I/O.
 
-Your assumptions about performance often won’t match the reality. Measuring is an art on its own. Modern CPUs with different cache levels and other optimizations make it hard to reasons about performance. But at least make sure to measure in Release mode (with compiler optimizations on) and check that you are getting consistent results. The absolute measurements might not always be accurate, but the relative values should give you confidence that your changes improve performance, not degrade it. Never do premature optimizations, but also don't paint yourself into a corner where the only way to improve performance is to rewrite half of the app.
+Measuring is an art on its own. Modern CPUs with different cache levels and other optimizations make it hard to reasons about performance. But at least make sure to measure in Release mode (with compiler optimizations on) and check that you are getting consistent results. The absolute measurements might not always be accurate, but the relative values will guide you in the right direction. Never do premature optimizations, but also don't paint yourself into a corner where the only way to improve performance is to rewrite half of the app.
 
-Nuke has a lot of optimizations, some are not practical, so don't just go and copy them. I just finished watched [F1 Season 3](https://www.formula1.com/en/latest/article.watch-the-unmissable-trailer-for-season-3-of-netflixs-drive-to-survive.1ZMsRiYIvxZEPV9iqzatsx.html) (which was phenomenal by the way) in basically two sittings. Not that's I'm a huge fan of F1, but I like things to go fast. I'm not stopping where any sane person should.
+Nuke has many optimizations, some impractical, so don't just go and copy them. I just finished watching [F1 Season 3](https://www.formula1.com/en/latest/article.watch-the-unmissable-trailer-for-season-3-of-netflixs-drive-to-survive.1ZMsRiYIvxZEPV9iqzatsx.html) (which was phenomenal, by the way). I can't say that I'm a huge F1 fan, but I appreciate things designed for performance and a bit of competition. I'm not stopping where a sane person should.
 
 <div class="References" markdown="1">
 
@@ -241,4 +250,3 @@ Nuke has a lot of optimizations, some are not practical, so don't just go and co
 
 <div class="FootnotesSection" markdown="1">
 </div>
-
