@@ -14,11 +14,11 @@ image:
   width: 640
 ---
 
-Some apps can afford not to have concurrency. The rest are the reason why books on concurrency exist[^3].
+Some apps can afford to have _no_ concurrency. The rest are the reason why books on concurrency exist[^3].
 
 [^3]: Or are Xcode [blocking the main thread](https://twitter.com/a_grebenyuk/status/1371519070122692609?s=20) for 20+ seconds at a time when checking run destinations with WiFi deployment enabled. Sorry, Xcode, I didn't mean to be mean.
 
-I have two examples from my experience. [Pulse](https://github.com/kean/Pulse) has practically no concurrency, no parallelism, and does _everything_ on the main thread. On the other end of the spectrum is [Nuke](https://github.com/kean/Nuke) that has to be massively concurrent, parallel, and, of course, thread-safe.
+I have two examples from my recent experience. [Pulse](https://github.com/kean/Pulse) has practically no concurrency, no parallelism, and does _everything_ on the main thread. On the other end of the spectrum is [Nuke](https://github.com/kean/Nuke) that has to be massively concurrent, parallel, and thread-safe.
 
 Nuke is often used during scrolling, so it has to be fast and never add unnecessary contention to the main thread. This is why Nuke does _nothing_ on the main thread. At the same time, it requires very few context switches. And that's the key to its performance (among numerous other performance-related [features](https://kean.blog/post/nuke-9)).
 
@@ -32,7 +32,7 @@ There isn't much to say about Pulse: you can't have threading issues if you [don
 
 ## Overview
 
-If you group the primary components in Nuke based on the concurrency primitives they use, you'll end up with roughly four groups. There isn't one pattern that dominates. Each situation requires a unique approach.
+If you group the primary components in Nuke based on the concurrency primitives, you'll end up with roughly four groups. There isn't one pattern that dominates. Each situation requires a unique approach.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/concurrency-cover.png">
 
@@ -53,7 +53,7 @@ I've been designing classes as Actors in Objective-C since [GCD](https://develop
 
 [^7]: It appears that the actual implementation in Swift won't be using dispatch queues. I'm also curious to learn more about a lighter-weight implementation of the actor runtime mentioned in the Swift Evolution proposal that _isn't_ based on serial `DispatchQueue`.
 
-I designed most of the user-facing components in Nuke that has to be thread-safe as actors: `ImagePipeline`, `ImagePrefetcher`, `DataLoader`.
+I designed most of the public components in Nuke that have to be thread-safe as actors: `ImagePipeline`, `ImagePrefetcher`, `DataLoader`.
 
 ### ImagePipeline
 
@@ -114,7 +114,7 @@ Now here is a problem. Let's say you start prefetching images with 4 URLs. How m
 - 4 made by the pipeline to access _its_ state in `loadImage(url:)`
 - 4 made by the prefetcher, one per completion callback
 
-That's a bit much. Can we optimize it?
+That's a bit too much. Can we optimize it?
 
 One option is to forget about thread-safety and background execution and synchronize on the main thread. But prefetcher is also used during scrolling. A collection view [prefetch API](https://developer.apple.com/documentation/uikit/uicollectionviewdatasourceprefetching) can ask you to start prefetching for 20 or more cells at a time. If sending it to background is faster than executing on the main queue, I would prefer to do it. When [120Hz displays](https://www.macrumors.com/2020/12/28/120hz-promotion-display-iphone-13/) for iPhones drop, you will be happy to get any optimizations you can.
 
@@ -123,7 +123,7 @@ One option is to forget about thread-safety and background execution and synchro
 
 To avoid the excessive number of context switches, Nuke synchronizes two actors (pipleine and prefetcher) on a single dispatch queue, dropping the number of `queue.async` calls to just one!
 
-> Can you still call this approach an actor model? I think it's a stretch, but I will let it slide. I definitely won't be able to implement it this way with just features from [SE-0306: Actors](https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md), but [Global Actors Pitch](https://github.com/DougGregor/swift-evolution/blob/global-actors/proposals/nnnn-global-actors.md) hints at something similar. Regardless, I think it’s a nice optimization, but not as impactful as you can imagine. Measure!
+> Can you still call this approach an actor model? I think it's a stretch, but I will let it slide. I definitely won't be able to implement it this way with just features from [SE-0306: Actors](https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md), but [Global Actors Pitch](https://github.com/DougGregor/swift-evolution/blob/global-actors/proposals/nnnn-global-actors.md) hints at a solution. One could also think about this as a confirmation that actors synchronization can be too granular.
 
 ### DataLoader
 
@@ -187,7 +187,7 @@ If you synchronize on the main queue, the important words are "synchronizing" an
 
 There is also a flaw in synchronizing on main. If your subsystems assume they are only called from a single queue, they are not thread-safe. If you accidentally call any of them from the background, you can _introduce subtle bugs_ which are harder to find than simple UI updates from the background, unless you fill your code with assertions. And if your app becomes big enough that it can no longer afford to operate strickly on the main queue, you are going to be up to major rethinking of your components (been there).
 
-The actor model is a great way to achieve thread-safety and keep your apps responsive.
+If you need thread-safety and mutable state, the actor model is probably your best bet.
 
 ## Tasks
 
@@ -230,11 +230,11 @@ The expensive operations, e.g. decoding, processing, data loading, are modeled u
 
 ## Conclusion
 
-To write responsive client-side programs[^5], you often have to embrace concurrency. There are, of course, kinds of tasks that obviously have to be asynchronous, such as networking. But if you want to use background processing as an optimization, always measure! Performance is about doing less, not more.
+It's always best to avoid concurrency or mutable state. But sometimes it's not feasible and to write responsive client-side programs[^5], you often have to embrace concurrency. There are, of course, kinds of tasks that obviously have to be asynchronous, such as networking. But if you want to use background processing as an optimization, always measure! Performance is about doing less, not more.
 
 [^5]: And servers! Modern server-side frameworks, such as [SwiftNIO](https://github.com/apple/swift-nio) also embraced concurrency and non-blocking I/O.
 
-Measuring is an art on its own. Modern CPUs with different cache levels and other optimizations make it hard to reasons about performance. But at least make sure to measure in Release mode (with compiler optimizations on) and check that you are getting consistent results. The absolute measurements might not always be accurate, but the relative values will guide you in the right direction. Never do premature optimizations, but also don't paint yourself into a corner where the only way to improve performance is to rewrite half of the app.
+Measuring is an art on its own. Modern CPUs with different cache levels and other optimizations make it hard to reasons about performance. But at least make sure to measure in Release mode (with compiler optimizations on) and check that you are getting consistent results. The absolute measurements might not always be accurate, but the relative values will guide you in the right direction. Avoid premature optimization, but also don't paint yourself into a corner where the only way to improve performance is to rewrite half of the app.
 
 Nuke has many optimizations, some impractical, so don't just go and copy them. I just finished watching [F1 Season 3](https://www.formula1.com/en/latest/article.watch-the-unmissable-trailer-for-season-3-of-netflixs-drive-to-survive.1ZMsRiYIvxZEPV9iqzatsx.html) (which was phenomenal, by the way). I can't say that I'm a huge F1 fan, but I appreciate things designed for performance and a bit of competition. I'm not stopping where a sane person should.
 
