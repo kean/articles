@@ -187,7 +187,7 @@ If you synchronize on the main queue, the important words are "synchronizing" an
 
 There is also a flaw in synchronizing on main. If your subsystems assume they are only called from a single queue, they are not thread-safe. If you accidentally call any of them from the background, you can _introduce subtle bugs_ which are harder to find than simple UI updates from the background, unless you fill your code with assertions. And if your app becomes big enough that it can no longer afford to operate strickly on the main queue, you are going to be up to major rethinking of your components (been there).
 
-If you need thread-safety and mutable state, the actor model is probably your best bet.
+If you need thread-safety and mutable state, the actor model is probably your best bet. From the two [concurrency models](https://web.mit.edu/6.005/www/fa14/classes/17-concurrency/): shared memory and messages passing, I find the latter to be more appealing.
 
 ## Tasks
 
@@ -218,11 +218,13 @@ There isn't much to say about locks. There are easy to use and fast[^6]. I don't
 
 ## Atomics
 
-I've been using atomic operations (`OSAtomicIncrement64`, `OSCompareAndSwap`) in a couple of places in Nuke before, for example for generating unique task IDs in the pipeline. But when Thread Sanizer was introduced it started emiting fasle positive warnings to the users.
+I had been using atomic operations (`OSAtomicIncrement64`, `OSCompareAndSwap`) in a couple of places in Nuke before, for example for generating unique task IDs in the pipeline. But when Thread Sanizer was introduced it started emiting warnings[^8].
+
+[^8]: You can learn more about why these warnings get emitted in the [following post](http://www.russbishop.net/the-law).
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/access-race.png">
 
-I replaced all atomics usages with locks or refactored some code to not require synchronization in the first place. There wasn't much impact on performance for the scenarios where I was using them. Atomics are great when you want to avoid allocating a lock. I will revisit this topic when/if [Swift Atomics](https://swift.org/blog/swift-atomics/) are part of the Standard Library.
+I replaced all atomics usages with locks or refactored some code to not require synchronization in the first place. There wasn't much impact on performance for the scenarios where I was using them. I will revisit this topic when/if [Swift Atomics](https://swift.org/blog/swift-atomics/) are part of the Standard Library.
 
 ## OperationQueues
 
