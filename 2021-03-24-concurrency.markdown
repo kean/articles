@@ -23,12 +23,18 @@ I have two examples from my experience. [Pulse](https://github.com/kean/Pulse) h
 Nuke is often used during scrolling, so it has to be fast and never add unnecessary contention to the main thread. This is why Nuke does _nothing_ on the main thread. At the same time, it requires very few context switches. And that's the key to its performance (among numerous other performance-related [features](https://kean.blog/post/nuke-9)).
 
 <div class="BlogVideo">
-<video autoplay loop muted playsinline preload="auto">
+<video controls muted playsinline preload="auto">
   <source src="{{ site.url }}/videos/rate_limiter.mp4" type="video/mp4">
 </video>
 </div>
 
 There isn't much to say about Pulse: you can't have threading issues if you [don't have]({{ site.url }}/images/misc/m1.jpg) threading. But when you need concurrency, it's notoriously hard to get it right. So what do you do?
+
+## Overview
+
+As an overview, here is a high-level breakdown of the primary components in Nuke, grouped based on the concurrency primitives they are using. There isn't one pattern that dominates. Each situation requires a unique approach.
+
+<img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/overview.png">
 
 ## Actor Model
 
