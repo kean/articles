@@ -216,16 +216,6 @@ There isn't much to say about locks. There are easy to use and fast[^6]. I don't
 
 > `DataCache` is a bit more complicated than that. It writes data asynchronously and does so in parallel to reads, while reads can also be parallel to each other. It's a bit experimental, I haven't tested the full impact of this approach on the performance.
 
-## Atomics
-
-I had been using atomic operations (`OSAtomicIncrement64`, `OSCompareAndSwap`) in a couple of places in Nuke before, for example for generating unique task IDs in the pipeline. But when Thread Sanizer was introduced it started emiting warnings[^8].
-
-[^8]: You can learn more about why these warnings get emitted in the [following post](http://www.russbishop.net/the-law).
-
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/access-race.png">
-
-I replaced all atomics usages with locks or refactored some code to not require synchronization in the first place. There wasn't much impact on performance for the scenarios where I was using them. I will revisit this topic when/if [Swift Atomics](https://swift.org/blog/swift-atomics/) are part of the Standard Library.
-
 ## OperationQueues
 
 The expensive operations, e.g. decoding, processing, data loading, are modeled using [`Foundation.Operation`](https://developer.apple.com/documentation/foundation/operation). Operation [queues](https://developer.apple.com/documentation/foundation/operationqueue) are used for parallelism with a limited number of concurrent operations. They are also used for prioritization which is crucial for some user scenarios. There isn't much else to say about operation queues that haven't already been said.
