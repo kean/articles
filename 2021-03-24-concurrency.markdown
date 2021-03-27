@@ -46,7 +46,7 @@ There is a tiny portion of code that is not thread-safe and can only run from th
 
 The actor model is a pattern. It doesn't *have* to be included in the language, but the goal of the Swift team is to add to one of the main Swift strengths: safety via compile-time checks. With the actor model, you will get isolation checks at compile-time along with other safety features.
 
-I've been designing classes as Actors in Objective-C since [GCD](https://developer.apple.com/documentation/DISPATCH) was added in iOS 4. I'm designing Swift classes as Actors now. And I can't wait to start designing them using a formal actor model.
+I've been designing classes as actors in Objective-C since [GCD](https://developer.apple.com/documentation/DISPATCH) was added in iOS 4. I'm designing Swift classes as Actors now. And I can't wait to start designing them using a formal actor model.
 
 > While the formal definition seems a bit complicated, you can simply think of an actor as a class with some private state and an associated *serial* dispatch queue[^7]. The only way to access the state is to do it on the serial queue. It ensures there are never any [data races](https://en.wikipedia.org/wiki/Race_condition#Data_race).
 {:.info}
@@ -171,7 +171,7 @@ private final class LoadDataTask {
 }
 ```
 
-`DataLoader` used a background operation queue as a [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) delegate queue, which is great because it reduces contention on the main thread. But it is a new private queue – the same problem as with the prefetcher. Here is a trick, [`OperationQueue`](https://developer.apple.com/documentation/foundation/operationqueue) allows you to set an [`underlyingQueue`](https://developer.apple.com/documentation/foundation/operationqueue/1415344-underlyingqueue). In the optimized version, `DataLoader` uses the pipeline's serial queue as a delegate queue.
+`DataLoader` uses a background operation queue as a [`URLSession`](https://developer.apple.com/documentation/foundation/urlsession) delegate queue, which is great because it reduces contention on the main thread. But it is a new private queue – the same problem as with the prefetcher. Here is a trick, [`OperationQueue`](https://developer.apple.com/documentation/foundation/operationqueue) allows you to set an [`underlyingQueue`](https://developer.apple.com/documentation/foundation/operationqueue/1415344-underlyingqueue). In the optimized version, `DataLoader` uses the pipeline's serial queue as a delegate queue.
 
 ```swift
 extension DataLoader {
@@ -193,9 +193,9 @@ If you need thread-safety and mutable state, the actor model is probably your be
 
 ## Tasks
 
-Nuke has an incredible number of performance [features](https://kean.blog/post/nuke-9): progressive decoding, prioritization, coalescing of tasks, cooperative cancellation, parallel processing, backpressure, prefetching. It forces Nuke to be massively concurrent. The actor modal is just part of the solution. To manage individual image requests, it needed a structured approach for managing async tasks.
+Nuke has an incredible number of performance [features](https://kean.blog/post/nuke-9): progressive decoding, prioritization, coalescing of tasks, cooperative cancellation, parallel processing, backpressure, prefetching. It forces Nuke to be massively concurrent. The actor model is just part of the solution. To manage individual image requests, it needed a structured approach for managing async tasks.
 
-The solution is [`Task`](https://github.com/kean/Nuke/blob/93c187ab98ab02f8c891d1fa40ffe92a1591f524/Sources/Tasks/Task.swift#L18), a is part of the internal infrastructure. When you request an image, Nuke creates a dependency tree with multiple tasks. When a similar image request arrives (e.g. the same URL, but different processors), an existing subtree can serve as a dependency of another task.
+The solution is [`Task`](https://github.com/kean/Nuke/blob/93c187ab98ab02f8c891d1fa40ffe92a1591f524/Sources/Tasks/Task.swift#L18), which is a part of the internal infrastructure. When you request an image, Nuke creates a dependency tree with multiple tasks. When a similar image request arrives (e.g. the same URL, but different processors), an existing subtree can serve as a dependency of another task.
 
 Nuke supports progressive decoding and task design reflects that. It is inspired by reactive programming, but is optimized for Nuke. Tasks are much simpler and faster than a typical generalized reactive programming implementation. The complete implementation takes just 237 lines.
 
