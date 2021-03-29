@@ -8,6 +8,7 @@ category: programming
 tags: programming
 permalink: /post/swiftui-experiment
 uuid: 4559025a-577f-495f-93d8-dfc0c49f5b35
+published: false
 ---
 
 A couple of months ago, I started an experiment to answer one question: is SwiftUI ready for building non-trivial apps targeting all Apple platforms? It was an incredibly fun and sometimes challenging experience, but part of the journey is the end. This post is about all the things that I built and learned along the way.
