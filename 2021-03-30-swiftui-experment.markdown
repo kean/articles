@@ -163,6 +163,10 @@ I tried to [make sense](https://twitter.com/a_grebenyuk/status/13626445129595863
 
 UIKit/AppKit delegate-based approach is well-positioned to scale to any level of complexity. I’m interested to see how SwiftUI, which currently barely offers any customization, will tackle this problem.
 
+- **List**
+
+TODO: List performance on macOS is unaceptable
+
 ## Conclusion
 
 It’s one thing to watch WWDC videos on SwiftUI where everything is nice and smooth. But only when you use it extensively, you truly get a feel for it. I used pretty much every SwiftUI component throughout this experiment. SwiftUI is as fast as it is unforgiving. You structure the code in one predefined way, or you suffer. But when you figure it out, you can be extremely productive.

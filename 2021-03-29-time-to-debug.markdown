@@ -135,7 +135,7 @@ When you open the details page, it's just a `NavigationLink`. For this page, I r
 
 ## Conclusion
 
-I’m glad I had my Apple Watch lying around. It was so exciting deploying an app for it for the first time. It brought up the memories of doing the same on iOS many years ago!
+I’m glad I had my Apple Watch lying around. I was so excited deploying an app to it for the first time. It brought up the memories of doing the same on iOS many years ago!
 
 <div class="BlogVideo NewScreenshot">
 <video controls muted playsinline preload="auto">
