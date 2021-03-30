@@ -20,12 +20,11 @@ Unforunately, there are not a lot of built-in options in the Apple SDKs, so peop
 
 ## Poor Practices
 
-### Concatenated Strings
+> <h3 style="margin-top: 15px;">Concatenated Strings</h3>
+{:.error}
 
 One of the common approaches is to split the text into several keys and concatenate them later in code.
 
-> BAD EXAMPLE
-{:.error}
 
 ```swift
 // Localizable.strings
@@ -61,12 +60,10 @@ The problem is that the order of words and phrases is hard-coded. You should nev
 The granularity of keys will also cause confusion during the translation. Nobody likes guessing games.
 
 
-### Substring Lookup
+> <h3 style="margin-top: 15px;">Substring Lookup</h3>
+{:.error}
 
 Another (bad) approach is to use substring lookup to apply attributes.
-
-> BAD EXAMPLE
-{:.error}
 
 ```swift
 // Localizable.strings
@@ -99,7 +96,8 @@ This is a lit bit better than the previous solution as it gives more control to 
 
 But the major issue is that this is going to be a massive pain to translate and can often lead to an issue where someone will update the original string but will forget to update one of the substrings.
 
-### HTML
+> <h3 style="margin-top: 15px;">HTML</h3>
+{:.warning}
 
 If you search online, one of the common suggestions is to use HTML. You can either use a full-blown web view if you need to render a big portion of the screen. And for labels, there is a native way to convert [HTML to NSAttributedString](https://www.hackingwithswift.com/example-code/system/how-to-convert-html-to-an-nsattributedstring).
 
@@ -164,9 +162,7 @@ public extension NSAttributedString {
 ```
 
 
-Now it matches the expected design. There are still at least four major issues you should be aware of.
-
-> WARNING
+> Now it matches the expected design, but there are still at least four major issues you should be aware of.
 {:.warning}
 
 1. It produces attributes you might not necessarily want, such as `.kern`, `.paragraphStyle`, etc. You might want to remove those. 

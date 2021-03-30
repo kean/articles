@@ -26,7 +26,7 @@ Updating Pulse to work on watchOS took me just a couple of hours. I was able to 
 
 Why bring Pulse to watchOS in the first place? Many of the watchOS apps are designed to be used outdoors, during physical activities. You won’t be carrying a computer with you to a gym, will you?
 
-With Pulse, you can view network requests and logs right on your wrist. All logs are recorded persistently and can be shared at any time on other platforms, for example, iOS. Pulse for iOS offers a great experience and a feature-set on par with a macOS version.
+With Pulse, you can view network requests and logs right on your wrist. All logs are recorded persistently and can be shared at any time to other platforms, for example, iOS. Pulse for iOS offers a great experience and a feature-set on par with a macOS version.
 
 ## Development
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Concurrency"
+title: "Concurrency Done Right"
 subtitle: The actor model and other concurrency patterns used in Nuke
 description: The actor model and other concurrency patterns used in Nuke
 date: 2021-03-24 10:00:00 -0500
