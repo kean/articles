@@ -1,14 +1,13 @@
 ---
 layout: post
 title: "The SwiftUI Experiment"
-subtitle: Restrospecive on using SwiftUI to build an app targeting all Apple platforms
-description: Restrospecive on using SwiftUI to build an app targeting all Apple platforms
+subtitle: Is it ready for production?
+description: Is it ready for production?
 date: 2021-03-30 09:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/swiftui-experiment
 uuid: 4559025a-577f-495f-93d8-dfc0c49f5b35
-published: false
 ---
 
 A couple of months ago, I started an experiment to answer one question: is SwiftUI ready for building non-trivial apps targeting all Apple platforms? It was an incredibly fun and sometimes challenging experience, but part of the journey is the end. This post is about all the things that I built and learned along the way.
@@ -43,9 +42,11 @@ As a QA engineer testing the app, you can view the network requests right on you
 
 ## Pulse Beta
 
-TBD
-TODO: nice flame animation
-TODO: it's a pretty solid beta. people who wanted to make try to make it crash, I challenge them to ahead and try do that
+<img alt="Pulse, a structured logging system built using SwiftUI" class="" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="230px">
+
+I'm thrilled to anounce that today I'm starting Pulse Open Beta! You can download the frameworks from the [dedicated repo](https://github.com/kean/PulseBeta) and install the apps using TestFlight (the links are in the repo).
+
+I want to thank everyone who [sponsored](https://github.com/sponsors/kean), you are the main reason I was able to reach this stage with it!
 
 ## Development
 
@@ -95,9 +96,9 @@ I was surprised to learn just how powerful the API for this platform is. It basi
 
 ## Restospective
 
-Everyone wants to know the answer to the question: is SwiftUI ready for production? It's more nuanced than that. For Pulse, SwiftUI was undoubtedly the right tool. But there are some aspects of SwiftUI that I'm not crazy about.
+Everyone wants to know the answer to the question: is SwiftUI ready for production? It's more nuanced than that. For Pulse, SwiftUI was undoubtedly the right tool. But there are also some aspects of SwiftUI that I'm not crazy about.
 
-### Went Well
+### Good
 
 - **Iteration Speed**
 
@@ -111,11 +112,11 @@ People love to praise [Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS
  
 - **Code Reuse**
 
-Pulse consists of **~10000** lines of code. PulseCore is **3000** lines (store and network proxy). The rest (**7000** lines) takes PulseUI. **85%** of the UI code is shared between platforms. That's a lot. It's astonishing how much UI you can fit in 7000 lines. SwiftUI, it gets the job done!
+Pulse consists of **~10000** lines of code. PulseCore is **3000** lines (store and network proxy). The rest (**7000** lines) takes PulseUI. About **85%** of the UI code is shared between platforms. That's a lot. It's astonishing how much UI you can fit in 7000 lines. SwiftUI, it gets the job done!
 
-### Needs Improvement
+### Bad
 
-SwiftUI increases iteration speed and enables code reuse. But is it because of its design? A lot of speed up comes from Xcode Canvas. And UIKit and AppKit have more in common than they are given credit for. The layout system – the same. A lot of components are one typealias away from reuse. Was UIKit so horrible that it needed a complete overhaul?
+SwiftUI increases iteration speed and enables code reuse. But is it because of its design? A lot of speed up comes from Xcode Canvas. As for the code reuse, UIKit and AppKit have more in common than they are given credit for. The layout system – the same. A lot of components are one typealias away from reuse. Was UIKit so terrible that it needed a complete overhaul?
 
 - **Generics**
 
@@ -124,27 +125,31 @@ I can't count how much time I wasted fighting the SwiftUI generics. Code complet
 <img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/swiftui-exp/gen01.png">
 <img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/swiftui-exp/gen02.png">
 
-My most common mistake is using `&` instead of `$` and then wasting 20 minutes figuring out why there is an unrelated type-system error 10 lines from where I used `$`.
+My most common mistake is using `&` instead of `$` and then wasting 20 minutes figuring out why there is an unrelated type-system error 5 lines from where I used `$`.
 
 - **Layout System (Bad Parts)**
 
-Some basic things that are super easy to do with Auto Layout are hard in SwiftUI. For example, matching views size or aligning views. SwiftUI layout system loses in power to Auto Layout. The good things about it (stacks, grids, spacers) are easy to add to Auto Layout. And I still can’t build a complete mental model around the SwiftUI layout system, while Auto Layout makes total sense – it’s math.
+Some basic things that are super easy to do with Auto Layout are hard in SwiftUI. For example, matching views size or aligning views. SwiftUI layout system loses in power to Auto Layout. The good things about it (stacks, grids, spacers) are easy to add to Auto Layout. And I still can’t build a complete mental model around the SwiftUI layout system, while Auto Layout makes total sense – it’s just math.
 
-- **View Builders**
+- **Telescoping APIs**
 
-I'm used to it now, but it's still too clever to my taste. But I wouldn't bet against DSLs.
+UIKit/AppKit delegate-based approach is well-positioned to scale to any level of complexity. There are some extremely powerful APIs in these frameworks. I’m interested to see how SwiftUI will tackle this problem.
+
+- **List**
+
+Unusable on macOS: junky scrolling, jumping scroll bar, slow reloads, delays when opening details (especially when combined with selection API). I wrote an [entire post]({{ site.url }}/post/not-list) just on it. It is the only case where I had to compromise and not use SwiftUI components. I'm still using `List` on the rest of the platforms.
 
 - **View Identity**
 
 We are all used to memory management in UIKit. You create a ViewModel, you create a View, View holds a strong reference to a ViewModel - easy and clear. SwiftUI makes this basic setup unnecessarily awkward.
 
-[`ObservedObject`](https://developer.apple.com/documentation/swiftui/observedobject) makes no guarantees about the object lifetime, so you can't use it. Managing ViewModel graph manually is a pain. [`StateObject`](https://developer.apple.com/documentation/swiftui/stateobject) uses autoclosure making initializer injection pain to use. It doesn't make sense in the first place because it can give you a wrong impression that you can inject new parameters without changing the identity of the view.
+[`ObservedObject`](https://developer.apple.com/documentation/swiftui/observedobject) makes no guarantees about the object lifetime, so you can't use it for this. Managing ViewModel graph manually is a pain. [`StateObject`](https://developer.apple.com/documentation/swiftui/stateobject) uses autoclosure making initializer injection pain to use. It doesn't make sense in the first place because it can give you a wrong impression that you can inject new parameters without changing the identity of the view.
 
-I figured data flow out, but I feel [like this]({{ site.url }}/images/posts/swiftui-exp/web.webp) every time I explain it to anyone. It just doesn't come from the use case. It comes from serving the needs of the framework, more specifically that the views are constantly recreated structs but at the same time maintain identity.
+I figured data flow out, but I feel [like this]({{ site.url }}/images/posts/swiftui-exp/web.webp) every time I explain it to anyone. It feels that it comes not from the use case but from the needs of the framework. More specifically, from the need to constantly re-create views while maintaining view identity.
 
 - **Conditionals**
 
-It's harder to add platform-specific code (or any conditional code really) in SwiftUI than it is in UIKit/AppKit.
+It's harder to add platform-specific code (or any conditional code really) in SwiftUI than in UIKit/AppKit. Sometimes you wish you could use basic Swift language features. I won't bet against DSLs - it's fine, but I not a fan of SwiftUI method-focused APIs.
 
 <img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/swiftui-exp/cond01.png">
 
@@ -157,21 +162,19 @@ It's harder to add platform-specific code (or any conditional code really) in Sw
 .disableAutocorrection() // ???
 ```
 
-I tried to [make sense](https://twitter.com/a_grebenyuk/status/1362644512959586304?s=20) of it, I still don't fully understand the logic. I never use the `nil` part. Regardless of the use-case, the naming is objectively bad.
+I tried to [make sense](https://twitter.com/a_grebenyuk/status/1362644512959586304?s=20) of it, I still don't fully understand the logic. I never use the `nil` part. Regardless of the use-case, the naming is objectively poor.
 
-- **Telescoping APIs**
+- **EnvironmentObject**
 
-UIKit/AppKit delegate-based approach is well-positioned to scale to any level of complexity. I’m interested to see how SwiftUI, which currently barely offers any customization, will tackle this problem.
-
-- **List**
-
-TODO: List performance on macOS is unaceptable
+Not a fan because of the lack of type-safety which goes against Swift's design principles. Still crashes on watchOS for me when showing details using `NavigationLink`. Fortunately, no one forces you to use it.
 
 ## Conclusion
 
-It’s one thing to watch WWDC videos on SwiftUI where everything is nice and smooth. But only when you use it extensively, you truly get a feel for it. I used pretty much every SwiftUI component throughout this experiment. SwiftUI is as fast as it is unforgiving. You structure the code in one predefined way, or you suffer. But when you figure it out, you can be extremely productive.
+It’s one thing to watch WWDC videos on SwiftUI in which everything is nice and smooth. But only when you use it extensively, you get a feel for it. SwiftUI is as fast as it is unforgiving. On one hand, there is HTML that works even with incorrect syntax. SwiftUI is on another extreme end. Even after you get it to compile, it won’t work unless you use it precisely the way it was designed to be used.
 
-The hardest part of the design is determining what not to build. This applies both to apps and frameworks. I’m pretty happy with the Pulse feature-set, focused on my personal use-cases. I hope you’ll enjoy using it as much as I do.
+But the bottom line is, I delivered a product that I consider production-ready. It performs well. It reuses a lot of code but is optimized for each of the supported platforms. It has a ton of powerful features: deep-links, document-based apps, database, powerful search, and filters. What did it cost? I want to say everything – I feel completely exhausted. At times, I wanted to give up, but I kept pushing through and got it done.
+
+There is so much material on SwiftUI that only deal with the basics but falls apart in a different context. This experiment proved, to me at least, that you _can_ build production-ready apps using SwiftUI. I hope you’ll enjoy using Pulse as much as I do!
 
 ## Further Reading
 
