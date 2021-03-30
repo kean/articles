@@ -40,13 +40,11 @@ As a QA engineer testing the app, you can view the network requests right on you
 > Implementing a custom document format was a story on its own, so I covered it in ["What's a Document"]({{ site.url }}/post/pulse-store).
 {:.info}
 
-## Pulse Beta
+## Pulse Open Beta
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="230px">
+<a href="https://github.com/kean/PulseBeta"><img alt="Pulse, a structured logging system built using SwiftUI" class="" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="200px"></a>
 
-I'm thrilled to anounce that today I'm starting Pulse Open Beta! You can download the frameworks from the [dedicated repo](https://github.com/kean/PulseBeta) and install the apps using TestFlight (the links are in the repo).
-
-I want to thank everyone who [sponsored](https://github.com/sponsors/kean), you are the main reason I was able to reach this stage with it!
+I'm thrilled to announce that today I start **Pulse Open Beta**! All the links are available in a [dedicated repo](https://github.com/kean/PulseBeta). I want to thank everyone who [sponsored](https://github.com/sponsors/kean) Pulse. You are the reason I was able to reach this stage!
 
 ## Development
 
@@ -54,9 +52,9 @@ I want to thank everyone who [sponsored](https://github.com/sponsors/kean), you 
 
 I started with the platform I felt the most comfortable with – iOS – with the initial goal to truly learn SwiftUI by putting it through its faces. After all, before building the app, I had to design it. I wanted to avoid the distraction of having to learn a new UX paradigm.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-01-console.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-03-share.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-01-console.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-03-share.png">
 
 I built the entire app using SwiftU with a couple of minor exceptions: `UITextView`, `UISearchBar`, and `UIActivityViewController`. But it was a simple matter of wrapping them using [`UIViewRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable). The rest of the systems: [layout]({{ site.url }}/post/swiftui-layout-system), [data flow]({{ site.url }}/post/swiftui-data-flow), and the existing SwiftUI components, worked perfectly.
 
@@ -64,7 +62,7 @@ I built the entire app using SwiftU with a couple of minor exceptions: `UITextVi
 
 The next milestone was macOS. When the time came to work on it, I was anxious. I had no idea what to expect from SwiftUI on a Mac. But thanks to the [new](https://developer.apple.com/videos/play/wwdc2020/10041/) SwiftUI APIs and the Big Sur design changes, everything just made sense!
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/pulse-01.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-01.png">
 
 I was so excited after building the macOS version, that I wrote an optimistic take on how [AppKit was done]({{ site.url }}/post/appkit-is-done), only to [correct myself]({{ site.url }}/post/not-list) later after I had spent more time on optimization. I encountered massive issues with [`List`](https://developer.apple.com/documentation/swiftui/list) performance and had to replace it with an AppKit version, including AppKit-based cells and context menus. Fortunately, I was able to get it to with the SwiftUI navigation system. It was worth it. The optimized version is fast even when working with hundreds of thousands of messages.
 
@@ -84,7 +82,7 @@ Why bring Pulse to watchOS in the first place? Many of the watchOS apps are desi
 > You can learn more about Pulse for watchOS in ["Time to Log"]({{ site.url }}/post/time-to-debug).
 {:.info}
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/promo-6.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/promo-6.png">
 
 ### tvOS
 
@@ -92,7 +90,7 @@ I'm not entirely sure if Pulse is needed on tvOS, so I haven't prioritized this 
 
 I was surprised to learn just how powerful the API for this platform is. It basically runs UIKit. There is a bit of a mismatch between the APIs and the typical design of the apps. It's counterintuitive, but the apps for the biggest screen are limited in a similar way that the watchOS apps are. I ended up reusing a lot of the elements from watchOS.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/promo-7.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/promo-7.png">
 
 ## Restospective
 
@@ -122,8 +120,8 @@ SwiftUI increases iteration speed and enables code reuse. But is it because of i
 
 I can't count how much time I wasted fighting the SwiftUI generics. Code completion is bad, error messages are bad, generated documentation is bad. It's a legitimate issue. Does it need to be this clever?
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/swiftui-exp/gen01.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/swiftui-exp/gen02.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/gen01.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/gen02.png">
 
 My most common mistake is using `&` instead of `$` and then wasting 20 minutes figuring out why there is an unrelated type-system error 5 lines from where I used `$`.
 
@@ -151,7 +149,7 @@ I figured data flow out, but I feel [like this]({{ site.url }}/images/posts/swif
 
 It's harder to add platform-specific code (or any conditional code really) in SwiftUI than in UIKit/AppKit. Sometimes you wish you could use basic Swift language features. I won't bet against DSLs - it's fine, but I not a fan of SwiftUI method-focused APIs.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/swiftui-exp/cond01.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/cond01.png">
 
 - **API Quirks**
 
