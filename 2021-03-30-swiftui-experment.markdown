@@ -64,7 +64,7 @@ I started with the platform I felt the most comfortable with – iOS – with th
 <img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.png">
 <img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-03-share.png">
 
-I built the entire app using SwiftU with a couple of minor exceptions: `UITextView`, `UISearchBar`, and `UIActivityViewController`. But it was a simple matter of wrapping them using [`UIViewRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable). The rest of the systems: [layout]({{ site.url }}/post/swiftui-layout-system), [data flow]({{ site.url }}/post/swiftui-data-flow), and the existing SwiftUI components, worked perfectly.
+I built the entire app using SwiftUI with a couple of minor exceptions: `UITextView`, `UISearchBar`, and `UIActivityViewController`. But it was a simple matter of wrapping them using [`UIViewRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable). The rest of the systems: [layout]({{ site.url }}/post/swiftui-layout-system), [data flow]({{ site.url }}/post/swiftui-data-flow), and the existing SwiftUI components, worked perfectly.
 
 For iOS, I challenged myself to use only SwiftUI APIs available on iOS 13. But what do you do if your app supports earlier iOS versions? `PulseUI.framework` compiles on iOS 11, but most of the components are marked with `@available` attributes.
 
