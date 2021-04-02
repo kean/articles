@@ -196,7 +196,7 @@ We exchanged the gotchas from UIKit with new ones in SwiftUI. Some examples:
 
 - Forgetting a single period can cause a SwiftUI view to crash in a [less-than-obvious way](https://twitter.com/mbrandonw/status/1352321769676279813?s=20) ([screenshot]({{ site.url }}/images/posts/swiftui-exp/crash.png) in case the message gets deleted).
 - SwiftUI frequently re-instantiates views and creates some of the view [hierarchy in advance](https://twitter.com/a_grebenyuk/status/1362844210207076353?s=20). It can lead to performance issues if you are not careful.
-- You can only access `State` and `StateObject` values from `body`.
+- You can access `State` and `StateObject` values only from `body`.
 - Putting modifiers in the wrong order. The most common example is using `background` before `padding` with an unexpected result (unexpected compared to how most other UI frameworks work).
 
 > **Conditional Compilation Blocks**
