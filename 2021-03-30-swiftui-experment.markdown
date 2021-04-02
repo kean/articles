@@ -169,12 +169,12 @@ It's hard to tell just how much time I wasted fighting the SwiftUI generics. I a
 
 <img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/gen02.png" width="320px">
 
-My most common mistake is using `&` instead of `$` and then wasting 20 minutes figuring out why there is an unrelated type-system error 5 lines from where I used `$`.
+My most common mistake is using `&` instead of `$` and then wasting 20 minutes figuring out why there is an unrelated type-system error 5 lines from where I used `&`.
 
 > **Layout System (Bad Parts)**
 {:.error}
 
-Some basic things that are unproblematically done with Auto Layout are hard in SwiftUI, for example, matching views size or aligning views. SwiftUI layout system is simply less expressive. The good things about it (stacks, grids, spacers) are easy to add to Auto Layout. And I still can’t build a complete mental model around the SwiftUI layout system. Auto Layout, on the other hand, makes total sense – it’s just math.
+Some basic things that are unproblematically done with Auto Layout are hard in SwiftUI, for example, matching the size of two views or aligning them. SwiftUI layout system is simply less expressive. The good things about it (stacks, grids, spacers) are easy to add to Auto Layout. And I still can’t build a complete mental model around the SwiftUI layout system. Auto Layout, on the other hand, makes total sense – it’s just math.
 
 > **List**
 {:.error}
@@ -209,7 +209,7 @@ It's harder to add platform-specific code (or any conditional code really) in Sw
 <div class="UpdatesSections UpdatesSectionsInline" markdown="1">
 **Updates**
 
-- Apr 2, 2021. A [proposal](https://github.com/apple/swift-evolution/blob/main/proposals/0308-postfix-if-config-expressions.md) by [@rintaro](https://twitter.com/rintaro) to allow conditional compilation blocks (`#if`) to be used in postfix expressions was just created and is scheduled for review.
+- Apr 2, 2021. A [proposal](https://github.com/apple/swift-evolution/blob/main/proposals/0308-postfix-if-config-expressions.md) by [@rintaro](https://twitter.com/rintaro) to allow conditional compilation blocks (`#if`) to be used in postfix expressions was just created and scheduled for review.
 </div>
 
 > **View Lifetime**
@@ -239,9 +239,9 @@ I tried to make sense of it, but I still don't fully understand the logic. I nev
 
 Back when the first iOS SDK hadn't even launched, Scott Forstall [told some developers](https://appleinsider.com/articles/21/03/04/scott-forstall-told-pandora-to-jailbreak-early-iphones-to-get-a-head-start-on-development) to jailbreak iPhones to get a head start on development. And they did. SwiftUI is in its early stages, but there is already so much written on it. The developer community inspected every aspect of SwiftUI and came up with great workarounds for its current limitations.
 
-This experiment proved, to me at least, that you _can_ build production-ready apps using SwiftUI. Pulse performs well. It reuses a lot of code but is optimized for each platform. It has a ton of powerful features: deep-links, document-based apps, databases, powerful search, and filters. But if you decide to use SwiftUI, proceed with caution. It's the second mouse that gets the cheese. You'll still be the first mouse. I always draw the line between the business needs and my personal passion projects.
+This experiment proved, to me at least, that you _can_ build production-ready apps using SwiftUI. Pulse performs well. It reuses a lot of code but is optimized for each platform. It has a ton of powerful features: deep-links, document-based apps, databases, powerful search, and filters. But if you decide to use SwiftUI, proceed with caution. It's the second mouse that gets the cheese. You'll still be the first mouse.
 
-I hope you liked this series. It was meant to inspire folks to try their hand at SwiftUI and explore different Apple platforms. Again, the [Pulse Open Beta](https://github.com/kean/PulseBeta) is out. I hope you'll like it! And if you want to read more from this series, boy, I have posts for you.
+I hope you liked this series. It was meant to inspire folks to try their hand at SwiftUI and explore different Apple platforms. Some caution is still warranted. I always draw the line between the business needs and my personal passion projects. And again, the [Pulse Open Beta](https://github.com/kean/PulseBeta) is out. I hope you'll like it! And if you want to read more from this series, boy, I have posts for you.
 
 <br/>
 
