@@ -199,12 +199,18 @@ We exchanged the gotchas from UIKit with new ones in SwiftUI. Some examples:
 - You can only access `State` and `StateObject` values from `body`.
 - Putting modifiers in the wrong order. The most common example is using `background` before `padding` with an unexpected result (unexpected compared to how most other UI frameworks work).
 
-> **Conditionals**
+> **Conditional Compilation Blocks**
 {:.warning}
 
 It's harder to add platform-specific code (or any conditional code really) in SwiftUI than in UIKit or AppKit. I'm not even starting on ViewBuilders. I won't bet against DSLs or functional programming, but it forces you to find solutions for problems you didn't have.
 
 <img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/cond01.png">
+
+<div class="UpdatesSections UpdatesSectionsInline" markdown="1">
+**Updates**
+
+- Apr 2, 2021. A [proposal](https://github.com/apple/swift-evolution/blob/main/proposals/0308-postfix-if-config-expressions.md) by [@rintaro](https://twitter.com/rintaro) to allow conditional compilation blocks (`#if`) to be used in postfix expressions (common in SwiftUI) was just created and is scheduled for review.
+</div>
 
 > **View Lifetime**
 {:.warning}
