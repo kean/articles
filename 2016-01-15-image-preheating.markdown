@@ -45,7 +45,7 @@ The next step is to calculate a preheat window in the current scroll direction (
 
 ```swift
 extension UICollectionView {
-    // `sizeRatio` is a proportion of a scroll view's width (or height for views with vertical orientation) used as a preheating window width (or height respectively).
+    // `sizeRatio` is a proportion of a scroll view's width (or height for views with vertical orientation) used as a preheating window width (or height).
     func preheatingRect(isScrollingForward isScrollingForward: Bool, sizeRatio: CGFloat) -> CGRect {
         let viewport = CGRect(origin: contentOffset, size: bounds.size)
         switch (collectionViewLayout as! UICollectionViewFlowLayout).scrollDirection {

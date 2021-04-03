@@ -159,7 +159,7 @@ As you can see from the code above `Id` also has a special rule that prevents it
 
 ## 3. Safely Decoding Enums
 
-Swift has a great support for decoding (and encoding) enums. In many cases, all you need to do is to just declare a `Decodable` conformance which gets synthesized automatically by a compiler (the enum raw type must be either `String` or `Int`).
+Swift has a great support for decoding (and encoding) enums. Often all you need to do is declare a `Decodable` conformance synthesized automatically by a compiler (the enum raw type must be either `String` or `Int`).
 
 Suppose you're building a system that displays all your devices on a map. A device has a `location` (required) and `system` (required) which it's running.
 

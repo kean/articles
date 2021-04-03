@@ -19,7 +19,7 @@ Why HTTP cache? It's an industry standard that fits the needs of most users. HTT
 
 In addition to on-disk cache, it's imperative to have a separate in-memory cache for fast access to decompressed images that are ready for display.
 
-*This guide focuses on images, but it most certainly applies to the other areas too. Its purpose is to answer some of the common questions about caching, and to provide references to more comprehensive sources.*
+*This guide focuses on images, but it applies to the other areas too. Its purpose is to answer some of the common questions about caching, and to provide references to more comprehensive sources.*
 
 > ## TL;DR
 - Each resource can define its caching policy via HTTP cache headers

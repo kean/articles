@@ -18,7 +18,7 @@ Two months ago, I started an experiment of building a non-trivial production-rea
 
 I've been working on iOS for many years now. When Apple shipped SwiftUI, I saw it as a perfect opportunity to explore other Apple platforms. 
 
-The best way to learn something is to build a project. SwiftUI has two main advantages: iteration speed and code reuse across Apple platforms. I had just the right idea for a project that would take advantage of both.
+The best way to learn something is to build a project. SwiftUI has two main advantages: iteration speed and code reuse across Apple platforms. I had just the right idea for a project that could take advantage of both.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/cover.png">
 

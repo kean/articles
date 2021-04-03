@@ -513,7 +513,7 @@ In fact, if you use reflection to inspect what stored properties `@State` has, y
     - value : false
 ```
 
-This explains the rules behind the lifetime of `@State` properties. The backing storage for `@State` properties is linked to the lifetime of the nodes in the render tree. It is held in memory until the view is removed from the view hierarchy. At this point, SwiftUI most likely destroys the respective `_ViewRendererHost` along with all of its subscriptions and storages for `@State`. But if you simply hide the view using [`hidden()`](https://developer.apple.com/documentation/swiftui/view/3278576-hidden), the state persists.
+This explains the rules behind the lifetime of `@State` properties. The backing storage for `@State` properties is linked to the lifetime of the nodes in the render tree. It is held in memory until the view is removed from the view hierarchy. At this point, SwiftUI most likely destroys the `_ViewRendererHost` along with all of its subscriptions and storages for `@State`. But if you simply hide the view using [`hidden()`](https://developer.apple.com/documentation/swiftui/view/3278576-hidden), the state persists.
 
 The way `@StateObject` is implemented must be similar to `@State`. The key is `@autoclosure` in `@StateObject` [initializer](https://developer.apple.com/documentation/swiftui/stateobject/init(wrappedvalue:)).
 

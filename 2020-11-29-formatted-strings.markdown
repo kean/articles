@@ -192,7 +192,7 @@ With HTML, you no longer need to concatenate strings or lookup substrings, which
 
 Most HTML tags (and all tags we are interested in) are valid XML. Do we need the entire power of WebKit to parse a few basic XML tags? No.
 
-I created a repo, called [Formatting](https://github.com/kean/Formatting), where I use basic [XMLParser](https://developer.apple.com/documentation/foundation/xmlparser) to parse tags and apply respective text attributes. The entire solution takes less than 100 slocs. Here is a usage example:
+I created a repo, called [Formatting](https://github.com/kean/Formatting), where I use basic [XMLParser](https://developer.apple.com/documentation/foundation/xmlparser) to parse tags and apply text attributes. The entire solution takes less than 100 slocs. Here is a usage example:
 
 ```swift
 let input = "M1 delivers up to <b>2.8x faster</b> processing performance
