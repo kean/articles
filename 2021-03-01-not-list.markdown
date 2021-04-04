@@ -104,7 +104,7 @@ struct NotList<Element: Identifiable>: NSViewRepresentable {
 }
 ```
 
-To communicate the changes, I set the respective flags on `NotListViewModel` and manually send [`objectWillChange`](https://developer.apple.com/documentation/combine/observableobject) event. It gives me precise control over what to update and when without breaking out from the SwiftUI data flow model.
+To communicate the changes, I set the flags on `NotListViewModel` and manually send [`objectWillChange`](https://developer.apple.com/documentation/combine/observableobject) event. It gives me precise control over what to update and when without breaking out from the SwiftUI data flow model.
 
 ## Platform Discrepancies
 
