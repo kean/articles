@@ -34,12 +34,12 @@ First, the browser needs to send a [DNS](https://www.cloudflare.com/learning/dns
   <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-01', 'page-02')">DNS Response</button>
 </div>
 
-<div id="page-01" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+<div id="page-01" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1">
 The browser sends a DNS query with a domain name `www.example.com`.
 <img alt="Wireshark capture: DNS query" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-01.png">
 </div>
 
-<div id="page-02" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+<div id="page-02" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
 The DNS server returns an *answer* – `93.184.216.34`.
 <img alt="Wireshark capture: DNS answer" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-02.png">
 </div>
@@ -58,12 +58,12 @@ Now that the browser has an IP address, it is ready to start sending HTTP reques
   <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-02', 'page-04')">HTTP Response</button>
 </div>
 
-<div id="page-03" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+<div id="page-03" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1">
 The browser takes the resolved IP address and initiates an HTTP request to fetch the content of the page at the root path (`/`).
 <img alt="Wireshark capture: HTTP request" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-03.png">
 </div>
 
-<div id="page-04" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+<div id="page-04" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
 The server returns some HTML content in the HTTP body.
 <img alt="Wireshark capture: HTTP response" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/vpn-04.png">
 </div>
@@ -89,7 +89,7 @@ Transport layer protocols, such as TCP and UDP, transfer data using protocol dat
 
 The DNS messages are typically sent using [UDP](https://tools.ietf.org/html/rfc768) (other options exist, even including things like [DNS over HTTPS](https://en.wikipedia.org/wiki/DNS_over_HTTPS)). The UDP datagram header is extremely. simple When a system needs to send a DNS message, it takes the message (the protocol of the message is irrelevant, for DNS it's just raw bytes), and prepends 4 bytes of the UDP datagram header. If we go back to our browser example, here is what the UDP header looks like:
 
-<img alt="Wireshark capture: DNS packet" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/vpn-05.png">
+<img alt="Wireshark capture: DNS packet" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-protocol/vpn-05.png">
 
 The *source* port is `63802`, which is the port that the browser reserved for itself, and the *destination* port is `53`, which is one of the [well-known](https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers) ports.
 
@@ -99,7 +99,7 @@ Obviously, UDP and TCP are completely different. TCP protocol has its own [segme
 
 In the previous section, we established that a socket is addressable using a combination of an IP address and a port number. We know what the port is for. But there are no IP addresses to be found in UDP/TCP headers. To know which computer to send the messages to, you need an IP address and IP protocol. Let’s get back to our Wireshark capture to see what information an IP header contains.
 
-<img alt="Wireshark capture: IP packet" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/vpn-06.png">
+<img alt="Wireshark capture: IP packet" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-protocol/vpn-06.png">
 
 All of the information that you saw captured using Wireshark was recorded from my `en0` *network interface* (WiFi).
 
@@ -144,7 +144,7 @@ The key idea behind VPN is surprisingly simple:
 
 The IP packets end up being wrapped in another IP packets, a networking version of a Russian nesting doll.
 
-<img alt="VPN, nesting protocols" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/vpn-matryoshka.png" style="width: 240px; border-radius: 44px;">
+<img alt="VPN, nesting protocols" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-protocol/vpn-matryoshka.png" style="width: 240px; border-radius: 44px;">
 
 This is a simple idea, yet it achieves all of our goals. The original IP packets are fully encrypted. You can see neither the application, nor even the internet layer contents (IP addresses). The only thing ISP or other observers are going to see is some blob of encrypted data going between a VPN client and a VPN server.
 
@@ -163,17 +163,17 @@ The [description of the protocol](https://openvpn.net/community-resources/openvp
   <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-03', 'page-07')">Acknowledge</button>
 </div>
 
-<div id="page-05" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+<div id="page-05" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1">
 The client sends a *control* (`P_CONTROL`) packet with `P_CONTROL_HARD_RESET_CLIENT_V2` type which prepares a new session.
 <img alt="Wireshark capture: OpenVPN client reset" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-01.png">
 </div>
 
-<div id="page-06" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+<div id="page-06" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
 The server responds with a control packet of its own – `P_CONTROL_HARD_RESET_SERVER_V2` type.
 <img alt="Wireshark capture: OpenVPN server reset" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-02.png">
 </div>
 
-<div id="page-07" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+<div id="page-07" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
 The client acknowledges that it received the "reset" from the server.
 <img alt="Wireshark capture: OpenVPN ack" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-03.png">
 </div>
@@ -187,12 +187,12 @@ When the session is ready, the client and the server need to exchange cryptograp
   <button class="SwiftUITabLink" onclick="openTab(event, 'tabs-04', 'page-09')">TLS Payload</button>
 </div>
 
-<div id="page-08" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1">
+<div id="page-08" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1">
 The client sends another control (`P_CONTROL`) packet, this time with a payload.
 <img alt="Wireshark capture: OpenVPN TLS session" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-04.png">
 </div>
 
-<div id="page-09" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 Any-responsiveCard SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
+<div id="page-09" class="SwiftUITabContent SwiftUIExampleWithScreenshot2 kb-legacy-card SwiftUIPost_ExampleWithTabs" markdown="1" style="display:none">
 This packet has TLS payload.
 <img alt="Wireshark capture: OpenVPN TLS session" class="Screenshot" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-05.png">
 </div>
@@ -200,7 +200,7 @@ This packet has TLS payload.
 
 I'm not going to go into detail regarding the TLS exchange. The Wireshark session only shows the first messages of the TLS "handshake". The entire handshake requires a few round-trips. The point is that after a few control messages, the client and the server are ready to encrypt and send messages to the server, regardless of which version of TLS and which encryption model was used. And this is what `P_DATA_V1` message type is for – data channel packet containing actual tunnel data ciphertext.
 
-<img alt="Wireshark capture: OpenVPN sending data" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-06.png">
+<img alt="Wireshark capture: OpenVPN sending data" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-protocol/openvpn-06.png">
 
 And this wraps up an overview of OpenVPN. There is no need to fully understand it, but the big picture is clear. The main takeaways are:
 

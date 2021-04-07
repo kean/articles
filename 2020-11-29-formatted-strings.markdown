@@ -215,11 +215,11 @@ Result using standard `UILabel`[^1]:
 
 How fast is it? ~200 times faster than the HTML-based solution[^2].
 
-<img alt="Formatting Example" width="600px" class="Any-responsiveCard" src="/images/posts/formatting/performance.png">
+<img alt="Formatting Example" width="600px" class="kb-legacy-card" src="/images/posts/formatting/performance.png">
 
 Typically I would be skeptical when I see a performance difference like this, but not in this case. If you profile and see what it's doing, there is WebView, DOM, CSS engine – all sorts of things just to apply two string attributes.
 
-<img alt="Formatting Example" width="600px" class="Any-responsiveCard" src="/images/posts/formatting/performance-2.png">
+<img alt="Formatting Example" width="600px" class="kb-legacy-card" src="/images/posts/formatting/performance-2.png">
 
 [Formatting](https://github.com/kean/Formatting), on the other hand, only does two things: parses XML and directly applies the attributes.
 

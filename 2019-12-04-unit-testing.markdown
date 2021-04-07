@@ -26,7 +26,7 @@ First, we need to set the right goals. For example, achieving 100% code coverage
 
 Code coverage is an instrument. It shows what areas of the app are not tested yet, nothing more. Improving coverage is not a goal in itself. It's a feel-good metric to pump up, but it's an unreliable indicator of how good your test suite is. Code coverage says nothing about the quality of the tests. Improving coverage is worthless if it doesn't attribute to an increase in the quality of the deliverables. Measure quality[^1], don't focus too much on code coverage.
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
 I do have high test coverage in my frameworks, like <a href="https://github.com/kean/Nuke">Nuke</a>. But frameworks are a different animal: a lot of consumers, APIs don't change as often, no dedicated QA team, and no time pressure. I talk more about unit tests and frameworks in <a href="{{ site.url }}/post/ci-for-frameworks)">CI for Swift Frameworks</a>.

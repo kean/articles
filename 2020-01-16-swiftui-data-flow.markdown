@@ -89,7 +89,7 @@ Here is what Apple documentation says about `@Published`:
 
 Now, what this all means is that by making property `@Published`, you are able to observe the changes made to it.
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">

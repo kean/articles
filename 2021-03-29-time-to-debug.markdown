@@ -22,7 +22,7 @@ After designing and implementing an iOS and macOS app, watchOS was a walk in the
 
 Updating Pulse to work on watchOS took me just a couple of hours. I was able to reuse the existing components from the **PulseUI** framework and combine them in new ways. It was super easy, barely an inconvenience.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot Any-responsiveCard" src="{{ site.url }}/images/posts/pulse/promo-6.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/promo-6.png">
 
 Why bring Pulse to watchOS in the first place? Many of the watchOS apps are designed to be used outdoors, during physical activities. You won’t be carrying a computer with you to a gym, will you?
 

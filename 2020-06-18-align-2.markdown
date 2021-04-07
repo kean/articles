@@ -11,7 +11,7 @@ uuid: 63031829-f890-4724-895e-57632ef67870
 ---
 
 <a href="https://github.com/kean/Align">
-<img alt="Align, logo" class="Screenshot Any-responsiveCard" src="/images/posts/align_logo.png">
+<img alt="Align, logo" class="Screenshot kb-legacy-card" src="/images/posts/align_logo.png">
 </a>
 
 This weekend, I decided to revisit one of my early frameworks - [Align](https://github.com/kean/Align). I thought it had some good ideas behind it, but there was still a lot of room for improvement. I ended up re-engineering major parts of it, even taking some inspiration from SwiftUI. I'm thrilled with the results and I can't wait to show it to you now.
@@ -70,7 +70,7 @@ I also quickly realized that this approach would hurt discoverability using Xcod
 I scraped the idea of augmenting the existing methods and decided to split the API into two parts: **Core** and **Semantic**. Align APIs fit in the following quadrant.
 
 <a href="https://github.com/kean/Align">
-<img alt="Align, logo" class="Screenshot Any-responsiveCard" src="/images/posts/align_quadrant.png">
+<img alt="Align, logo" class="Screenshot kb-legacy-card" src="/images/posts/align_quadrant.png">
 </a>
 
 The idea is to make **Core API** as dumb and as close to constraints as possible. **Semantic API**, on the other hand, is a high-level API that focuses on your goals rather than the constraints. This gives me freedom to choose method names and arguments that fit my needs.
@@ -91,7 +91,7 @@ Not bad, huh? Barely any code, six constraints created covering one of the commo
 There are multiple ways to learn Align APIs. The APIs surface is small and easily discoverable using Xcode code completion. The [README](https://github.com/kean/Align) consains an illustrated guide. There is even a <a href="https://github.com/kean/Align/blob/master/Docs/align-cheat-sheet.pdf">cheat sheet</a> available.
 
 <a href="https://github.com/kean/Align/blob/master/Docs/align-cheat-sheet.pdf">
-<img alt="Align cheat sheet" class="Screenshot Any-responsiveCard" src="/images/posts/align/align-cheat-sheet.png">
+<img alt="Align cheat sheet" class="Screenshot kb-legacy-card" src="/images/posts/align/align-cheat-sheet.png">
 </a>
 
 Let me give you a brief tour of some other APIs in Align.

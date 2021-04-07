@@ -20,7 +20,7 @@ I have always been fascinated by the layout systems. I built an [open-source UIS
 
 Let's start with the most basic "Hello World" example.
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left">
@@ -61,7 +61,7 @@ The top layer of any custom view, like `ContentView`, is *layout neutral*. Its b
 
 There are three steps in SwiftUI layout process.
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left">
@@ -108,7 +108,7 @@ First, forget everything you know about frames in UIKit or AppKit. Those have no
 
 Let's take a 60x60 image and display it using SwiftUI's [`Image`](https://developer.apple.com/documentation/swiftui/image). Look what happens if I set the frame to 80x80.
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
@@ -136,7 +136,7 @@ By calling `Image("swiftui").frame(width: 80, height: 80)`, SwiftUI creates a ne
 
 The `alignment` parameter specifies this view’s alignment within the frame. The default one is `.center`, but you can select any of the other [available ones](https://developer.apple.com/documentation/swiftui/alignment):
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
@@ -171,7 +171,7 @@ struct Frame: View {
 
 In SwiftUI, unless you mark an image as resizable, either in the asset catalog or in code, it's fixed sized. If marked resizable, frame now directly affects the size of the image view:
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
@@ -208,7 +208,7 @@ All of the parameters of the [`frame(width:height:alignment:)`](https://develope
 
 Finally, let's see what happens when the frame is smaller than the size of the content.
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
         <!-- To the left: title, subtitle, etc -->
@@ -249,7 +249,7 @@ When creating a SwiftUI view, you describe its content in the view’s body prop
   <button class="SwiftUITabLink" onclick="openTab(event, 'stack-page-04')">Padding</button>
 </div>
 
-<div id="stack-page-01" class="SwiftUITabContent SwiftUIExampleWithScreenshot Any-responsiveCard SwiftUIPost_ExampleWithTabs">
+<div id="stack-page-01" class="SwiftUITabContent SwiftUIExampleWithScreenshot kb-legacy-card SwiftUIPost_ExampleWithTabs">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left2">
@@ -285,7 +285,7 @@ By default, stack view uses <code>.center</code> alignment. That's not quite wha
     </div>
 </div>
 
-<div id="stack-page-02" class="SwiftUITabContent SwiftUIExampleWithScreenshot Any-responsiveCard SwiftUIPost_ExampleWithTabs" style="display:none">
+<div id="stack-page-02" class="SwiftUITabContent SwiftUIExampleWithScreenshot kb-legacy-card SwiftUIPost_ExampleWithTabs" style="display:none">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left2">
@@ -313,7 +313,7 @@ Alright, that worked. But now we need to align the stack itself to the leading e
 </div>
 
 
-<div id="stack-page-03" class="SwiftUITabContent SwiftUIExampleWithScreenshot Any-responsiveCard SwiftUIPost_ExampleWithTabs" style="display:none">
+<div id="stack-page-03" class="SwiftUITabContent SwiftUIExampleWithScreenshot kb-legacy-card SwiftUIPost_ExampleWithTabs" style="display:none">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left2">
@@ -346,7 +346,7 @@ Spacer fills all the space on the right side of the horizontal stack view.
 </div>
 
 
-<div id="stack-page-04" class="SwiftUITabContent SwiftUIExampleWithScreenshot Any-responsiveCard SwiftUIPost_ExampleWithTabs" style="display:none">
+<div id="stack-page-04" class="SwiftUITabContent SwiftUIExampleWithScreenshot kb-legacy-card SwiftUIPost_ExampleWithTabs" style="display:none">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left2">
@@ -394,7 +394,7 @@ The first and the last steps probably don't require any explanation. Step two, o
 
 Let's start with a simple example with two image views. The size of each image is 80x80 points, which is *non-negotiable* (use [`resizable`](https://developer.apple.com/documentation/swiftui/image/3269730-resizable) to allow an image to resize). Regardless of what size the stack proposes to any of the images on step two, the image always returns 80x80. The size of the stack itself, with spacing 10, is always going to be 170x80, regardless of the size of its parent.
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
@@ -429,7 +429,7 @@ This first example again shows that in SwiftUI the child ultimately chooses its 
 
 Let's now look at another example. This time, let's throw some more flexible views into the mix - `Text` views. The scenario where everything fits is not particularly interesting. The question is what happens if it doesn't?
 
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
@@ -474,7 +474,7 @@ In the first example (top screenshot) the width of the preview is 230. The spaci
 
 In the second example (bottom) we give the stack a little bit more space. So the second text now fits. But because the stack always splits the unallocated space into equal parts, the second text view occupied almost all of the available space.
  
-<div class="SwiftUIExampleWithScreenshot Any-responsiveCard">
+<div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <!-- To the left: title, subtitle, etc -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">

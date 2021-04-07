@@ -109,11 +109,11 @@ To configure and control a network provider from your app, you use [`NETunnelPro
 
 So, how does it work? Suppose you have a `NEPacketTunnelProvider` running on the system, connected to a VPN server and providing a tunnel to some internal network. An app wants to get some resource on the network. The app creates a socket, and a TCP/IP connection.
 
-<img alt="WWDC: What's New in NetworkExtension and VPN Screenshot" class="Screenshot Any-responsiveCard" src="/images/posts/vpn-client/tunnel-01.png">
+<img alt="WWDC: What's New in NetworkExtension and VPN Screenshot" class="Screenshot kb-legacy-card" src="/images/posts/vpn-client/tunnel-01.png">
 
 The packets for this TCP/IP connection are routed to a virtual `utun0` network interface. Instead of sending packets over the network, the system diverts the packets to the active `NEPacketTunnelProvider`.
 
-<img alt="WWDC: What's New in NetworkExtension and VPN Screenshot" class="Screenshot Any-responsiveCard" src="/images/posts/vpn-client/tunnel-02.png">
+<img alt="WWDC: What's New in NetworkExtension and VPN Screenshot" class="Screenshot kb-legacy-card" src="/images/posts/vpn-client/tunnel-02.png">
 
 The tunnel provider uses [`NEPacketTunnelFlow`](https://developer.apple.com/documentation/networkextension/nepackettunnelflow) to read the IP packets ([`readPackets(completionHandler:)`](https://developer.apple.com/documentation/networkextension/nepackettunnelflow/1406903-readpackets)) from the virtual interface. It then encapsulates the packets in your tunneling protocol and sends them over to the tunneling server. The server will decapsulate them, and inject the IP packets into the network to send them to their ultimate destination. The responses are sent back to the client in a similar fashion (encapulate-send-decapsulate), and are injected back into the client networking using [`NEPacketTunnelFlow`](https://developer.apple.com/documentation/networkextension/nepackettunnelflow) and `utun0` virtual interface ([`writePackets(_:withProtocols:)`](https://developer.apple.com/documentation/networkextension/nepackettunnelflow/1406484-writepackets)). They will be delivered back to the TCP/IP stack, and back to the application.
 

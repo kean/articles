@@ -158,7 +158,7 @@ Here is an idea. Let's say you have a grid of images. When the user taps on an i
 
 Nuke is packed with performance optimizations. There a [benchmark](https://github.com/kean/Image-Frameworks-Benchmark) that I run periodically to see how it compares with other frameworks in regards to main thread performance.
 
-<img alt="Nuke benchmark: comparison with other image loading frameworks" class="Any-responsiveCard" src="{{ site.url }}/images/posts/nuke9/benchmark.png">
+<img alt="Nuke benchmark: comparison with other image loading frameworks" class="kb-legacy-card" src="{{ site.url }}/images/posts/nuke9/benchmark.png">
 
 How does Nuke achieve its performance? It's not just one optimization, it's a whole range of optimizations across the board. I'll give just a few examples.
 
@@ -175,7 +175,7 @@ These are just some examples of the optimization techniques used in Nuke. There 
 
 With all of these features in place, it can be quite challenging to understand the performance characteristics of the system. Fortunately, with [os_signpost](https://developer.apple.com/documentation/os/logging) integration added in [Nuke 8.0](https://github.com/kean/Nuke/releases/tag/8.0), it's easier than ever. Signposts allow you to have visibility into the pipeline. With Signposts Instrument, you can see which stages take more time.
 
-<img alt="Xcode Instruments session demonstrating Nuke signposts integration" class="Any-responsiveCard" src="{{ site.url }}/images/posts/nuke9/os_signpost.png">
+<img alt="Xcode Instruments session demonstrating Nuke signposts integration" class="kb-legacy-card" src="{{ site.url }}/images/posts/nuke9/os_signpost.png">
 
 > For more information see [WWDC 2018: Measuring Performance Using Logging](https://developer.apple.com/videos/play/wwdc2018/405/) which explains `os_signpost` in a great detail.
 {:.info}
