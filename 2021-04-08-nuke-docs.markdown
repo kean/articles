@@ -26,7 +26,7 @@ Sorry for the ambiguity in the title; I’m not suggesting annihilating all the 
 
 There are three main types of documentation:
 
-<div class="NewList" markdown="1">
+<div class="kb-new-li" markdown="1">
 - **Guides**: problem and understanding-oriented, focus on both practical and theoretical knowledge
 - **Tutorials**: learning-oriented, focused on practical steps
 - **API Reference**: information-oriented
@@ -68,7 +68,7 @@ For the navigation model, I simply used the same design found on [Vapor docs](ht
 
 <img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-02.png">
 
-<div class="NewList" markdown="1">
+<div class="kb-new-li" markdown="1">
 
 1. The **header** is pinned to the top to give you access to search and other navigation. It is different from kean.blog, where the primary use-case is reading one article at a time[^3] – you don’t want a header to interfere with your reading experience.
 2. A **sidebar** with the main navigation with a list of all available pages; makes it easy to understand which page you currently on and what page is next.
@@ -117,7 +117,7 @@ The subsequent page opens are even faster; it's pretty much instant. The only re
 
 How does Nuke Docs achieve this performance?
 
-<div class="NewList" markdown="1">
+<div class="kb-new-li" markdown="1">
 
 - Static HTML and CSS, and not a lot of it
 - No dependencies except for minified [lunr.js](https://lunrjs.com) for search  (<10 KB transfer size)

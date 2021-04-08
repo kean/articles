@@ -384,7 +384,7 @@ What I ended up doing – and I'm not sure I'm happy about – is pre-fetching t
 
 If that wasn't enough, here is a dozen more tips.
 
-<div class="NewList" markdown="1">
+<div class="kb-new-li" markdown="1">
 
 - Use [`.help`](https://developer.apple.com/documentation/swiftui/view/help(_:)-9lm7l) to configure the view's accessibility hint and its tooltip (“help tag”)
 - Use [`.keyboardShortcut`](https://developer.apple.com/documentation/swiftui/keyboardshortcut) to add shortcuts for common actions that are _not_ in the app menu. For example, `.keyboardShortcut("f", modifiers: [.shift, .option])`.
