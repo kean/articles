@@ -36,7 +36,6 @@ Want to learn how to build macOS apps or see some videos with rad UI interaction
 
 ## Navigation
 
-<!-- <img alt="Triple column navigation on macOS using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/00-columns.png"> -->
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
   <source src="{{ site.url }}/videos/pulse/00-triple-2.mp4" type="video/mp4">

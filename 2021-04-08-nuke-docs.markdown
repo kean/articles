@@ -1,18 +1,215 @@
 ---
 layout: post
 title: "Nuke Docs"
-description: TBD
+subtitle: Building new documentation for Nuke
+description: Building new documentation for Nuke
 date: 2021-04-09 09:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/nuke-docs
 uuid: d258c2e5-dcbc-42ff-8f18-700067ecea95
 image:
-  path: TBD
+  path: /images/posts/nuke-docs/cover.png
   height: 1280
   width: 640
-published: false
 ---
 
-Nuke has beautiful [new documentation]({{ site.url }}/nuke/guides/welcome) with quick search and all-new guides. 
+Nuke has beautiful [new documentation]({{ site.url }}/nuke/guides/welcome) with quick search and all-new guides. It’s a relatively simple site, but there are a few things I really enjoy about it. This post is a write-up about some design and technical decisions behind it. I'm not an expert in frontend, so take what you see here with a grain of salt.
 
+Sorry for the ambiguity in the title; I’m not suggesting annihilating all the documentation.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-01.png">
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-03.png">
+
+## Documentation
+
+There are three main types of documentation:
+
+<div class="NewList" markdown="1">
+- **Guides**: problem and understanding-oriented, focus on both practical and theoretical knowledge
+- **Tutorials**: learning-oriented, focused on practical steps
+- **API Reference**: information-oriented
+</div>
+
+It's usually a great idea to start with a tutorial to quickly **learn** some basics concepts of the frameworks, then go through the guides to get a better **understanding** of what the framework does and why, and then use API reference for **information** as you work with the framework.
+
+Great documentation has all three types; so does the new Nuke documentation.
+
+<h3 class="no_toc">API Reference</h3>
+
+I generate [**API Reference**](https://kean-org.github.io/docs/nuke/reference/9.5.0/) for Nuke using [swift-doc](https://github.com/SwiftDocOrg/swift-doc). Many people will simply use the Xcode inline documentation, but it's important also to have it available online. This way, you can link to it, open it on mobile, etc. The line between the API reference and the rest of the documentation should be clear; this is why I host it separately.
+
+<h3 class="no_toc">Tutorials</h3>
+
+As for **tutorials**, there are a couple online, most notably [Nuke Tutorial for iOS: Getting Started](https://www.raywenderlich.com/11070743-nuke-tutorial-for-ios-getting-started) by [Ehab Amer](https://twitter.com/Waheiba) on [raywenderlich.com](https://www.raywenderlich.com). There was also [one](https://www.raywenderlich.com/1337-what-is-nuke) written in 2016 by [Rui Peres](https://twitter.com/peres), but it is a bit outdated now because I kept changing APIs like crazy at the time[^2]. Huge shout-out to both [Ehab Amer](https://twitter.com/Waheiba) and [Rui Peres](https://twitter.com/peres) and the [raywenderlich.com](https://www.raywenderlich.com) team; it's incredible to see people invest so much time into writing about the stuff you made.
+
+[^2]: I want to thank everyone who patiently migrated to the new APIs. I used to post detailed [migration guides](https://github.com/kean/Nuke/tree/master/Documentation/Migrations) for every major release, but it was still a pain to migrate. Starting with [Nuke 7](https://github.com/kean/Nuke/releases/tag/7.0) in 2018 all of the new releases have been largely source-compatible.
+
+<h3 class="no_toc">Guides</h3>
+
+And now to **guides**, probably the hardest part to get right. Guides are a mix of everything: they can describe how to solve a specific problem, explain some high-level concepts, or serve as a subset of an API reference. Most importantly, guides should tell a cohesive story; I think about them as a small book split into chapters.
+
+My main focus was on guides, and this is what the post is also about. I initially started putting them on GitHub, but it was hard to navigate, and I found the experience of using them just in general unappealing. Take simple things like charters per line, for example. GitHub crams 135 characters in a single line, while the ideal is about 90. That's why I decided to bite the bullet and build [Nuke Docs]({{ sire.url }}/nuke/guides/welcome).
+
+## Technology
+
+It's rare for an open-source framework in the Apple ecosystem to have a dedicated site for documentation. Vapor comes to mind; it has a [documentation page](https://docs.vapor.codes/4.0/) created using [Material](https://squidfunk.github.io/mkdocs-material/) theme for [MkDocs](https://www.mkdocs.org). It looks great; I love Vapor docs! You can build something similar quickly and easily.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/vapor-01.png">
+
+So I'm going to use MkDocs, right? No... I wanted to use the design from [kean.blog]({{ site.url }}) that many people seem to love. I also wanted to learn a bit more about frontend. So what technology am I using? It's just static HTML generated using [Jekyll](https://jekyllrb.com), CSS, and, of course, JavaScript. And, you know, I kind of like it, JavaScript.
+
+## Design
+
+I already had a nice design for the main page content from [kean.blog]({{ site.url }}) with all the features I could possibly need: images, video, side-by-side stacks, footnotes, code blocks, etc. So all I needed was a new navigation model and search.
+
+For the navigation model, I simply used the same design found on [Vapor docs](https://docs.vapor.codes/4.0/). This is pretty much what everyone is using [except for Apple]({{ site.url }}/post/apple-documentation).
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-02.png">
+
+<div class="NewList" markdown="1">
+
+1. The **header** is pinned to the top to give you access to search and other navigation. It is different from kean.blog, where the primary use-case is reading one article at a time[^3] – you don’t want a header to interfere with your reading experience.
+2. A **sidebar** with the main navigation with a list of all available pages; makes it easy to understand which page you currently on and what page is next.
+3. Each guide has a **badge** with color-coding to make it even easier to understand where you are in the navigation. A **subtitle** defines a clear goal, ensures that the content is cohesive.
+4. **Code** blocks, designed not to break you from reading by adding low visual noise thanks to the lack of borders, the same insets as text, and only basic syntax highlighting.
+5. The **content** width displays ideal 90 characters per line.
+6. **Table of contents** lets you know where you currently are on the page, allows you to jump to other sections, and dynamically updates as you scroll.
+
+</div>
+
+[^3]: Speaking about time, I want to mention “time to read” that I recently removed from all posts. You can’t provide an accurate estimate of how much time it would take someone to read a technical article. I think a scroll bar is a good enough indicator of how long the post is. Also, what purpose does it even serve? If someone wants to read an article, they will, regardless of its length.
+
+## Responsive
+
+A great website is responsive: it takes advantage of the big screens while also supporting the smallest devices. I can’t even begin to describe just how easy it is to make responsive interfaces using CSS. There is a lot that native platforms could learn from it. I love CSS; imagine if you had to write all styles in code, ugh.
+
+Of course, Nuke Docs takes advantage of the big screens by displaying all of the navigation elements at the same time.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-01.png">
+
+Many people use an iPad as a second screen, and I optimized the site for it. There is space for both the sidebar and the full-width page content (730px).
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-02.png">
+
+Of course, it also works on iPhones (even on 4"). All features are available on mobile, including a table of contents and even search.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-06.png">
+
+And there is even a layout for big iPhone screens where the width allows you to put a smaller version of the sidebar on the page. If you were to display the page content full-width, it would be comically large. With a sidebar, it’s just right.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-03.png">
+
+## Performance
+
+What is a post without a section on performance? Let's dive in.
+
+When you open a typical web page, you often see hundreds of resources downloaded from tens of domains. Open a popular website, and see. That’s not necessarily a problem if the resources are small, cacheable, and are required for the best user experience. But with Nuke Docs, I wanted to do with the absolute minimum.
+
+Here are some numbers. When you open it for the first time (nothing in cache), the total transfer size is 28 KB, and everything loads in less than 100ms from a single domain. Sure, it's a simple page, but check out Vapor Docs [networking]({{ site.url }}/images/posts/nuke-docs/vapor-perf.png) for comparison: 8 domains, 22 documents, 1.03 MB, 666ms. It’s still super fast compared to other websites. But faster is faster.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/perf-01.png">
+
+The subsequent page opens are even faster; it's pretty much instant. The only resource that is loaded is HTML for this page.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/perf-02.png">
+
+How does Nuke Docs achieve this performance?
+
+<div class="NewList" markdown="1">
+
+- Static HTML and CSS, and not a lot of it
+- No dependencies except for minified [lunr.js](https://lunrjs.com) for search  (<10 KB transfer size)
+- No analytics
+- Small amount of JavaScript[^4]
+- The search index is loaded lazily when you open search; the time before the user enters the first 2 letters is enough to fetch it
+
+[^4]: It looks like building a website without a framework isn’t a common affair these days. A lot of the answers online are from years ago, and most use jquery. It’s a bit painful to translate it to vanilla JavaScript every time, but I think it was worth it to avoid a dependency. For example, [Jazzy](https://github.com/realm/jazzy) has 30 lines of JavaScript and downloads 4000 lines of jquery; a shame.
+
+Speaking about search; it was probably the most exciting feature I needed to build. It's hard to find good articles on a subject, so maybe someone will find it helpful. 
+
+## Search
+
+<div class="BlogVideo NewScreenshot">
+<video controls muted playsinline preload="auto">
+	<source src="{{ site.url }}/videos/nuke-docs/search.mp4" type="video/mp4">
+</video>
+</div>
+
+The search is built using [lunr.js](https://lunrjs.com) which is a simple client-side search engine. It doesn't provide any of the UI components; you have to build them yourself. But first, you need to create a search index.
+
+In Nuke Docs, an index (`search-index.json`) is a JSON file that gets generated as part of the Jekyll build process. The file has [front matter](https://jekyllrb.com/docs/front-matter/) to enable special processing where you can use [Liquid](https://jekyllrb.com/docs/front-matter/) tags and have access to all site pages and other information.
+
+```js
+---
+
+---
+
+[
+{% raw %}{% assign guides = site.pages | where: 'layout', 'nuke-guide' %}
+{% for guide in guides %}
+  {
+    "title": {{guide.title | jsonify}},
+    "content": {{ guide.content | markdownify | jsonify }},
+    "link": {{ guide.url | jsonify  }}
+  }{% unless forloop.last %},{% endunless %}
+{% endfor %}{% endraw %}
+]
+```
+
+As an output, you get a simple `search-index.json` file with an array of entries ([example](https://kean.blog/nuke/assets/search-index.json)). When the user presses the search button (or `f` key), the app fetches this file, and populates the lunr.js index.
+
+```javascript
+function populateSearchIndex(json) {
+    let entries = json.flatMap(splitPageContentIntoChunks);
+
+    searchIndex = lunr(function () {
+        this.field('title', { boost: 5 });
+        this.field('content');
+        this.ref('id');
+
+        for (var i = 0; i < entries.length; i++) {
+            const entry = entries[i];
+            this.add({ title: entry.title, content: entry.content, id: i });
+        }
+    });
+
+    for (const entry of entries) {
+        const excerpt = truncate(entry.content, 120, true);
+        searchEntries.push({ 'title': entry.title, 'link': entry.link, 'excerpt': excerpt });
+    }
+}
+```
+
+Starting with lunr.js 2.0, by default, the search simply looks for a complete match of the input word. For example, if you search for `priorirty`, the text has to contain a complete word. If you just enter `priori`, the results will be empty. So I ended up using the following approach for creating a query:
+
+```javascript
+const updatedQuery = query
+    .split(" ")
+    .map(word => word + '~1^2 ' + word + '*')
+    .join(' ');
+
+const results = searchIndex.search(updatedQuery);
+```
+
+I search for a full match of the word with a bit of fuzziness (`~1`) and boost the score for this match (`^2`), and I also search for a prefix using a wildcard (`*`). There is probably a better way to configure it, but with this setup, I got it to work as the previous versions.
+
+Now, this search works, but it only searches complete pages. And I wanted to allow the user to search for parts of the guide split by headings, and jump straight to the heading. Fortunately, I already had [jekyll-anchor-headings](https://github.com/allejo/jekyll-anchor-headings) set up for the table of contents, so all I needed to do was a bit of pre-processing of the search index.
+
+I take each page, split it into chunks using simple regex[^5] and voila. I then strip HTML and liquid tags from the content, and it's done. The only thing left is to create an anchor link for each entry and attach it to our new piece of searchable content.
+
+I don't want to paste the complete code here, but you can always find it on the [website](https://kean.blog/nuke/guides/welcome). As for the UI, you can also find it there. There is quite a lot of JavaScript with event handlers to make it work well, especially to support keyboard navigation.
+
+[^5]: `.content.split(/(<h[^>]*>.*?<\/h.>)/g)`
+
+[lunr.js](https://lunrjs.com) is a great tool with more features that I haven't covered here. Fortunately, it has a website with [documentation](https://lunrjs.com/guides/searching.html) of its own.
+
+## Conclusion
+
+I was waiting until someone compares it to the Apple Documentation, and, sure enough, Twitter [doesn't](https://twitter.com/freak4pc/status/1379655628063453189?s=20) disappoint. Honestly, I don't think it deserves that much praise, but I'm glad many people liked it. I wanted to make it as fast and enjoyable to use as possible.
+
+There is still a lot to improve. I wrote some of the guides a long time ago, and the writing there is terrible. I also want to add a cross-site search to show results from the API reference on the main site. And I need a way to automate the creation of links from the guides to the API reference when I mention a type from the framework. But that’s going to be another story.
+
+<div class="FootnotesSection" markdown="1">
+</div>
