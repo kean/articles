@@ -529,9 +529,9 @@ In contrast with parser generators, this method of building parsers is fully ext
 
 The code from the article is available in a [playground]({{ site.url }}/playgrounds/parsers.zip). You can find the complete regex parser implementation in [kean/Regex](https://github.com/kean/Regex). With a parser completed, we can now produce a structured representation of the pattern and compile it. This will be the focus on the upcoming article. Stay tuned!
 
-<div class="Any-vertInsets">
+<div class="kb-vert-insets">
 <a href="{{ site.url }}/post/regex-compiler">
-  <div class="PrimaryButton">
+  <div class="kb-primary-button">
     Continue Reading »
   </div>
 </a>

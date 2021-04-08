@@ -172,9 +172,9 @@ I think you get the idea. You can find a complete regex [grammar](https://github
 
 In the next article I will write a parser based on [the grammar](https://kean.github.io/Regex/grammar-diagram.xhtml). There are multiple ways to do that. You can write a parser by hand or generate it. A parser can use a top-down or bottom-up approach. You can use [parser combinators](https://en.wikipedia.org/wiki/Parser_combinator), etc. I will look at all of these options.
 
-<div class="Any-vertInsets">
+<div class="kb-vert-insets">
 <a href="{{ site.url }}/post/regex-parser">
-  <div class="PrimaryButton">
+  <div class="kb-primary-button">
     Continue Reading »
   </div>
 </a>

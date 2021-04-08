@@ -210,9 +210,9 @@ And this wraps up an overview of OpenVPN. There is no need to fully understand i
 
 This is enough information to start working on our toy VPN protocol.
 
-<div class="Any-vertInsets">
+<div class="kb-vert-insets">
 <a href="{{ site.url }}/post/vpn-configuration-manager">
-  <div class="PrimaryButton">
+  <div class="kb-primary-button">
     Continue Reading »
   </div>
 </a>

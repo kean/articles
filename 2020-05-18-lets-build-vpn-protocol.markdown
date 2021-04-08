@@ -40,9 +40,9 @@ The primary topic of this series is going to be [Network Extension](https://deve
 > The entire app source code is available at [kean/VPN](https://github.com/kean/VPN).
 {:.info}
 
-<div class="Any-vertInsets">
+<div class="kb-vert-insets">
 <a href="/post/networking-101">
-  <div class="PrimaryButton">
+  <div class="kb-primary-button">
     Continue Reading »
   </div>
 </a>

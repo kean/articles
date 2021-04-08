@@ -115,7 +115,7 @@ As you probably noticed we haven't defined the stack's size along neither of its
 
 In the result we get a very simple but very useful layout. In terms of constraints this configuration is the simplest one to implement.
 
-<p class="HorDivider"></p>
+
 
 
 <a name="UIStackViewDistribution.fillEqually"></a>
@@ -150,7 +150,7 @@ In the result we get a very simple but very useful layout. In terms of constrain
 
 This distribution is almost the same as <a href="#UIStackViewDistribution.fill">fill distribution</a>. The only different is the new <b>UISV-fill-equally</b> set of constraints. It forces all of the arranged views to have the same width (or height for vertical `UIStackView`).
 
-<p class="HorDivider"></p>
+
 
 
 <a name="UIStackViewDistribution.fillProportionally"></a>
@@ -204,7 +204,7 @@ Also notice that the priority of the constraints is higher then both content hug
 
 > I'm not sure why each constraint has a different priority (999, 998, etc). If you have an idea please <a href="#comment-section">leave a comment below</a>.
 
-<p class="HorDivider"></p>
+
 
 
 <a name="UIStackViewDistribution.equalSpacing"></a>
@@ -244,7 +244,7 @@ Also notice that the priority of the constraints is higher then both content hug
 
 This configuration requires extra spacers (`_UIOLAGapGuide`) [between subsequent subviews](http://stackoverflow.com/questions/38778692/xcode-7-constraints-equal-spacing-between-buttons). Spacers are pinned to respected subviews by <b>UISV-distributing-edge</b> constraints. All the spacers have the same size thanks to <b>UISV-fill-equally</b> constraints. The <b>UISV-spacing</b> constraints are a bit different from previous distributions too - they now use `NSLayoutRelation.greaterThanOrEqual` rather than `NSLayoutRelation.equal`.
 
-<p class="HorDivider"></p>
+
 
 
 <a name="UIStackViewDistribution.equalCentering"></a>
@@ -290,7 +290,7 @@ The other difference is that **UISV-fill-equally** constraints now have a low pr
 
 The minimum spacing is again achieved by **UISV-spacing** constraints which all have a *required* priority.
 
-<p class="HorDivider"></p>
+
 
 ## UIStackView.Alignment
 
@@ -323,7 +323,7 @@ The minimum spacing is again achieved by **UISV-spacing** constraints which all 
 
 This configuration is exactly the same as the very first one: [fill distribution](#UIStackViewDistribution.fill).
 
-<p class="HorDivider"></p>
+
 
 
 <a name="UIStackViewAlignment.leading"></a>
@@ -376,7 +376,7 @@ Interestingly vertical **UISV-canvas-connection** constraints pin different view
 
 Now why is that so complicated? Why is layout spacer necessary and is it necessary at all? Couldn't we just pin all the arranged views to the stack view itself? I think that it might be excessive, but I might be missing something. If you have an idea why it's implemented this way please [share it in the comments](#comment-section).
 
-<p class="HorDivider"></p>
+
 
 
 <a name="UIStackViewAlignment.center"></a>
@@ -422,7 +422,7 @@ Now why is that so complicated? Why is layout spacer necessary and is it necessa
 
 This and the following alignment (.trailing) is very similar to a [leading alignment](#UIStackViewAlignment.leading) so I'm not going to comment them that much. This particular configuration has an extra **UISV-canvas-connection** constraint that pins first arranged view to the `.centerY` of the stack view, and has slightly different **UISV-spanning-boundary** and **UISV-alignment**. But the idea is the same.
 
-<p class="HorDivider"></p>
+
 
 
 <a name="UIStackViewAlignment.trailing"></a>
@@ -465,7 +465,6 @@ This and the following alignment (.trailing) is very similar to a [leading align
  H:[Subview1]-(0)-[Subview2]
 </pre>
 
-<p class="HorDivider"></p>
 
 
 <a name="UIStackViewAlignment.firstBaseline"></a>
@@ -516,7 +515,7 @@ This and the following alignment (.trailing) is very similar to a [leading align
  H:[Subview1]-(0)-[Subview2]
 </pre>
 
-<p class="HorDivider"></p>
+
 
 The `.firstBaseline` and the `.lastBaseline` alignments only make sense for views like `UILabel` which has some content with actual baselines (like text).
 
@@ -570,7 +569,7 @@ The set of constraints is similar to the previous scenario: it uses an auxiliary
  H:[Subview1]-(0)-[Subview2]
 </pre>
 
-<p class="HorDivider"></p>
+
 
 
 ## Misc
@@ -628,7 +627,7 @@ UIView.animateWithDuration(0.33) {
 
 This way some of the responsibilities gets delegated to the user of the library, but all the complexities of working with `isHidden` are gone.
 
-<p class="HorDivider"></p>
+
 
 
 <a name="Misc.MarginsRelativeLayout"></a>
@@ -665,7 +664,7 @@ UISV-alignment:
 
 **UISV-canvas-connection** constraints now pin subviews to `UIViewLayoutMarginsGuide` instead of bounds.
 
-<p class="HorDivider"></p>
+
 
 
 <a name="Misc.BaselineRelativeLayout"></a>
@@ -696,7 +695,7 @@ UISV-alignment:
 
 The stack modifies **UISV-spacing** constraints by using `.firstBaseline` and `.lastBaseline` layout attributes.
 
-<p class="HorDivider"></p>
+
 
 
 <a name="Misc.SingleSubviewCenterAlignment"></a>

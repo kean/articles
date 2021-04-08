@@ -192,9 +192,9 @@ As usual, you can find the full compiler implementation at [kean/Regex](https://
 >
 > Most of the state machines in the article were non-deterministic (or NFA). The moment you introduce epsilon transitions you add non-determinism. Non-determinism means that a state machine has multiple valid transitions from the same state and with the same input. Most of the regex engines use NFA but there are some that use DFA. I'm not covering the later in the series.
 
-<div class="Any-vertInsets">
+<div class="kb-vert-insets">
 <a href="{{ site.url }}/post/regex-matcher">
-  <div class="PrimaryButton">
+  <div class="kb-primary-button">
     Continue Reading »
   </div>
 </a>

@@ -327,9 +327,9 @@ I encourage you to test whether you are able to attach the debug to the extensio
 
 Congratulations, if you reached this point, you know how to install a VPN configuration, enable it, start a VPN tunnel, and attach a debugger to it. This a great progress! In the next part, I'm going to cover the Packet Tunnel itself.
 
-<div class="Any-vertInsets">
+<div class="kb-vert-insets">
 <a href="{{ site.url }}/post/packet-tunnel-provider">
-  <div class="PrimaryButton">
+  <div class="kb-primary-button">
     Continue Reading »
   </div>
 </a>

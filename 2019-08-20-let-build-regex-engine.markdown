@@ -66,9 +66,9 @@ And finally, in [**Regex, Part 3: Matcher**]({{ site.url }}/post/regex-matcher) 
 
 I hope I got you excited! This is going to be a fun series packed with ideas and concepts. It will be useful for anyone, regardless of whether you have a CS background or not. You can find a complete implementation on [GitHub](https://github.com/kean/Regex) and if you have any comments or suggestions, please, feel free to hit me up on [Twitter](https://twitter.com/a_grebenyuk).
 
-<div class="Any-vertInsets">
+<div class="kb-vert-insets">
 <a href="{{ site.url }}/post/regex-grammar">
-  <div class="PrimaryButton">
+  <div class="kb-primary-button">
     Continue Reading »
   </div>
 </a>
