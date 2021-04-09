@@ -137,9 +137,9 @@ Speaking about search; it was probably the most exciting feature I needed to bui
 </video>
 </div>
 
-The search is built using [lunr.js](https://lunrjs.com) which is a simple client-side search engine. It doesn't provide any of the UI components; you have to build them yourself. But first, you need to create a search index.
+The search is built using [lunr.js](https://lunrjs.com) which is a simple client-side search engine which is relatively easy to use.
 
-In Nuke Docs, an index (`search-index.json`) is a JSON file that gets generated as part of the Jekyll build process. The file has [front matter](https://jekyllrb.com/docs/front-matter/) to enable special processing where you can use [Liquid](https://jekyllrb.com/docs/front-matter/) tags and have access to all site pages and other information.
+First, you need to populate a search index. In Nuke Docs, an index is a JSON file generated during the Jekyll build process. The file has [front matter](https://jekyllrb.com/docs/front-matter/) to enable special processing where you can use [Liquid](https://jekyllrb.com/docs/front-matter/) tags.
 
 ```js
 ---
@@ -158,11 +158,11 @@ In Nuke Docs, an index (`search-index.json`) is a JSON file that gets generated 
 ]
 ```
 
-As an output, you get a simple `search-index.json` file with an array of entries ([example](https://kean.blog/nuke/assets/search-index.json)). When the user presses the search button (or `f` key), the app fetches this file, and populates the lunr.js index.
+As an output, I get a simple [`search-index.json`](https://kean.blog/nuke/assets/search-index.json) file with an array of pages. When the user presses the search button (or an `f` key), the app fetches it and populates the lunr.js index.
 
 ```javascript
 function populateSearchIndex(json) {
-    let entries = json.flatMap(splitPageContentIntoChunks);
+    let entries = json.flatMap(splitPageIntoChunks);
 
     searchIndex = lunr(function () {
         this.field('title', { boost: 5 });
@@ -182,26 +182,24 @@ function populateSearchIndex(json) {
 }
 ```
 
-Starting with lunr.js 2.0, by default, the search simply looks for a complete match of the input word. For example, if you search for `priorirty`, the text has to contain a complete word. If you just enter `priori`, the results will be empty. So I ended up using the following approach for creating a query:
+With the index populated, you can start searching. With lunr.js 2.0, the search simply looks for complete matches of the input words by default. For example, if you want to search for `priorirty`, but only enter `priori`, the results will be empty. So I ended up with the following approach for creating a query:
 
 ```javascript
 const updatedQuery = query
     .split(" ")
-    .map(word => word + '~1^2 ' + word + '*')
+    .map(word => word + '^2 ' + word + '*')
     .join(' ');
 
 const results = searchIndex.search(updatedQuery);
 ```
 
-I search for a full match of the word with a bit of fuzziness (`~1`) and boost the score for this match (`^2`), and I also search for a prefix using a wildcard (`*`). There is probably a better way to configure it, but with this setup, I got it to work as the previous versions.
+I search for a complete match boosting its score (`^2`) and for a prefix using a wildcard (`*`). I also tried adding a bit of fuzziness (`~1`) but was producing inaccurate results with high scores.
 
-Now, this search works, but it only searches complete pages. And I wanted to allow the user to search for parts of the guide split by headings, and jump straight to the heading. Fortunately, I already had [jekyll-anchor-headings](https://github.com/allejo/jekyll-anchor-headings) set up for the table of contents, so all I needed to do was a bit of pre-processing of the search index.
+The search works, but only for complete pages: you can't jump to subheadings. Fortunately, I already had [jekyll-anchor-headings](https://github.com/allejo/jekyll-anchor-headings) set up for the table of contents, so all I needed to do was preprocess the pages. I take a page, split it into chunks using simple regex[^5], find anchor links, strip HTML and Liquid tags from content, and voila – now the search index has parts of pages split based on subheadings instead of complete pages.
 
-I take each page, split it into chunks using simple regex[^5] and voila. I then strip HTML and liquid tags from the content, and it's done. The only thing left is to create an anchor link for each entry and attach it to our new piece of searchable content.
+I don't want to paste the complete code here, but you can always find it on the [website](https://kean.blog/nuke/guides/welcome). As for the UI, you can find it there as well; it was challenging to get the search view to work precisely the way I wanted it to with keyboard navigation, automatic scrolling, nice highlighting, etc.
 
-I don't want to paste the complete code here, but you can always find it on the [website](https://kean.blog/nuke/guides/welcome). As for the UI, you can also find it there. There is quite a lot of JavaScript with event handlers to make it work well, especially to support keyboard navigation.
-
-[^5]: `.content.split(/(<h[^>]*>.*?<\/h.>)/g)`
+[^5]: `.content.split(/(<h[^>]*>.*?<\/h.>)/g)`. Parsing HTML with regex is generally not a good idea, but it works well in this controlled environment.
 
 [lunr.js](https://lunrjs.com) is a great tool with more features that I haven't covered here. Fortunately, it has a website with [documentation](https://lunrjs.com/guides/searching.html) of its own.
 
