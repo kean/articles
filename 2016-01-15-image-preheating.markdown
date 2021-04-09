@@ -16,13 +16,13 @@ uuid: 7ca6cd36-1cb2-4825-93af-3c8e291b9960
 - Apr 3, 2021. Replace [Preheat](https://github.com/kean/Preheat) (deprecated) with `UICollectionView` prefetching APIs. Add prefetching in SwiftUI `List`.
 </div>
 
-Loading data ahead of time in anticipation of its use ([prefetching](https://en.wikipedia.org/wiki/Prefetching)) is an great way to improve user experience. It's especially effective for images; it can give users an impression that there is no networking and the images are just magically always there when they need them.
+Loading data ahead of time in anticipation of its use ([prefetching](https://en.wikipedia.org/wiki/Prefetching)) is a great way to improve user experience. It's especially effective for images; it can give users an impression that there is no networking and the images are just magically always there.
 
 In this post, I will cover [Nuke](https://kean.github.io/Nuke/) and image prefetching in `UICollectionView` and SwiftUI `List`.
 
 ## UICollectionView
 
-Starting with iOS 10, it became easy to implement prefetching in a `UICollectionView` thanks to the [`UICollectionViewDataSourcePrefetching`](https://developer.apple.com/documentation/uikit/uicollectionviewdatasourceprefetching]) API. All you need to do is set [`isPrefetchingEnabled`](https://developer.apple.com/documentation/uikit/uicollectionview/1771771-isprefetchingenabled) to `true` and set a [`prefetchDataSource`](https://developer.apple.com/documentation/uikit/uicollectionview/1771768-prefetchdatasource).
+Starting with iOS 10, it became easy to implement prefetching in a `UICollectionView` thanks to the [`UICollectionViewDataSourcePrefetching`](https://developer.apple.com/documentation/uikit/uicollectionviewdatasourceprefetching) API. All you need to do is set [`isPrefetchingEnabled`](https://developer.apple.com/documentation/uikit/uicollectionview/1771771-isprefetchingenabled) to `true` and set a [`prefetchDataSource`](https://developer.apple.com/documentation/uikit/uicollectionview/1771768-prefetchdatasource).
 
 ```swift
 final class PrefetchingDemoViewController: BaseDemoViewController {
