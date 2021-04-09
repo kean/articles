@@ -9,7 +9,7 @@ tags: programming
 permalink: /post/client-side-search
 uuid: 73543c14-bc64-4bf3-8913-210e2dbf1268
 image:
-  path: /images/posts/nuke-docs/cover.png
+  path: /images/posts/client-side-search/cover.png
   height: 1280
   width: 640
 ---
