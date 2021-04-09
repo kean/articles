@@ -3,7 +3,7 @@ layout: post
 title: "Nuke Docs"
 subtitle: How to build great documentation for a framework
 description: How to build great documentation for a framework
-date: 2021-04-09 09:00:00 -0500
+date: 2021-04-08 09:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/nuke-docs
@@ -127,81 +127,8 @@ How does Nuke Docs achieve this performance?
 
 [^4]: It looks like building a website without a framework isn’t a common affair these days. A lot of the answers online are from years ago, and most use jquery. It’s a bit painful to translate it to vanilla JavaScript every time, but I think it was worth it to avoid a dependency. For example, [Jazzy](https://github.com/realm/jazzy) has 30 lines of JavaScript and downloads 4000 lines of jquery; a shame.
 
-Speaking about search; it was probably the most exciting feature I needed to build. It's hard to find good articles on a subject, so maybe someone will find it helpful. 
-
-## Search
-
-<div class="BlogVideo NewScreenshot">
-<video controls muted playsinline preload="auto">
-	<source src="{{ site.url }}/videos/nuke-docs/search.mp4" type="video/mp4">
-</video>
-</div>
-
-The search is built using [lunr.js](https://lunrjs.com) which is a simple client-side search engine which is relatively easy to use.
-
-First, you need to populate a search index. In Nuke Docs, an index is a JSON file generated during the Jekyll build process. The file has [front matter](https://jekyllrb.com/docs/front-matter/) to enable special processing where you can use [Liquid](https://jekyllrb.com/docs/front-matter/) tags.
-
-```js
----
-
----
-
-[
-{% raw %}{% assign guides = site.pages | where: 'layout', 'nuke-guide' %}
-{% for guide in guides %}
-  {
-    "title": {{guide.title | jsonify}},
-    "content": {{ guide.content | markdownify | jsonify }},
-    "link": {{ guide.url | jsonify  }}
-  }{% unless forloop.last %},{% endunless %}
-{% endfor %}{% endraw %}
-]
-```
-
-As an output, I get a simple [`search-index.json`](https://kean.blog/nuke/assets/search-index.json) file with an array of pages. When the user presses the search button (or an `f` key), the app fetches it and populates the lunr.js index.
-
-```javascript
-function populateSearchIndex(json) {
-    let entries = json.flatMap(splitPageIntoChunks);
-
-    searchIndex = lunr(function () {
-        this.field('title', { boost: 5 });
-        this.field('content');
-        this.ref('id');
-
-        for (var i = 0; i < entries.length; i++) {
-            const entry = entries[i];
-            this.add({ title: entry.title, content: entry.content, id: i });
-        }
-    });
-
-    for (const entry of entries) {
-        const excerpt = truncate(entry.content, 120, true);
-        searchEntries.push({ 'title': entry.title, 'link': entry.link, 'excerpt': excerpt });
-    }
-}
-```
-
-With the index populated, you can start searching. With lunr.js 2.0, the search simply looks for complete matches of the input words by default. For example, if you want to search for `priorirty`, but only enter `priori`, the results will be empty. So I ended up with the following approach for creating a query:
-
-```javascript
-const updatedQuery = query
-    .split(" ")
-    .map(word => word + '^2 ' + word + '*')
-    .join(' ');
-
-const results = searchIndex.search(updatedQuery);
-```
-
-I search for a complete match boosting its score (`^2`) and for a prefix using a wildcard (`*`). I also tried adding a bit of fuzziness (`~1`) but was producing inaccurate results with high scores.
-
-The search works, but only for complete pages: you can't jump to subheadings. Fortunately, I already had [jekyll-anchor-headings](https://github.com/allejo/jekyll-anchor-headings) set up for the table of contents, so all I needed to do was preprocess the pages. I take a page, split it into chunks using simple regex[^5], find anchor links, strip HTML and Liquid tags from content, and voila – now the search index has parts of pages split based on subheadings instead of complete pages.
-
-I don't want to paste the complete code here, but you can always find it on the [website](https://kean.blog/nuke/guides/welcome). As for the UI, you can find it there as well; it was challenging to get the search view to work precisely the way I wanted it to with keyboard navigation, automatic scrolling, nice highlighting, etc.
-
-[^5]: `.content.split(/(<h[^>]*>.*?<\/h.>)/g)`. Parsing HTML with regex is generally not a good idea, but it works well in this controlled environment.
-
-[lunr.js](https://lunrjs.com) is a great tool with more features that I haven't covered here. Fortunately, it has a website with [documentation](https://lunrjs.com/guides/searching.html) of its own.
+> If you want to learn more about how to build the client-side search, see the [dedicated post]({{ site.url }}/post/client-side-search).
+{:.info}
 
 ## Conclusion
 
