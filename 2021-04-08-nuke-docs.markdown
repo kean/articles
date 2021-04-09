@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Nuke Docs"
-subtitle: Building new documentation for Nuke
-description: Building new documentation for Nuke
+subtitle: How to build great documentation for a framework
+description: How to build great documentation for a framework
 date: 2021-04-09 09:00:00 -0500
 category: programming
 tags: programming
