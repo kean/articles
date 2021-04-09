@@ -125,7 +125,7 @@ public extension ImagePrefetcher {
 
 SwiftUI currency doesn't provide an API for prefetching, and that's why I built [ScrollViewPrefetcher](https://github.com/kean/ScrollViewPrefetcher).
 
-> `ScrollViewPrefetcher` is pre-release software, use at your own risk.
+> `ScrollViewPrefetcher` is pre-release software, use at your own risk. The API is suboptimal and will most likely change in the future.
 {:.warning}
 
 As part of the Nuke infrastructure, the `ScrollViewPrefetcher` demo is available in the central [Nuke Demo](https://github.com/kean/NukeDemo) repository. In this repo, I create a grid of images using `LazyVGrid` and load images using [`FetchImage`](https://github.com/kean/FetchImage).
