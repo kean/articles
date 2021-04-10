@@ -38,17 +38,17 @@ Great documentation has all three types; so does the new Nuke documentation.
 
 <h3 class="no_toc">API Reference</h3>
 
-I generate [**API Reference**](https://kean-org.github.io/docs/nuke/reference/9.5.0/) for Nuke using [swift-doc](https://github.com/SwiftDocOrg/swift-doc). Many people will simply use the Xcode inline documentation, but it's important also to have it available online. This way, you can link to it, open it on mobile, etc. The line between the API reference and the rest of the documentation should be clear; this is why I host it separately.
+I generate [**API Reference**](https://kean-org.github.io/docs/nuke/reference/9.5.0/) for Nuke using [swift-doc](https://github.com/SwiftDocOrg/swift-doc). Many people will simply use the Xcode inline documentation, but it's important to also have it available online. This way, you can link to it, open it on mobile, etc. The line between the API reference and the rest of the documentation should be clear; this is why I host it separately.
 
 <h3 class="no_toc">Tutorials</h3>
 
-As for **tutorials**, there are a couple online, most notably [Nuke Tutorial for iOS: Getting Started](https://www.raywenderlich.com/11070743-nuke-tutorial-for-ios-getting-started) by [Ehab Amer](https://twitter.com/Waheiba) on [raywenderlich.com](https://www.raywenderlich.com). There was also [one](https://www.raywenderlich.com/1337-what-is-nuke) written in 2016 by [Rui Peres](https://twitter.com/peres), but it is a bit outdated now because I kept changing APIs like crazy at the time[^2]. Huge shout-out to both [Ehab Amer](https://twitter.com/Waheiba) and [Rui Peres](https://twitter.com/peres) and the [raywenderlich.com](https://www.raywenderlich.com) team; it's incredible to see people invest so much time into writing about the stuff you made.
+As for **tutorials**, there are a couple, most notably [Nuke Tutorial for iOS: Getting Started](https://www.raywenderlich.com/11070743-nuke-tutorial-for-ios-getting-started) by [Ehab Amer](https://twitter.com/Waheiba) on [raywenderlich.com](https://www.raywenderlich.com). There was also [one](https://www.raywenderlich.com/1337-what-is-nuke) written in 2016 by [Rui Peres](https://twitter.com/peres), but it is a bit outdated now because I kept changing APIs like crazy at the time[^2]. Huge shout-out to both [Ehab Amer](https://twitter.com/Waheiba) and [Rui Peres](https://twitter.com/peres) and the [raywenderlich.com](https://www.raywenderlich.com) team; it's incredible to see people invest so much time into writing about the stuff you made.
 
 [^2]: I want to thank everyone who patiently migrated to the new APIs. I used to post detailed [migration guides](https://github.com/kean/Nuke/tree/master/Documentation/Migrations) for every major release, but it was still a pain to migrate. Starting with [Nuke 7](https://github.com/kean/Nuke/releases/tag/7.0) in 2018 all of the new releases have been largely source-compatible.
 
 <h3 class="no_toc">Guides</h3>
 
-And now to **guides**, probably the hardest part to get right. Guides are a mix of everything: they can describe how to solve a specific problem, explain some high-level concepts, or serve as a subset of an API reference. Most importantly, guides should tell a cohesive story; I think about them as a small book split into chapters.
+And now to **guides**. Guides are a mix of everything: they can describe how to solve a specific problem, explain some high-level concepts, or serve as a subset of an API reference. Most importantly, guides should tell a cohesive story; I think about them as a small book split into chapters.
 
 My main focus was on guides, and this is what the post is also about. I initially started putting them on GitHub, but it was hard to navigate, and I found the experience of using them just in general unappealing. Take simple things like charters per line, for example. GitHub crams 135 characters in a single line, while the ideal is about 90. That's why I decided to bite the bullet and build [Nuke Docs]({{ sire.url }}/nuke/guides/welcome).
 
@@ -70,10 +70,10 @@ For the navigation model, I simply used the same design found on [Vapor docs](ht
 
 <div class="kb-new-li" markdown="1">
 
-1. The **header** is pinned to the top to give you access to search and other navigation. It is different from kean.blog, where the primary use-case is reading one article at a time[^3] – you don’t want a header to interfere with your reading experience.
-2. A **sidebar** with the main navigation with a list of all available pages; makes it easy to understand which page you currently on and what page is next.
-3. Each guide has a **badge** with color-coding to make it even easier to understand where you are in the navigation. A **subtitle** defines a clear goal, ensures that the content is cohesive.
-4. **Code** blocks, designed not to break you from reading by adding low visual noise thanks to the lack of borders, the same insets as text, and only basic syntax highlighting.
+1. The **header** is pinned to the top to give you access to search and other navigation. It is different from kean.blog, where the primary use-case is reading one article at a time[^3] – you don’t want a header to interfere with your reading experience there.
+2. A **sidebar** with the main navigation with a list of all available pages makes it easy to understand which page you currently on and what page is next.
+3. Each guide has a **badge** with color-coding to make it even easier to understand where you are in the navigation. A **subtitle** defines a clear goal for the guide ensuring that the content is cohesive.
+4. **Code** blocks, designed to be the main part of the content as the rest of the text – no borders, the same insets as text, and only basic syntax highlighting.
 5. The **content** width displays ideal 90 characters per line.
 6. **Table of contents** lets you know where you currently are on the page, allows you to jump to other sections, and dynamically updates as you scroll.
 
@@ -93,7 +93,7 @@ Many people use an iPad as a second screen, and I optimized the site for it. The
 
 <img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-02.png">
 
-Of course, it also works on iPhones (even on 4"). All features are available on mobile, including a table of contents and even search.
+Of course, it also works on iPhones (even on 4"). All features are available on mobile, including the table of contents and even search.
 
 <img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-06.png">
 
@@ -125,7 +125,7 @@ How does Nuke Docs achieve this performance?
 - Small amount of JavaScript[^4]
 - The search index is loaded lazily when you open search; the time before the user enters the first 2 letters is enough to fetch it
 
-[^4]: It looks like building a website without a framework isn’t a common affair these days. A lot of the answers online are from years ago, and most use jquery. It’s a bit painful to translate it to vanilla JavaScript every time, but I think it was worth it to avoid a dependency. For example, [Jazzy](https://github.com/realm/jazzy) has 30 lines of JavaScript and downloads 4000 lines of jquery; a shame.
+[^4]: It looks like building a website without a framework isn’t a common affair these days. A lot of the answers online are from years ago, and most use jquery. It’s a bit painful to translate it to vanilla JavaScript every time, but I think it was worth it to avoid a dependency. Some site have 30 lines of JavaScript but downloads 4000 lines of jquery to use one function.
 
 > If you want to learn more about how to build the client-side search, see the [dedicated post]({{ site.url }}/post/client-side-search).
 {:.info}
