@@ -417,8 +417,6 @@ There are still a lot of things that can't be done using only SwiftUI. I can sac
 
 It's economics. Choosing web technologies used to be almost a no-brainer for many companies. But the things are changing. On one hand, there is M1 which is finally powerful and energy-efficient enough to run Slack, rejoice! On the other hand, the calculation has changed. The main impediment, AppKit, is gone. There are millions of iOS engineers on the market. The path to delivering great native experience on Apple platforms has never been clearer[^5]. I heard you can even put Swift on a server, but was not able to reach Tim Cook for comment[^2].
 
-<div class="FootnotesSection" markdown="1">
-
 [^1]: I'm positive that I can increase the amount of the shared code to at least 90%. It wasn't a priority, my main focus was on the delivery.
 [^2]: I love Swift on a server. If you haven't checked it out, go see [Vapor](https://vapor.codes). It's a vast ecosystem that keeps expanding. With coroutines in Swift 6, this is going to be insanely great.
 [^3]: I see many Catalyst defects reported on Twitter which can sometimes be confused with SwiftUI defects. I'm a bit surprised this configuration (SwiftUI Catalyst) is even supported. But of course, UIKit apps that chose to support Catalyst need a path forward to adopt SwiftUI, so it has to be there. For new apps, if you are writing SwiftUI, there should be no reason to use Catalyst, you should compile for macOS natively.

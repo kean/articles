@@ -93,6 +93,3 @@ I don't want to paste the complete code here, but you can always find it on the 
 ## Conclusion
 
 [lunr.js](https://lunrjs.com) is a great tool with more features that I haven't covered here. Fortunately, it has a website with [documentation](https://lunrjs.com/guides/searching.html) of its own.
-
-<div class="FootnotesSection" markdown="1">
-</div>

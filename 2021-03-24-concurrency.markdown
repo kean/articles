@@ -247,6 +247,3 @@ Nuke has many optimizations, some impractical, so don't just go and copy them. I
 - [**SE-0306**: Actors](https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md)
 
 </div>
-
-<div class="FootnotesSection" markdown="1">
-</div>

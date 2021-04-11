@@ -231,8 +231,6 @@ This is enough information to start working on our toy VPN protocol.
 </div>
 
 
-<div class="FootnotesSection" markdown="1">
-
 [^1]: The packets that are configured to go through the VPN tunnel. A *split* tunnel can be configured, such that only packets with the predefined destination addressed are routed via the tunnel, and the rest go through the normal physical network interfaces.
 [^2]: OpenVPN uses UDP by default, but also [supports TCP](https://openvpn.net/faq/why-does-openvpn-use-udp-and-tcp/).
 [^3]: HTTP/3 seems to be [replacing TCP with QUIC](https://thenewstack.io/,http-3-replaces-tcp-with-udp-to-boost-network-speed-reliability/), a new transport layer protocol based on UDP
@@ -240,9 +238,6 @@ This is enough information to start working on our toy VPN protocol.
 [^5]: You could memorize an IPv4 address, but try memorizing `2400:cb00:2048:1::c629:d7a2` (IPv6).
 [^6]: If you are using HTTPS, you are generally good. Only the destination server is going to be able to read HTTP headers and body of your requests.
 [^7]: OpenVPN supports two modes: static key (using a pre-shared key) and TLS (using SSL/TLS and certificates for authentication and key exchange). In this example, you see the later.
-
-</div>
-
 
 
 <!-- All of this stuff is currently specific for this invividual post. I will make it part of the intrastructure later. -->

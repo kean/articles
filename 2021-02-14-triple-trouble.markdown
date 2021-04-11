@@ -133,6 +133,4 @@ Despite some limitations, this solution works for me it and it uses `NavigationV
 
 <br/>
 
-<div class="FootnotesSection" markdown="1">
-
 [^1]: Maybe if you dynamically switch between two `NavigationView` instances you can, I haven't tried that.

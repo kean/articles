@@ -239,9 +239,5 @@ You can use [Formatting](https://github.com/kean/Formatting) as is or modify it 
 - [**10 Common Mistakes in Software Localization and How to Avoid Them**](https://phrase.com/blog/posts/10-common-mistakes-in-software-localization/)
 - [Hacking with Swift: **How to convert HTML to an NSAttributedString**](https://www.hackingwithswift.com/example-code/system/how-to-convert-html-to-an-nsattributedstring)
 
-<div class="FootnotesSection" markdown="1">
-
 [^1]: To make links clickable, use `UITextView`.
 [^2]: Measured on iPhone 11 Pro using Xcode 12.2, -Os. I also had to disable system logging by setting `OS_ACTIVITY_MODE` to `disable` because WebKit was spending half of its time doing logging. You can find the tests in the [repo](https://github.com/kean/Formatting).
-
-</div>

@@ -135,6 +135,3 @@ How does Nuke Docs achieve this performance?
 I was waiting until someone compares it to the Apple Documentation, and, sure enough, Twitter [doesn't](https://twitter.com/freak4pc/status/1379655628063453189?s=20) disappoint. Honestly, I don't think it deserves that much praise, but I'm glad many people liked it. I wanted to make it as fast and enjoyable to use as possible.
 
 There is still a lot to improve. I wrote some of the guides a long time ago, and the writing there is terrible. I also want to add a cross-site search to show results from the API reference on the main site. And I need a way to automate the creation of links from the guides to the API reference when I mention a type from the framework. But that’s going to be another story.
-
-<div class="FootnotesSection" markdown="1">
-</div>

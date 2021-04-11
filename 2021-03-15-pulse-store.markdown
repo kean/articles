@@ -201,6 +201,4 @@ A clear, concise, and easy to understand file format is a crucial part of any ap
 
 </div>
 
-<div class="FootnotesSection" markdown="1">
 [^3]: ZIP archives can also work without compression if you just want to put multiple files in a single binary.
-</div>

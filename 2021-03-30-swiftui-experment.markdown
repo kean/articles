@@ -256,6 +256,3 @@ I hope you liked this series. It was meant to inspire folks to try their hand at
 <br/>
 
 This wraps up the series on Pulse. I'm _completely_ exhausted. It's time to unwind and get ready to start on a new project...
-
-<div class="FootnotesSection" markdown="1">
-</div>

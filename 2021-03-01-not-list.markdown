@@ -124,8 +124,6 @@ This little maneuver cost me a couple of wasted hours. I had to re-implement the
 
 There is always a risk with SwiftUI. It is an exceptional tool, but you never know when you are going to hit a wall. My pure SwiftUI app uses `NSTextView`, `NSSearchField`, and now `NSTableView` and `NSMenu`.
 
-<div class="FootnotesSection" markdown="1">
-
 [^1]: Technically, 150 023... off-by-one error.
 [^2]: Databases are fast. In practice, if you measure it, there isn't much difference with or without the `fetchBatchSize`, at least with a dataset of this size. Having said that, I want every operation in the app to feel instantaneous, so I'm taking any wins possible.
 [^3]: I'm not sure what made `List` scrolling performance sluggish. If I were to guess, it's either cell height calculations or cell reuse. Does `List` even have cell reuse? I don't think so.
