@@ -120,14 +120,14 @@ Experiment. Even if you are doing some of your testing wrong, the risks are low 
 
 Take the advice from this article with a grain of salt. The culture of test automation on iOS and some other Apple platforms is relatively young. I can't wait to see where it goes next.
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 - WWDC 2019, [**Testing with Xcode**](https://developer.apple.com/videos/play/wwdc2019/413/)
 - WWDC 2018, [**Engineering for Testability**](https://developer.apple.com/videos/play/wwdc2017/414)
 - WWDC 2016, [**UI Testing in Xcode**](https://developer.apple.com/videos/play/wwdc2015/406/)
 - Martin Fowler (2019), [**Software Testing Guide**](https://martinfowler.com/testing/)
+
+{% include references-end.html %}
 
 [^1]: Measuring quality is a topic in its own right. Your team should have visibility, e.g. via weekly report, in how many defects there are total and per story, how quickly the defects are closed, how many regressions there are per each version. If that's what everyone sees, that's what the team is going optimize.
 [^2]: [Nimble](https://github.com/Quick/Nimble) is a separate framework and can be used with XCTest. So if that's your cup of tea, you have options.

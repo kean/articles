@@ -180,12 +180,10 @@ In the next article I will write a parser based on [the grammar](https://kean.gi
 </a>
 </div>
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 1. Dick Grune, Ceriel J.H. Jacobs (2008), [**Parsing Techniques**](https://dickgrune.com/Books/PTAPG_2nd_Edition/), VU University Amsterdam, Amsterdam, The Netherlands
 2. Gunther Rademacher, [**Railroad Diagram Generator**](https://www.bottlecaps.de/rr/ui)
 3. W3C (2008), [**EBNF Notation**](https://www.w3.org/TR/REC-xml/#sec-notation)
 
-</div>
+{% include references-end.html %}

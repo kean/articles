@@ -215,9 +215,11 @@ func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive 
 
 It was very satisfying to implement resumable downloads in Nuke and see them in action. I think it can be a major improvement to the user experience, especially on mobile networks.
 
-## References
+{% include references-start.html %}
 
 - [Nuke](https://kean.github.io/nuke)
 - [MDN web docs: HTTP Range Requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests)
 - [RFC 7233. Hypertext Transfer Protocol (HTTP/1.1): Range Requests](https://tools.ietf.org/html/rfc7233)
 - [Apple Developer Library: URLSession](https://developer.apple.com/documentation/foundation/urlsession)
+
+{% include references-end.html %}

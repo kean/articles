@@ -286,9 +286,11 @@ func prepareStore(name: String) -> URL {
 - If you set the `com.apple.CoreData.MigrationDebug` preference to `1`, Core Data will log information about exceptional cases as it migrates data.
 - The `com.apple.CoreData.SQLDebug` preference lets you see the actual SQL sent to SQLite.
 
-## <a name="references"></a>References
+{% include references-start.html %}
 
 1. [Core Data Model Versioning and Data Migration Programming Guide](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/Introduction.html#//apple_ref/doc/uid/TP40004399-CH1-SW1)
 2. [How to Corrupt an SQLite Database File](https://www.sqlite.org/howtocorrupt.html)
 3. [Mac OS X Debugging Magic](https://developer.apple.com/library/mac/technotes/tn2124/_index.html#//apple_ref/doc/uid/DTS10003391-CH1-SECCOREDATA)
 4. [Launch Arguments & Environment Variables](http://nshipster.com/launch-arguments-and-environment-variables/)
+
+{% include references-end.html %}

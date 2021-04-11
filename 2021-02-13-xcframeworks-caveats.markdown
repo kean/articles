@@ -148,15 +148,15 @@ I'm now thinking, could Xcode do something to at least communicate the problem e
 
 The main thing is that with a few hiccups but I was able to achieve what I needed and Pulse could now be distributed.
 
-<div class="References" markdown="1">
-
-<h2 class="PostLink SectionTitle">References</h2>
+{% include references-start.html %}
 
 - [**Pulse**](https://github.com/kean/Pulse), a structured logging system
 - [**swift-create-xcframework**](https://github.com/marketplace/actions/swift-create-xcframework) (GitHub Action)
 - [**create_xcframework**](https://github.com/bielikb/fastlane-plugin-create_xcframework) (Fastlane plugin)
 - [**WWDC 2019: Binary Frameworks in Swift**](https://developer.apple.com/videos/play/wwdc2019/416/)
 - [**Library Evolution**](https://swift.org/blog/library-evolution/)
+
+{% include references-end.html %}
 
 [^1]: This solution works fine if your dependencies are also distributed as Swift binary frameworks, or Objective-C frameworks for that matter.
 [^2]: Unfortunately, there was another small hiccup after I made this (massive) change. When I added `PulseUI` and `Pulse` to my app, I assumed that `PulseCore` would be automatically added as a transitive dependency. It turned out not to be the case. It worked during deployment, my guess is that all the binaries produced from Swift packages are copied to the bundle during the deployment. But it failed during Archive. And it failed when I tried dragging an product to a simulator.

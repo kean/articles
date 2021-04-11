@@ -130,9 +130,11 @@ Let's dive straight into implementation but this time we will start with a base 
 `Entity` class has no mutable counterpart, defensive copying is no longer required. We also used just two lines of code for an `ID` property.
 
 
-## References
+{% include references-start.html %}
 
 - [objc.io: Value Objects](https://www.objc.io/issues/7-foundation/value-objects/)
 - [Wikipedia: Builder Pattern](https://en.wikipedia.org/wiki/Builder_pattern)
 - [Wikipedia: Immutable Objects](https://en.wikipedia.org/wiki/Immutable_object)
 - [Concepts in Objective-C Programming: Object Mutability](https://developer.apple.com/library/mac/documentation/General/Conceptual/CocoaEncyclopedia/ObjectMutability/ObjectMutability.html)
+
+{% include references-end.html %}

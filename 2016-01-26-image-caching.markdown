@@ -137,11 +137,11 @@ This configuration will provide arguably the best `NSCache` performance. Memory 
 
 The downside of a separate memory cache is that it doesn't have any expiration and validation mechanisms. It's fine for most use cases because `NSCache` evicts objects rather frequently. If you need more control over memory cache you can easily implement such features (expiration age, request policy, etc).
 
-## <a name="references"></a>References
-
+{% include references-start.html %}
 1. [Increasing Application Performance with HTTP Cache Headers](https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers)
 2. [RFC 7234. HTTP/1.1 Caching](https://tools.ietf.org/html/rfc7234)
 3. [Cache-Control HTTP Headers](https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9)
 4. [URL Loading System Programming Guide. Understanding cache control.](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/URLLoadingSystem/Concepts/CachePolicies.html#//apple_ref/doc/uid/20001843-BAJEAIEE)
 7. [Google Developers: HTTP caching](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=en)
 8. [From NSURLConnection to NSURLSession](https://www.objc.io/issues/5-ios7/from-nsurlconnection-to-nsurlsession/)
+{% include references-end.html %}

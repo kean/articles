@@ -12,10 +12,8 @@ published: false
 
 {% include ad-hor.html %}
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 - https://developer.apple.com/documentation/network/building_a_custom_peer-to-peer_protocol
 
-</div>
+{% include references-end.html %}

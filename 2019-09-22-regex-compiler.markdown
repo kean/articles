@@ -200,11 +200,11 @@ As usual, you can find the full compiler implementation at [kean/Regex](https://
 </a>
 </div>
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 1. Robert Sedgewick, Kevin Wayne (2011), [**Algorithms. 5.4 Regular Expressions**](https://www.cs.princeton.edu/courses/archive/fall12/cos226/lectures/54RegularExpressions-2x2.pdf), ISBN-13: 978-0321573513
 2. Ole Begemann (2017), [**Strings in Swift 4**](https://oleb.net/blog/2017/11/swift-4-strings/), excerpt from [Advanced Swift](https://www.objc.io/books/advanced-swift/) book
 3. NSHipster (2018), [**CharacterSet**](https://nshipster.com/characterset/)
 4. Microsoft (2017), [**Details of Regular Expression Behavior**](https://docs.microsoft.com/en-us/dotnet/standard/base-types/details-of-regular-expression-behavior)
+
+{% include references-end.html %}

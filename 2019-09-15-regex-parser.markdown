@@ -537,9 +537,7 @@ The code from the article is available in a [playground]({{ site.url }}/playgrou
 </a>
 </div>
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 1. Brandon Williams, Stephen Celis (June 2019), [**Parser Combinators**](https://www.pointfree.co/episodes/ep62-parser-combinators-part-1), [Point-Free](https://www.pointfree.co), A video series exploring functional programming and Swift
 2. Graham Hutton, Erik Meijer (1996), [**Monadic Parser Combinators**](http://www.cs.nott.ac.uk/~pszgmh/monparsing.pdf), Department of Computer Science, University of Nottingham
@@ -547,4 +545,4 @@ The code from the article is available in a [playground]({{ site.url }}/playgrou
 4. Scott Wlaschin (2016), [**Understanding Parser Combinators: A Deep Dive**](https://www.youtube.com/watch?v=RDalzi7mhdY) (Video), NDC Conferences
 5. Gunther Rademacher, [**Railroad Diagram Generator**](https://www.bottlecaps.de/rr/ui)
 
-</div>
+{% include references-end.html %}

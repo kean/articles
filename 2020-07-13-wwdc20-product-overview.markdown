@@ -22,11 +22,9 @@ It takes a special kind of geek to follow every little platform update, both fro
 	<img alt="WWDC20 Summary Keynote screenshot" class="Screenshot kb-legacy-card" src="/images/posts/wwdc20-summary/wwdc-summary.png">
 </a>
 
-<div class="References" markdown="1">
-
-## Downloads
+{% include references-start.html %}
 
 - [**WWDC20 Summary (Keynote)**](/assets/wwdc20-summary.key.zip)
 - [**WWDC20 Summary (PDF)**](/assets/wwdc20-summary.pdf)
 
-</div>
+{% include references-end.html %}

@@ -233,9 +233,7 @@ Fortunately, Swift team is working hard on [optimizing ARC](https://github.com/a
 
 That's all folks! I hope you enjoyed this series as much as I did. I've learned so much working on this series and I hope you have too. If you have any corrections, please feel free to open a [pull-request](https://github.com/kean/kean.github.io) or drop the comment down below. Also, I will be glad to discuss this topic on Twitter, you can find me at [@a_grebenyuk](https://twitter.com/a_grebenyuk). Alright, let's wrap this up. I can't wait to start working on what's next.
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 1. Microsoft (2018), [**Backtracking in Regular Expressions**](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions), Regular Expression in .NET
 2. ICU, [**Regular Expressions**](http://userguide.icu-project.org/strings/regexp)
@@ -245,7 +243,7 @@ That's all folks! I hope you enjoyed this series as much as I did. I've learned 
 6. The IEEE and The Open Group (2004), [**The Open Group Base Specifications Issue 6
 IEEE Std 1003.1, Part 9, Regular Expressions**](https://pubs.opengroup.org/onlinepubs/009695399/basedefs/xbd_chap09.html)
 
-</div>
+{% include references-end.html %}
 
 [^1]: To check whether the *entire* input string matches the regex you normally use Start of String and End of String [anchors](https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions).
 [^2]: Epsilon transitions don't consume any input characters. We assume that the regex will never produce an NFA with loops which consist solely of epsilon transitions because that would lead to infinite recursion.

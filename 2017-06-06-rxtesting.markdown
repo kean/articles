@@ -159,12 +159,10 @@ There are other ways to write RxSwift tests one of which is called [*marble test
 
 RxTest can control time, but it is no magic. If there is any uncontrolled asynchronous code in the systems you are covering with unit tests, you will still [end up writing asynchronous tests](http://rx-marin.com/post/rxswift-rxtests-unit-tests-part-2/). However, RxTest has a variety of use cases and you should consider using it to write your unit tests.
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 - [RxSwift](https://github.com/ReactiveX/RxSwift)
 - [RxSwift: Unit Tests](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/UnitTests.md)
 - [RxJS: Writing Marble Tests](https://github.com/ReactiveX/RxJS/blob/master/doc/writing-marble-tests.md)
 
-</div>
+{% include references-end.html %}

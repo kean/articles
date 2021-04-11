@@ -125,12 +125,10 @@ Despite some limitations, this solution works for me it and it uses `NavigationV
 {:.info}
 
 
-<div class="References" markdown="1">
-
-<h2 class="PostLink SectionTitle">References</h2>
+{% include references-start.html %}
 
 *I wish there were any.*
 
-<br/>
+{% include references-end.html %}
 
 [^1]: Maybe if you dynamically switch between two `NavigationView` instances you can, I haven't tried that.

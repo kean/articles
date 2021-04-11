@@ -357,13 +357,13 @@ private func didReceiveDatagram(datagram: Data) throws {
 }
 ```
 
-<div class="References" markdown="1">
 
-
-## References
+{% include references-start.html %}
 
 1. Apple Developer Documentation, [**NetworkExtension Framework**](https://developer.apple.com/documentation/networkextension)
 2. WWDC 2017, [**Session 707: Advances in Networking, Part 1**](https://developer.apple.com/videos/play/wwdc2017/707)
 3. WWDC 2017, [**Session 709: Advances in Networking, Part 2**](https://developer.apple.com/videos/play/wwdc2017/709/)
 4. WWDC 2015, [**Session 717: What's New in NetworkExtension and VPN**](https://developer.apple.com/videos/wwdc/2015/?id=717)
 5. OpenVPN, [**Why does OpenVPN use UDP and TCP?**)](https://openvpn.net/faq/why-does-openvpn-use-udp-and-tcp/)
+
+{% include references-end.html %}

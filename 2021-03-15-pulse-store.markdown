@@ -191,14 +191,12 @@ A clear, concise, and easy to understand file format is a crucial part of any ap
    <footer>Fred Brooks</footer>
 </blockquote>
 
-<div class="References" markdown="1">
-
-<h2 class="PostLink SectionTitle">References</h2>
+{% include references-start.html %}
 
 - [**Sample Code**: Building a Document Browser App for Custom File Formats](https://developer.apple.com/documentation/uikit/view_controllers/building_a_document_browser_app_for_custom_file_formats)
 - [**ZIPFoundation**](https://github.com/weichsel/ZIPFoundation)
 - [**SQLite**: SQLite As An Application File Format](https://www.sqlite.org/appfileformat.html)
 
-</div>
+{% include references-end.html %}
 
 [^3]: ZIP archives can also work without compression if you just want to put multiple files in a single binary.

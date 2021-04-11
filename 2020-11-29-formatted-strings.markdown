@@ -232,12 +232,10 @@ Typically I would be skeptical when I see a performance difference like this, bu
 
 You can use [Formatting](https://github.com/kean/Formatting) as is or modify it to fit your needs. You have full control to determine which tags you want to support and in which way. You also get the performance that makes it viable to use it even in scroll views. No compromises.
 
-<div class="References" markdown="1">
-
-<h2 class="PostLink SectionTitle">References</h2>
-
+{% include references-start.html %}
 - [**10 Common Mistakes in Software Localization and How to Avoid Them**](https://phrase.com/blog/posts/10-common-mistakes-in-software-localization/)
 - [Hacking with Swift: **How to convert HTML to an NSAttributedString**](https://www.hackingwithswift.com/example-code/system/how-to-convert-html-to-an-nsattributedstring)
+{% include references-end.html %}
 
 [^1]: To make links clickable, use `UITextView`.
 [^2]: Measured on iPhone 11 Pro using Xcode 12.2, -Os. I also had to disable system logging by setting `OS_ACTIVITY_MODE` to `disable` because WebKit was spending half of its time doing logging. You can find the tests in the [repo](https://github.com/kean/Formatting).

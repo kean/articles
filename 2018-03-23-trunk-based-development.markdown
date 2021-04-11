@@ -121,7 +121,7 @@ In this post, I've completely avoided how releases are managed in GitFlow and in
 
 There are definitely better articles about trunk-based development (see references), I encourage you to check them out.
 
-## References
+{% include references-start.html %}
 
 - [Paul Hammant, Steve Smith and friends (2017). Trunk Based Development.](https://trunkbaseddevelopment.com/context/)
 - [Apple Inc (2018). Swift: Contributing Code, Incremental Development.](https://swift.org/contributing/#contributing-code)
@@ -131,3 +131,5 @@ There are definitely better articles about trunk-based development (see referenc
 - [Martin Fowler (2009). FeatureBranch.](https://martinfowler.com/bliki/FeatureBranch.html)
 - [Martin Fowler (2010). FeatureToogle.](https://martinfowler.com/bliki/FeatureToggle.html)
 - [Vincent Driessen (2010). A Successful Git Branching Model.](http://nvie.com/posts/a-successful-git-branching-model/)
+
+{% include references-end.html %}

@@ -279,14 +279,14 @@ The jobs that run instruments don't necessarily have to make a binary decision w
 
 Delivering software is easy, maintaining quality and velocity is hard. Continuous integration can be a game-changer in achieving great quality and high iteration speed.
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 1. Martin Fowler, [**Continous Integration**](https://martinfowler.com/articles/continuousIntegration.html)
 2. Paul Duvall, Steve Matyas, and Andrew Glover, [**Continuous Integration: Improving Software Quality and Reducing Risk**](https://martinfowler.com/books/duvall.html)
 3. [**Travis CI**](https://travis-ci.com)
 4. [**xcpretty**](https://github.com/xcpretty/xcpretty)
+
+{% include references-end.html %}
 
 [^1]: Not counting [Mattt](https://github.com/mattt) since he hasn't been actively involved in the project since 2015.
 [^2]: Large companies typically want to run their software on-premise and the obvious choice for them is [Jenkins](https://jenkins.io) which provides flexibility and scalability. Jenkins is free but not every company can afford running it – you need to invest time and money in maintaining it. For smaller companies, cloud solutions are often the best choice. For example, I had been using [BuddyBuild](https://www.buddybuild.com) when working for a startup in 2018. [BuddyBuild](https://techcrunch.com/2018/01/02/apple-buys-app-development-service-buddybuild/) was acquired by Apple in 2018 and they have not been accepting new customers since. The future of BuddyBuild within Apple is still unclear.

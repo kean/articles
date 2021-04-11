@@ -238,12 +238,10 @@ Measuring is an art on its own. Modern CPUs with different cache levels and othe
 
 Nuke has many optimizations, some impractical, so don't just go and copy them. I just finished watching [F1 Season 3](https://www.formula1.com/en/latest/article.watch-the-unmissable-trailer-for-season-3-of-netflixs-drive-to-survive.1ZMsRiYIvxZEPV9iqzatsx.html) (which was phenomenal, by the way). I can't say that I'm a huge F1 fan, but I appreciate things designed for performance and a bit of competition. I'm not always stopping where a sane person should.
 
-<div class="References" markdown="1">
-
-<h2 class="PostLink SectionTitle">References</h2>
+{% include references-start.html %}
 
 - [**Nuke**](https://github.com/kean/Nuke), an image loading and caching system
 - [**Pulse**](https://github.com/kean/Pulse), a structured logging system
 - [**SE-0306**: Actors](https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md)
 
-</div>
+{% include references-end.html %}

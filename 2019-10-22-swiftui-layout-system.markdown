@@ -527,14 +527,12 @@ You can feel that SwiftUI was created with a completely different mindset than A
 
 Swift dominance didn't come from the server, it just might from the UI.
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 1. WWDC 2019, [**Building Custom Views with SwiftUI**](https://developer.apple.com/videos/play/wwdc2019/237/)
 2. Apple, [**SwiftUI Tutorials**](https://developer.apple.com/tutorials/swiftui)
 
-</div>
+{% include references-end.html %}
 
 [^1]: Unfortunately, there is no way to [examine the view hierarchy](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/ExaminingtheViewHierarchy.html) in Xcode Previews yet. I hope this is something that will be added in the future. For now, Apple recommends you add [borders](https://developer.apple.com/documentation/swiftui/view/3288984-border) to the views for debugging purposes.
 

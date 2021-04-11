@@ -394,7 +394,7 @@ It's hard to imagine now that there was a time when the only relatively easy-to-
 
 > All of the code from the post is [available here](https://gist.github.com/kean/64b9fc0963fd430594fdb3eb848bccf3) (requires Swift 4).
 
-## References
+{% include references-start.html %}
 
 - [Alamofire](https://github.com/Alamofire/Alamofire)
 - [RxSwift](https://github.com/ReactiveX/RxSwift)
@@ -402,3 +402,5 @@ It's hard to imagine now that there was a time when the only relatively easy-to-
 - [RxSwift: Traits](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Traits.md)
 - [Rust by Example: phantom Type Parameters](https://rustbyexample.com/generics/phantom.html)
 - [The Swift Programming Languages: Extensions with Generic Where Clauses](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID553)
+
+{% include references-end.html %}

@@ -566,9 +566,7 @@ Most of the current complaints about SwiftUI come with regards to its incomplete
 
 It seems mind-boggling just how many language features were needed to make SwiftUI possible: reflection, complex generics system, property wrappers, function builders, opaque return types, dynamic member lookup. There is a lot to learn! Fortunately, if you ever used reactive programming and MVVM before, your investment was fully worth it. SwiftUI is the closest thing to it as you can get. This new direction for development for Apple platforms makes me excited for its future.
 
-<div class="References" markdown="1">
-
-## References
+{% include references-start.html %}
 
 - WWDC 2019, [**Data Flow Through SwiftUI**](https://developer.apple.com/videos/play/wwdc2019/226/)
 - WWDC 2020, [**Data Essentials in SwiftUI**](https://developer.apple.com/videos/play/wwdc2020/10040/)
@@ -576,7 +574,7 @@ It seems mind-boggling just how many language features were needed to make Swift
 - Swift Evolution, [**Dynamic Member Lookup**](https://github.com/apple/swift-evolution/blob/master/proposals/0252-keypath-dynamic-member-lookup.md)
 - Swift Evolution, [**Property Wrappers**](https://github.com/apple/swift-evolution/blob/master/proposals/0258-property-wrappers.md)
 
-</div>
+{% include references-end.html %}
 
 [^1]: For simplicity, I'm exposing model objects (`Song`) from the view model. If you are closely following MVVM, you would typically want to to create a separate view model for each song instead.
 [^2]: Property Wrappers are not an exclusive feature of SwiftUI and can be introduced in ReactiveSwift. There is already a [pull request](https://github.com/ReactiveCocoa/ReactiveSwift/pull/762) with a proposed changed. It introduces a new `@Observable` property wrapper. In reality, I think it should completely replace the existing `Property` and `MutableProperty` types.
