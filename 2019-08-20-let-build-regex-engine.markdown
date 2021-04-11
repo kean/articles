@@ -7,7 +7,6 @@ category: programming
 tags: programming
 permalink: /post/lets-build-regex
 uuid: ea30401f-f344-4dcc-830c-d513e2f52193
-disable_suggested_articles: true
 ---
 
 > How to understand the language of <code>&lt;\/?[\w\s]*&gt;|&lt;.+[\W]&gt;</code>
