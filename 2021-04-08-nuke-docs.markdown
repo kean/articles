@@ -73,7 +73,7 @@ For the navigation model, I simply used the same design found on [Vapor docs](ht
 1. The **header** is pinned to the top to give you access to search and other navigation. It is different from kean.blog, where the primary use-case is reading one article at a time[^3] – you don’t want a header to interfere with your reading experience there.
 2. A **sidebar** with the main navigation with a list of all available pages makes it easy to understand which page you currently on and what page is next.
 3. Each guide has a **badge** with color-coding to make it even easier to understand where you are in the navigation. A **subtitle** defines a clear goal for the guide ensuring that the content is cohesive.
-4. **Code** blocks, designed to be the main part of the content as the rest of the text – no borders, the same insets as text, and only basic syntax highlighting.
+4. **Code** blocks, designed to be the main part of the content as the rest of the text – no borders, the same insets as text. In the newest version I even got syntax highlighting exactly like in the default Xcode theme.
 5. The **content** width displays ideal 90 characters per line.
 6. **Table of contents** lets you know where you currently are on the page, allows you to jump to other sections, and dynamically updates as you scroll.
 
@@ -129,6 +129,10 @@ How does Nuke Docs achieve this performance?
 
 > If you want to learn more about how to build the client-side search, see the [dedicated post]({{ site.url }}/post/client-side-search).
 {:.info}
+
+I put it in a macOS app as a joke and I'm pretty sure it runs faster than my SwiftUI apps.
+
+<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/macos.png">
 
 ## Conclusion
 
