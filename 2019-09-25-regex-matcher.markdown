@@ -217,7 +217,7 @@ Whether these trade-offs are significant or not is up to the developers who use 
 
 ### String-Searching
 
-We've already established in the [previous article](http://localhost:4000/post/regex-compiler#match-character) that a pattern consisting of multiple characters in a row can be compiled into a state machine with a single transition with a condition "does an input string has the given prefix?" (`string.hasPrefix(:)`). This allows the matcher to use a faster [string searching algorithms](https://en.wikipedia.org/wiki/String-searching_algorithm) which improves the time complexity from `O(nm)` to `O(n+m)`, where *`n`* is the size of the input and *`m`* is the size of the pattern.
+We've already established in the [previous article]({{ site.url }}/post/regex-compiler#match-character) that a pattern consisting of multiple characters in a row can be compiled into a state machine with a single transition with a condition "does an input string has the given prefix?" (`string.hasPrefix(:)`). This allows the matcher to use a faster [string searching algorithms](https://en.wikipedia.org/wiki/String-searching_algorithm) which improves the time complexity from `O(nm)` to `O(n+m)`, where *`n`* is the size of the input and *`m`* is the size of the pattern.
 
 [Regex](https://github.com/kean/Regex/blob/master/Source/Optimizer.swift) also performs this optimization. It adds a significant level of complexity to the matcher. I've extracted the optimizations into separate code blocks and commented them so that they don't clutter the core implementation that much.
 
