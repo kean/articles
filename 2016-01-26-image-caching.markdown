@@ -9,6 +9,7 @@ tags: swift, ios, http, nsurlsession
 permalink: /post/image-caching
 redirect_from: /blog/image-caching
 uuid: d9cd6b09-75ec-4873-a9ef-c7457cc40b34
+favorite: true
 ---
 
 Caching is a great way to improve application performance and end-user experience. Some popular iOS libraries try to reinvent caching, especially when it comes to storing images. They frequently overlook [HTTP cache](https://tools.ietf.org/html/rfc7234) in [Foundation's URL Loading System](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/URLLoadingSystem/URLLoadingSystem.html).

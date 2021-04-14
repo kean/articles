@@ -8,6 +8,7 @@ category: programming
 tags: programming
 permalink: /post/swiftui-data-flow
 uuid: c5358288-8c59-41e0-a790-521b52f89921
+favorite: true
 ---
 
 <div class="UpdatesSections" markdown="1">

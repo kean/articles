@@ -8,6 +8,7 @@ tags: ios
 permalink: /post/lets-build-uistackview
 redirect_from: /blog/lets-build-uistackview
 uuid: 89038ab2-a19b-4be3-9a3f-7ab2d58530d6
+favorite: true
 ---
 
 [`UIStackView`](https://developer.apple.com/reference/uikit/uistackview) is a great showcase of Auto Layout. It is built entirely using constraints. Which makes it fairly straightforward to build an [open source replacement](https://github.com/kean/Arranged). Even if you're not in the business of building one, you may find this article useful. It will give you a better understanding of `UIStackView`.

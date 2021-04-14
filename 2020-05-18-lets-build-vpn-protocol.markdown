@@ -7,6 +7,7 @@ date: 2020-05-18 9:00:00 -0400
 category: programming
 tags: programming
 permalink: /post/lets-build-vpn-protocol
+favorite: true
 uuid: 4f4b6cb2-192f-4a1c-bafb-f1e84baee96d
 ---
 

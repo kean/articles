@@ -8,6 +8,7 @@ category: programming
 tags: programming
 permalink: /post/appkit-is-done
 uuid: ef480460-ee95-4504-b4b1-ec133703b6b3
+favorite: true
 image:
   path: /images/posts/macos/cover-macos.png
   height: 1280

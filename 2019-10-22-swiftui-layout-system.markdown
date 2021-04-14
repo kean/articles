@@ -8,6 +8,7 @@ category: programming
 tags: programming
 permalink: /post/swiftui-layout-system
 uuid: 2fe0b2d5-b449-4912-8719-fee0c4ad9cb0
+favorite: true
 ---
 
 Everything about SwiftUI is new. And the layout system is no exception. SwiftUI no longer uses Auto Layout, gone all of [the cruft](https://developer.apple.com/documentation/uikit/uiview/1622572-translatesautoresizingmaskintoco) introduced over the years. SwiftUI has a completely new layout system designed from the ground up to make it easy to write adaptive cross-platform apps.

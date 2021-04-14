@@ -7,6 +7,7 @@ category: programming
 tags: programming
 permalink: /post/trunk-based-development
 uuid: f7b08862-3571-4c61-a7a2-9a5f742fc10a
+favorite: true
 ---
 
 Selecting a good branching strategy is an important step for any team, especially the one that values continuous integration. In this post, I would like to share some of the problems that we had experienced when using [feature branches](http://nvie.com/posts/a-successful-git-branching-model/) and explore another branching strategy - [trunk-based development (TBD)](https://www.thoughtworks.com/insights/blog/enabling-trunk-based-development-deployment-pipelines) - which aims to solve them.

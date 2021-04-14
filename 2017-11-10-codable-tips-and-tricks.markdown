@@ -8,6 +8,7 @@ tags: ios
 permalink: /post/codable-tips-and-tricks
 uuid: 8b6a08fa-ba58-4f9a-b607-7bd4d1171f7f
 cover: /images/posts/codable_cover.png
+favorite: true
 ---
 
 I've migrated our app to [Codable](https://developer.apple.com/documentation/swift/encoding_decoding_and_serialization). I'd like to share with you some of the tips and tricks that I've come up with along the way.

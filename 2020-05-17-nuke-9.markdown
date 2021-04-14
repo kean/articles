@@ -7,6 +7,7 @@ date: 2020-05-17 9:00:00 -0400
 category: programming
 tags: programming
 permalink: /post/nuke-9
+favorite: true
 uuid: 3f0ab615-9905-4fb9-9480-0ffe1952422a
 ---
 
