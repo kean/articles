@@ -29,7 +29,7 @@ Code coverage is an instrument. It shows what areas of the app are not tested ye
 <div class="SwiftUIExampleWithScreenshot kb-legacy-card">
     <div class="SwiftUIExampleWithScreenshot_Flex">
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
-I do have high test coverage in my frameworks, like <a href="https://github.com/kean/Nuke">Nuke</a>. But frameworks are a different animal: a lot of consumers, APIs don't change as often, no dedicated QA team, and no time pressure. I talk more about unit tests and frameworks in <a href="{{ site.url }}/post/ci-for-frameworks)">CI for Swift Frameworks</a>.
+I do have high test coverage in my frameworks, like <a href="https://github.com/kean/Nuke">Nuke</a>. But frameworks are a different animal: a lot of consumers, APIs don't change as often, no dedicated QA team, and no time pressure. I talk more about unit tests and frameworks in <a href="{{ site.url }}/post/ci-for-frameworks">CI for Swift Frameworks</a>.
         </div>
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
             <img alt="Xcode screenshot showing test coverage" src="{{ site.url }}/images/posts/effective-unit-testing/nuke-coverage.png">
