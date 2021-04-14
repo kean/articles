@@ -21,7 +21,7 @@ I've been working on iOS for many years now. When Apple shipped SwiftUI, I saw i
 
 The best way to learn something is to build a project. SwiftUI has two main advantages: iteration speed and code reuse across Apple platforms. I had just the right idea for a project that could take advantage of both.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/cover.png">
+<img class="NewScreenshot" alt="SwiftUI Experiment post cover" src="{{ site.url }}/images/posts/swiftui-exp/cover.png">
 
 ## Project
 
@@ -49,7 +49,7 @@ As a QA engineer testing the app, you can view the network requests right on you
 
 ## Pulse Open Beta
 
-<a href="https://github.com/kean/PulseBeta"><img alt="Pulse, a structured logging system built using SwiftUI" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="180px"></a>
+<a href="https://github.com/kean/PulseBeta"><img alt="Pulse, a structured logging system built using SwiftUI" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="180"></a>
 
 I'm thrilled to announce that **Pulse Open Beta** starts today. You can find the download links in a [dedicated repo](https://github.com/kean/PulseBeta). If you wanted to try to [make it crash](https://twitter.com/steipete/status/1364623472559857665?s=20), now is your chance.
 
@@ -166,9 +166,9 @@ Data flow is probably my favorite aspect of SwiftUI. I was so impressed with it 
 
 It's hard to tell just how much time I wasted fighting the SwiftUI generics. I acknowledge that I don't fully understand the performance benefits of types in SwiftUI, but I can't help but wonder if it was worth it. The abundance of generics leads to poor code completion, error messages, documentation, and ergonomics. These are legitimate issues.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/gen01.png" width="360px">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/gen01.png" width="360">
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/gen02.png" width="320px">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/swiftui-exp/gen02.png" width="320">
 
 My most common mistake is using `&` instead of `$` and then wasting 20 minutes figuring out why there is an unrelated type-system error 5 lines from where I used `&`.
 
@@ -246,13 +246,13 @@ I hope you liked this series. It was meant to inspire folks to try their hand at
 
 <br/>
 
-<div class="article-list">
+<ul class="article-list">
 {% for post in site.posts  %}
     {% if post.uuid == "de347c14-59c3-4f15-9824-1cfc1781f299" or post.uuid == "424b2065-a294-4311-9bc7-f85ed82d1290" or post.uuid == "29cb612c-2e35-406d-a27a-a9c1b9f9c122" or post.uuid == "ef480460-ee95-4504-b4b1-ec133703b6b3" or post.uuid == "0526798f-a074-4365-8970-cb470579c358" or post.uuid == "d99799b5-aa4b-4403-8b65-aa639db7dc10" or post.uuid == "c5358288-8c59-41e0-a790-521b52f89921" or post.uuid == "2fe0b2d5-b449-4912-8719-fee0c4ad9cb0" or post.uuid == "6d873c89-a3cd-4173-a73b-cd6ba2a89e15" or post.uuid == "97629671-7fb5-481a-a020-38e2aab4175d" %}
 	{% include archive-post-list-item.html %}
 	{% endif %}
 {% endfor %}
-</div>
+</ul>
 
 <br/>
 
