@@ -245,7 +245,7 @@ I hope you liked this series. It was meant to inspire folks to try their hand at
 
 <br/>
 
-<div class="ArchivePostList">
+<div class="article-list">
 {% for post in site.posts  %}
     {% if post.uuid == "de347c14-59c3-4f15-9824-1cfc1781f299" or post.uuid == "424b2065-a294-4311-9bc7-f85ed82d1290" or post.uuid == "29cb612c-2e35-406d-a27a-a9c1b9f9c122" or post.uuid == "ef480460-ee95-4504-b4b1-ec133703b6b3" or post.uuid == "0526798f-a074-4365-8970-cb470579c358" or post.uuid == "d99799b5-aa4b-4403-8b65-aa639db7dc10" or post.uuid == "c5358288-8c59-41e0-a790-521b52f89921" or post.uuid == "2fe0b2d5-b449-4912-8719-fee0c4ad9cb0" or post.uuid == "6d873c89-a3cd-4173-a73b-cd6ba2a89e15" or post.uuid == "97629671-7fb5-481a-a020-38e2aab4175d" %}
 	{% include archive-post-list-item.html %}
