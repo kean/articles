@@ -38,7 +38,7 @@ Great documentation has all three types; so does the new Nuke documentation.
 
 <h3 class="no_toc">API Reference</h3>
 
-I generate [**API Reference**](https://kean-org.github.io/docs/nuke/reference/9.5.0/) for Nuke using [swift-doc](https://github.com/SwiftDocOrg/swift-doc). Many people will simply use the Xcode inline documentation, but it's important to also have it available online. This way, you can link to it, open it on mobile, etc. The line between the API reference and the rest of the documentation should be clear; this is why I host it separately.
+I generate [**API Reference**](https://kean-org.github.io/docs/nuke/reference/9.6.0/) for Nuke using [swift-doc](https://github.com/SwiftDocOrg/swift-doc). Many people will simply use the Xcode inline documentation, but it's important to also have it available online. This way, you can link to it, open it on mobile, etc. The line between the API reference and the rest of the documentation should be clear; this is why I host it separately.
 
 <h3 class="no_toc">Tutorials</h3>
 
