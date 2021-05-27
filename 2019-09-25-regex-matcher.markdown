@@ -231,7 +231,7 @@ Fortunately, Swift team is working hard on [optimizing ARC](https://github.com/a
 
 ## The End
 
-That's all folks! I hope you enjoyed this series as much as I did. I've learned so much working on this series and I hope you have too. If you have any corrections, please feel free to open a [pull-request](https://github.com/kean/kean.github.io) or drop the comment down below. Also, I will be glad to discuss this topic on Twitter, you can find me at [@a_grebenyuk](https://twitter.com/a_grebenyuk). Alright, let's wrap this up. I can't wait to start working on what's next.
+That's all! I hope you enjoyed this series. I'm pretty sure I got at least some of it wrong. If you have any corrections, please feel free to open a [pull-request](https://github.com/kean/kean.github.io) or drop a comment.
 
 {% include references-start.html %}
 
