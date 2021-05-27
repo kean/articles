@@ -14,7 +14,7 @@ favorite: true
 
 Ever wondered how regex works under the hood? How does it understand an incantation like `"<\/?[\w\s]*>|<.+[\W]>"` and magically produces a desired result? This series is going to describe exactly how it works and how to implement a feature-rich regex engine.
 
-Now you might be wondering, why would you want to do that? Well, turns out, this is a fantastic learning opportunity. Parsers, compilers, finite automation, graphs, trees, extended grapheme clusters - it has everything! Last but not least, you get a chance to learn regex.
+Now you might be wondering, why would you want to do that? Well, turns out, this is a fantastic learning opportunity. Parsers, compilers, finite automaton, graphs, trees, extended grapheme clusters - it has everything! Last but not least, you get a chance to learn regex.
 
 > - [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex) (You are here)
 > - [Regex, Prologue: Grammar]({{ site.url }}/post/regex-grammar)
@@ -54,7 +54,7 @@ Regular expressions have complicated syntax with many constructs, including recu
 
 ### Compiler
 
-In [**Regex, Part 2: Compiler**]({{ site.url }}/post/regex-compiler) we will learn about [Finite State Automation](https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton) and how you can use it to represent regular expressions. In this part, some of the theory from [the part about grammars]({{ site.url }}/post/regex-grammar) will come in handy.
+In [**Regex, Part 2: Compiler**]({{ site.url }}/post/regex-compiler) we will learn about [Finite State Automaton](https://en.wikipedia.org/wiki/Nondeterministic_finite_automaton) and how you can use it to represent regular expressions. In this part, some of the theory from [the part about grammars]({{ site.url }}/post/regex-grammar) will come in handy.
 
 ### Matcher
 

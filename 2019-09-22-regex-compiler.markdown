@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Regex, Part 2: Compiler"
-description: What are Type-2 (or <i>regular</i>) languages? How can Finite State Automation be used to recognize them? Where do regex fit into all this?
+description: What are Type-2 (or <i>regular</i>) languages? How can Finite State Automaton be used to recognize them? Where do regex fit into all this?
 date: 2019-09-22 9:00:00 +0300
 category: programming
 tags: programming
@@ -17,23 +17,23 @@ Fortunately, there are very few concepts that you need to know, most of which we
 
 ## Regular Languages
 
-In [Regex, Part 1: Grammar]({{ site.url }}/post/regex-grammar) I briefly mentioned [Chomsky Hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy) of grammars. In [Regex, Part 2: Parser]({{ site.url }}/post/regex-parser) we implemented a parser which recognizes a regular expression language. This is a Type-2 language (or *context-free language*). Chomsky Hierarchy states that you need a [Pushdown Automation](https://en.wikipedia.org/wiki/Pushdown_automaton) to recognize it. This is essentially what we implemented using Parser Combinators, but without mentioning it explicitly (there was already too much theory to go through!).
+In [Regex, Part 1: Grammar]({{ site.url }}/post/regex-grammar) I briefly mentioned [Chomsky Hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy) of grammars. In [Regex, Part 2: Parser]({{ site.url }}/post/regex-parser) we implemented a parser which recognizes a regular expression language. This is a Type-2 language (or *context-free language*). Chomsky Hierarchy states that you need a [Pushdown Automatin](https://en.wikipedia.org/wiki/Pushdown_automaton) to recognize it. This is essentially what we implemented using Parser Combinators, but without mentioning it explicitly (there was already too much theory to go through!).
 
-Now, if you look at Chomsky Hierarchy more closely, there is also Type-3 grammars (or *regular grammars*) which define *regular languages*. This sounds familiar, doesn't it? It says that you need [Finite State Automation](https://en.wikipedia.org/wiki/Finite-state_machine) to recognize these languages. What does it all mean?
+Now, if you look at Chomsky Hierarchy more closely, there is also Type-3 grammars (or *regular grammars*) which define *regular languages*. This sounds familiar, doesn't it? It says that you need [Finite State Automaton](https://en.wikipedia.org/wiki/Finite-state_machine) to recognize these languages. What does it all mean?
 
 There are a lot of parallels between what we were doing in the previous articles and what we are going to do next:
 
-|**Grammar**|**Languages**|**Automation**
-|Type 2|Context-free**\***|Pushdown Automation
-|Type 3**\***|Regular|Finite State Automation
+|**Grammar**|**Languages**|**Automaton**
+|Type 2|Context-free**\***|Pushdown Automaton
+|Type 3**\***|Regular|Finite State Automaton
 
-**\*** In our case, these both of these are the same thing – *regular expression language*. We used Pushdown Automation to recognize a regular expression language (Type-2 language). And now we will use this language to generate Finite State Automation.
+**\*** In our case, these both of these are the same thing – *regular expression language*. We used Pushdown Automaton to recognize a regular expression language (Type-2 language). And now we will use this language to generate Finite State Automaton.
 
 At this point, you are either excited or confused. If it's the later, don't worry, continue with the series and revisit it later.
 
-> [**Pushdown Automation**](https://www.tutorialspoint.com/automata_theory/pushdown_automata_introduction.htm) *(Additional Reading)*
+> [**Pushdown Automaton**](https://www.tutorialspoint.com/automata_theory/pushdown_automata_introduction.htm) *(Additional Reading)*
 >
-> You don't have to know Pushdown Automation to continue going through this series, as you didn't need it to know it to implement Parser Combinators. However, it is one of the fundamental computational models which is important to understand. It essentially introduces a concept of a stack. In the case of Parser Combinators, a stack was implicitly created by recursive function calls.
+> You don't have to know Pushdown Automaton to continue going through this series, as you didn't need it to know it to implement Parser Combinators. However, it is one of the fundamental computational models which is important to understand. It essentially introduces a concept of a stack. In the case of Parser Combinators, a stack was implicitly created by recursive function calls.
  
 ## Finite State Machines
 

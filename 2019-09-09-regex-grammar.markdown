@@ -100,11 +100,11 @@ ModifiedNoun ::= Adjective Noun | Adjective, ModifiedNoun`
 
 > [**Chomsky Hierarchy**](https://en.wikipedia.org/wiki/Chomsky_hierarchy) *(Additional Reading)*
 >
-> In the 1950s, Noan Chomsky created a hierarchy of grammars. There are four categories of formal grammars in the *Chomsky Hierarchy*, spanning from Type 0, the most general, to Type 3, the most restrictive. Each layer is different in terms of the restriction applied to the production rules, the class of language it generates, the type of automation that recognizes it.
+> In the 1950s, Noan Chomsky created a hierarchy of grammars. There are four categories of formal grammars in the *Chomsky Hierarchy*, spanning from Type 0, the most general, to Type 3, the most restrictive. Each layer is different in terms of the restriction applied to the production rules, the class of language it generates, the type of automaton that recognizes it.
 >
 > Most programming languages are defined using Type 2 grammars, or [Context-Free Grammars](https://en.wikipedia.org/wiki/Context-free_grammar) (CFG). In context-free grammars, all production rules must have only one (non-terminal) symbol on the left-hand side. It essentially means that regardless in which context the non-terminal symbol appears, it should be also interpreted the same way. Context-free grammars can be recognized using [pushdown automata](https://en.wikipedia.org/wiki/Pushdown_automaton).
 >
-> Another important type is Type 3 which describes [Regular Languages](https://en.wikipedia.org/wiki/Regular_grammar) which can be recognized using [Finite State Automation](https://en.wikipedia.org/wiki/Finite-state_machine). Sounds familiar?
+> Another important type is Type 3 which describes [Regular Languages](https://en.wikipedia.org/wiki/Regular_grammar) which can be recognized using [Finite State Automaton](https://en.wikipedia.org/wiki/Finite-state_machine). Sounds familiar?
 
 Now that we know what formal grammars are, let's take a closer look at the notations that are used to describe them.
 
