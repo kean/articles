@@ -11,8 +11,8 @@ uuid: 0b507d56-2cd1-402f-be3e-f1f39645e3d3
 
 Previously on [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex), we learned about formal grammars and [defined]({{ site.url }}/post/regex-grammar) one for regex, [parsed]({{ site.url }}/post/regex-parser) the pattern, and [compiled]({{ site.url }}/post/regex-compiler) it to Nondeterministic Finite Automaton (NFA) There is now only one thing left to do – use NFA to find *matches* in the input strings.
 
-> Matcher is still a work in progress. I'm sure I got at least some of it wrong. I'm confident in the parser and the "compiler", but Russ Cox [articles](https://swtch.com/~rsc/regexp/) are probably a better source on matching algorithms.
-{:warning}
+> Matcher is still a work in progress. I'm sure I got at least some of it wrong. I'm confident in the parser and the compiler, but there doesn't seem to be a single best matching algorithm – they all seem to address different problems in different ways. In this post, I explore two algorithms that are, to the very least, simple and clear from the CS standpoint. They are not necessarily going to be the best in practice.
+{:.warning}
 
 {% include ad-hor.html %}
 
@@ -71,7 +71,7 @@ I implemented two different matching algorithms for NFA.
 
 The first one uses backtracking. It offers some powerful features, like [backreferences](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backreference-constructs-in-regular-expressions), at the expense of potentially exponential time complexity. Similar algorithm can be found in [.NET](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions) and other platforms.
 
-The second one guarantees linear time complexity to the length of the input string. It is useful when you want to be able to handle regular expression from untrusted users. One of the available implementations is [RE2](https://github.com/google/re2) created by Google.
+The second one guarantees linear time complexity to the length of the input string. It is useful when you want to be able to handle regular expression from untrusted users.
 
 You can find many different names and descriptions of both of these algorithms. I will present them from a slightly different angle, taking some ideas from graph algorithms. I find this approach more compelling and hope it doesn't add to confusion.
 
@@ -186,13 +186,13 @@ Catastrophic backtracking is not the end of the world as many people suggest it 
 
 Is there anything we can do about it? The answer is yes. And this is where the second algorithm comes in.
 
-## BFS (Lazy DFA)
+## BFS
 
 [Breadth-first search (BFS)](https://en.wikipedia.org/wiki/Breadth-first_search) is another search algorithm which, unlike DFS, explores all the neighbor nodes prior to moving to the nodes at the next depth level. Just like with DFS, we won't simply use the BFS algorithm itself, but we can apply its principles.
 
 The idea behind this new regex matching algorithm is to take an input character and find all states reachable from the current state after consuming a single character. By doing so we might encounter multiple epsilon transitions in the NFA. If we remove all the epsilon transitions, and keep only the ones that consume a character, we essentially re-construct a single DFA state with all the possible transitions.
 
-The idea might seem straightforward but there is a lot nuance. Every engine, that implements this algorithm, does it slightly differently. I'm also currently in the process of implementing it. You can find the latest version on [GitHub](https://github.com/kean/Regex). If you want to see a complete version written by people who I smarter that I am, I would encourage you going through the code of some of the production-ready open source engines like [RE2](https://github.com/google/re2) or [Rust/Regex](https://github.com/rust-lang/regex/blob/master/src/dfa.rs).
+The idea might seem straightforward but there is a lot nuance. Every engine, that implements this algorithm, does it slightly differently. I'm also currently in the process of implementing it. You can find the latest version on [GitHub](https://github.com/kean/Regex).
 
 ### Longest Path
 
