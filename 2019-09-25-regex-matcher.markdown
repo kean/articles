@@ -11,7 +11,8 @@ uuid: 0b507d56-2cd1-402f-be3e-f1f39645e3d3
 
 Previously on [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex), we learned about formal grammars and [defined]({{ site.url }}/post/regex-grammar) one for regex, [parsed]({{ site.url }}/post/regex-parser) the pattern, and [compiled]({{ site.url }}/post/regex-compiler) it to Nondeterministic Finite Automaton (NFA) There is now only one thing left to do – use NFA to find *matches* in the input strings.
 
-> **Note**: Matcher is still work in progress.
+> Matcher is still a work in progress. I'm sure I got at least some of it wrong. I'm confident in the parser and the "compiler", but Russ Cox [articles](https://swtch.com/~rsc/regexp/) are probably a better source on matching algorithms.
+{:warning}
 
 {% include ad-hor.html %}
 
