@@ -40,8 +40,6 @@ Implementing an engine capable of matching patterns like "`https?`" is easy beca
 
 To make it more challenging, I also wanted it to have performance comparable to `NSRegularExpression` which uses highly optimized [ICU regex engine](http://icu-project.org/apiref/icu4c/uregex_8h_source.html) written in C.
 
-Do you want to see how it turned out? Then take the red pill.
-
 ## Overview
 
 There are four main pieces of the puzzle that needs to be solved to make it all work.
