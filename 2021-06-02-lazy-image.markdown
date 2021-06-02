@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "LazyImage"
-subtitle: TBD
-description: TBD
+subtitle: Lazy image loading for SwiftUI
+description: Lazy image loading for SwiftUI
 date: 2021-06-02 09:00:00 -0500
 category: programming
 tags: programming
