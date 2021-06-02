@@ -10,7 +10,7 @@ permalink: /post/lazy-image
 uuid: 608e88a5-d9e7-40af-8957-18ad1b5bb025
 ---
 
-[Nuke 10](https://github.com/kean/Nuke/releases/tag/10.0.0) comes with a new package called [NukeUI](https://github.com/kean/NukeUI) that makes lazy image loading as easy as possible. It comes with two main components:
+[Nuke 10](https://github.com/kean/Nuke/releases/tag/10.0.0) is out, but this post is not about it. It's about a new package called [NukeUI](https://github.com/kean/NukeUI) that makes lazy image loading as easy as possible. It comes with two main components:
 
 - `LazyImage` for SwiftUI
 - `LazyImageView` for UIKit/AppKit
@@ -80,6 +80,42 @@ So I thought `LazyImage` was a great opportunity to accelerate the switch to vid
   <source src="{{ site.url }}/videos/lazy-image.mp4" type="video/mp4">
 </video>
 </div>
+
+This required quite a bit of digging into AVKit because there were no high-level API to play videos from memory. I ended up an asset (`AVAsset`) with a custom `AVAssetResourceLoaderDelegate`:
+
+```swift
+// This allows LazyImage to play video from memory.
+final class DataAssetResourceLoader: NSObject, AVAssetResourceLoaderDelegate {
+    private let data: Data
+    private let contentType: String
+
+    init(data: Data, contentType: String) {
+        self.data = data
+        self.contentType = contentType
+    }
+
+    func resourceLoader(_ resourceLoader: AVAssetResourceLoader, shouldWaitForLoadingOfRequestedResource loadingRequest: AVAssetResourceLoadingRequest) -> Bool {
+        if let contentRequest = loadingRequest.contentInformationRequest {
+            contentRequest.contentType = contentType
+            contentRequest.contentLength = Int64(data.count)
+            contentRequest.isByteRangeAccessSupported = true
+        }
+
+        if let dataRequest = loadingRequest.dataRequest {
+            if dataRequest.requestsAllDataToEndOfResource {
+                dataRequest.respond(with: data[dataRequest.requestedOffset...])
+            } else {
+                let range = dataRequest.requestedOffset..<(dataRequest.requestedOffset + Int64(dataRequest.requestedLength))
+                dataRequest.respond(with: data[range])
+            }
+        }
+
+        loadingRequest.finishLoading()
+
+        return true
+    }
+}
+```
 
 ## Pre-Release
 
