@@ -81,7 +81,7 @@ So I thought `LazyImage` was a great opportunity to accelerate the switch to vid
 </video>
 </div>
 
-This required quite a bit of digging into AVKit because there were no high-level API to play videos from memory. I ended up an asset (`AVAsset`) with a custom `AVAssetResourceLoaderDelegate`:
+It required quite a bit of digging into AVKit because there was no high-level API to play videos from memory. I ended up an asset (`AVAsset`) with a custom `AVAssetResourceLoaderDelegate`:
 
 ```swift
 // This allows LazyImage to play video from memory.
