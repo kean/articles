@@ -63,7 +63,7 @@ I also added an escape hatch similar to [SwiftUI Introspect](https://github.com/
 
 ## Animation (and Video)
 
-Some frameworks include the support for rendering animated images right in the main target. For example, there is a framework that has a copied and modified version of [Gifu](https://github.com/kaishin/Gifu) in it. That wasn't the path I wanted to take. Nuke plays well with others, and it instead makes [integration with Gifu](https://kean.blog/nuke/guides/image-formats#gif) as easy as possible. And with NukeUI, it's even easy.
+Some frameworks include the support for rendering animated images right in the main target. For example, there is a framework that has a copied and modified version of [Gifu](https://github.com/kaishin/Gifu) in it. That wasn't the path I wanted to take. Nuke plays well with others, and it instead makes [integration with Gifu](https://kean.blog/nuke/guides/image-formats#gif) as easy as possible. And with NukeUI, it's even easier.
 
 Rendering animated images is not a concern of a framework that loads images – it’s the responsibility of the UI.  And that's why it fits perfectly in NukeUI where [Gifu](https://github.com/kaishin/Gifu) is added as a dependency by default, so you don't need to do anything. Gifu is a relatively small Swift library, and if you install it using SPM, it ends up in the same binary anyway, so there is barely any overhead. It also keeps [Nuke](https://github.com/kean/Nuke) lighter.
 
