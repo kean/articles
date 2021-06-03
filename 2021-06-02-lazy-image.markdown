@@ -24,19 +24,19 @@ uuid: 608e88a5-d9e7-40af-8957-18ad1b5bb025
 <span class="p">}</span>
 </code></pre></div></div>
 
-`LazyImage` uses [Nuke](https://github.com/kean/Nuke) for loading images. It has many customization options like setting a placeholder or changing the image scaling mode. It also has GIF support powered by [Gifu](https://github.com/kaishin/Gifu). But GIF is [not the most](https://web.dev/replace-gifs-with-videos/) efficient format for animated images, so NukeUI can also play short videos, which I’ll talk about later.
+`LazyImage` uses [Nuke](https://github.com/kean/Nuke) for loading images. It has many customization options. It also has GIF support powered by [Gifu](https://github.com/kaishin/Gifu). But GIF is [not the most](https://web.dev/replace-gifs-with-videos/) efficient format for animated images, so NukeUI can also play short videos, which I’ll talk about later. And it supports progressive images.
 
-You can learn more about `LazyImage` in the [repository](https://github.com/kean/NukeUI). And in this post, I'll quickly go over some design decisions.
+You can learn more about `LazyImage` in the [repository](https://github.com/kean/NukeUI). And in this post, I'll quickly go over some of the design decisions.
 
 ## Design
 
-My initial approach to SwiftUI in Nuke was to provide a view model (`ObservableObject`) that you could integrate into your views – [`FetchImage`](/post/introducing-fetch-image). The reasoning was that creating views in SwiftUI is easy: you can start with a simple example and customize it precisely the way you want. This idea still stands, and, with [Nuke 10](https://github.com/kean/Nuke/releases/tag/10.0.0), FetchImage is now part of the main library. But this approach is good only up to a point.
+My initial approach to SwiftUI in Nuke was to provide a view model (`ObservableObject`) that you could integrate into your views – [`FetchImage`](/post/introducing-fetch-image). The reasoning was that creating views in SwiftUI is easy: you can start with a simple example and customize it precisely the way you want. It still stands, and, with [Nuke 10](https://github.com/kean/Nuke/releases/tag/10.0.0), FetchImage is part of the main library. But this approach is good only up to a point.
 
 Firstly, there are not that many customizations you might want. It’s a good idea to provide a solution that would work for most people. Secondly, in SwiftUI, there are not that many tools available yet. For example, if you want to use [Gifu](https://github.com/kaishin/Gifu) to render animated GIFs, you need to use UIKit. Putting this all together can be a daunting task. And this is the problem I wanted to tackle with NukeUI.
 
 ### Lazy
 
-Naming is important and I wanted a great name for this component that would feel at home in SwiftUI. `Image` was taken by SwiftUI. `Nuke.Image` felt clunky. When the solution doesn't come immediately, I try to go through as many bad ideas as possible before eventually, it leads to a good one. I think the name `LazyImage` is perfect for a couple of reasons.
+I wanted a great name for this component that would feel at home in SwiftUI. `Image` was taken by SwiftUI. `Nuke.Image` felt clunky. I tried a couple more options befre settling on `LazyImage`.
 
 It's lazy because it loads the image from the source only when it appears on the screen. And when it disappears (or is deallocated), the current request automatically gets canceled. When the view reappears, the download picks up where it left off, thanks to [resumable downloads](https://kean.blog/post/resumable-downloads). 
 
@@ -46,9 +46,9 @@ And if you are coming to SwiftUI from the web, the terms used by `NukeUI` will b
 
 ## Implementation
 
-I initially started working on a pure-SwiftUI version of `LazyImage`, but quickly realized there were practically no advantages of doing that, but there were some limitations. And I still needed to use UIKit at least partially if I wanted to use [Gifu](https://github.com/kaishin/Gifu) for animated image rendering.
+I initially started working on a pure-SwiftUI version of `LazyImage`, but quickly realized there were practically no advantages of doing that, but there were limitations. I also still need to use UIKit at least partially if I wanted to use [Gifu](https://github.com/kaishin/Gifu) for animated image rendering.
 
-Instead of an initially planned one component, I made two: `LazyImageView` for UIKit and AppKit and `LazyImage`, a thin wrapper on top of it for SwiftUI. They both have equivalent APIs, which makes it easy to learn them. And I didn't need to re-implement any of the functionality, which is great. My initial SwiftUI implementation was using [@StateObject](https://developer.apple.com/documentation/swiftui/stateobject), making it iOS 14+ only. But with the new approach, I dropped the deployment target to iOS 13.
+So instead of the initially planned one component, I made two: `LazyImageView` for UIKit and AppKit and `LazyImage`, a thin wrapper on top of it for SwiftUI. They both have equivalent APIs, which makes it easy to learn them. And I didn't need to re-implement any of the functionality, which is great. My initial SwiftUI implementation was also using [@StateObject](https://developer.apple.com/documentation/swiftui/stateobject), making it iOS 14+ only. But with the new approach, I dropped the deployment target to iOS 13.
 
 I also added an escape hatch similar to [SwiftUI Introspect](https://github.com/siteline/SwiftUI-Introspect). So if some features are not yet exposed in `LazyImage` or SwiftUI, there is a "legal" way to access the underlying UIKit or AppKit components.
 
@@ -73,7 +73,6 @@ So I managed to add GIF support without reinventing it and added it to `LazyImag
 {:.info}
 
 So I thought `LazyImage` was a great opportunity to accelerate the switch to video. With `LazyImage`, displaying a short video is as easy as providing a video URL as a source.
-
 
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
