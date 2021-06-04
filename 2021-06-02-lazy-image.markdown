@@ -116,6 +116,17 @@ final class DataAssetResourceLoader: NSObject, AVAssetResourceLoaderDelegate {
 }
 ```
 
+Both `LazyImage` and `LazyImageView` support video playback out of the box. In practice, it means that you can replace a 20 MB GIF with a 1 MB video of comparable quality. And instead of 60% CPU usage and overheating device, you'll see 0%.
+
+There is nothing you need to do to enable video playback. It does the right thing by default:
+
+- It plays automatically
+- It doesn't show any controls
+- It loops continuously
+- It's always silent
+- It doesn't prevent the display from sleeping
+- It displays a preview until the video is downloaded
+
 ## Pre-Release
 
 I hope I got you interested in `LazyImage`. You can learn more in the [repository](https://github.com/kean/NukeUI).`LazyImage` 0.1.0 is out (pre-release version) and you can give it a try now. You can see it in action in the [Nuke Demo](https://github.com/kean/NukeDemo).
