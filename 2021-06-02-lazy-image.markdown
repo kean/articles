@@ -34,7 +34,7 @@ My initial approach to SwiftUI in Nuke was to provide a view model (`ObservableO
 
 Firstly, there are just not that many customization options you might want, so it’s a good idea to provide a solution that works for most people. Secondly, I wanted it as versatile as it could. Adding [Gifu](https://github.com/kaishin/Gifu) integration that requires UIKit, supporting progressing rendering, playing video – putting all these things together can be a daunting task. And this is the problem I wanted to tackle with NukeUI.
 
-### Lazy
+### Naming
 
 I wanted a name for this component that would feel at home in SwiftUI. `Image` was taken by SwiftUI. `Nuke.Image` felt clunky. I tried a couple more options before settling on `LazyImage`.
 
