@@ -24,7 +24,7 @@ uuid: 608e88a5-d9e7-40af-8957-18ad1b5bb025
 <span class="p">}</span>
 </code></pre></div></div>
 
-`LazyImage` uses [Nuke](https://github.com/kean/Nuke) for loading images and has many customization options. But it's not just that. It also supports progressive images, it has GIF support powered by [Gifu](https://github.com/kaishin/Gifu) and can even play short videos, which is [a much more efficient](https://web.dev/replace-gifs-with-videos/).
+`LazyImage` uses [Nuke](https://github.com/kean/Nuke) for loading images and has many customization options. But it's not just that. It also supports progressive images, it has GIF support powered by [Gifu](https://github.com/kaishin/Gifu) and can even play short videos, which is [a much more efficient](https://web.dev/replace-gifs-with-videos/) way to implement animated images.
 
 You can learn more about `LazyImage` in the [repository](https://github.com/kean/NukeUI). And in this post, I'll quickly go over some of the design decisions.
 
@@ -32,7 +32,7 @@ You can learn more about `LazyImage` in the [repository](https://github.com/kean
 
 My initial approach to SwiftUI in Nuke was to provide a view model (`ObservableObject`) that you could integrate into your views – [`FetchImage`](/post/introducing-fetch-image). The reasoning was that creating views in SwiftUI is easy: you can start with a simple example and customize it precisely the way you want. With [Nuke 10](https://github.com/kean/Nuke/releases/tag/10.0.0), FetchImage is part of the main library. But this approach is good only up to a point.
 
-Firstly, there are just not that many customization options you might want, so it’s a good idea to provide a solution that works for most people. Secondly, I wanted it as versatile as it could. Adding [Gifu](https://github.com/kaishin/Gifu) integration that requires UIKit, supporting progressing rendering, playing video – putting all these things together can be a daunting task. And this is the problem I wanted to tackle with NukeUI.
+Firstly, there are just not that many customization options you might want, so it’s a good idea to provide a solution that works for most people. Secondly, I wanted it to be versatile. Adding [Gifu](https://github.com/kaishin/Gifu) integration, supporting progressing rendering, playing video – putting all these things together can be a daunting task. And this is the problem I wanted to tackle with NukeUI.
 
 ## Naming
 
@@ -46,9 +46,9 @@ And if you are coming to SwiftUI from the web, the terms used by NukeUI will be 
 
 ## Implementation
 
-I initially started working on a version of `LazyImage` by only using SwiftUi, but quickly realized there were practically no advantages of doing that, but there were limitations. And I needed to use UIKit, at least partially, if I wanted to use [Gifu](https://github.com/kaishin/Gifu).
+I initially started working on a version of `LazyImage` by using only SwiftUI, but quickly realized there were practically no advantages of doing that, but there were limitations. And I needed to use UIKit, at least partially, if I wanted to use [Gifu](https://github.com/kaishin/Gifu).
 
-So instead of the initially planned one component, I made two: `LazyImageView` for UIKit and AppKit and `LazyImage`, a thin wrapper on top of it for SwiftUI. They both have equivalent APIs, which makes then easy to learn. And I didn't need to re-implement any of the functionality, which is great.
+So instead of the initially planned one component, I made two: `LazyImageView` for UIKit and AppKit and `LazyImage`, a thin wrapper on top of it for SwiftUI. They both have equivalent APIs, which makes them easy to learn. And I didn't need to re-implement any of the functionality, which is great.
 
 My initial SwiftUI implementation was also using [@StateObject](https://developer.apple.com/documentation/swiftui/stateobject), making it iOS 14+ only. But with the new approach, I dropped the deployment target to iOS 13.
 
@@ -95,7 +95,7 @@ If you compare the performance metrics, there is a massive difference. Video pla
 <img width="300px" class="Screenshot" src="{{ site.url }}/images/posts/lazy-image/perf-mp4.png"> 
 <img width="300px" class="Screenshot" src="{{ site.url }}/images/posts/lazy-image/perf-gif.png">
 
-It required a bit of digging into AVKit because there was no high-level API to play videos from memory. I ended up an asset (`AVAsset`) with a custom `AVAssetResourceLoaderDelegate`:
+It required a bit of digging into AVKit because there was no high-level API to play videos from memory. I ended up using an asset (`AVAsset`) with a custom `AVAssetResourceLoaderDelegate`:
 
 ```swift
 // This allows LazyImage to play video from memory.
