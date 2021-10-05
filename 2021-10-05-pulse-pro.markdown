@@ -11,7 +11,7 @@ uuid: 8f1c9545-868c-41a3-be93-b675a86c3bb6
 fullscreen: true
 disable-toc: true
 image:
-  path: /images/posts/macos/cover.png
+  path: /images/posts/pulse-pro/cover.png
   height: 1200
   width: 675
 ---
@@ -206,4 +206,4 @@ Even where I didn’t use SwiftUI I still used Xcode Canvas, and it significantl
 
 [Pulse](https://github.com/kean/Pulse) is open-source and is available on GitHub as usual. You can integrate it into your app now and view logs using the on-device console. The latest version also includes remote logging, but it requires the Pulse Pro app.
 
-Pulse Pro is [available today](https://github.com/kean/PulsePro) for all of the sponsors as an early preview. I thank everyone who is sponsoring projects like Pulse and [Nuke](https://github.com/kean/Nuke). If you are not supporting it yet, it's easy to do [on GitHub](https://github.com/sponsors/kean), and you can get access to Pulse Pro now.
+Pulse Pro is [available today](https://github.com/kean/PulsePro) for all of the sponsors. I thank everyone who is sponsoring projects like Pulse and [Nuke](https://github.com/kean/Nuke). If you are not supporting it yet, it's easy to do [on GitHub](https://github.com/sponsors/kean).
