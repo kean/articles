@@ -23,7 +23,7 @@ With the [Pulse](https://github.com/kean/Pulse) framework, you can record logs a
 The new app is designed to be flexible, expansive, and precise while using all the familiar macOS patterns. It makes it easy to navigate large log files with table and text modes, filters, scroller markers, an all-new network inspector, JSON filters, and more.
 
 <a href="{{ site.url }}/images/posts/pulse-pro/main-console-04.png">
-<img class="NewScreenshot full-width" src="{{ site.url }}/images/posts/pulse-pro/main-console-04.png">
+<img class="full-width JustVertMargins" src="{{ site.url }}/images/posts/pulse-pro/main-console-04.png">
 </a>
 
 ## Remote Logging 
