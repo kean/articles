@@ -142,7 +142,7 @@ Networks filters were also designed from scratch. The most powerful filter is pr
 
 Response viewer has also gotten some love in this release. I added line numbers, the way to change some basic settings, like font size. There is a new color theme that matches Xcode. And, one of the features I'm super excited about, is a [jq](https://github.com/stedolan/jq) integration.
 
-[jq](https://github.com/stedolan/jq) is a tool for processing JSON, applying the given filter. You can fidn some examples of what it can do at the [jq website](https://stedolan.github.io/jq"). It's really-really powerful and Pulse Pro makes it super nice to use with side-by-side live results view, and nice output formatting.
+[jq](https://github.com/stedolan/jq) is a tool for processing JSON, applying the given filter. You can find some examples of what it can do at the [jq website](https://stedolan.github.io/jq"). It's really-really powerful and Pulse Pro makes it super nice to use with side-by-side live results view, and nice output formatting.
 
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
