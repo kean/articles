@@ -10,7 +10,11 @@ permalink: /post/learn-ios
 uuid: a074c914-6d07-4b0a-8911-667e6f0cc76d
 ---
 
-Last week, I made [a poll](https://twitter.com/a_grebenyuk/status/1458158375942950916?s=20) on Twitter asking to share the best learning materials for iOS engineers, and I was overwhelmed with the number of responses it got. It was very insightful, and I thought it would be nice to compile the results into a single post, which I did here, adding a few recommendations of my own.
+Last week, I made [a poll](https://twitter.com/a_grebenyuk/status/1458158375942950916?s=20) on Twitter asking to share the best learning materials for iOS engineers and was overwhelmed with the number of responses. It was very insightful, and I thought it would be nice to compile the results into a single post, which I did here, adding a few recommendations of my own.
+
+<div class="blog-small-v-spacer"></div>
+
+<blockquote style="margin-top: 30px" class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">I need your help, Twitter. What are the best learning resources for beginner/intermediate iOS engineers these days (can be paid)?</p>&mdash; Alex Grebenyuk (@a_grebenyuk) <a href="https://twitter.com/a_grebenyuk/status/1458158375942950916?ref_src=twsrc%5Etfw">November 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 ## Most Recommended
 
@@ -19,68 +23,75 @@ There were a couple of outliers that got an absolutely massive number of recomme
 ### [Standford: CS193p - Developing App for iOS](https://cs193p.sites.stanford.edu)
 <p class="blog-inner-subtitle">Beginner, Free</p>
 
-The lectures of the Stanford University's course CS193p were one of the top-recommended resources. I went through the first few videos myself and was blown by how packed they are with information.
+The Stanford University's course CS193p was by far the most recommended resource. I went through the first few videos myself and was blown away by how packed they are with information.
+
+<div class="blog-small-v-spacer"></div>
 
 <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr">Stanford hands down. I recommend those lectures to everyone. It&#39;s free and it&#39;s some of the highest quality content out there: <a href="https://t.co/Msv1E7wb2M">https://t.co/Msv1E7wb2M</a></p>&mdash; Lauren N. Roth (@lauren_n_roth) <a href="https://twitter.com/lauren_n_roth/status/1458207125679792133?ref_src=twsrc%5Etfw">November 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+<div class="blog-small-v-spacer"></div>
+
 There are a couple of things to note about this course:
 
-- It focuses on SwiftUI. We are still in the transition period where most companies use UIKit, but it’s worth investing time into SwiftUI now. And you learn much more than just SwiftUI in this course.
+- It focuses on SwiftUI. We are still in the transition period where most companies still use UIKit, but it’s already worth investing time into SwiftUI. And you learn much more than just SwiftUI in this course.
 - The course's primary target audience is students, and it assumes they are familiar with programming fundamentals. If you are learning programming from scratch, you might want to consider going through other resources first. Having said that, the best way to learn programming is by building things.
 
 ###   [100 Days of Swift](https://www.hackingwithswift.com/100)
 <p class="blog-inner-subtitle">Beginner, Free</p>
 
-The second most recommended resource is [100 Days of Swift](https://www.hackingwithswift.com/100). And it's not the only resource on [Hacking with Swift](https://www.hackingwithswift.com) by [Paul Hudson](https://twitter.com/twostraws). For example, there is a similar course on SwiftUI - [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui).
+The second most recommended course is [100 Days of Swift](https://www.hackingwithswift.com/100). And it's not the only resource on [Hacking with Swift](https://www.hackingwithswift.com) by [Paul Hudson](https://twitter.com/twostraws). There is a similar course on SwiftUI – [100 Days of SwiftUI](https://www.hackingwithswift.com/100/swiftui), and there are a ton of other articles and videos.
 
 Unlike Standford's course, [100 Days of Swift](https://www.hackingwithswift.com/100) focuses not on app development, but on Swift itself. If you are just starting learning programming, this course is for you.
+
+<div class="blog-small-v-spacer"></div>
 
 <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr">Highly recommend<a href="https://twitter.com/twostraws?ref_src=twsrc%5Etfw">@twostraws</a> 100 days of swift <a href="https://t.co/Ud94Ju0aYg">https://t.co/Ud94Ju0aYg</a><br>And <a href="https://twitter.com/objcio?ref_src=twsrc%5Etfw">@objcio</a> courses <a href="https://t.co/DBs9fGdsi1">https://t.co/DBs9fGdsi1</a></p>&mdash; inailuy☁️ (@cloudssayhello) <a href="https://twitter.com/cloudssayhello/status/1458159633579843584?ref_src=twsrc%5Etfw">November 9, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr"><a href="https://t.co/50rv302VMv">https://t.co/50rv302VMv</a> and take the 100 days of Swift course. There also a 100 days of SwiftUI course</p>&mdash; Nikolaj Nielsen (@NikolajMosb) <a href="https://twitter.com/NikolajMosb/status/1458323026064314374?ref_src=twsrc%5Etfw">November 10, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-### [Udemy - iOS & Swift - The Complete iOS App Development Bootcamp](https://www.udemy.com/course/ios-13-app-development-bootcamp) 
+<div class="blog-small-v-spacer"></div>
+
+### [Udemy - The Complete iOS App Development Bootcamp](https://www.udemy.com/course/ios-13-app-development-bootcamp) 
 <p class="blog-inner-subtitle">Beginner, Paid</p>
 
-It’s uncommon for a paid resource to get a lot of recommendations, but this course was recommended by quite a few people and that's why it made the shortlist. I wasn’t able to check it out myself, but if you look at the course’s content, it looks impressive. I think right now it might be a better option than Standford’s CS193p if you want to focus on the current technologies, such as UIKit.
+It seems uncommon for a paid course to get a lot of recommendations, but this one is an exception and it made the shortlist. I wasn’t able to check it out myself, but if you look at the course’s content, it does look _complete_. I think right now it might be a better option than Standford’s CS193p if you want to focus on the _current_ technologies, such as UIKit.
+
+<div class="blog-small-v-spacer"></div>
 
 <blockquote class="twitter-tweet" data-conversation="none" data-theme="dark"><p lang="en" dir="ltr">Amazing and thorough. This course is hands down one of the best around: <a href="https://t.co/y7IG0KD2fk">https://t.co/y7IG0KD2fk</a> <a href="https://twitter.com/yu_angela?ref_src=twsrc%5Etfw">@yu_angela</a> <a href="https://twitter.com/LondonAppBrewer?ref_src=twsrc%5Etfw">@LondonAppBrewer</a></p>&mdash; Greg Watkins (@GregWatkins69) <a href="https://twitter.com/GregWatkins69/status/1458498150726094853?ref_src=twsrc%5Etfw">November 10, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<div class="blog-small-v-spacer"></div>
 
 ### [Ray Wanderlich](https://www.raywenderlich.com)
 <p class="blog-inner-subtitle">Beginner/Indermediate, Free/Paid</p>
 
-This resource doesn't need an introduction. I often find myself using it in my daily work. Ray Wanderlich is the go-to place for finding tutorials on specific topics. But it has more than that. It also has [courses](https://www.raywenderlich.com/ios/paths), [videos](https://www.raywenderlich.com/ios/videos), [articles](https://www.raywenderlich.com/ios/articles), and even [books](https://www.raywenderlich.com/ios/books). If there is an iOS topic you are interested in, chances are you'll find it on this site.
-
-### [objc.io](objc.io)
-<p class="blog-inner-subtitle">Indermediate/Advanced, Free/Paid</p>
-
-[objc.io](objc.io) is one of the early resources covering a variety of advanced topics on iOS. I loved the format where each Issue would focus on a particular topic and have articles from multiple authors – it was one of my favorite resources when I was getting started.
-
-The site has evolved and now features [videos](https://talk.objc.io) and [books](https://www.objc.io).
-The topics can be quite advanced, so they are probably not suitable for beginners.
+This site doesn't need an introduction. I often find myself using it in my daily work. Ray Wanderlich is the go-to place for finding tutorials on specific topics. But it has more than that. It also has [courses](https://www.raywenderlich.com/ios/paths), [videos](https://www.raywenderlich.com/ios/videos), [articles](https://www.raywenderlich.com/ios/articles), and even [books](https://www.raywenderlich.com/ios/books). If there is an iOS topic you are interested in, chances are you'll find it on this site.
 
 ## First-Party Resources
 
 I’m surprised nobody linked official Apple documentation in the thread. If I made this poll 6-8 years ago, I’m sure a lot of people would've jumped in recommending to stick with the official documentation. Today, there are a ton of third-party resources that can oftentimes be better than the official documentation. But despite that, the Apple documentation will always be my primary source of all the information on Apple technologies.
 
+<div class="blog-new-li" markdown="1">
+
 - [Apple WWDC videos](https://developer.apple.com/videos/) – probably the main source of information on Apple technologies. You can often find information not available anywhere else in WWDC videos. It’s a bit unfortunate because finding what you are looking for in a video can be time-consuming.
 - [Apple Developer documentation](https://developer.apple.com/documentation/) – not quite as good as it used to be, but is still a valuable resource
 - [Apple Tutorials: Develop Apps for iOS](https://developer.apple.com/tutorials/app-dev-training/) – Apple recent venture in the tutorial-creation business. I went through these tutorials and they are well made and informative, but a bit dry.
-- [The Swift Programming Language](https://docs.swift.org/swift-book/) – reading this book is how I learned Swift in 2014. It was the _only_ resource on the language. It's a concise and well-written book and is a must-read.
+- [The Swift Programming Language](https://docs.swift.org/swift-book/) – reading this book is how I learned Swift. It's a concise and well-written book and is a must-read. You can learn through it instead using a course.
 - [Swift Evolution](https://apple.github.io/swift-evolution/) – the programming guide doesn't cover everything and sometimes the best source of information on the newest Swift features can be the Swift Evolution proposals
 - [Human Interface Guidelines (HIG)](https://developer.apple.com/design/human-interface-guidelines/ios/overview/themes/) – design is a major part of iOS development and engineers are often relied on to provide their input. This is a must-read resource for any Apple engineer.
 - [Apple Developer News and Updates](https://developer.apple.com/news/) – add it to your RSS reader to learn about the latest updates on the platforms. For example, about deadlines to switching to new Xcode vresions or SDKs.
 - [Swift Forums](https://forums.swift.org) – if you want to keep be up to date with the latest proposals or even participate in discussions
 
-There are so many [technologies](https://developer.apple.com/documentation/technologies) on Apple platforms that you can’t just go and preemptively learn everything. The way I typically learn a new technology is by first going through a quick tutorial and applying it in practice,and then learning the rest of the details using the official documentation.
+</div>
 
-I find it hard to learn anything preemptively. It's best when you have a project and you have a need. When you have a need, you have all the motivation you need to study something. Writing an article can also be a good motivator for learning the topic in depth – it generates the need because you don't want your article to be bad.
+There are so many [technologies](https://developer.apple.com/documentation/technologies) on Apple platforms that you can’t just go and preemptively learn everything. It's best when you have a project and you have a need. When you have a need, you have all the motivation you need to study something. Writing an article can also be a good motivator.
 
 ## Other Recommendations
 
-I received a ton of recommendations in the original [poll](https://twitter.com/a_grebenyuk/status/1458158375942950916?s=20). Here I'm going to list the ones that didn't make the shortlist, in no particular order. A word of caution – Apple platforms are constantly evolving, make sure what you are reading is updated.
+I received a ton of recommendations in the original [poll](https://twitter.com/a_grebenyuk/status/1458158375942950916?s=20). Here I'm going to list the ones that didn't make the shortlist, in no particular order. A word of caution – Apple platforms are constantly evolving, make sure what you are reading is up-to-date.
 
-- [Donny Walls](https://twitter.com/DonnyWals)'s [blog](https://www.donnywals.com/the-blog/) and [books](https://www.donnywals.com/books/): [Practical Combine](https://donnywals.gumroad.com/l/practical-combine) and [Practical Core Data](https://donnywals.gumroad.com/l/practical-core-data)
+- [objc.io](objc.io)
+- [Donny Walls](https://twitter.com/DonnyWals)'s [blog](https://www.donnywals.com/the-blog/) and [books](https://www.donnywals.com/books/)
 - [Point·Free](https://www.pointfree.co)
 - [The Ultimate Kickstart Bundle](https://editorscut.gumroad.com/l/kickstart-bundle)
 - [Flightschool](https://flight.school)
@@ -104,37 +115,44 @@ I received a ton of recommendations in the original [poll](https://twitter.com/a
 - [Ben Scheirman](https://benscheirman.com)
 - [Learn to Build iOS Apps](https://gallaugher.com/swift/)
 
-I'd like to add a couple of resources myself: [iOS Dev Weekly](https://iosdevweekly.com), [NSHipster](https://nshipster.com), [Use Your Load](https://useyourloaf.com), [Cocoa with Love](https://www.cocoawithlove.com), [Little Bites of Cocoa](https://littlebitesofcocoa.com), [Krzysztof Zabłocki](http://merowing.info/post/), [Ole Begemann](https://oleb.net), [Increment](https://increment.com/issues/).
+I'd like to add a couple links myself: [iOS Dev Weekly](https://iosdevweekly.com), [NSHipster](https://nshipster.com), [Use Your Loaf](https://useyourloaf.com), [Cocoa with Love](https://www.cocoawithlove.com), [Little Bites of Cocoa](https://littlebitesofcocoa.com), [Krzysztof Zabłocki](http://merowing.info/post/), [Ole Begemann](https://oleb.net), [Increment](https://increment.com/issues/).
 
 ## Software Engineering
 
-There is more to software engineering than learning a programming language and a platform you are working on. If you want to get a competitive advantage among other engineers, especially if you don’t have a CS degree, make sure to invest time into learning the fundamentals. The good news is that degrees are extremely overrated – you can learn everything they do and more by yourself. It’s not like you need any special equipment or anything.
+There is more to software engineering than learning a programming language and a platform you are working on. If you want to get a competitive advantage among other engineers, especially if you don’t have a CS degree, invest time in learning the fundamentals. The good news is that degrees are overrated – you can learn everything they do and more by yourself. It’s not like you need any special equipment or anything.
 
-An incomplete list of everything that you should/can learn (in no particular order):
+An incomplete list of everything that you should consider learning (in no particular order):
+
+<div class="blog-new-li" markdown="1">
 
 - **Git**. There are a ton of resources on Git, but I found [Pro Git](https://github.com/git-guides/) to be the most insightful.
-- **Release and Branching Strategies**. I think Trunk-Based Development is hands down the best branching strategy, especially for a larger team. [This website](https://trunkbaseddevelopment.com) is a fantastic place to learn it.
-- **Algorithms and Data Structures**. There are many ways to learn it. I like [The Algorithm Design Manual](https://www.amazon.com/Algorithm-Design-Manual-Steven-Skiena/dp/1849967202), Steven Skiena and [Introduction to Algorithms](https://www.amazon.com/Introduction-Algorithms-3rd-MIT-Press/dp/0262033844), Thomas H. Cormen. The former is more approachable.
-- **Terminal and Bash**. There are a ton of resources to learn them. For me, Swift largely replaced Bash as a scripting language of choice, but I still find myself using Bash often enough that it's worth investing time into learning it.
+- **Release and Branching Strategies**. I think [Trunk-Based Development](https://trunkbaseddevelopment.com) is hands down the best branching strategy, especially for larger teams.
+- **Algorithms and Data Structures**. There are many ways to learn them. I like [The Algorithm Design Manual](https://www.amazon.com/Algorithm-Design-Manual-Steven-Skiena/dp/1849967202), Steven Skiena and [Introduction to Algorithms](https://www.amazon.com/Introduction-Algorithms-3rd-MIT-Press/dp/0262033844), Thomas H. Cormen. The former is more approachable.
+- **Terminal and Bash**. For me, Swift largely replaced Bash as a scripting language of choice, but I still find myself using Bash often enough. Regardless of your choice, it's also always worth learning [regex](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference).
 - **Concurrency and Reactive Programming**. Concurrency is hands down the most challenging aspect of UI development, and there are a ton of things to learn: [Swift Structured Concurrency](https://developer.apple.com/news/?id=2o3euotz), [Combine](https://developer.apple.com/documentation/combine), parallel programming, synchronization mechanisms, threading. It's hard, but it comes with practice.
 - **Databases**. Learn the basics of relational databases, [Core Data](https://developer.apple.com/documentation/coredata), try using [SQLite](https://www.sqlite.org/index.html) directly, and you are mostly set as far as mobile development goes.
 - **Continuous Integration and Delivery**. It's not just the tools, it's the practice. You can learn a lot about it by reading Martin Fowler's [articles](https://martinfowler.com/articles/continuousIntegration.html). If you want to dive deeper, there are a few good [books](https://www.amazon.com/Continuous-Integration-Improving-Addison-Wesley-Signature-ebook/dp/B0026772IS) available too. But it's also tools. On iOS, it largely means learning [Fastlane](https://fastlane.tools) and a CI/CD tool of your choice. You can start by creating a sample project on GitHub and setting up a simple pipeline using [GitHub Actions](https://docs.github.com/en/actions).
-- **Functional Programming**. It's finally the mainstream. If you use Swift, you are already using functional programming. But Swift isn't a pure functional language and it can be a lot of fun learning one. I recommend [Structure and Interpretation of Computer Programs](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html) (Lisp version) or Haskell (probably the most well-established and well-documented pure functional language out there).
-- **Software Networking**. Almost every app uses networking. You generally don't _need_ to know anything beyond basics HTTP and JSON, but it's a lot of fun learning how it actually works under the hood. I suggest learning the basics of TCP/IP protocols, DNS, go through the HTTP specs. Tools like [Charles](https://www.charlesproxy.com) allow you to inspect network traffic. [Wireshark](https://www.wireshark.org) can help you learn network protocols. [Postman](https://www.postman.com) is the best tool to explore and test APIs. [OpenAPI](https://www.openapis.org) is how you document the APIs.
-- **Best Practices**. I think "best practices" have often done more harm than good, especially if you take them to the extreme. But they can still be valuable. I would suggest going through [Code Complete](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670) by Steve McConnel and skipping everything else.
+- **Functional Programming**. It's finally mainstream. If you use Swift, you are already using functional programming. But Swift isn't a pure functional language and it can be a lot of fun learning one. I recommend [Structure and Interpretation of Computer Programs](https://mitpress.mit.edu/sites/default/files/sicp/full-text/book/book.html) (Lisp version) or Haskell (probably the most well-established and well-documented pure functional language out there).
+- **Software Networking**. Almost every app uses networking. You generally don't _need_ to know anything beyond basics HTTP and JSON, but it's a lot of fun learning how it actually works under the hood. I suggest learning the basics of the networking protocols: TCP/IP, DNS, go through the HTTP specs. Tools like [Charles](https://www.charlesproxy.com) allow you to inspect network traffic. [Wireshark](https://www.wireshark.org) can help you learn network protocols. [Postman](https://www.postman.com) is the best tool to explore and test APIs. [OpenAPI](https://www.openapis.org) is how you document the APIs.
+- **Best Practices**. I think "best practices" often do more harm than good, especially taken to the extreme. But they can still be valuable. I would suggest going through [Code Complete](https://www.amazon.com/Code-Complete-Practical-Handbook-Construction/dp/0735619670) by Steve McConnel and skipping everything else.
 - **Processes**. Atlassian has a pretty good guide on [Agile](https://www.atlassian.com/agile).
 - **Soft Skills**. This is probably more important than half of the list. I don't think there is a shortcut to learning them. You have to practice and always pay close attention to what you are doing. Reading the following books can give you some valuable insights about this side of engineering: The Pragmatic Programmer, The Mythical Man Month, Herding Cats, The Five Dysfunctions of a Team.
 
-This isn't a complete list by any measure. There are a variety of specializations in software engineering. You can learn anything if you put your mind to it. I think every perspective is valuable. For example, if you are a mobile engineer, it doesn't mean that you can't explore a bit of backend development (especially now that's it can be done in Swift).
+</div>
+
+This list is far from being complete. There are a variety of specializations in software engineering. You can learn anything if you put your mind to it. I think adding new perspectives is valuable. For example, if you are a mobile engineer, it doesn't mean that you can't explore a bit of backend development to expand your perspective (especially now that's it can be done in Swift).
 
 ## Interviews
 
-So you learned everything about iOS and software engineering, now you are done, right? Not quite. There is software engineering and there are software engineering interviews. There is some intersection between the two, but completing coding challenges on an interview has almost nothing in common with your job.
+So you learned everything about iOS and software engineering, now you are done, right? Not quite. There is software engineering, and there are software engineering interviews. There is some intersection between the two, but completing coding challenges on an interview is very different from what you typically do at work.
 
-Fortunately, there are a ton of tools to help with preparation for interviews. The gold standard is [Cracking the Coding Interview](https://www.amazon.com/Cracking-Coding-Interview-Programming-Questions/dp/0984782850/ref=sr_1_1?gclid=Cj0KCQiAhMOMBhDhARIsAPVml-Enj4_92p_aL0INssZJFmQR4bpQuhIu9TMlOySo3et6QtwnzR_dEqYaAqIgEALw_wcB&hvadid=241870593966&hvdev=c&hvlocphy=9003488&hvnetw=g&hvqmt=e&hvrand=16845426662624439861&hvtargid=kwd-20040243067&hydadcr=16409_10304044&keywords=cracking+the+coding+interview&qid=1636928527&qsid=147-7803069-3350963&sr=8-1&sres=0984782850%2C1466208686%2CB09BGKJ3FL%2C0984782869%2CB09559NJKL%2C1537713949%2C1793296634%2C111941847X%2C1519089864%2CB00ISYMUR6%2CB08B3FWYBX%2C0578973839%2CB00U2YQ1Z2%2CB08VL1BLHB%2CB08X8ZXT15%2CB01D24NAL6&srpt=ABIS_BOOK), this is hands down the best resource that can help you prepare. I would also recommend [leetcode](https://leetcode.com). Another great resource is [Tech Interview Handbook](https://techinterviewhandbook.org/introduction/). 
+The main difference is speed. Not only do you need to be quick to be able to complete a task within a given timeframe, but you also need to explain your thinking to the interviewer, making it even more complicated. So it’s crucial to set a timer when you are preparing and optimize for speed and practice explaining what you are doing.
 
-Despite what the interviewers will tell about how it’s not about the speed and how they want to see your thinking… it’s primarily about the speed. You are measured against other candidates. The more you can demonstrate within the limited timeframe of an interview, the better. So it’s absolutely crucial to set a timer and optimize for speed.
+Fortunately, there are a ton of tools to help you prepare for interviews. The gold standard is [Cracking the Coding Interview](https://www.amazon.com/Cracking-Coding-Interview-Programming-Questions/dp/0984782850/ref=sr_1_1?gclid=Cj0KCQiAhMOMBhDhARIsAPVml-Enj4_92p_aL0INssZJFmQR4bpQuhIu9TMlOySo3et6QtwnzR_dEqYaAqIgEALw_wcB&hvadid=241870593966&hvdev=c&hvlocphy=9003488&hvnetw=g&hvqmt=e&hvrand=16845426662624439861&hvtargid=kwd-20040243067&hydadcr=16409_10304044&keywords=cracking+the+coding+interview&qid=1636928527&qsid=147-7803069-3350963&sr=8-1&sres=0984782850%2C1466208686%2CB09BGKJ3FL%2C0984782869%2CB09559NJKL%2C1537713949%2C1793296634%2C111941847X%2C1519089864%2CB00ISYMUR6%2CB08B3FWYBX%2C0578973839%2CB00U2YQ1Z2%2CB08VL1BLHB%2CB08X8ZXT15%2CB01D24NAL6&srpt=ABIS_BOOK), this is hands down the best resource that can help you prepare. I would also recommend [leetcode](https://leetcode.com). Another great resource is [Tech Interview Handbook](https://techinterviewhandbook.org/introduction/). Passing interviews is a special skill and you need to allocate time into learning it unless you want to miss out on some opportunities.
 
 ## Final Thoughts
 
-Everyone’s path in software engineering is different. It’s highly technical and it requires a ton of time investment. But it can also be extremely rewarding and fun. I hope you’ll find some of the resources from this post useful and they'll inspire you to learn!
+Everyone’s path in software engineering is different. It’s highly technical and it requires a ton of time investment. But it can also be extremely rewarding and fun. I hope you’ll find some of the resources from this post useful and they'll inspire you to learn something new!
+
+<div class="blog-small-v-spacer"></div>
+<p class="blog-inner-subtitle" markdown="1">If you have any suggestions to the list, feel free to [open a PR](https://github.com/kean/articles/blob/master/2021-11-15-ios.markdown) on GitHub or [reach out](https://twitter.com/a_grebenyuk) to me on Twitter. I intend on keeping this post up-to-date.</p>
