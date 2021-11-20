@@ -9,60 +9,58 @@ permalink: /post/api-client
 uuid: 543b6221-e3ec-4636-be57-6e6eb501e1f6
 ---
 
+> This post is **archived**. For a modern version that uses Async/Await and Actors, see the new article [Web API Client in Swift](/post/new-api-client) (Nov 2021).
+{:.warning}
+
 Consuming a web service API was a major part of almost all the projects that I worked on. Each one of them had a different approach to networking.
 
 - My very first iOS project was built using [ASIHTTPRequest](https://github.com/pokeb/asi-http-request). `AFNetworking` was yet to be released. The XML responses were parsed using [TouchXML](https://github.com/TouchCode/TouchXML).
-- The next major project that I've worked on used [AFNetworking](https://github.com/AFNetworking/AFNetworking) which was just recently introduced. We've later wrapped the API calls in our in-house [Promises/A+](https://promisesaplus.com) to make things like chaining requests easier. This was well before [PromiseKit](https://github.com/mxcl/PromiseKit) first appeared on GitHub. The JSON responses were parsed manually with a help of a simple [safe_cast](https://gist.github.com/kean/3600ad35c818a6b28caa3e0fa026d478) macro.
-- The latest project that I've worked on had a custom API layer written on top of `NSURLSession`. It supported things like [batch HTTP requests](https://tools.ietf.org/id/draft-snell-http-batch-00.html#http-batch). The JSON responses were parsed using our in-house Objective-C JSON wrapper which was similar in terms of features to one of the first Swift JSON wrappers [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
+- The next major project I've worked on used [AFNetworking](https://github.com/AFNetworking/AFNetworking) – a new modern framework at the time. Later, we wrapped the API calls using our in-house [Promises/A+](https://promisesaplus.com) to make things like chaining requests easier. This was well before [PromiseKit](https://github.com/mxcl/PromiseKit) first appeared on GitHub. The JSON responses were parsed manually with a help of a simple [safe_cast](https://gist.github.com/kean/3600ad35c818a6b28caa3e0fa026d478) macro.
+- At my previous project, we had a custom API layer written on top of `NSURLSession` (no `AFNetworking`). It had some advanced stuff in it such as [batch HTTP requests](https://tools.ietf.org/id/draft-snell-http-batch-00.html#http-batch). We used a simple in-house JSON framework similar in terms of features to one of the first Swift JSON wrappers [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
 
 {% include ad-hor.html %}
 
-Each of those had its own good and bad parts. I'm not going to do a full retrospect, but I'd like to stress out that the majority of the problems in those different implementations *were not caused but some intrinsic flaws* of the technologies being used. It's always about how we were using those tools.
+Each of these approaches had its strengths and weaknesses. And in this article, I'd like to share my latest networking stack. It has a small yet powerful API, type-safe authorization scopes, endpoints modeled in a declarative and concise way, and support for OAuth 2 "refresh access token" flow. It takes full advantage of the open-source frameworks to achieve all of these powerful features.
 
-In this article, I'd like to share my latest networking stack. It has a minimalistic yet powerful API, type-safe authorization scopes, endpoints are modeled in a type-safe, declarative and concise way, support for OAuth 2 "refresh access token" dance. And it takes full advantage of the open source frameworks to achieve all of those powerful features 
-
-> All of the code from the post is [available here](https://gist.github.com/kean/64b9fc0963fd430594fdb3eb848bccf3) (requires Swift 4).
-
-* TOC
-{:toc}
+> The code from the post is [available here](https://gist.github.com/kean/64b9fc0963fd430594fdb3eb848bccf3) (requires Swift 4).
+{:.info}
 
 ## Dependencies
 
-Let's start with dependencies. As Swift ecosystem grows it becomes increasingly more complicated to select the right tools for the job, just because of the sheer number of options. Especially for someone who likes to go through an entire library code base before making a final choice.
+Let's start with dependencies. As the Swift ecosystem grows, it becomes increasingly more complicated to select the right tools for the job. Especially for someone who likes to go through an entire library code base before making a final choice.
 
 ### 1. Alamofire
 
 [Alamofire](https://github.com/Alamofire/Alamofire) is a workhorse of many iOS projects. It has a lot of convenient features:
 
 - Dispatches from `Foundation.URLSession(Task/DataTask)Delegate` methods to individual requests
-- Parameter encoding including URL encoding and JSON encoding
+- Parameter encoding, including URL encoding and JSON encoding
 - Response validation
 - Default `Accept-Encoding`, `Accept-Language`, and `User-Agent` HTTP headers
 - Tools for implementing automatic OAuth 2 "refresh access token" dance
 - Generate cURL command output
 - Automatically show and hide network activity indicator
 
-`Alamofire` is a great framework with a solid code base and comprehensive documentation. The only real alternative to `Alamofire` is writing your own abstraction on top of `Foundation.URLSession`. It's absolutely possible and relatively simple, but it requires a lot of boilerplate code.
+`Alamofire` is a great framework with a solid code base and comprehensive documentation. The only real alternative to `Alamofire` is writing an abstraction on top of `Foundation.URLSession`. It's possible and is even relatively simple, but it requires a lot of boilerplate code.
 
 ### 2. RxSwift
 
-[RxSwift](https://github.com/ReactiveX/RxSwift) has become a must-have tool for me. It gives you all of the advantages of promises and [much more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md). One of its underrated features which happen to be one of me my favorite is its built-in [testing support](https://kean.github.io/post/rxswift-testing). Why does it make sense to wrap your API calls into `Observables`? I'm going to provide a couple of examples later in a "Usage" section to show exactly that.
+[RxSwift](https://github.com/ReactiveX/RxSwift) has become a must-have tool for me. It gives you all of the advantages of promises and [more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md). One of its underrated features, which happens to be one of me my favorite, is its built-in [testing support](https://kean.github.io/post/rxswift-testing). I will provide a couple of examples later in the "Usage" section demonstrating why you want your network calls to be observables.
 
-> There is a number of reasons why I prefer RxSwift over ReactiveCocoa, but I'd like not to dive into this discussion as part of this article.
+> Another popular reactive programming framework is [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift). It's also a solid choice, and many people prefer it over RxSwift.
+{:.info}
 
 ### 3. Codable
 
-The new [Swift Encoders and Decoders](https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md) - `Codable` - is the way to go for the majority of the apps. `Codable` was introduces in Swift 4 with a [motivation](https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md#motivation) to replace old `NSCoding` APIs. Unlike `NSCoding` it has a first class JSON support which makes it a promising option for consuming JSON APIs. `Codable` does have a few drawbacks which you can learn more about in a separate post [**Codable: Tips and Tricks**](https://kean.github.io/post/codable-tips-and-tricks).
+The new [Swift Encoders and Decoders](https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md) - `Codable` - is the way to go for the majority of the apps. `Codable` was introduced in Swift 4 with a [motivation](https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md#motivation) to replace old `NSCoding` APIs. Unlike `NSCoding` it has first-class JSON support which makes it a promising option for consuming JSON APIs. `Codable` does have a few drawbacks which you can learn more about in a separate post [**Codable: Tips and Tricks**](https://kean.github.io/post/codable-tips-and-tricks).
 
-There are a lot of third-party alternatives which were in use prior to Swift 4. Some of them still have advantages over `Codable.`. There is a [great article](https://github.com/bwhiteley/JSONShootout) which gives an overview of all of the major third-party JSON libraries.
+There are a lot of third-party alternatives which were in use before Swift 4. Some of them still have advantages over `Codable`. There is a [great article](https://github.com/bwhiteley/JSONShootout) that gives an overview of all of the major third-party JSON libraries.
 
 ## Endpoint
 
-Now let's dive into the code. One of the questions to be answered is how to model API endpoints.
+Now let's dive into the code. First, we need a way to model network requests.
 
-> [Moya](https://github.com/Moya/Moya) [recommends that you model](https://gist.github.com/kean/a2461a4520969a995c62d9ee65ff7e1a) put your endpoints into an enum (but doesn't enforce this), some open source projects do the same, and Alamofire itself [suggests](https://github.com/Alamofire/Alamofire#crud--authorization) that you do the same. This is surprising because it doesn't seem like an optimal way to represent endpoints. Enums are great for representing concepts where mutual exclusivity of cases is important - `Optional`, `Result`, `Bool`. This is not the case with the API endpoints. There is no cohesion in [this code](https://gist.github.com/kean/a2461a4520969a995c62d9ee65ff7e1a). Instead of pulling together things that describe a single endpoint the details are scattered across the entire file. It's going to be unnecessary tedious to read, add new endpoint or edit existing ones.
-
-My priorities are that the endpoints should be modeled in a type-safe, declarative and concise way, and it should be easy to add, use, and change them. In its simplest form `Endpoint` is described using `HTTP method`, `path`, `parameters`, and a way to decode the response:
+My priorities are that the endpoints should be modeled in a type-safe, declarative, and concise way. It should be easy to add, use, and modify them. In its simplest form `Endpoint` is described using `HTTP method`, `path`, `parameters`, and a way to decode the response:
 
 ```swift
 final class Endpoint<Response> {
@@ -70,16 +68,6 @@ final class Endpoint<Response> {
     let path: Path
     let parameters: Parameters?
     let decode: (Data) throws -> Response
-
-    init(method: Method = .get,
-         path: Path,
-         parameters: Parameters? = nil,
-         decode: @escaping (Data) throws -> Response) {
-        self.method = method
-        self.path = path
-        self.parameters = parameters
-        self.decode = decode
-    }
 }
 
 typealias Parameters = [String: Any]
@@ -90,9 +78,7 @@ enum Method {
 }
 ```
 
-> There are no prefixes to make the code more concise. In reality, you would either add them or put those types in a separate module.
-
-To make endpoint initializers more concise `decode` closures can be inferred automatically (depends on the JSON mapper being used):
+To make endpoint initializers more concise, the `decode` closure can be inferred automatically.
 
 ```swift
 extension Endpoint where Response: Swift.Decodable {
@@ -124,11 +110,11 @@ Let's define a couple of endpoints to see how it works in practice:
 ```swift
 extension API {
     static func getCustomer() -> Endpoint<Customer> {
-        return Endpoint(path: "customer/profile")
+        Endpoint(path: "customer/profile")
     }
 
     static func patchCustomer(firstName: String, lastName: String) -> Endpoint<Customer> {
-        return Endpoint(
+        Endpoint(
             method: .patch,
             path: "customer/profile",
             parameters: ["firstName" : firstName,
@@ -146,7 +132,7 @@ extension API {
         private static let path = "customer/profile"
 
         static func get() -> Endpoint<App.Customer> {
-            return Endpoint(path: path)
+            Endpoint(path: path)
         }
 
         static func patch(firstName: String, lastName: String) -> Endpoint<App.Customer> {
@@ -161,15 +147,17 @@ extension API {
 }
 ```
 
-This approach closely resembles the way REST models resources, but it has it's downsides too - it's less auto-complete friendly, and it introduces a bunch of new types (enums) into the system.
+This approach closely resembles the way REST models resources, but it has it's downsides too - it's less auto-complete friendly, and it introduces a bunch of new types into the system.
 
+> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each propery has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
+{:.warning}
 
 ## Client
 
-The next question is how to actually perform the requests for those endpoints - `Client`. It takes an endpoint parameters, fills the rest of the defaults including the access token, base URL, etc, and carry out the request using an underlying `Alamofire.SessionManager`:
+The next question is how to perform the requests. Let's create a `APIClient` type to do just that. 
 
 ```swift
-final class Client: ClientProtocol {
+final class APIClient: APIClientProtocol {
     private let manager: Alamofire.SessionManager
     private let baseURL = URL(string: "<your_server_base_url>")!
     private let queue = DispatchQueue(label: "<your_queue_label>")
@@ -186,38 +174,37 @@ final class Client: ClientProtocol {
         self.manager = Alamofire.SessionManager(configuration: configuration)
         self.manager.retrier = OAuth2Retrier()
     }
+}
+```
 
-    func request<Response>(_ endpoint: Endpoint<Response>) -> Single<Response> {
-        return Single<Response>.create { observer in
-            let request = self.manager.request(
-                self.url(path: endpoint.path),
-                method: httpMethod(from: endpoint.method),
-                parameters: endpoint.parameters
-            )
-            request
-                .validate()
-                .responseData(queue: self.queue) { response in
-                    let result = response.result.flatMap(endpoint.decode)
-                    switch result {
-                    case let .success(val): observer(.success(val))
-                    case let .failure(err): observer(.error(err))
-                    }
-            }
-            return Disposables.create {
-                request.cancel()
+The client takes endpoint parameters, fills the rest of the defaults including the access token, base URL, etc, and carries out the request using an underlying `Alamofire.SessionManager`:
+
+```swift
+func request<Response>(_ endpoint: Endpoint<Response>) -> Single<Response> {
+    Single<Response>.create { observer in
+        let request = self.manager.request(
+            baseURL.appendingPathComponent(endpoint.path),
+            method: httpMethod(from: endpoint.method),
+            parameters: endpoint.parameters
+        )
+        request.validate().responseData(queue: self.queue) { response in
+            let result = response.result.flatMap(endpoint.decode)
+            switch result {
+            case let .success(val): observer(.success(val))
+            case let .failure(err): observer(.error(err))
             }
         }
-    }
-
-    private func url(path: Path) -> URL {
-        return baseURL.appendingPathComponent(path)
+        return Disposables.create {
+            request.cancel()
+        }
     }
 }
 ```
 
-Each request is wrapped in a `Single` observable provided by `RxSwift`. I'm going to show why this is useful later in a `Usage` section.
+The requests are wrapped in a `Single` observable provided by `RxSwift`.
 
 > A `Single` is a variation of `Observable` that, instead of emitting a series of elements, is always guaranteed to emit either a single element or an error. The common use case of `Single` is to wrap HTTP requests. See [Traits](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Traits.md#single) for more info.
+{:.info}
 
 The `OAuth2Retrier` type is responsible for refreshing access tokens:
 
@@ -236,7 +223,7 @@ private class OAuth2Retrier: Alamofire.RequestRetrier {
 
 ## Usage
 
-We now have everything in place to start using our API endpoints. Let's create a client and start a request.
+We now have everything in place to start using API endpoints. Let's create a client and start a request.
 
 ```swift
 let client = Client(accessToken: "<access_token>")
@@ -244,13 +231,14 @@ _ = client.request(API.Customer.get())
 _ = client.request(API.Customer.patch(firstName: "First", lastName: "Last"))
 ```
 
-> In general, the actual net network calls are only made from Model layer (e.g. `API.Customer` would only be used directly inside `CustomerService` class).
+> It's a good practice to perform network calls only from the Model layer. I like to create "services" that represent the main app's features. For example, for a `API.Customer` would only be used directly inside `CustomerService` class.
+{:.info}
 
-Each of the requests return [cold observables](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/HotAndColdObservables.md). So nothing is going to happen until someone subscribes to the observable. I'm not going to dive into details about RxSwift and how to use it. The article assumes that you are already familiar with it. However, what I would like to do is show a couple of examples of why observables are so useful and why it's a good idea to use them in a networking layer.
+The requests return [cold observables](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/HotAndColdObservables.md). So nothing is going to happen until someone subscribes to the observable. I'm not going to dive into details about RxSwift and how to use it, but I will show a couple of examples of why observables are so useful.
 
 **Load two resources simultaneously and continue only when both requests were successful**
 
-Suppose you need to load two entities form the backed simultaneously and only then you would be able to continue. Without Rx it would be an exercise of manually managing state of both of those requests. With Rx [`combineLatest`](http://reactivex.io/documentation/operators/combinelatest.html) operator it's a single line:
+Suppose you need to load two entities from the backed simultaneously. Without Rx, it's a challenge to manually manage the state of both requests. But with [`combineLatest`](http://reactivex.io/documentation/operators/combinelatest.html) operator, it takes a single line of code:
 
 ```swift
 let dependencies = Observable.combineLatest(
@@ -261,7 +249,7 @@ let dependencies = Observable.combineLatest(
 
 **Chain two requests**
 
-Suppose you may want to upload an image to the resource service and the patch a customer entry with an `imageId` returned by the first request. Here's how you can do it with Rx:
+Suppose you may want to upload an image to the resource service and then patch a customer entry with an `imageId` returned by the first request. Here's how you can do it with Rx:
 
 ```swift
 _ = resourseService.upload(image).flatMap { imageId in
@@ -271,7 +259,7 @@ _ = resourseService.upload(image).flatMap { imageId in
 
 **Implement autocomplete field**
 
-This is a classic example of Rx which you would find in almost any reactive library:
+A classic example of Rx that you will find in almost any reactive library:
 
 ```swift
 let isBusy = ActivityIndicator()
@@ -299,13 +287,17 @@ Another interesting problem is how to model authorization scopes using Swift. Th
 - `Guest` - the lowest level of authorization, has access only to a handful of methods
 - `Customer` - superset of `Guest` in terms of permissions
 
+> This is an **experimental** feature. I'm still testing this approach and haven't yet put this in production code.
+{:.warning}
+
 I'd like to represent those concepts using Swift type system. I want to be able to "say" that "this API client is initialized with a guest token", and "that API endpoint can only be performed by customer", and the compiler should prevent me from performing endpoints with customer scope using a client initialized with a guest token.
 
 The simplest way to implement this is to create a specific type to represent each of those concepts (e.g. `GuestEndpoint`, `CustomerClient`). However, we can do something different. Another way to achieve this is by leveraging Swift generics system. What I would do is create two separate [phantom types](https://rustbyexample.com/generics/phantom.html) that represent each of authorization scopes (`Scope.Guest` and `Scope.Customer`).
 
 > A phantom type parameter is one that doesn't show up at runtime, but is checked statically (and only) at compile time. Types can use extra generic type parameters to act as markers or to perform type checking at compile time. These extra parameters hold no storage values, and have no runtime behavior.
+{:.info}
 
-Then I would wrap API client and each of the endpoints in generic wrappers (`AuthorizedClient<Authorization>` and `AuthorizedEndpoint<Authorization, Response>` respectively) which I would parameterize with concrete scopes:
+I wrap API client and every endpoint in generic wrappers (`AuthorizedClient<Authorization>` and `AuthorizedEndpoint<Authorization, Response>` respectively) that I then parameterize with concrete scopes:
 
 ```swift
 struct Scope {
@@ -324,7 +316,7 @@ struct AuthorizedClient<Authorization> {
 }
 ```
 
-We now take advantage of [extensions with generic where clauses](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID553) to represent permissions in `AuthorizedClient`:
+Let's take advantage of [extensions with generic where clauses](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID553) to represent permissions in `AuthorizedClient`:
 
 ```swift
 // API client with a `Guest` authorization can only perform requests
@@ -384,7 +376,7 @@ _ = client.request(API.postFeedback(email: "email", message: "message"))
 _ = client.request(API.getCustomerProfile())
 ```
 
-Great, this works just as expected! I'm still experimenting with this approach and haven't yet put this in production code. However, it looks really promising. The Swift type system is obviously so much more powerful than Objective-C, but I can't stop myself from wanting more.
+Great, this works just as expected! The Swift type system is so much more powerful than Objective-C, it's fantastic what you can do with it.
 
 ## Conclusion
 
@@ -392,7 +384,8 @@ I hope you've enjoyed this! Please keep in mind that all of those decisions were
 
 It's hard to imagine now that there was a time when the only relatively easy-to-use tool for iOS developers to do networking was `ASIHTTPRequest`. It's just amazing that we now have so many great tools at our disposal. It's now up to us to make the best use of them.
 
-> All of the code from the post is [available here](https://gist.github.com/kean/64b9fc0963fd430594fdb3eb848bccf3) (requires Swift 4).
+> The code from the post is [available here](https://gist.github.com/kean/64b9fc0963fd430594fdb3eb848bccf3) (requires Swift 4).
+{:.info}
 
 {% include references-start.html %}
 
