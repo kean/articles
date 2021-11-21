@@ -185,7 +185,7 @@ The only remaining bit is a `validate()` method where I check that the response 
 <span class="p">}</span>
 </code></pre></div></div>
 
-And that’s it, a baseline `APIClient`!. It’s not much yet, but it already covers most of the needs of most users. And if it doesn’t yet, it’s easy to add what you need – depending on your backend. Let’s explore the options to extend it.
+And that’s it, a baseline `APIClient`. It already covers most of the needs of most users and there many ways to extend it.
 
 ## Extending the Client
 
