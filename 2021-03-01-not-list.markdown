@@ -106,6 +106,9 @@ struct NotList<Element: Identifiable>: NSViewRepresentable {
 
 To communicate the changes, I set the flags on `NotListViewModel` and manually send [`objectWillChange`](https://developer.apple.com/documentation/combine/observableobject) event. It gives me precise control over what to update and when without breaking out from the SwiftUI data flow model.
 
+> I ended up simplifying this approach for [Pulse Pro](https://kean.blog/pulse/guides/pulse-pro). Instead of using `updateNSView(_:context:)` and keeping track of what updates need to be performed or not, I now simply use Combine publishers to modify the table view directly.
+{:.warning}
+
 ## Platform Discrepancies
 
 iOS engineers are used to lazy self-sizing table cells. Well, `NSTableView` doesn't support it, and for a good reason. `List` on macOS:
