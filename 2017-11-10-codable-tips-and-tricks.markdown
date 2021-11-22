@@ -11,41 +11,42 @@ cover: /images/posts/codable_cover.png
 favorite: true
 ---
 
-I've migrated our app to [Codable](https://developer.apple.com/documentation/swift/encoding_decoding_and_serialization). I'd like to share with you some of the tips and tricks that I've come up with along the way.
+<div class="UpdatesSections" markdown="1">
+**Updates**
 
-> <a href="{{ site.url }}/playgrounds/codable.playground.zip">Swift Playground</a> with all of the code from this article:
+- Nov 21, 2021. Add references to the new `Codable` features and rework the existing tips.
+</div>
+
+I've just finished migrating our app to [Codable](https://developer.apple.com/documentation/swift/encoding_decoding_and_serialization) and I'd like to share some of the tips and tricks that I've come up with along the way.
+
+> You can [download](/playgrounds/codable.playground.zip) a Swift Playground with all of the code from this article.
+{:.info}
 
 <img alt="Xcode screenshot showing Codable example" src="{{ site.url }}/images/posts/codable_screen_01.png" class="Screenshot">
 
 {% include ad-hor.html %}
 
-`Codable` was introduces in Swift 4 with a [motivation](https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md#motivation) to replace old `NSCoding` APIs. Unlike `NSCoding` it has a first class JSON support which makes it a promising option for consuming JSON APIs.
+Apple introduced `Codable` in Swift 4 with a [motivation](https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md#motivation) to replace old `NSCoding` APIs. Unlike `NSCoding` it has first-class JSON support making it a great option not just for persisting data but also for decoding JSON responses from web APIs.
 
-`Codable` is great for its intended purpose of `NSCoding` replacement. If you just need to encode and decode some local data which you have full control over you might even be able to take advantage of [automatic encoding and decoding](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
+`Codable` is great for its intended purpose of `NSCoding` replacement. If you just need to encode and decode some local data that you have full control over you might even be able to take advantage of [automatic encoding and decoding](https://developer.apple.com/documentation/foundation/archives_and_serialization/encoding_and_decoding_custom_types).
 
-In the real world though things get very *complicated* very *quickly*. Trying to build a fault tolerant system which deals with all the quirks of the external JSON and models all the product requirements is a challenge.
+In the real world though things get complicated *very quickly*. Building a fault tolerant system capable of dealing with all the quirks of the external JSON is a challenge.
 
-One of the major downsides of `Codable` is that as soon as you need custom decoding logic - even for a single key - you have to provide custom everything: manually define all the *coding keys*, and implementing an entire `init(from decoder: Decoder) throws` initializer by hand. This isn't ideal. But it is at least as good (or bad) as third-party JSON libraries in Swift. Having one built into the standard library is definitely a win.
-
-So if you'd like to start using `Codable` in your app (and you are already familiar with all the basics) here are some tips and tricks that you may find helpful:
-
-* TOC
-{:toc}
+One of the major downsides of `Codable` is that as soon as you need custom decoding logic - even for a single key - you have to provide custom everything: manually define all the *coding keys*, and implementing an entire `init(from decoder: Decoder) throws` initializer by hand. This, of course, isn't ideal. But fortunately, there are a few tricks that can make working with `Codable` a bit easier.
 
 ## 1. Safely Decoding Arrays
 
-Let's say you want to load and display a collection of posts (`Post`) in your app. Each `Post` has an `id` (required), `title` (required), and `subtitle` (optional).
+Let's say you need to load and display a list of posts in your app. Every `Post` has an `id` (required), `title` (required), and `subtitle` (optional).
 
 
-```swift
-final class Post: Decodable {
-    let id: Id<Post> // More about this type later.
-    let title: String
-    let subtitle: String?
-}
-```
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kc">Post</span><span class="p">:</span> <span class="xc">Decodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">id</span><span class="p">:</span> <span class="kc">Id</span><span class="o">&lt;</span><span class="kc">Post</span><span class="o">&gt;</span> <span class="c1">// More about this type later.</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="xc">String</span>
+    <span class="k">let</span> <span class="nv">subtitle</span><span class="p">:</span> <span class="xc">String</span><span class="p">?</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-The `Post` class nicely models the requirements. It already adopts `Decodable` protocol so we are ready to decode some data:
+Swift compiler automatically generated `Decodable` implementation for this struct, taking into account what types are optional. Let's try to decode an array of posts.
 
 ```json
 [
@@ -59,130 +60,121 @@ The `Post` class nicely models the requirements. It already adopts `Decodable` p
 ]
 ```
 
-```swift
-do {
-    let posts = try JSONDecoder().decode([Post].self, from: json.data(using: .utf8)!)
-} catch {
-    print(error)
-    // prints "No value associated with key title (\"title\")."
-}
-```
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">posts</span> <span class="o">=</span> <span class="k">try</span> <span class="xc">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="xv">decode</span><span class="p">([</span><span class="kc">Post</span><span class="p">]</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">from</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="xv">data</span><span class="p">(</span><span class="xv">using</span><span class="p">:</span> <span class="o">.</span><span class="xv">utf8</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="xv">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="c1">// prints "No value associated with key title (\"title\")."</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-As you might have expected we received a [`.keyNotFound`](https://developer.apple.com/documentation/swift/decodingerror/2893451-keynotfound) error because the second post object doesn't have a `title`.
+It throws an error: [`.keyNotFound`](https://developer.apple.com/documentation/swift/decodingerror/2893451-keynotfound). The second post object is missing a required `title` field, so that makes sense. Swift provides a complete error report using [`DecodingError`](https://developer.apple.com/documentation/swift/decodingerror) which is extremely useful.
 
-> When the data doesn't match an expected format (e.g. it might be a result of miscommunication, regression, or unexpected user input) the system should automatically report an error to give the developers a chance to fix it. Swift provides a thorough error report in a form of [`DecodingError`](https://developer.apple.com/documentation/swift/decodingerror) any time the decoding fails which is extremely useful.
+But what if you don't want a single corrupted post to prevent you from displaying an entire page of otherwise perfectly valid posts. I use a special `Safe<T>` type that allows me to safely decode an object. If it encounters an error during decoding, it fails safely and [sends a report](https://sentry.io/welcome/) to the development team:
 
-In most cases, you wouldn't want a single corrupted post to prevent you from displaying an entire page of other perfectly valid ones. To prevent this from happening I use a special `Safe<T>` type which allows me to safely decode an object. If it encounters an error during decoding it fails safely and [sends a report](https://sentry.io/welcome/):
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kc">Safe</span><span class="o">&lt;</span><span class="o">Base</span><span class="p">:</span> <span class="xc">Decodable</span><span class="o">&gt;</span><span class="p">:</span> <span class="xc">Decodable</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="k">let</span> <span class="nv">value</span><span class="p">:</span> <span class="o">Base</span><span class="p">?</span>
 
-```swift
-public struct Safe<Base: Decodable>: Decodable {
-    public let value: Base?
+    <span class="kd">public</span> <span class="k">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="xc">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+        <span class="k">do</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">container</span> <span class="o">=</span> <span class="k">try</span> <span class="n">decoder</span><span class="o">.</span><span class="xv">singleValueContainer</span><span class="p">()</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="k">try</span> <span class="n">container</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="o">Base</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+            <span class="nf">assertionFailure</span><span class="p">(</span><span class="s">"ERROR: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+            <span class="c1">// TODO: automatically send a report about a corrupted data</span>
+            <span class="k">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="k">nil</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-    public init(from decoder: Decoder) throws {
-        do {
-            let container = try decoder.singleValueContainer()
-            self.value = try container.decode(Base.self)
-        } catch {
-            assertionFailure("ERROR: \(error)")
-            // TODO: automatically send a report about a corrupted data
-            self.value = nil
-        }
-    }
-}
-```
+Now I can indicate that I don't want to stop decoding in case of a single corrupted element:
 
-Now when I decode an array I can indicate that I don't want to stop decoding in case of a single corrupted element:
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">posts</span> <span class="o">=</span> <span class="k">try</span> <span class="xc">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="xv">decode</span><span class="p">([</span><span class="kc">Safe</span><span class="o">&lt;</span><span class="kc">Post</span><span class="o">&gt;</span><span class="p">]</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">from</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="xv">data</span><span class="p">(</span><span class="xv">using</span><span class="p">:</span> <span class="o">.</span><span class="xv">utf8</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">posts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="kt">value</span><span class="o">!.</span><span class="kt">title</span><span class="p">)</span>    <span class="c1">// prints "Codable: Tips and Tricks"</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">posts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="kt">value</span><span class="p">)</span>           <span class="c1">// prints "nil"</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-```swift
-do {
-    let posts = try JSONDecoder().decode([Safe<Post>].self, from: json.data(using: .utf8)!)
-    print(posts[0].value!.title)    // prints "Codable: Tips and Tricks"
-    print(posts[1].value)           // prints "nil"
-} catch {
-    print(error)
-}
-```
+Keep in mind that `decode([Safe<Post>].self, from:...` is still going to throw an error if the data doesn't contain an array of contain something other than an array.
 
-> Keep in mind that `decode([Safe<Post>].self, from:...` call is going to throw an error if the data doesn't contain an array. In general errors like that should be caught on a higher level. The common API contract is to always return an empty array if there are no elements to return.
+> Ignoring errors is not always the best strategy. For example, if you are displaying bank accounts and the backend suddenly starts sending invalid data for one of them, it’s might be better to show an error than cause a heart attack!
+{:.warning}
 
 ## 2. Id Type and a Single Value Container
 
-In the previous example, I've used a special `Id<Post>` type. The `Id` type gets parametrized with a generic parameter `Entity` which isn't actually used by the `Id` itself but is used by the compiler when comparing different types of `Id`s. This way the compiler ensures that I can't accidentally pass `Id<Media>` where `Id<Image>` is expected.
+In the previous example, I used a special `Id<Post>` type. It gets parametrized with a generic parameter `Entity` which isn't used by the `Id` itself but is used by the compiler when comparing different `Id`. This way it can ensure that you can't accidentally pass `Id<Media>` where `Id<Image>` is expected.
 
-> Another place where I used *phantom types* for type safety is my <a href="{{ site.url }}/post/api-client">**API Client in Swift**</a> post.
+> Generic types like this are sometimes referred to as *phantom* types. You can learn more about them in [Three Use-Cases of Phantom Types](https://kean.blog/post/phantom-types).
+{:.info}
 
-The `Id` type itself is very simple, it's just a wrapper on top of a raw `String`:
+The `Id` type itself is very simple, it's just a wrapper for a raw `String`:
 
-```swift
-public struct Id<Entity>: Hashable {
-    public let raw: String
-    public init(_ raw: String) {
-        self.raw = raw
-    }
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kc">Id</span><span class="o">&lt;</span><span class="o">Entity</span><span class="o">&gt;</span><span class="p">:</span> <span class="xc">Hashable</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="k">let</span> <span class="nv">raw</span><span class="p">:</span> <span class="xc">String</span>
+    <span class="kd">public</span> <span class="k">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">raw</span><span class="p">:</span> <span class="xc">String</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">raw</span> <span class="o">=</span> <span class="n">raw</span>
+    <span class="p">}</span>
         
-    public var hashValue: Int {
-        return raw.hashValue
-    }
+    <span class="kd">public</span> <span class="k">var</span> <span class="nv">hashValue</span><span class="p">:</span> <span class="xc">Int</span> <span class="p">{</span>
+         <span class="kt">raw</span><span class="o">.</span><span class="xv">hashValue</span>
+    <span class="p">}</span>
     
-    public static func ==(lhs: Id, rhs: Id) -> Bool {
-        return lhs.raw == rhs.raw
-    }
-}
-```
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span><span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kc">Id</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kc">Id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="xc">Bool</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">lhs</span><span class="o">.</span><span class="kt">raw</span> <span class="o">==</span> <span class="n">rhs</span><span class="o">.</span><span class="kt">raw</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-Adding `Codable` conformance to it is a bit tricky. It requires a special [`SingleValueEncodingContainer`](https://developer.apple.com/documentation/swift/singlevalueencodingcontainer) type:
+Adding `Codable` conformance to it is a bit more tricky. It requires a special [`SingleValueEncodingContainer`](https://developer.apple.com/documentation/swift/singlevalueencodingcontainer) type – a container that can support the storage and direct encoding of a single non-keyed value.
 
-> A container that can support the storage and direct encoding of a single non-keyed value.
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kc">Id</span><span class="p">:</span> <span class="xc">Codable</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="k">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="xc">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">container</span> <span class="o">=</span> <span class="k">try</span> <span class="n">decoder</span><span class="o">.</span><span class="xv">singleValueContainer</span><span class="p">()</span>
+        <span class="k">let</span> <span class="nv">raw</span> <span class="o">=</span> <span class="k">try</span> <span class="n">container</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="xc">String</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">raw</span><span class="o">.</span><span class="xv">isEmpty</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="xc">DecodingError</span><span class="o">.</span><span class="xv">dataCorruptedError</span><span class="p">(</span>
+                <span class="nv">in</span><span class="p">:</span> <span class="n">container</span><span class="p">,</span>
+                <span class="nv">debugDescription</span><span class="p">:</span> <span class="s">"Cannot initialize Id from an empty string"</span>
+            <span class="p">)</span>
+        <span class="p">}</span>
+        <span class="k">self</span><span class="o">.</span><span class="k">init</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+    <span class="p">}</span>
 
-```swift
-extension Id: Codable {
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.singleValueContainer()
-        let raw = try container.decode(String.self)
-        if raw.isEmpty {
-            throw DecodingError.dataCorruptedError(
-                in: container,
-                debugDescription: "Cannot initialize Id from an empty string"
-            )
-        }
-        self.init(raw)
-    }
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">encode</span><span class="p">(</span><span class="n">to</span> <span class="nv">encoder</span><span class="p">:</span> <span class="xc">Encoder</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">container</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="xv">singleValueContainer</span><span class="p">()</span>
+        <span class="k">try</span> <span class="n">container</span><span class="o">.</span><span class="xv">encode</span><span class="p">(</span><span class="kt">raw</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        try container.encode(raw)
-    }
-}
-```
-
-As you can see from the code above `Id` also has a special rule that prevents it from being initialized from an empty `String`.
-
+This gets the job done also ensuring that the ID has a non-empty value.
 
 ## 3. Safely Decoding Enums
 
-Swift has a great support for decoding (and encoding) enums. Often all you need to do is declare a `Decodable` conformance synthesized automatically by a compiler (the enum raw type must be either `String` or `Int`).
+Swift has great support for decoding (and encoding) enums and Swift 5.5, it even [generates conformances](https://github.com/apple/swift-evolution/blob/main/proposals/0295-codable-synthesis-for-enums-with-associated-values.md) for enums with associated types. Often all you need to do is declare a `Decodable` conformance synthesized automatically by a compiler (the enum raw type must be either `String` or `Int`).
 
-Suppose you're building a system that displays all your devices on a map. A device has a `location` (required) and `system` (required) which it's running.
+Suppose you're building a system that displays all your devices on a map and you modelled your types the following way:
 
-```swift
-enum System: String, Decodable {
-    case ios, macos, tvos, watchos
-}
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">enum</span> <span class="kc">System</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="xc">Decodable</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">ios</span><span class="p">,</span> <span class="n">macos</span><span class="p">,</span> <span class="n">tvos</span><span class="p">,</span> <span class="n">watchos</span>
+<span class="p">}</span>
 
-struct Location: Decodable {
-    let latitude: Double
-    let longitude: Double
-}
+<span class="kd">struct</span> <span class="kc">Location</span><span class="p">:</span> <span class="xc">Decodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="xc">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="xc">Double</span>
+<span class="p">}</span>
 
-final class Device: Decodable {
-    let location: Location
-    let system: System
-}
-```
+<span class="kd">final</span> <span class="kd">class</span> <span class="kc">Device</span><span class="p">:</span> <span class="xc">Decodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">location</span><span class="p">:</span> <span class="kc">Location</span>
+    <span class="k">let</span> <span class="nv">system</span><span class="p">:</span> <span class="kc">System</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-Now here is the question. What if more systems are added in the future? The product decision might be to still display those devices but somehow indicate that the system is "unknown". Now how should you go about modeling this in the app?
-
-By default Swift would throw a [`.dataCorrupted`](https://developer.apple.com/documentation/swift/decodingerror/2893182-datacorrupted?changes=lates_1) error if it encounters unknown enum value:
+Now, what if more systems are added in the future? The product decision might be to display the "unknown" devices on a map but indicate that the app update is needed. But how should you go about modeling this in the app? By default Swift throws a [`.dataCorrupted`](https://developer.apple.com/documentation/swift/decodingerror/2893182-datacorrupted?changes=lates_1) error if it encounters an unknown enum value:
 
 ```json
 {
@@ -194,16 +186,15 @@ By default Swift would throw a [`.dataCorrupted`](https://developer.apple.com/do
 }
 ```
 
-```swift
-do {
-    let device = try JSONDecoder().decode(Device.self, from: json.data(using: .utf8)!)
-} catch {
-    print(error)
-    // Prints "Cannot initialize System from invalid String value caros"
-}
-```
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">do</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">device</span> <span class="o">=</span> <span class="k">try</span> <span class="xc">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="kc">Device</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">from</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="xv">data</span><span class="p">(</span><span class="xv">using</span><span class="p">:</span> <span class="o">.</span><span class="xv">utf8</span><span class="p">)</span><span class="o">!</span><span class="p">)</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+    <span class="nf">print</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+    <span class="c1">// Prints "Cannot initialize System from invalid String value caros"</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-How can `system` be modeled and be decoded in a safe way? One way is to make `system` property optional which would mean "unknown". And the most straightforward way to decode `system` safely is by implementing a custom `init(from decoder: Decoder) throws` initializer:
+You can make a system optional or add an explicit `.unknown` type. And then the most straightforward way to decode `system` safely is by implementing a custom `init(from decoder: Decoder) throws` initializer:
 
 ```swift
 final class Device: Decodable {
@@ -223,34 +214,31 @@ final class Device: Decodable {
 } 
 ```
 
-Keep in mind that this version simply ignores *all* the potential problems with `system` value. This means that even "corrupted" data (e.g. missing key `system`, a number `123`, `null`, empty object `{}` - depending on what the API contract is) gets decoded to `nil` ("unknown"). A more precise way to say "decode unknown strings as nil" would be:
+You could also use the `Safe` type introduced in one of the previous sections. But both of these options are not ideal because they ignore *all* the potential problems with the `system` value. This means that even corrupted data – e.g. a missing key, a number `123`, `null`, an empty object – gets decoded to `nil` (or `.unknown`). A more precise way to say "decode unknown strings as nil" would be:
 
-```swift
-self.system = System(rawValue: try map.decode(String.self, forKey: .system))
-```
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">self</span><span class="o">.</span><span class="n">system</span> <span class="o">=</span> <span class="kc">System</span><span class="p">(</span><span class="kt">rawValue</span><span class="p">:</span> <span class="k">try</span> <span class="n">map</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="xc">String</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">forKey</span><span class="p">:</span> <span class="o">.</span><span class="kt">system</span><span class="p">))</span>
+</code></pre></div></div>
 
+## 4. Less Verbose Decoding
 
-## 4. Less Verbose Manual Decoding
+In the previous example, I used a custom initializer and it turned out [pretty verbose](https://bugs.swift.org/browse/SR-6063). Fortunately, there are a few ways to make it more concise.
 
-In the previous example, we had to implement a custom initializer `init(from decoder: Decoder) throws` which turned out [pretty verbose](https://bugs.swift.org/browse/SR-6063). Fortunately, there are a few ways to make it terser.
+### 4.1. Implitic Type Parameters
 
-### 4.1. Getting Rid of Explicit Type Parameters
+The first obvious thing is to get rid of the explicit type parameters.
 
-One option is to get rid of explicit type parameters:
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="xc">KeyedDecodingContainer</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="n">decode</span><span class="o">&lt;</span><span class="o">T</span><span class="p">:</span> <span class="xc">Decodable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="xc">Key</span><span class="p">,</span> <span class="o">as</span> <span class="nv">type</span><span class="p">:</span> <span class="o">T</span><span class="o">.</span><span class="k">Type</span> <span class="o">=</span> <span class="o">T</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="o">T</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="k">self</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="o">T</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">forKey</span><span class="p">:</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">}</span>
 
-```swift
-extension KeyedDecodingContainer {
-    public func decode<T: Decodable>(_ key: Key, as type: T.Type = T.self) throws -> T {
-        return try self.decode(T.self, forKey: key)
-    }
+    <span class="kd">public</span> <span class="kd">func</span> <span class="n">decodeIfPresent</span><span class="o">&lt;</span><span class="o">T</span><span class="p">:</span> <span class="xc">Decodable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">key</span><span class="p">:</span> <span class="xc">KeyedDecodingContainer</span><span class="o">.</span><span class="xc">Key</span><span class="p">)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="o">T</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="xv">decodeIfPresent</span><span class="p">(</span><span class="o">T</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">forKey</span><span class="p">:</span> <span class="n">key</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-    public func decodeIfPresent<T: Decodable>(_ key: KeyedDecodingContainer.Key) throws -> T? {
-        return try decodeIfPresent(T.self, forKey: key)
-    }
-}
-```
-
-Let's go back to our `Post` example and extend it with `webURL` property (optional). If we try to decode the data posted below we'll get a [`.dataCorrupted`](https://developer.apple.com/documentation/swift/decodingerror/2893182-datacorrupted?changes=latest_minor) error with an underlying error: `"Invalid URL string."`.
+Let's go back to our `Post` example and extend it with an optional `webURL` property. If you try to decode the data posted below, you'll get a [`.dataCorrupted`](https://developer.apple.com/documentation/swift/decodingerror/2893182-datacorrupted?changes=latest_minor) error with an underlying error: "Invalid URL string.".
 
 ```swift
 {
@@ -260,170 +248,121 @@ Let's go back to our `Post` example and extend it with `webURL` property (option
 }
 ```
 
-To decode this data safely we could implement a custom `init(from decoder: Decoder) throws` initializer but this time take advantage of our new `decode(...)` methods which don't require an explicit type parameter:
+Let's implement a custom initializer to ignore this error and also take the new convenience methods for a spin.
 
-```swift
-final class Post: Decodable {
-    let id: Id<Post>
-    let title: String
-    let webURL: URL?
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">final</span>  <span class="kc">Post</span><span class="p">:</span> <span class="xc">Decodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">id</span><span class="p">:</span> <span class="kc">Id</span><span class="o">&lt;</span><span class="kc">Post</span><span class="o">&gt;</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="xc">String</span>
+    <span class="k">let</span> <span class="nv">webURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">?</span>
 
-    init(from decoder: Decoder) throws {
-        let map = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try map.decode(.id)
-        self.title = try map.decode(.title)
-        self.webURL = try? map.decode(.webURL)
-    }
+    <span class="k">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="xc">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">map</span> <span class="o">=</span> <span class="k">try</span> <span class="n">decoder</span><span class="o">.</span><span class="xv">container</span><span class="p">(</span><span class="xv">keyedBy</span><span class="p">:</span> <span class="kc">CodingKeys</span><span class="o">.</span><span class="k">self</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">id</span> <span class="o">=</span> <span class="k">try</span> <span class="n">map</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="o">.</span><span class="kt">id</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">title</span> <span class="o">=</span> <span class="k">try</span> <span class="n">map</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="o">.</span><span class="kt">title</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">webURL</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="n">map</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="o">.</span><span class="kt">webURL</span><span class="p">)</span>
+    <span class="p">}</span>
 
-    private enum CodingKeys: CodingKey {
-        case id
-        case title
-        case webURL
-    }
-}
-```
+    <span class="kd">private</span> <span class="kd">enum</span> <span class="kt">CodingKeys</span><span class="p">:</span> <span class="kt">CodingKey</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="n">id</span>
+        <span class="k">case</span> <span class="n">title</span>
+        <span class="k">case</span> <span class="n">webURL</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-> As one of the Swift developers points out in [a comment to SR-6063](https://bugs.swift.org/browse/SR-6063?focusedCommentId=29267&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-29267) there are places when explicitly specifying the generic type is necessary.
+This works. But as one of the Swift developers points out in [a comment to SR-6063](https://bugs.swift.org/browse/SR-6063?focusedCommentId=29267&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-29267) there are a few places when explicitly specifying the generic type is necessary. Well, you can always fallback to the built-in methods.
 
-This is great, however this way we simply ignore all the errors. What we'd really like to do is automatically send a report about a corrupted URL like that.
+This new approach is great, but this way all the errors are ignored again. What would be ideal is to automatically send a report to the server about the corrupted data. You can do that pretty easily with a few more convenience methods for decoding values.
 
-In order to deal with the second problem I currently use a special family of `decodeSafely...` methods. This is however still a work in progress:
+Before I wrap up this section, let me also share one more extension that I added:
 
-```swift
-extension KeyedDecodingContainer {
-    public func decodeSafely<T: Decodable>(_ key: KeyedDecodingContainer.Key) -> T? {
-        return self.decodeSafely(T.self, forKey: key)
-    }
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="xc">JSONDecoder</span> <span class="p">{</span>
+    <span class="kd">public</span> <span class="kd">func</span> <span class="n">decodeSafelyArray</span><span class="o">&lt;</span><span class="o">T</span><span class="p">:</span> <span class="xc">Decodable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">of</span> <span class="nv">type</span><span class="p">:</span> <span class="o">T</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="n">from</span> <span class="nv">data</span><span class="p">:</span> <span class="xc">Data</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="o">T</span><span class="p">]</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">array</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="xv">decode</span><span class="p">([</span><span class="kc">Decoded</span><span class="o">&lt;</span><span class="o">T</span><span class="o">&gt;</span><span class="p">]</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">[]</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="n">array</span><span class="o">.</span><span class="xv">flatMap</span> <span class="p">{</span> <span class="nv">$0</span><span class="o">.</span><span class="kt">raw</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-    public func decodeSafely<T: Decodable>(_ type: T.Type, forKey key: KeyedDecodingContainer.Key) -> T? {
-        let decoded = try? decode(Safe<T>.self, forKey: key)
-        return decoded?.value
-    }
+<span class="c1">// Usage (creates a plain array of posts – [Post])</span>
+<span class="k">let</span> <span class="nv">posts</span> <span class="o">=</span> <span class="xc">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="kt">decodeSafelyArray</span><span class="p">(</span><span class="kt">of</span><span class="p">:</span> <span class="kc">Post</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="kt">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+</code></pre></div></div>
 
-    public func decodeSafelyIfPresent<T: Decodable>(_ key: KeyedDecodingContainer.Key) -> T? {
-        return self.decodeSafelyIfPresent(T.self, forKey: key)
-    }
+### 4.2. Separate JSON Scheme
 
-    public func decodeSafelyIfPresent<T: Decodable>(_ type: T.Type, forKey key: KeyedDecodingContainer.Key) -> T? {
-        let decoded = try? decodeIfPresent(Safe<T>.self, forKey: key)
-        return decoded??.value
-    }
-}
-```
+Another approach that I really like is defining a separate type to take advantage of automatic decoding, and then map it to your entity.
 
-Here's how to use it:
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">final</span> <span class="kd">struct</span> <span class="kc">Post</span><span class="p">:</span> <span class="xc">Decodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">id</span><span class="p">:</span> <span class="kc">Id</span><span class="o">&lt;</span><span class="kc">Post</span><span class="o">&gt;</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="xc">String</span>
+    <span class="k">let</span> <span class="nv">webURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">?</span>
 
-```swift
-self.webURL = map.decodeSafelyIfPresent(.webURL)
-```
+    <span class="k">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">decoder</span><span class="p">:</span> <span class="xc">Decoder</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">map</span> <span class="o">=</span> <span class="k">try</span> <span class="kc">PostScheme</span><span class="p">(</span><span class="xv">from</span><span class="p">:</span> <span class="n">decoder</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">id</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="kt">postIdentifier</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">title</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="kt">title</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">webURL</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="kt">webURL</span><span class="p">?</span><span class="o">.</span><span class="kt">value</span>
+    <span class="p">}</span>
 
-It would try to decode a URL (only in case it's present). If a URL isn't valid it would fail safely and send a report.
+    <span class="kd">private</span> <span class="kd">struct</span> <span class="kc">PostJSON</span><span class="p">:</span> <span class="xc">Decodable</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">postIdentifier</span><span class="p">:</span> <span class="kc">Id</span><span class="o">&lt;</span><span class="kc">Post</span><span class="o">&gt;</span>
+        <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="xc">String</span>
+        <span class="k">let</span> <span class="nv">webURL</span><span class="p">:</span> <span class="kc">Safe</span><span class="o">&lt;</span><span class="xc">URL</span><span class="o">&gt;</span><span class="p">?</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-Another "safe" functions that would be nice to have is the one for safely decoding array of elements:
-
-```swift
-extension KeyedDecodingContainer {
-    public func decodeSafelyArray<T: Decodable>(of type: T.Type, forKey key: KeyedDecodingContainer.Key) -> [T] {
-        let array = decodeSafely([Safe<T>].self, forKey: key)
-        return array?.flatMap { $0.raw } ?? []
-    }
-}
-
-extension JSONDecoder {
-    public func decodeSafelyArray<T: Decodable>(of type: T.Type, from data: Data) -> [T] {
-        guard let array = try? decode([Decoded<T>].self, from: data) else { return [] }
-        return array.flatMap { $0.raw }
-    }
-}
-
-
-// Usage:
-
-let posts: [Post] = JSONDecoder().decodeSafelyArray(of: Post.self, from: data)
-
-init(from decoder: Decoder) throws {
-    let map = try decoder.container(keyedBy: CodingKeys.self)
-    self.posts = map.decodeSafelyArray(of: Post.self, forKey: .posts)
-}
-```
-
-
-### 4.2. Using Separate Decoding Scheme
-
-Another approach that I find promising is to define a separate `<#Type#>Scheme` type which takes advantage of automatic decoding, but uses some helper types (like `Safe`) to customize the decoding process:
-
-```swift
-final class Post: Decodable {
-    let id: Id<Post>
-    let title: String
-    let webURL: URL?
-
-    init(from decoder: Decoder) throws {
-        let map = try PostScheme(from: decoder)
-        self.id = map.id
-        self.title = map.title
-        self.webURL = map.webURL?.value
-    }
-
-    final class PostScheme: Decodable {
-        let id: Id<Post>
-        let title: String
-        let webURL: Safe<URL>?
-    }
-}
-```
-
-The upside of this approach is that we take advantage of automatic decoding. The scheme is also arguably easier to read then a wall of manual `decode(...)` calls. The scheme describes an API contract: which keys are required, which are optional, and which can be "corrupted" without breaking an entire app (you can progressively disable some of the features instead).
-
-There are plenty of downsides too, so I'm reluctant to recommend this approach.
-
+What I like about this approach is that it's declarative. It still uses automatic decoding while giving you a ton of flexibility. It's a great way to map the data to the format more suitable for your app.
 
 ## 5. Encoding Patch Parameters
 
-A common `PATCH` request in our app follows this set of rules:
+And for the final type - the PATCH HTTP method. In REST, it is used to send a set of changes described to be applied to the entity.
+
 - The keys not present in the request are ignored
-- If the key is present the value entry gets updated (`null` deletes a value)
+- If the key is present, the value gets updated (`null` deletes a value)
 
-One way to implement this using `Codable` involves another new custom `Parameter` type. Here's how it looks like:
+The way I implemented this in the app is with a new `Parameter` type. Here's how it looks like:
 
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kc">Parameter</span><span class="o">&lt;</span><span class="o">Base</span><span class="p">:</span> <span class="xc">Codable</span><span class="o">&gt;</span><span class="p">:</span> <span class="xc">Encodable</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">null</span> <span class="c1">// parameter set to `null`</span>
+    <span class="k">case</span> <span class="nf">value</span><span class="p">(</span><span class="o">Base</span><span class="p">)</span>
 
-```swift
-public enum Parameter<Base: Swift.Codable>: Swift.Encodable {
-    case null // parameter set to `null`
-    case value(Base)
+    <span class="kd">public</span> <span class="k">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="o">Base</span><span class="p">?)</span> <span class="p">{</span>
+        <span class="k">self</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="xv">map</span><span class="p">(</span><span class="kc">Parameter</span><span class="o">.</span><span class="kt">value</span><span class="p">)</span> <span class="p">??</span> <span class="o">.</span><span class="kt">null</span>
+    <span class="p">}</span>
 
-    public init(_ value: Base?) {
-        self = value.map(Parameter.value) ?? .null
-    }
+    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">encode</span><span class="p">(</span><span class="n">to</span> <span class="nv">encoder</span><span class="p">:</span> <span class="xc">Encoder</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+        <span class="k">var</span> <span class="nv">container</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="xv">singleValueContainer</span><span class="p">()</span>
+        <span class="k">switch</span> <span class="k">self</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">null</span><span class="p">:</span> <span class="k">try</span> <span class="n">container</span><span class="o">.</span><span class="xv">encodeNil</span><span class="p">()</span>
+        <span class="k">case</span> <span class="kd">let</span> <span class="o">.</span><span class="nf">value</span><span class="p">(</span><span class="n">value</span><span class="p">):</span> <span class="k">try</span> <span class="n">container</span><span class="o">.</span><span class="xv">encode</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
 
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.singleValueContainer()
-        switch self {
-        case .null: try container.encodeNil()
-        case let .value(value): try container.encode(value)
-        }
-    }
-}
-```
+And the example usage:
 
-Here's how it work on a simple example:
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kc">PatchParameters</span><span class="p">:</span> <span class="xc">Encodable</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">name</span><span class="p">:</span> <span class="kc">Parameter</span><span class="o">&lt;</span><span class="xc">String</span><span class="o">&gt;</span><span class="p">?</span>
+<span class="p">}</span>
 
-```swift
-struct PatchParameters: Swift.Encodable {
-    let name: Parameter<String>?
-}
+<span class="kd">func</span> <span class="nf">encoded</span><span class="p">(</span><span class="n">_</span> <span class="nv">params</span><span class="p">:</span> <span class="kc">PatchParameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="xc">String</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="k">try!</span> <span class="xc">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="xv">encode</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="xc">String</span><span class="p">(</span><span class="o">data</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="o">encoding</span><span class="p">:</span> <span class="o">.</span><span class="xv">utf8</span><span class="p">)</span><span class="o">!</span>
+<span class="p">}</span>
 
-func encoded(_ params: PatchParameters) -> String {
-    let data = try! JSONEncoder().encode(params)
-    return String(data: data, encoding: .utf8)!
-}
+<span class="nf">encoded</span><span class="p">(</span><span class="kc">PatchParameters</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="k">nil</span><span class="p">))</span>
+<span class="c1">// prints "{}"</span>
 
-encoded(PatchParameters(name: nil))
-// prints "{}"
+<span class="nf">encoded</span><span class="p">(</span><span class="kc">PatchParameters</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="o">.</span><span class="kt">null</span><span class="p">))</span>
+<span class="c1">//print "{"name":null}"</span>
 
-encoded(PatchParameters(name: .null))
-//print "{"name":null}"
+<span class="nf">encoded</span><span class="p">(</span><span class="kc">PatchParameters</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="o">.</span><span class="kt">value</span><span class="p">(</span><span class="s">"Alex"</span><span class="p">)))</span>
+<span class="c1">//print "{"name":"Alex"}"</span>
+</code></pre></div></div>
 
-encoded(PatchParameters(name: .value("Alex")))
-//print "{"name":"Alex"}"
-```
+Sweet, exactly what I wanted.
+
+## Final Thoughts
+
+Apple got a lot of things right with `Codable`, and I hope to see more improvements in the future!

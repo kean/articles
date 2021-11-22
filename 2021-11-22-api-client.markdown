@@ -1,8 +1,8 @@
 ---
 layout: post
 title: "Web API Client in Swift"
-subtitle: Building a modern web API client in Swift using Async/Await and Actors
-description: Building a modern web API client in Swift using Async/Await and Actors
+subtitle: Building a modern web API client using Async/Await and Actors
+description: Building a modern web API client using Async/Await and Actors
 date: 2021-11-21 09:00:00 -0500
 category: programming
 tags: programming
