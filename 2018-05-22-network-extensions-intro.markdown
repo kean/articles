@@ -67,6 +67,9 @@ The **[`NEHotspotHelper`](https://developer.apple.com/documentation/networkexten
 
 The next post in the series is going to be a deep dive into `NEPacketTunnelProvider` (the most powerful and the most low-level extension) and into Apple's sample project - [SimpleTunnel](https://developer.apple.com/library/content/samplecode/SimpleTunnel/Introduction/Intro.html). It's going to be a practical hands-on experience, please stay tuned.
 
+> **Update:** The fact that this series never started turned into a bit of a running joke. I did end up writing three more posts on the Network Extension framework in 2020, starting with ["How Does VPN Work?"](post/networking-101)
+{:.info}
+
 {% include references-start.html %}
 
 - [Apple Developer Documentation: NetworkExtension Framework](https://developer.apple.com/documentation/networkextension)
