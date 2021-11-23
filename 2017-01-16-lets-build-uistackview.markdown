@@ -11,26 +11,25 @@ uuid: 89038ab2-a19b-4be3-9a3f-7ab2d58530d6
 favorite: true
 ---
 
-[`UIStackView`](https://developer.apple.com/reference/uikit/uistackview) is a great showcase of Auto Layout. It is built entirely using constraints. Which makes it fairly straightforward to build an [open source replacement](https://github.com/kean/Arranged). Even if you're not in the business of building one, you may find this article useful. It will give you a better understanding of `UIStackView`.
+[`UIStackView`](https://developer.apple.com/reference/uikit/uistackview) is a great showcase of Auto Layout – it is built entirely using constraints. It makes it fairly straightforward to build an open-source replacement. Even if you're not in the business of building one, you may find this article useful because it will give you a better understanding of how `UIStackView` works under the hood.
 
-Here is the plan. I will create an instance of `UIStackView`, try different configurations, take screenshots, and print all of the constraints that affect the stack view layout. With this information, implementing a replacement of `UIStackView` should be as easy as translating those constraints into code. In fact, I've already done that in a library named [Arranged](https://github.com/kean/Arranged) (which I've built more than 10 months ago, this follow-up post is a bit late).
+Here is my plan. I'll create an instance of `UIStackView`, try different configurations, take screenshots, and print the constraints affecting the stack view layout. With this information, re-implementing `UIStackView` should be as easy as translating those constraints into code. I've already done that in a library named [Arranged](https://github.com/kean/Arranged).
 
-{% include ad-hor.html %}
-
-**Prerequisites:**
-
-- [Auto Layout Guide](https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/AutolayoutPG/)
-- [UIStackView Guide](https://developer.apple.com/reference/uikit/uistackview)
+> The code from this article is available at [kean/Arranged](https://github.com/kean/Arranged).
+{:.info}
 
 ## Introduction
 
-The `UIStackView` is an abstraction on top of Auto Layout for laying out a collection of views in either a column or a row.
+`UIStackView` is an abstraction on top of Auto Layout for laying out a collection of views in either a column or a row.
 
-> The stack view manages the layout of all the views in its [arrangedSubviews](https://developer.apple.com/reference/uikit/uistackview/1616232-arrangedsubviews) property. These views are arranged along the stack view’s axis, based on their order in the arrangedSubviews array. The exact layout varies depending on the stack view’s [axis](https://developer.apple.com/reference/uikit/uistackview/1616223-axis), [distribution](https://developer.apple.com/reference/uikit/uistackview/1616233-distribution), [alignment](https://developer.apple.com/reference/uikit/uistackview/1616243-alignment), [spacing](https://developer.apple.com/reference/uikit/uistackview/1616225-spacing), and other properties.
+<blockquote class="quotation" markdown="1">
+The stack view manages the layout of all the views in its [arrangedSubviews](https://developer.apple.com/reference/uikit/uistackview/1616232-arrangedsubviews) property. These views are arranged along the stack view’s axis, based on their order in the arrangedSubviews array. The exact layout varies depending on the stack view’s [axis](https://developer.apple.com/reference/uikit/uistackview/1616223-axis), [distribution](https://developer.apple.com/reference/uikit/uistackview/1616233-distribution), [alignment](https://developer.apple.com/reference/uikit/uistackview/1616243-alignment), [spacing](https://developer.apple.com/reference/uikit/uistackview/1616225-spacing), and other properties.
+<footer>From <a href="https://developer.apple.com/documentation/uikit/uistackview">Developer Documentation</a></footer>
+</blockquote>
 
 <a name="intrinsic-content-sizes"></a>
 
-In most examples I'm going to use a single `UIStackView` with 3 arranged views with a predefined intrinsic content sizes:
+I'll use a stack view with the three arranged views with the following intrinsic content sizes:
 
 <pre>
 <b>Intrinsic Content Size</b>
@@ -41,8 +40,6 @@ In most examples I'm going to use a single `UIStackView` with 3 arranged views w
  Subview2.width == 40 Hug:250 CompressionResistance:750
  Subview2.height == 50 Hug:250 CompressionResistance:750
 </pre>
-
-Most of the configurations are going to have a `.horizontal` axis.
 
 ## UIStackView.Distribution
 
@@ -73,7 +70,7 @@ func constraints(for view: UIView) -> [NSLayoutConstraint] {
 }
 ```
 
-Each constraint gets printed in a full format like this:
+The constraints get printed in a full format like this:
 
 ```swift
 <NSLayoutConstraint:0x6100000922f0 'UISV-canvas-connection'
@@ -103,7 +100,7 @@ As you can see stack view sets a specific `identifier` based on the role that th
 
 #### Constraint Categories
 
-The fist two categories of the constraints ensure that the subviews fill the stack view both horizontally (distribution `.fill`) and vertically (alignment `.fill`):
+The first two categories of the constraints ensure that the subviews fill the stack view both horizontally (distribution `.fill`) and vertically (alignment `.fill`):
 
 - <b>UISV-alignment</b> constraints align subviews horizontally by making them have equal `.bottom` and equal `.top` layout attributes (`NSLayoutAttribute`). Notice that the stack view pins all the subviews to the first one.
 - <b>UISV-canvas-connection</b> constraints connect subviews to the 'canvas' which is a stack view itself. The first and the last subview gets pinned to the `.leading` and `.trailing` layout attributes of the stack view respectively. The first subview also gets pinned to the `.top` and `.bottom` attributes.
@@ -112,11 +109,9 @@ The fist two categories of the constraints ensure that the subviews fill the sta
 
 #### Intrinsic Content Size
 
-As you probably noticed we haven't defined the stack's size along neither of its axis. In this case, the stack view’s size grows freely in both dimensions, based on the its arranged views. So the other remaining constraints that affect the stack view layout are <b>intrinsic content size</b> constraints which I've <a href="#intrinsic-content-sizes">listed earlier</a>. The stack view takes the height of the `Subview0` which is the highest with `Subview0.height == 200 Hug:250 CompressionResistance:750`. The width of the stack view is equal to the combined width of all subviews + all spacings.
+I haven't defined the stack's size along any of its axis. In this case, the stack view’s size grows freely in both dimensions, based on its arranged views. So the other remaining constraints that affect the stack view layout are <b>intrinsic content size</b> constraints which I've <a href="#intrinsic-content-sizes">listed earlier</a>. The stack view takes the height of the `Subview0` which is the highest with `Subview0.height == 200 Hug:250 CompressionResistance:750`. The width of the stack view is equal to the combined width of all subviews + all spacings.
 
-In the result we get a very simple but very useful layout. In terms of constraints this configuration is the simplest one to implement.
-
-
+As the result, you get a simple but very useful layout. In terms of constraints, this configuration is the simplest one to implement.
 
 
 <a name="UIStackViewDistribution.fillEqually"></a>
@@ -199,9 +194,9 @@ This one is also similar to the <a href="#UIStackViewDistribution.fill">fill dis
 
 The multipliers (0.571429, 0.285714, etc) are calculated as a proportion of an arranged view intrinsic content width to the combined intrinsic content width of all visible arranged views + size of all spacings.
 
-At first this layout seems relatively simple to implement. But there are some potential issues. What happens when not all (or none) of the arranged views have an intrinsic content size? What happens when the intrinsic content size of some of the arranged views changes? Well, as to the last question, `UIStackView` uses a neat private method `_intrinsicContentSizeInvalidatedForChildView` in which it recalculate constraints' multipliers. Unfortunately we can't do that, and there doesn't seem to be any other way to implement this.
+At first, this layout seems relatively simple to implement. But there are some potential issues. What happens when not all (or none) of the arranged views have an intrinsic content size? What happens when the intrinsic content size of some of the arranged views changes? Well, as to the last question, `UIStackView` uses a neat private method `_intrinsicContentSizeInvalidatedForChildView` in which it recalculates constraints' multipliers. Unfortunately, you can't do that, and there doesn't seem to be any other way to implement this.
 
-Also notice that the priority of the constraints is higher then both content hugging and compression resistance priorities which both effectively get ignored (unless you change those).
+Also, notice that the priority of the constraints is higher than both content hugging and compression resistance priorities which both effectively get ignored (unless you change those).
 
 > I'm not sure why each constraint has a different priority (999, 998, etc). If you have an idea please <a href="#comment-section">leave a comment below</a>.
 
@@ -369,13 +364,13 @@ This configuration is exactly the same as the very first one: [fill distribution
 
 That's a lot of constraints compared to the previous configurations! Let's figure out what's going on here.
 
-Stack views adds a new auxiliary `_UILayoutSpacer` view to which it pins all of the arranged views with **UISV-spanning-boundary** constraints. Notice that all `.bottom` constraints use `.greaterThanOrEqual` relation.
+The stack view added a new auxiliary `_UILayoutSpacer` view to which it pins all of the arranged views with **UISV-spanning-boundary** constraints. Notice that all `.bottom` constraints use `.greaterThanOrEqual` relation.
 
 Spacer's height is bounded by **UISV-spanning-fit** constraint to disambiguate its height. The height of the arranged views also gets disambiguated automatically by stack view for you (**UISV-ambiguity-suppression** constraints).
 
 Interestingly vertical **UISV-canvas-connection** constraints pin different views to the canvas this time. The first arranged view gets pinned to the top, while the spacer (`_UILayoutSpacer`) gets pinned to the bottom.
 
-Now why is that so complicated? Why is layout spacer necessary and is it necessary at all? Couldn't we just pin all the arranged views to the stack view itself? I think that it might be excessive, but I might be missing something. If you have an idea why it's implemented this way please [share it in the comments](#comment-section).
+Now why is that so complicated? Why is layout spacer necessary and is it necessary at all? Couldn't you just pin all the arranged views to the stack view itself? I think that it might be excessive, but I might be missing something. If you have an idea why it's implemented this way please [share it in the comments](#comment-section).
 
 
 
@@ -421,7 +416,7 @@ Now why is that so complicated? Why is layout spacer necessary and is it necessa
  H:[Subview1]-(0)-[Subview2]
 </pre>
 
-This and the following alignment (.trailing) is very similar to a [leading alignment](#UIStackViewAlignment.leading) so I'm not going to comment them that much. This particular configuration has an extra **UISV-canvas-connection** constraint that pins first arranged view to the `.centerY` of the stack view, and has slightly different **UISV-spanning-boundary** and **UISV-alignment**. But the idea is the same.
+This and the following alignment (.trailing) is very similar to a [leading alignment](#UIStackViewAlignment.leading). This particular configuration has an extra **UISV-canvas-connection** constraint that pins the first arranged view to the `.centerY` of the stack view, and has slightly different **UISV-spanning-boundary** and **UISV-alignment**. But the idea is the same.
 
 
 
@@ -520,7 +515,7 @@ This and the following alignment (.trailing) is very similar to a [leading align
 
 The `.firstBaseline` and the `.lastBaseline` alignments only make sense for views like `UILabel` which has some content with actual baselines (like text).
 
-The set of constraints is similar to the previous scenario: it uses an auxiliary spacer, connects the spacer to the stack view, etc. But there is one discrepancy – **UISV-text-width-disambiguation** constraints. Without these constraints, the layout would be ambiguous – the layout system won't be able to decide which text container to prioritize. I would say that this is a user error, and it looks like Apple decided to automatically correct it to produce a layout that's not completely broken. But there is no trace of this behavior neither in the [UIStackView documentation](https://developer.apple.com/reference/uikit/uistackview) not in headers, and because of that, I decided not to implement these constraints in [Arranged](https://github.com/kean/Arranged).
+The set of constraints is similar to the previous scenario: it uses an auxiliary spacer, connects the spacer to the stack view, etc. But there is one discrepancy – **UISV-text-width-disambiguation** constraints. Without these constraints, the layout would be ambiguous – the layout system won't be able to decide which text container to prioritize. I would say that this is a user error, and it looks like Apple decided to automatically correct it to produce a layout that's not completely broken. But there is no trace of this behavior neither in the [UIStackView documentation](https://developer.apple.com/reference/uikit/uistackview) nor in headers, and because of that, I decided not to implement these constraints in [Arranged](https://github.com/kean/Arranged).
 
 <a name="UIStackViewAlignment.lastBaseline"></a>
 
@@ -605,7 +600,7 @@ The set of constraints is similar to the previous scenario: it uses an auxiliary
  Subview0.bottom == StackView.bottom
 </pre>
 
-This one seems easy at first but actually is quite tricky. Hiding subviews is quite simple, `UIStackView` just adds a single **UISV-hiding** constraint and recalculates the spacings. What's more complicated is how `UIStackView` reacts to `isHidden` changes and how it perform animations.
+This one seems easy at first but is actually quite tricky. Hiding subviews is quite simple, `UIStackView` just adds a single **UISV-hiding** constraint and recalculates the spacings. What's more complicated is how `UIStackView` reacts to `isHidden` changes and how it perform animations.
 
 The `UIStackView` promises to do everything automagically for you:
 
@@ -626,7 +621,7 @@ UIView.animateWithDuration(0.33) {
 }
 ```
 
-This way some of the responsibilities gets delegated to the user of the library, but all the complexities of working with `isHidden` are gone.
+This way some of the responsibilities get delegated to the user of the library, but all the complexities of working with `isHidden` are gone.
 
 
 
@@ -720,22 +715,20 @@ The stack modifies **UISV-spacing** constraints by using `.firstBaseline` and `.
  Subview0.height == 0 priority:25
 </pre>
 
-Compared to [center alignment](#UIStackViewAlignment.center) with multiple subviews this configuration optimizes constraints by removing auxiliary spacer (`_UILayoutSpacer`) which is not necessary when there is just single arranged view.
+Compared to [center alignment](#UIStackViewAlignment.center) with multiple subviews, this configuration optimizes constraints by removing auxiliary spacer (`_UILayoutSpacer`) which is not necessary when there is just a single arranged view.
 
 
 ## Implementation
 
-I'm not going to dive into too much detail as far as actual the implementation goes. You've probably already noticed that most of the configurations have something in common. All of the constraints are split into well-defined categories and follow specific rules. The only thing that remains is to translate those categories and rules into code (actually it was a bit challenging given the number of options and different scenarios).
-
-If you'd like to check out the actual code please take a look at [Arranged](https://github.com/kean/Arranged) sources. The entire implementation takes about 500 lines of code, most of which aren't even constraint related.
+If you'd like to check out the actual code please take a look at [Arranged](https://github.com/kean/Arranged) sources. The entire implementation takes about 500 lines of code!
 
 ### Performance
 
-`UIStackView` has a bunch of optimizations under the hood. One thing that it does for certain is updating only the constraints that need to be changed when some of stack view options change (like, say, distribution). While this feature might be welcomed when the layout changes dynamically, I've decided to avoid those optimizations to keep code as simple and reliable as possible. Even `UIStackView` itself has a number of scenarios in which it fails to update all of the constraints when configuraiton changes
+`UIStackView` has a bunch of optimizations under the hood. One thing that it does for certain is updating only the constraints that need to be changed when some of the stack view options change (like, say, distribution). While this feature might be welcomed when the layout changes dynamically, I decided to avoid those optimizations to keep code as simple and reliable as possible. Even `UIStackView` itself has a number of scenarios in which it fails to update all of the constraints when configuration changes.
 
 ### Testing
 
-Testing [Arranged](https://github.com/kean/Arranged) was relatively simple. All I had to do was test that `Arranged.StackView` creates a set of constraints equivalent to the reference (`UIStackView`) in all of those cases.
+Testing [Arranged](https://github.com/kean/Arranged) was relatively simple. All I had to do was to test that `Arranged.StackView` creates a set of constraints equivalent to the reference (`UIStackView`) in all of those cases.
 
 
 <a name="bottom"></a>
