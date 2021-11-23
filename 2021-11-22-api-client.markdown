@@ -40,7 +40,7 @@ The previous version of the client was built using [Alamofire](https://github.co
 
 ## Implementing a Client
 
-Let’s start by defining a type for representing requests. It can be as complicated as you need, but here is a good starting point:
+Let’s start by defining a type for representing requests. It can be as complicated as you need, but this is a good starting point:
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="kc">Response</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="xc">String</span>
@@ -69,9 +69,9 @@ To make it easier to define REST APIs, let's add a few factory methods which are
 <span class="p">}</span>
 </code></pre></div></div>
 
-What do Swift developers love more than anything else? Type-safety. By separating each HTTP method, `Request` stops invalid parameter combinations at compile time. For example, you [shouldn't pass](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) body to GET requests, and `URLSession` throws an error at runtime if you try. With `Request`, you can't.
+What do Swift developers love more than anything else? Type-safety. By separating each HTTP method, `Request` stops invalid parameter combinations at compile time. For example, you [shouldn't pass](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) body to GET requests, and `URLSession` throws an error at runtime if you try. With `Request`, you can't pass it.
 
-To execute the requests, you use `APIClient`. It's a small wrapper on top of `URLSession` that is easy to modify or extend. You initialize it with a `host` making it easy to change the environments at runtime.
+To execute the requests, you use `APIClient`. It's a small wrapper on top of `URLSession` that is easy to modify and extend. You initialize it with a host making it easy to change the environments at runtime.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="k">actor</span> <span class="kc">APIClient</span> <span class="p">{</span>
     <span class="kd">private</span> <span class="k">let</span> <span class="nv">session</span><span class="p">:</span> <span class="xc">URLSession</span>
@@ -87,7 +87,7 @@ To execute the requests, you use `APIClient`. It's a small wrapper on top of `UR
     <span class="p">}</span>
 </code></pre></div></div>
 
-There are two types of `send()` method – one for `Decodable` types and one for `Void` that isn't decodable.
+There are two types of `send()` methods – one for `Decodable` types and one for `Void` that isn't decodable.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kc">APIClient</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="o">T</span><span class="p">:</span> <span class="xc">Decodable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="o">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="o">T</span> <span class="p">{</span>
@@ -126,10 +126,10 @@ There are two types of `send()` method – one for `Decodable` types and one for
 <span class="p">}</span>
 </code></pre></div></div>
 
-> Initially, I wasn’t sure whether using actors to send work to a different “thread” was a good idea – the primary role of actors is to protect mutable state. But if you watch [Swift concurrency: Update a sample app (WWDC21)](https://developer.apple.com/videos/play/wwdc2021/10194/), you'll see on minute 36 [Ben Cohen](https://twitter.com/AirspeedSwift) suggesting replacing a serial `DispatchQueue` with an actor to perform work in background. It's not exactly the same thing, because actor runtime [doesn't use](https://developer.apple.com/videos/play/wwdc2021/10254/) GCD, but it seems close enough for this scenario. If you want to parallelize decoding, you'll might look for other approaches. One of the advantages of the new system is that even if you use `Task.detached`, you no longer risk causing thread explosion.
+> Initially, I wasn’t sure whether using actors to send work to a different “thread” was a good idea – the primary role of actors is to protect mutable state. But if you watch [Swift concurrency: Update a sample app (WWDC21)](https://developer.apple.com/videos/play/wwdc2021/10194/), you'll see on minute 36 [Ben Cohen](https://twitter.com/AirspeedSwift) suggesting replacing a serial `DispatchQueue` with an actor to perform work in background. It's not exactly the same thing, because actor runtime [doesn't use](https://developer.apple.com/videos/play/wwdc2021/10254/) GCD. Actors have an advantage that they use a cooperative pool of threads. And if you want to parallelize decoding, you'll need to look for other approaches, e.g. `Task.detached`.
 {:.info}
 
-Getting back to `Codable`, I think we, as a developer community, have finally tackled the challenge of parsing JSON in Swift. So I'm not going to focus on it. If you want to learn more, I wrote [a post](https://kean.blog/post/codable-tips-and-tricks) a couple of years ago with some `Codable` tips – most are still relevant today. For example, it has [some ideas](https://kean.blog/post/codable-tips-and-tricks#5-encoding-patch-parameter) on encoding PATCH, which is useful for REST APIs.
+Getting back to `Codable`, I think we, as a developer community, have finally tackled the challenge of parsing JSON in Swift. So I'm not going to focus on it. If you want to learn more, I wrote [a post](https://kean.blog/post/codable-tips-and-tricks) a couple of years ago with some `Codable` tips – most are still relevant today. For example, it has [some ideas](https://kean.blog/post/codable-tips-and-tricks#5-encoding-patch-parameter) on encoding PATCH parameters, which is useful for REST APIs.
 
 The rest of the code is relatively straightforward. I'm using [`URLComponents`](https://developer.apple.com/documentation/foundation/urlcomponents) to create URLs, which is important because it [percent-encodes](https://en.wikipedia.org/wiki/Percent-encoding) the parts of the URLs that need it.
 
@@ -528,7 +528,7 @@ Ideally, you should call `cURLDescription` on task's [`currentRequest`](https://
 
 ## Final Thoughts
 
-Before I started using Async/Await in Swift, I thought it was mostly syntax sugar, but oh how wrong I was. The way Async/Await is integrated into the language is just brilliant. It solves a bunch of common problems in an elegant way and I barely touched the surface in this article. In the future async APIs should be defined exclusively using async functions – bye callbacks and `[weak self]`.
+Before I started using Async/Await in Swift, I thought it was mostly syntax sugar, but oh how wrong I was. The way Async/Await is integrated into the language is just brilliant. It solves a bunch of common problems in an elegant way and I barely touched the surface in this article. For example, I'm particularly excited about the new threading model that can reduce or eliminate timesharing of threads. In the future async APIs should be defined exclusively using async functions – bye callbacks, bye `[weak self]`.
 
 If you want to learn more about Async/Await and Structured Concurrency, look no further than this year [WWDC session videos](https://developer.apple.com/videos/wwdc2021/). They are all fantastically well made, and, if you want to dive a bit deeper, read the Swift Evolution proposals.
 
