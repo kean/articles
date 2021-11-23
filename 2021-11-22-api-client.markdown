@@ -354,7 +354,7 @@ REST APIs are designed around resources. One of the ideas I had was to create a 
 
 <span class="kd">extension</span> <span class="kc">Resources</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">users</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="xc">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">UsersResource</span> <span class="p">{</span>
-        <span class="kc">User</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"/users/</span><span class="se">\(</span><span class="n">name</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="kc">UsersResource</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="s">"/users/</span><span class="se">\(</span><span class="n">name</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
     <span class="p">}</span>
     
     <span class="kd">public</span> <span class="kd">struct</span> <span class="kc">UsersResource</span> <span class="p">{</span>
