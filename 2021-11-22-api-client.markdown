@@ -36,11 +36,11 @@ I'm going to focus on REST APIs and use [GitHub API](https://docs.github.com/en/
 
 Every backend has its quirks and usually requires a client optimized for it. This article is a collection of ideas that you can use for writing your clients. The goal is to use the minimum number of abstractions and make the code easy to understand and extend.
 
-The previous version of the client built using [Alamofire](https://github.com/Alamofire/Alamofire) and [RxSwift](https://github.com/ReactiveX/RxSwift) was a good design at the time, but with the recent Swift changes, I don’t think you need dependencies anymore.  I’m going with Apple technologies exclusively for this project: [URLSession](https://developer.apple.com/documentation/foundation/urlsession), [Codable](https://developer.apple.com/documentation/swift/codable), [Async/Await](https://developer.apple.com/videos/play/wwdc2021/10132/), and [Actors](https://developer.apple.com/videos/play/wwdc2021/10133/).
+The previous version of the client was built using [Alamofire](https://github.com/Alamofire/Alamofire) and [RxSwift](https://github.com/ReactiveX/RxSwift). It was a good design at the time, but with the recent Swift changes, I don’t think you need dependencies anymore.  I’m going with Apple technologies exclusively for this project: [URLSession](https://developer.apple.com/documentation/foundation/urlsession), [Codable](https://developer.apple.com/documentation/swift/codable), [Async/Await](https://developer.apple.com/videos/play/wwdc2021/10132/), and [Actors](https://developer.apple.com/videos/play/wwdc2021/10133/).
 
 ## Implementing a Client
 
-Let’s start by defining a type for representing requests – you’ll need it for API definitions later. It can be as complicated as you need, but here is a good starting point:
+Let’s start by defining a type for representing requests. It can be as complicated as you need, but here is a good starting point:
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="kc">Response</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="xc">String</span>
@@ -69,7 +69,7 @@ To make it easier to define REST APIs, let's add a few factory methods which are
 <span class="p">}</span>
 </code></pre></div></div>
 
-What do Swift developers love more than anything else? Type-safety. By separating each HTTP method, `Request` stops invalid parameter combinations at compile time. For example, you [shouldn't pass](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) body to GET requests, and `URLSession` throws an error at runtime if you try. With the `Request`, you can't.
+What do Swift developers love more than anything else? Type-safety. By separating each HTTP method, `Request` stops invalid parameter combinations at compile time. For example, you [shouldn't pass](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) body to GET requests, and `URLSession` throws an error at runtime if you try. With `Request`, you can't.
 
 To execute the requests, you use `APIClient`. It's a small wrapper on top of `URLSession` that is easy to modify or extend. You initialize it with a `host` making it easy to change the environments at runtime.
 
@@ -126,9 +126,7 @@ There are two types of `send()` method – one for `Decodable` types and one for
 <span class="p">}</span>
 </code></pre></div></div>
 
-> **Actor Runtime**
->
-> Initially, I wasn’t sure whether using actors to send work to a different “thread” was a good idea – the primary role of actors is to protect mutable state. But if you watch [Swift concurrency: Update a sample app (WWDC21)](https://developer.apple.com/videos/play/wwdc2021/10194/), you'll see on minute 36 [Ben Cohen](https://twitter.com/AirspeedSwift) suggesting replacing a serial `DispatchQueue` with an actor to perform work in background. It's not exactly the same thing, because actor runtime [doesn't use](https://developer.apple.com/videos/play/wwdc2021/10254/) GCD, but it's close enough for this scenario.
+> Initially, I wasn’t sure whether using actors to send work to a different “thread” was a good idea – the primary role of actors is to protect mutable state. But if you watch [Swift concurrency: Update a sample app (WWDC21)](https://developer.apple.com/videos/play/wwdc2021/10194/), you'll see on minute 36 [Ben Cohen](https://twitter.com/AirspeedSwift) suggesting replacing a serial `DispatchQueue` with an actor to perform work in background. It's not exactly the same thing, because actor runtime [doesn't use](https://developer.apple.com/videos/play/wwdc2021/10254/) GCD, but it seems close enough for this scenario. If you want to parallelize decoding, you'll might look for other approaches. One of the advantages of the new system is that even if you use `Task.detached`, you no longer risk causing thread explosion.
 {:.info}
 
 Getting back to `Codable`, I think we, as a developer community, have finally tackled the challenge of parsing JSON in Swift. So I'm not going to focus on it. If you want to learn more, I wrote [a post](https://kean.blog/post/codable-tips-and-tricks) a couple of years ago with some `Codable` tips – most are still relevant today. For example, it has [some ideas](https://kean.blog/post/codable-tips-and-tricks#5-encoding-patch-parameter) on encoding PATCH, which is useful for REST APIs.
@@ -206,7 +204,7 @@ The first piece is the `client(_:willSendRequest:)` delegate method that you can
 <span class="p">}</span>
 </code></pre></div></div>
 
-> If you look at `setValue(_:forHTTPHeaderField:)` [documentation](https://developer.apple.com/documentation/foundation/urlrequest/2011447-setvalue), you'll see a list of [Reserved HTTP Headers](https://developer.apple.com/documentation/foundation/nsurlrequest#1776617) that you shouldn't set manually. "Authorization" is one of them... `URLSession` supports seemingly every authorization mechanism except for the most popular one - OAuth 2.0. So setting an "Authorization" header manually is still [the least worst](https://developer.apple.com/forums/thread/89811) solution.
+> If you look at `setValue(_:forHTTPHeaderField:)` [documentation](https://developer.apple.com/documentation/foundation/urlrequest/2011447-setvalue), you'll see a list of [Reserved HTTP Headers](https://developer.apple.com/documentation/foundation/nsurlrequest#1776617) that you shouldn't set manually. "Authorization" is one of them... `URLSession` supports seemingly every authorization mechanism except the most popular one. Setting an "Authorization" header manually is still [the least worst](https://developer.apple.com/forums/thread/89811) option.
 {:.warning}
 
 > The `client(_:willSendRequest:)` method is also a good way to provide default headers, like ["User-Agent"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent). But you can also provide fields that don't change using [`httpAdditionalHeaders`](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/1411532-httpadditionalheaders) property of [`URLSessionConfiguration`](https://developer.apple.com/documentation/foundation/urlsessionconfiguration).
@@ -250,7 +248,7 @@ Now all you need is to implement a `shouldClientRetry(_:withError:)` method in y
 <span class="p">}</span>
 </code></pre></div></div>
 
-> The client might call `shouldClientRetry(_:withError:)`  multiple times (once for each failed request). Make sure to coalesce the requests to refresh the token. Also, don't forget the scenario with an expired refresh token.
+> The client might call `shouldClientRetry(_:withError:)`  multiple times (once for each failed request). Make sure to coalesce the requests to refresh the token and handle the scenario with an expired refresh token.
 {:.warning}
 
 I didn't show this code in the original `APIClient` implementation to not over-complicate things, but the project you find at GitHub already [supports it](https://github.com/kean/APIClient).
@@ -262,7 +260,7 @@ I didn't show this code in the original `APIClient` implementation to not over-c
 
 On top of authorizing the user, most services will also have a way of authorizing the client. If it's an API key, you can set it using the same way as an "Authorization" header. You may also want to [obfuscate](https://nshipster.com/secrets/) it, but remember that client secrecy is impossible.
 
-Another less common but more interesting approach is [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) (mutual TLS) where it's not just the server sending a certificate – the client does too. One of the advantages of using certificates is that the secret (private key) never leaves the device and doesn't travel over the network.
+Another less common but more interesting approach is [mTLS](https://www.cloudflare.com/learning/access-management/what-is-mutual-tls/) (mutual TLS) where it's not just the server sending a certificate – the client does too. One of the advantages of using certificates is that the secret (private key) never leaves the device.
 
 `URLSession` supports mTLS natively and it's easy to implement, even when using the new `async/await` API (thanks, Apple!).
 
@@ -281,7 +279,7 @@ Another less common but more interesting approach is [mTLS](https://www.cloudfla
 <span class="p">}</span>
 </code></pre></div></div>
 
-The main challenge with mTLS is getting the private key to the client. You can embed an obfuscated `.p12` file in the app and obfuscate it, making it hard to discover, but it's still not impenetrable.
+The main challenge with mTLS is getting the private key to the client. You can embed an obfuscated `.p12` file in the app, making it hard to discover, but it's still not impenetrable.
 
 ### SSL Pinning
 
@@ -386,7 +384,7 @@ Usage:
 
 This API is visually appealing, but it can be a bit tedious to write and less discoverable than simply listing all available calls. I’m also still a bit cautious about over-using nesting. I used to avoid it in the past, but the recent improvements to the Xcode code completion made working with nested APIs much easier. But again, this is just an example.
 
-> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each propery has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
+> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each propery has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it's harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
 {:.warning}
 
 ## Tools
@@ -436,7 +434,7 @@ Generating `Codable` entities is also extremely easy. There are [a ton of tools]
 
 By default, [swagger-codegen](https://github.com/swagger-api/swagger-codegen) generates not just the `Codable` entities but also attempts to generate an entire API client. Unfortunately, it leaves much to be desired. I suggest only using it for generating entities.
 
-> If you don’t have an OpenAPI spec, you can turn a sample JSON into a Codable struct using [quicktype.io](https://quicktype.io/) and tweak it manually to make sure it complete it.
+> If you don’t have an OpenAPI spec, you can turn a sample JSON into a Codable struct using [quicktype.io](https://quicktype.io/) and tweak it.
 {:.info}
 
 ### Logging
@@ -524,15 +522,15 @@ There are a many mocking tools to chose from. I used [`Mocker`](https://github.c
 
 ### cURL
 
-[cURL](https://curl.se) doesn't need an introduction. There is an [extension](https://gist.github.com/kean/cacb6d2e6bafa912bf130d3db1c2f116) to `URLRequest` that I borrowed from `Alamfire` that I love. It creates a cURL command for `URLRequest`.
+[cURL](https://curl.se) doesn't need an introduction. There is an [extension](https://gist.github.com/kean/cacb6d2e6bafa912bf130d3db1c2f116) to `URLRequest` that I borrowed from Alamofire that I love. It creates a cURL command for `URLRequest`.
 
 Ideally, you should call `cURLDescription` on task's [`currentRequest`](https://developer.apple.com/documentation/foundation/urlsessiontask/1411649-currentrequest) - it's has all of the cookies and [additional HTTP headers](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/1411532-httpadditionalheaders) automatically added by the system.
 
 ## Final Thoughts
 
-Before I started using Async/Wwait in Swift, I thought it was mostly syntax sugar, but oh how wrong I was. The way Async/Await is integrated into the language is just brilliant. It solves a bunch of common problems in an elegant way. I think in the future async APIs should be defined exclusively using async functions – bye callbacks and `[weak self]`.
+Before I started using Async/Await in Swift, I thought it was mostly syntax sugar, but oh how wrong I was. The way Async/Await is integrated into the language is just brilliant. It solves a bunch of common problems in an elegant way and I barely touched the surface in this article. In the future async APIs should be defined exclusively using async functions – bye callbacks and `[weak self]`.
 
-If you want to learn more about Async/Await and Structured Concurrency, look no further than this [WWDC21 session videos](https://developer.apple.com/videos/wwdc2021/). They are all fantastically well made, and, if you want to dive a bit deeper, read the Swift Evolution proposals.
+If you want to learn more about Async/Await and Structured Concurrency, look no further than this year [WWDC session videos](https://developer.apple.com/videos/wwdc2021/). They are all fantastically well made, and, if you want to dive a bit deeper, read the Swift Evolution proposals.
 
 If you just look at the surface level, let's see how much code I wrote to implement most of the features from this article:
 
