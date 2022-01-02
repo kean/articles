@@ -29,7 +29,7 @@ I'm going to focus on REST APIs and use [GitHub API](https://docs.github.com/en/
 <span class="k">let</span> <span class="nv">repos</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="kc">Resources</span><span class="o">.</span><span class="kt">users</span><span class="p">(</span><span class="s">"kean"</span><span class="p">)</span><span class="o">.</span><span class="kt">repos</span><span class="o">.</span><span class="kt">get</span><span class="p">)</span>
 </code></pre></div></div>
 
-> The code from this article is available at [kean/APIClient](https://github.com/kean/APIClient).
+> The code from this article is the basis of [kean/Get](https://github.com/kean/Get).
 {:.info}
 
 ## Overview
@@ -255,7 +255,7 @@ Now all you need is to implement a `shouldClientRetry(_:withError:)` method in y
 > The client might call `shouldClientRetry(_:withError:)`  multiple times (once for each failed request). Make sure to coalesce the requests to refresh the token and handle the scenario with an expired refresh token.
 {:.warning}
 
-I didn't show this code in the original `APIClient` implementation to not over-complicate things, but the project you find at GitHub already [supports it](https://github.com/kean/APIClient).
+I didn't show this code in the original `APIClient` implementation to not over-complicate things, but the project you find at GitHub already [supports it](https://github.com/kean/Get).
 
 > If you are thinking about using auto-retries for connectivity issues, consider using [`waitsForConnectivity`](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/2908812-waitsforconnectivity) instead. If the request does fail with a network issue, it's usually best to communicate an error to the user. With [`NWPathMonitor`](https://developer.apple.com/documentation/network/nwpathmonitor) you can still monitor the connection to your server and retry automatically.
 {:.info}
@@ -403,40 +403,7 @@ Remember the infamous [Working with JSON in Swift](https://developer.apple.com/s
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/03.png">
 
-Generating `Codable` entities is also extremely easy. There are [a ton of tools](https://openapi.tools) available for working with OpenAPI specs. For example, you can use [swagger-codegen](https://github.com/swagger-api/swagger-codegen). It supports all popular languages, including Swift. Here is an example of one of the generated types.
-
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kc">PublicUser</span><span class="p">:</span> <span class="xc">Codable</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">login</span><span class="p">:</span> <span class="xc">String</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="xc">Int</span>
-    <span class="kd">public</span> <span class="k">var</span> <span class="nv">nodeId</span><span class="p">:</span> <span class="xc">String</span>
-    <span class="c1">// ...</span>
-
-    <span class="kd">public</span> <span class="k">init</span><span class="p">(</span><span class="nv">login</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">id</span><span class="p">:</span> <span class="xc">Int</span><span class="p">,</span> <span class="nv">nodeId</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="cm">/* ... */</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">self</span><span class="o">.</span><span class="kt">login</span> <span class="o">=</span> <span class="n">login</span>
-        <span class="k">self</span><span class="o">.</span><span class="kt">id</span> <span class="o">=</span> <span class="n">id</span>
-        <span class="k">self</span><span class="o">.</span><span class="kt">nodeId</span> <span class="o">=</span> <span class="n">nodeId</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
-
-    <span class="kd">public</span> <span class="kd">enum</span> <span class="kc">CodingKeys</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="xc">CodingKey</span> <span class="p">{</span> 
-        <span class="k">case</span> <span class="n">login</span>
-        <span class="k">case</span> <span class="n">id</span> <span class="o">=</span> <span class="s">"id"</span>
-        <span class="k">case</span> <span class="n">nodeId</span> <span class="o">=</span> <span class="s">"node_id"</span>
-        <span class="c1">// ...</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-> By default, it generates structs, which is not always ideal – passing large structs around can be expensive. Fortunately, there is a way to generate classes instead (see `useModelClasses` option):
-> <br/><br/>
->
->     swagger-codegen generate \
->         -i api.github.com.yaml \
->         -o ~/github-api
->         -l swift5
->         --additional-properties useModelClasses=true
-{:.warning}
-
-By default, [swagger-codegen](https://github.com/swagger-api/swagger-codegen) generates not just the `Codable` entities but also attempts to generate an entire API client. Unfortunately, it leaves much to be desired. I suggest only using it for generating entities.
+Generating `Codable` entities is also extremely easy. There are [a ton of tools](https://openapi.tools) available for working with OpenAPI specs. I also created one optimized for [Get](https://github.com/kean/Get), named [CreateAPI](https://github.com/kean/CreateAPI) – check it out.
 
 > If you don’t have an OpenAPI spec, you can turn a sample JSON into a Codable struct using [quicktype.io](https://quicktype.io/) and tweak it.
 {:.info}
