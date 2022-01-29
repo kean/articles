@@ -13,7 +13,7 @@ Before writing a parser for a regular expression *language*, one needs to define
 
 {% include ad-hor.html %}
 
-> **Note.** This artcle outlines some of the theory behind languages and grammars. If that's not what you are interested in, you can skip it and jump straight into [parsing]({{ site.url }}/post/regex-parser). I would still recommend revisiting this article later.
+> **Note.** This article outlines some of the theory behind languages and grammars. If that's not what you are interested in, you can skip it and jump straight into [parsing]({{ site.url }}/post/regex-parser). I would still recommend revisiting this article later.
 
 The syntaxes of most programming languages in use today are defined through [*formal grammars*](https://en.wikipedia.org/wiki/Formal_grammar). If you've opened the [Swift Language Reference](https://docs.swift.org/swift-book/ReferenceManual/AboutTheLanguageReference.html) before, you've probably seen the blocks like this:
 
