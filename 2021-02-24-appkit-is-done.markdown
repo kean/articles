@@ -404,19 +404,13 @@ If that wasn't enough, here is a dozen more tips.
 
 ## Conclusion
 
-**Is SwiftUI perfect?**
-
-I had to compromise in a few places. But I don't have a lot of bugs to report[^3]. Maybe I'm just getting better at avoiding things that don't quite work as expected. There are some limitations. But the AppKit integration is always there for me.
+SwiftUI isn't perfect. I had to compromise in a few places. But I don't have a lot of bugs to report[^3]. Maybe I'm just getting better at avoiding things that don't quite work as expected. There are some limitations. But the AppKit integration is always there for me.
 
 One of the criticisms I hear a lot is: "I started using SwiftUI and it took me T amount of time to build X, it would've taken me a fraction of time to do that in AppKit". I voiced this criticism. SwiftUI is complex and is not magic. It is almost nothing like AppKit which I think is a good thing. But it means that you need to learn a lot before you can use it efficiently, even if you are already familiar with the core principles behind it.
 
-**Is AppKit done?**
-
 There are still a lot of things that can't be done using only SwiftUI. I can sacrifice certain features for my app, but I can't sacrifice performance. So far, `List` was the main impediment (as long as you have a decent number of items to display). If you want to learn more about `List` limitations, see the [next post]({{ site.url }}/post/not-list).
 
-**Is SwiftUI a game-changer for macOS?**
-
-It's economics. Choosing web technologies used to be almost a no-brainer for many companies. But the things are changing. On one hand, there is M1 which is finally powerful and energy-efficient enough to run Slack, rejoice! On the other hand, the calculation has changed. The main impediment, AppKit, is gone. There are millions of iOS engineers on the market. The path to delivering great native experience on Apple platforms has never been clearer[^5]. I heard you can even put Swift on a server, but was not able to reach Tim Cook for comment[^2].
+Is SwiftUI a game-changer for macOS? It's economics. It might seem like web technologies are dominating the desktop. On the one hand, there is M1 which is finally powerful and energy-efficient enough to run Slack, rejoice! On the other hand, the calculation is changing thanks to SwiftUI. AppKit is arguably one of the main impediments for developing apps for a Mac. But SwiftUI opens this market for millions of iOS engineers. The path to delivering great native experience on Apple platforms is becoming clearer than ever[^5]. I heard you can even put Swift on a server, but was not able to reach Tim Cook for comment[^2].
 
 [^1]: I'm positive that I can increase the amount of the shared code to at least 90%. It wasn't a priority, my main focus was on the delivery.
 [^2]: I love Swift on a server. If you haven't checked it out, go see [Vapor](https://vapor.codes). It's a vast ecosystem that keeps expanding. With coroutines in Swift 6, this is going to be insanely great.
