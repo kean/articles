@@ -30,7 +30,7 @@ What I wished iOS had is a simple analog of [Safari Web Inspector](https://devel
 Pulse is not an app. It's a framework with programmatic interfaces for everything. It consists of the following parts:
 
 - [**Pulse**](https://github.com/kean/Pulse), a logging system with structured persistent storage that implements [SwiftLog](https://github.com/apple/swift-log) protocol
-- [**PulseUI**](https://github.com/kean/PulseUI), a SwiftUI-based framework with components that you can embed directly into your app, e.g. `ConsoleView`. This framework is private and is available for [**GitHub sponsors**](https://github.com/sponsors/kean). It will be open sourced when there are enough sponsors behind it.
+- [**PulseUI**](https://github.com/kean/PulseUI), a SwiftUI-based framework with components that you can embed directly into your app, e.g. `ConsoleView`. This framework is open source.
 - A macOS app based on **PulseUI**.
 
 Integrating **PulseUI** is easy. You add a package to your app and configure it to record the events and metrics provided by `URLSession`. There are no certificates or VPN tunnels involved and it only sees your app's `URLSession` traffic. You can show a `PulseUI.ConsoleView` to see the requests and other logs in real-time.
@@ -50,4 +50,4 @@ I also used MVVM. And I'm glad I did. When the time came to implement the "Share
 
 ## Conclusion
 
-I have a massive backlog for this project, but I'm already extremely happy with the results. If you want to try it and support the project, please join to [GitHub sponsors](https://github.com/sponsors/kean). The plan is to open source it once there is enough sponsors.
+I have a massive backlog for this project, but I'm already extremely happy with the results.

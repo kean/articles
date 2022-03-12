@@ -24,6 +24,6 @@ There are plenty of open-source apps around – which wasn't the case just a few
 
 [^1]: I started with the SwiftUI-only approach, but eventually ended up using quite a lot of AppKit too: sometimes for performance reasons ([table view](https://kean.blog/post/not-list)), sometimes for features (e.g. rich text display).
 
-I initially started with a closed-source approach thinking about making it a commercial tool. But ultimately, I decided to go with open-source and sponsorships. If you are using this tool, I encourage you to [sponsor it](https://github.com/sponsors/kean) (you can think of it as "pay as much as you want") to help me maintain it and make it better in the future.
+I initially started with a closed-source approach thinking about making it a commercial tool. But ultimately, I decided to go with open-source.
 
 It was surprisingly liberating to work as a one-person team in a closed-source codebase. I didn't have to worry about how the code looks at all, only about delivering features quickly. But open-sourcing is a crucial step to allow the tool to reach its potential.
