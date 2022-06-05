@@ -2,7 +2,7 @@
 layout: post
 title: "SwiftUI Layout System"
 subtitle: Taking a deep dive into SwiftUI layout system 
-description: Taking a deep dive into SwiftUI layout system. Exploring the basics of the layout process, frames, stacks, alignemnts, spacers, environment, and more.
+description: Taking a deep dive into SwiftUI layout system. Exploring the basics of the layout process, frames, stacks, alignments, spacers, environment, and more.
 date: 2019-10-22 9:00:00 +0300
 category: programming
 tags: programming
