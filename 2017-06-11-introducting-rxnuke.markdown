@@ -56,7 +56,7 @@ This looks simple enough. Now let's see what makes this new addition to Nuke so 
 
 ## Use Cases
 
-I'm going to go throught a number of real world uses case and see how they can be implemented using `RxNuke`:
+I'm going to go through a number of real world uses case and see how they can be implemented using `RxNuke`:
 
 - [Going From Low to High Resolution](#huc_low_to_high) 
 - [Loading the First Available Image](#huc_loading_first_avail)

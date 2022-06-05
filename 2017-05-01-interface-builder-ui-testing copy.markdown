@@ -150,6 +150,6 @@ IB is not just a great tool for _creating_ the UI but it is also great for _test
 
 > **WARNING** 
 >
-> The major issue with `@IBDesignable` is just how unstable the Interface Builder (as of Xcode 8.3) seems to be when it is used. You should definetly check if you can tolerate it before commiting into this approach.
+> The major issue with `@IBDesignable` is just how unstable the Interface Builder (as of Xcode 8.3) seems to be when it is used. You should definitely check if you can tolerate it before commiting into this approach.
 
 I hope that Apple will continue improving IB. Imagine how great it would be if Storyboards were interactive in way Playgrounds are (see `PlaygroundPage` `liveView`. It would enable developers to do even more things with the UI without ever running their apps (e.g. test animations). In fact some teams actually [replaced Interface Builder with Playgrounds](https://youtu.be/A0VaIKK2ijM?t=26m47s).

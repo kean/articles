@@ -149,7 +149,7 @@ extension API {
 
 This approach closely resembles the way REST models resources, but it has it's downsides too - it's less auto-complete friendly, and it introduces a bunch of new types into the system.
 
-> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each propery has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
+> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each property has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
 {:.warning}
 
 ## Client

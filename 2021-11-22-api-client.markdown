@@ -388,7 +388,7 @@ Usage:
 
 This API is visually appealing, but it can be a bit tedious to write and less discoverable than simply listing all available calls. I’m also still a bit cautious about over-using nesting. I used to avoid it in the past, but the recent improvements to the Xcode code completion made working with nested APIs much easier. But again, this is just an example.
 
-> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each propery has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it's harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
+> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each property has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it's harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
 {:.warning}
 
 ## Tools

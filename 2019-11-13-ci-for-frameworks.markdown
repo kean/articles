@@ -281,7 +281,7 @@ Delivering software is easy, maintaining quality and velocity is hard. Continuou
 
 {% include references-start.html %}
 
-1. Martin Fowler, [**Continous Integration**](https://martinfowler.com/articles/continuousIntegration.html)
+1. Martin Fowler, [**Continuous Integration**](https://martinfowler.com/articles/continuousIntegration.html)
 2. Paul Duvall, Steve Matyas, and Andrew Glover, [**Continuous Integration: Improving Software Quality and Reducing Risk**](https://martinfowler.com/books/duvall.html)
 3. [**Travis CI**](https://travis-ci.com)
 4. [**xcpretty**](https://github.com/xcpretty/xcpretty)

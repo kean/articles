@@ -104,7 +104,7 @@ OK, at this point, you might think these are the table stakes for a macOS app. A
 
 ## Filters
 
-Filters were also fully redesigned. You know how in many apps you configure the filters, but then your only options are to either reset them all or change them back to the defaults manually. In Pulse Pro, you can toggle and reset each filter individually, which is surprisingly convenient. You can collapse the sections you rarely use, and the app saves your preferences. To show filters, hit `Cmd+Option+F` or click the toolar item.
+Filters were also fully redesigned. You know how in many apps you configure the filters, but then your only options are to either reset them all or change them back to the defaults manually. In Pulse Pro, you can toggle and reset each filter individually, which is surprisingly convenient. You can collapse the sections you rarely use, and the app saves your preferences. To show filters, hit `Cmd+Option+F` or click the toolbar item.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/table-view-05.png">
 

@@ -63,7 +63,7 @@ public enum Color {
 }
 ```
 
-The functions that define styles are applyied in their original order, which can be used to make styles "cascade" the way they do in CSS:
+The functions that define styles are applied in their original order, which can be used to make styles "cascade" the way they do in CSS:
 
 ```swift
 UILabel(style: Style.Label.body, { $0.textColor = .white })
@@ -111,7 +111,7 @@ What makes this work well is that styles are always defined upfront. If the list
 
 > Check out [Let's Build UIStackView](https://kean.github.io/post/lets-build-uistackview) to learn how stacks work under the hood.
 
-In the example [Align](https://github.com/kean/Align) is used very briefly. But you can definetly use an Auto Layout library of your choice instead (or no library at all and just stick with native layout anchors).
+In the example [Align](https://github.com/kean/Align) is used very briefly. But you can definitely use an Auto Layout library of your choice instead (or no library at all and just stick with native layout anchors).
 
 ```swift
 avatarView.al.size.set(CGSize(width: 40, height: 40))

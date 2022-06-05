@@ -20,7 +20,7 @@ Previously on [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex)
 
 What do we mean when we say "match"?
 
-A conventional regex engine can find the first match in the string. It searches the entire input string for the first occurence of the regular expression.
+A conventional regex engine can find the first match in the string. It searches the entire input string for the first occurrence of the regular expression.
 
 ```swift
 let regex = try Regex(#"<\/?[\w\s]*>|<.+[\W]>"#) // Finds tags

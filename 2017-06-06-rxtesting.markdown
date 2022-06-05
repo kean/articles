@@ -76,7 +76,7 @@ let expectedIndicators: [Recorded<Event<PagingIndicatorState>>] = [
     next(0, .loading),
     next(25, .hidden),
     next(150, .loading),
-    next(175, .failed("An error has occured"))
+    next(175, .failed("An error has occurred"))
 ]
 
 // Create a virtual time scheduler (RxTest)
@@ -129,7 +129,7 @@ indicators.events:
 next(loading) @ 0
 next(none) @ 25
 next(loading) @ 150
-next(failed("An error has occured")) @ 175
+next(failed("An error has occurred")) @ 175
 ```
 
 This matches the expected events, the test is passed successfully.

@@ -14,7 +14,7 @@ How do you localizale a text label that has rich formatting?
 
 <img alt="Formatting Example" width="400px" src="/images/posts/formatting/formatting.png">
 
-Unforunately, there are not a lot of built-in options in the Apple SDKs, so people often end up using sub-optimal appoaches.
+Unfortunately, there are not a lot of built-in options in the Apple SDKs, so people often end up using sub-optimal appoaches.
 
 {% include ad-hor.html %}
 

@@ -79,7 +79,7 @@ view.addSubview(title, subtitle) { title, subtitle in
     // Align center with a superview
     title.centerX.alignWithSuperview()
 
-    // Manipulate dimenstions
+    // Manipulate dimensions
     title.width.set(100)
     subtitle.width.match(title.width * 2)
 

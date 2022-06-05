@@ -84,7 +84,7 @@ Just to give you a taste of what these semantic APIs look like, here is an examp
 view.anchors.edges.pin(insets: 20, alignment: .center)
 ```
 
-<img src="https://user-images.githubusercontent.com/1567433/84931836-5cb7e400-b0a1-11ea-8342-ce76b151fcad.png" alt="pin edges with center alignmnet" width="400px"/>
+<img src="https://user-images.githubusercontent.com/1567433/84931836-5cb7e400-b0a1-11ea-8342-ce76b151fcad.png" alt="pin edges with center alignment" width="400px"/>
 
 Not bad, huh? Barely any code, six constraints created covering one of the common UI use cases. And this is just one example. `Alignment` parameter in `pin()` is extremely powerful. It has two components: vertical and horizontal. It covers a lot of possible layouts that you'll might want to create.
 
@@ -189,7 +189,7 @@ By default, `pin()` users `.fill` alignment. There are variety of other alignmen
 view.anchors.edges.pin(insets: 20, alignment: .center)
 ```
 
-<img src="https://user-images.githubusercontent.com/1567433/84931836-5cb7e400-b0a1-11ea-8342-ce76b151fcad.png" alt="pin edges with center alignmnet" width="400px"/>
+<img src="https://user-images.githubusercontent.com/1567433/84931836-5cb7e400-b0a1-11ea-8342-ce76b151fcad.png" alt="pin edges with center alignment" width="400px"/>
 
 You can create constraint along the given axis.
 
@@ -197,7 +197,7 @@ You can create constraint along the given axis.
 view.anchors.edges.pin(insets: 20, axis: .horizontal, alignment: .center)
 ```
 
-<img src="https://user-images.githubusercontent.com/1567433/84932039-af919b80-b0a1-11ea-9798-43a944f4b681.png" alt="pin edges with center alignmnet for horizontal axis" width="400px"/>
+<img src="https://user-images.githubusercontent.com/1567433/84932039-af919b80-b0a1-11ea-9798-43a944f4b681.png" alt="pin edges with center alignment for horizontal axis" width="400px"/>
 
 
 Or pin the view to to a corner.
@@ -206,7 +206,7 @@ Or pin the view to to a corner.
 view.anchors.edges.pin(insets: 20, alignment: .topLeading)
 ```
 
-<img src="https://user-images.githubusercontent.com/1567433/84932173-e36cc100-b0a1-11ea-9a5d-b6381cde2df7.png" alt="pin edges with center alignmnet for horizontal axis" width="400px"/>
+<img src="https://user-images.githubusercontent.com/1567433/84932173-e36cc100-b0a1-11ea-9a5d-b6381cde2df7.png" alt="pin edges with center alignment for horizontal axis" width="400px"/>
 
 You can create custom alignments (see `Alignment` type) by providing a vertical and horizontal component.
 
@@ -215,7 +215,7 @@ let alignment = Alignment(vertical: .center, horizontal: .leading)
 anchors.edges.pin(insets: 20, alignment: alignment)
 ```
 
-<img src="https://user-images.githubusercontent.com/1567433/84932264-0b5c2480-b0a2-11ea-9574-d32a6de77fb7.png" alt="pin edges with center alignmnet for horizontal axis" width="400px"/>
+<img src="https://user-images.githubusercontent.com/1567433/84932264-0b5c2480-b0a2-11ea-9574-d32a6de77fb7.png" alt="pin edges with center alignment for horizontal axis" width="400px"/>
 
 ### Center
 

@@ -122,7 +122,7 @@ One option is to forget about thread-safety and background execution and synchro
 > Always measure. Sending work to the background will often be _slower_ than executing it synchronously on the current thread and synchronizing with locks.
 {:.warning}
 
-To avoid the excessive number of context switches, Nuke synchronizes[^9] two actors (pipleine and prefetcher) on a single dispatch queue, dropping the number of `queue.async` calls to just one!
+To avoid the excessive number of context switches, Nuke synchronizes[^9] two actors (pipeline and prefetcher) on a single dispatch queue, dropping the number of `queue.async` calls to just one!
 
 [^9]: The implementation isn't particularly interesting. It's just prefetcher calling internal pipeline APIs, which isn't great as it breaks the actor metaphor. I'm investigating whether I can generalize it (actor to check which queue it's running on and passing synchronization context between actors?).
 
@@ -217,7 +217,7 @@ There isn't much to say about locks. There are easy to use and fast[^6]. I don't
 
 ## Atomics
 
-I'm using atomics (`OSAtomicIncrement32`, `OSCompareAndSwap32`) in a couple of places in Nuke. For example, in `Operation` I use [CAS](https://en.wikipedia.org/wiki/Compare-and-swap) to guarantee that the `finish()` callback is only executed once. But when Thread Sanizer was introduced it started emiting warnings[^8].
+I'm using atomics (`OSAtomicIncrement32`, `OSCompareAndSwap32`) in a couple of places in Nuke. For example, in `Operation` I use [CAS](https://en.wikipedia.org/wiki/Compare-and-swap) to guarantee that the `finish()` callback is only executed once. But when Thread Sanitizer was introduced it started emitting warnings[^8].
 
 [^8]: You can learn more about why these warnings get emitted in the [following post](http://www.russbishop.net/the-law).
 

@@ -201,7 +201,7 @@ final class Reachability {
 
 > The complete implementation is available [here](https://gist.github.com/kean/e2bc38106d19c249c04162714e7be321).
 
-## Resoures
+## Resources
 
 - [RxSwift](https://github.com/ReactiveX/RxSwift)
 - [ReactiveX operators: retry](http://reactivex.io/documentation/operators/retry.html)

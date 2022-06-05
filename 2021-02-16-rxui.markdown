@@ -172,7 +172,7 @@ When I showed `objectWillChange` implementation earlier, there wa a method call 
 ```swift
 public extension RxObservableObject {
     var objectWillChange: PublishRelay<Void> {
-        // ... return exsiting relay 
+        // ... return existing relay 
         registerPublishedProperties()
         // ... create new relay and associated it
     }

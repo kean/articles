@@ -54,7 +54,7 @@ public enum PacketCode: UInt8 {
     /// A data packet containing encrypted IP packets (raw bytes).
     case data = 0x03
 
-    /// Initilizes the code code with the given UDP packet contents.
+    /// Initializes the code code with the given UDP packet contents.
     public init(datagram: Data) throws {
         guard datagram.count > 0 else {
             throw PacketParsingError.notEnoughData

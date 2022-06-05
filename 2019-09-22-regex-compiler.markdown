@@ -71,7 +71,7 @@ How do you "run" this state machine? You take the input string, starting from th
 
 What if instead of one there were two characters in the pattern, e.g. "ab"? You add a new state and a new transition to the state machine.
 
-<img alt="NFA diagram: match two consequetive characters" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/match-two-characters.png" style="max-height:90px;">
+<img alt="NFA diagram: match two consecutive characters" class="AdaptiveImage" src="{{ site.url }}/images/posts/regex-compiler/match-two-characters.png" style="max-height:90px;">
 
 > [**String-Searching Algorithms**](https://en.wikipedia.org/wiki/String-searching_algorithm) *(Additional Reading)*
 >

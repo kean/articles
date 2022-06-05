@@ -132,7 +132,7 @@ final class AnchorAxisHorizontal {}
 final class AnchorAxisVertical {}
 ```
 
-A combination of `type` and `axis` is used to represent differnet anchors:
+A combination of `type` and `axis` is used to represent different anchors:
 
 ```swift
 var top: Anchor<AnchorTypeEdge, AnchorAxisVertical>

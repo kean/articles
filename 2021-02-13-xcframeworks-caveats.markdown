@@ -142,7 +142,7 @@ What I ended up doing eventually is rewriting the framework so that there are no
 
 With this approach, I was finally able to ship my frameworks[^2]. As a final test, I uploaded the app with the frameworks to TestFlight.
 
-If I were more diligent, I would've learned about the limitations before starting my work. I watched the WWDC video that I referenced earlier. I don't know how the crutial information about package dependencies exited my mind. Maybe I just haven't watched until the very end. At least it was before credits. Anyway, I didn't feel the need to rewatch it, because 90% of the video was trivial.
+If I were more diligent, I would've learned about the limitations before starting my work. I watched the WWDC video that I referenced earlier. I don't know how the crucial information about package dependencies exited my mind. Maybe I just haven't watched until the very end. At least it was before credits. Anyway, I didn't feel the need to rewatch it, because 90% of the video was trivial.
 
 I'm now thinking, could Xcode do something to at least communicate the problem early? It couldn't when I was writing a manifest, initially the package dependency was in a different repo. But it could probably throw a more user-friendly error during dependency resolution saying that the configuration isn't supported.
 

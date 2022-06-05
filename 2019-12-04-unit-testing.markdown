@@ -90,13 +90,13 @@ Testing ViewModels or Presenters typically requires a significant amount of effo
 
 Am I saying that you should *not* test ViewModels and Views? Absolutely not. What I mean is that you should probably not test ViewModels in isolation by mocking all of the dependencies. This is where UI and integration tests come in. ViewModels can be a fantastic "end" in integration tests.
 
-There is also an unintendend consequence of creating too many unit tests for ViewModels with too many mocks – they become a barrier to refactoring[^7]. You make a change in a commonly used service and instead of only updating unit tests for this service, you also have too update all of the ViewModels and all of the mocks that they use. Eventually, these tests erode without significant investment in their maintanence.
+There is also an unintendend consequence of creating too many unit tests for ViewModels with too many mocks – they become a barrier to refactoring[^7]. You make a change in a commonly used service and instead of only updating unit tests for this service, you also have too update all of the ViewModels and all of the mocks that they use. Eventually, these tests erode without significant investment in their maintenance.
 
 ## High Quality Tests
 
 I'm not going to focus too much on the nitty gritty details of how to actually write the unit tests. It all comes with the experience. But I would still like to share a couple of tips:
 
-- Treat test code as well as you treat your app's code. Apply all of the good engineering principles that you know. Avoid duplication, refactor, strive for readability. Have a plan for how you are going to mantain your tests.
+- Treat test code as well as you treat your app's code. Apply all of the good engineering principles that you know. Avoid duplication, refactor, strive for readability. Have a plan for how you are going to maintain your tests.
 - Follow the [FIRST principles](https://pragprog.com/magazines/2012-01/unit-tests-are-first), they are universally applicable
 - Before even writing tests, you must first think about the surface area of your APIs. You can't write good tests on top of a poorly designed API. And, on the other hand, a well-designed API makes it much easier to write good unit tests. This is a reinforcing cycle.
 
@@ -112,7 +112,7 @@ I would also recommend going through [Software Testing Guide](https://martinfowl
 
 Write tests. Reward value, not volume. Optimize for confidence. Don't create too many tests, there is such thing as too much of a good thing.
 
-Think carefuly about where to invest your efforts. Don't focus on just one kind of testing. Unit tests, integration tests, UI tests, [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing) – they all have their cost and they are all useful in unique ways. 
+Think carefully about where to invest your efforts. Don't focus on just one kind of testing. Unit tests, integration tests, UI tests, [snapshot tests](https://github.com/pointfreeco/swift-snapshot-testing) – they all have their cost and they are all useful in unique ways. 
 
 Prioritize. Cover the mission-critical scenarios first. And maybe you don't need to cover this tiny view model which never changes and never breaks.
 

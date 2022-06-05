@@ -33,7 +33,7 @@ If that sounds a bit too abstract, then you are in the right place. In this seri
 
 ## Network Extension Framework
 
-You are going to learn how the iOS manages VPN configuration, how to create custom VPN configurations programatically, how to implement both the client and the server sides of the VPN.
+You are going to learn how the iOS manages VPN configuration, how to create custom VPN configurations programmatically, how to implement both the client and the server sides of the VPN.
 
 The primary topic of this series is going to be [Network Extension](https://developer.apple.com/documentation/networkextension) framework. Among many of its features, it has extensive support for virtual private networks (VPN). The client side of the custom protocol implementation is implemented as a [Packet Tunnel Provider](https://developer.apple.com/documentation/networkextension/packet_tunnel_provider) extension. The Packet Tunnel Provider extension’s containing app uses `NETunnelProviderManager` to create and manage VPN configurations that use the custom protocol, and to control the VPN connections specified by the configurations.
 

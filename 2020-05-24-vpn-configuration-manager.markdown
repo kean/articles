@@ -230,7 +230,7 @@ You can use the connection object and [`.NEVPNStatusDidChange`](https://develope
 
 ### Starting/Stopping Tunnel
 
-The tunnel can be started/stopped programatically.
+The tunnel can be started/stopped programmatically.
 
 ```swift
 func buttonStartTapped() {

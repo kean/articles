@@ -115,7 +115,7 @@ public enum Status: String, Codable, Equatable, CaseIterable {
 }
 ```
 
-CreateAPI doesn't add redudant names. It's a small thing, but all these small things add up:
+CreateAPI doesn't add redundant names. It's a small thing, but all these small things add up:
 
 ```swift
 public enum Status: String, Codable, CaseIterable {

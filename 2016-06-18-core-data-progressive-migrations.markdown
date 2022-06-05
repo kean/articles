@@ -232,7 +232,7 @@ Testing migrations is extremely important. It makes sense to test that migration
 It is very important to test migrations on different data sets and different versions of your store. There are at least two ways to populate stores with data:
 
 - Run a specific version of an app. This way you generate data just like your app actually does, including some potential errors that you might be not aware of.
-- Populate stores programatically. This would allow you to simulate some very specific cases that are either hard or impossible to reproduce on the device.
+- Populate stores programmatically. This would allow you to simulate some very specific cases that are either hard or impossible to reproduce on the device.
 
 Here's how your test methods might actually look like (this is a very rough draft):
 
