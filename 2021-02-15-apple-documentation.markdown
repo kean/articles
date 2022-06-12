@@ -10,6 +10,12 @@ permalink: /post/apple-documentation
 uuid: 97629671-7fb5-481a-a020-38e2aab4175d
 ---
 
+<div class="UpdatesSections" markdown="1">
+**Updates**
+
+- Jun 11, 2022. With the latest changes to DocC presented during WWDC22, pretty much all points from this post were addressed.
+</div>
+
 I wrote a post yesterday about [triple-column navigation](https://kean.blog/post/triple-trouble) in SwiftUI. It felt a bit awkward posting it because this really shouldn't be some obscure knowledge. This is hardly a challenging problem. But to me and to many other people, this *was* challenging.
 
 Why was it challenging? The `NavigationView` [documentation page](https://developer.apple.com/documentation/swiftui/navigationview) doesn't mention a triple-column layout or macOS at all. But the lack of content is not the only problem with Apple Documentation.
