@@ -350,7 +350,7 @@ For smaller apps, using `APIClient` directly without creating an API definition 
 
 I've tried a few different approaches for defining APIs using `APIClient`, but couldn't decide which one was the best. They all have their pros and cons and are often just a matter of personal preference.
 
-REST APIs are designed around resources. One of the ideas I had was to create a separate type to represent each of the resources and expose HTTP methods that are available on them. It works best for APIs that closely follow ([REST API design](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design0). GitHub API is a great example of a REST API, so that's why I used it in the examples.
+REST APIs are designed around resources. One of the ideas I had was to create a separate type to represent each of the resources and expose HTTP methods that are available on them. It works best for APIs that closely follow ([REST API design](https://docs.microsoft.com/en-us/azure/architecture/best-practices/api-design)). GitHub API is a great example of a REST API, so that's why I used it in the examples.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kc">Resources</span> <span class="p">{}</span>
 
