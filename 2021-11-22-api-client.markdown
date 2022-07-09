@@ -115,23 +115,12 @@ There are two types of `send()` methods – one for `Decodable` types and one fo
 <span class="p">}</span>
 </code></pre></div></div>
 
-`APIClient` takes full advantage of async/await, including the new `URLSession` [async/await APIs](https://developer.apple.com/videos/play/wwdc2021/10095/). It also performs encoding and decoding on a separate actor reducing the amount of work[^1] done on the `APIClient`.
+`APIClient` takes full advantage of async/await, including the new `URLSession` [async/await APIs](https://developer.apple.com/videos/play/wwdc2021/10095/). It also performs encoding and decoding on detached tasks, reducing the amount of work done on the `APIClient`.
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="k">actor</span> <span class="kc">Serializer</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="n">encode</span><span class="o">&lt;</span><span class="o">T</span><span class="p">:</span> <span class="xc">Encodable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">entity</span><span class="p">:</span> <span class="o">T</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">Data</span> <span class="p">{</span>
-        <span class="k">try</span> <span class="xc">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="xv">encode</span><span class="p">(</span><span class="n">entity</span><span class="p">)</span>
-    <span class="p">}</span>
-    
-    <span class="kd">func</span> <span class="n">decode</span><span class="o">&lt;</span><span class="o">T</span><span class="p">:</span> <span class="xc">Decodable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">data</span><span class="p">:</span> <span class="xc">Data</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="o">T</span> <span class="p">{</span>
-        <span class="k">try</span> <span class="xc">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="o">T</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="xv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
-    <span class="p">}</span>
-<span class="p">}</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="xc">Task</span><span class="o">.</span><span class="xv">detached</span> <span class="p">{</span> <span class="p">[</span><span class="n">decoder</span><span class="p">]</span> <span class="k">in</span>
+    <span class="k">try</span> <span class="n">decoder</span><span class="o">.</span><span class="xv">decode</span><span class="p">(</span><span class="kt">T</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+<span class="p">}</span><span class="o">.</span><span class="xv">value</span>
 </code></pre></div></div>
-
-> Initially, I wasn’t sure whether using actors to send work to a different “thread” was a good idea – the primary role of actors is to protect mutable state. But if you watch [Swift concurrency: Update a sample app (WWDC21)](https://developer.apple.com/videos/play/wwdc2021/10194/), you'll see on minute 36 [Ben Cohen](https://twitter.com/AirspeedSwift) suggesting replacing a serial `DispatchQueue` with an actor to perform work in background. It's not exactly the same thing, because actor runtime [doesn't use](https://developer.apple.com/videos/play/wwdc2021/10254/) GCD – actors have an advantage that they use a cooperative pool of threads. And if you want to parallelize decoding, you'll need to look for other approaches, e.g. `Task.detached`.
-{:.info}
-
-[^1]: By making a serializer a separate actor, I make sure that it performs the work in the background and, if the work is expensive, doesn't delay other network requests from being started.
 
 Getting back to `Codable`, I think we, as a developer community, have finally tackled the challenge of parsing JSON in Swift. So I'm not going to focus on it. If you want to learn more, I wrote [a post](https://kean.blog/post/codable-tips-and-tricks) a couple of years ago with some `Codable` tips – most are still relevant today. For example, it has [some ideas](https://kean.blog/post/codable-tips-and-tricks#5-encoding-patch-parameter) on encoding PATCH parameters, which is useful for REST APIs.
 
