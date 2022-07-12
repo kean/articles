@@ -125,35 +125,6 @@ Getting back to `Codable`, I think we, as a developer community, have finally ta
 
 The rest of the code is relatively straightforward. I'm using [`URLComponents`](https://developer.apple.com/documentation/foundation/urlcomponents) to create URLs, which is important because it [percent-encodes](https://en.wikipedia.org/wiki/Percent-encoding) the parts of the URLs that need it.
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="n">makeURLRequest</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">for</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">URLRequest</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">makeURL</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">url</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">query</span><span class="p">)</span>
-    <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">makeURLRequest</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">method</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">body</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">private</span> <span class="kd">func</span> <span class="nf">makeURL</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[(</span><span class="xc">String</span><span class="p">,</span> <span class="xc">String</span><span class="p">?)]?)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">URL</span> <span class="p">{</span>
-    <span class="kd">func</span> <span class="nf">makeURLComponents</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="xc">URLComponents</span><span class="p">?</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="xv">isEmpty</span> <span class="p">?</span> <span class="s">"/"</span> <span class="p">:</span> <span class="n">url</span>
-        <span class="k">let</span> <span class="nv">isRelative</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="xv">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"/"</span><span class="p">)</span> <span class="o">||</span> <span class="xc">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">url</span><span class="p">)?</span><span class="o">.</span><span class="xv">scheme</span> <span class="o">==</span> <span class="k">nil</span>
-        <span class="k">if</span> <span class="n">isRelative</span> <span class="p">{</span>
-            <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="xc">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">relativeTo</span><span class="p">:</span> <span class="kt">configuration</span><span class="o">.</span><span class="kt">baseURL</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">url</span><span class="o">.</span><span class="xv">flatMap</span> <span class="p">{</span> <span class="xc">URLComponents</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="nv">$0</span><span class="p">,</span> <span class="nv">resolvingAgainstBaseURL</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span> <span class="p">}</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="xc">URLComponents</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">guard</span> <span class="k">var</span> <span class="nv">components</span> <span class="o">=</span> <span class="nf">makeURLComponents</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">throw</span> <span class="xc">URLError</span><span class="p">(</span><span class="o">.</span><span class="xv">badURL</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">,</span> <span class="o">!</span><span class="n">query</span><span class="o">.</span><span class="xv">isEmpty</span> <span class="p">{</span>
-        <span class="n">components</span><span class="o">.</span><span class="xv">queryItems</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="xv">map</span><span class="p">(</span><span class="xc">URLQueryItem</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="xv">url</span> <span class="k">else</span> <span class="p">{</span>
-        <span class="k">throw</span> <span class="xc">URLError</span><span class="p">(</span><span class="o">.</span><span class="xv">badURL</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">url</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
 The client works with JSON, so its sets the respective ["Content-Type"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) and ["Accept"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) HTTP header values automatically.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">makeRequest</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="xc">URL</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="xc">Encodable</span><span class="p">?)</span> <span class="k">async</span> <span class="k">throws</span> <span class="xc">-&gt;</span> <span class="kt">URLRequest</span> <span class="p">{</span>
@@ -456,7 +427,7 @@ It's easy to integrate Pulse in an `APIClient` by modifying the `send()` method 
 > For a complete guide on using Pulse, see the [official documentation](https://kean.blog/pulse/guides/overview).
 {:.info}
 
-### Network Debugging Proxies
+### Network Proxies
 
 Tools like [Proxyman](https://proxyman.io) or [Charles](https://www.charlesproxy.com) are indispensable for debugging your apps because they allow you not only to inspect the traffic but also manipulate the requests and responses without changing your app's code.
 
