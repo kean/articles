@@ -15,18 +15,22 @@ image:
   width: 600
 ---
 
+<div class="UpdatesSections" markdown="1">
+**Updates**
+
+- Jul 11, 2022. Updated to use the latest APIs introduced in Get 1.0
+</div>
+
 It's been more than four years since my previous [API Client in Swift (Archived)](/post/api-client) post. A lot has changed since then. With the addition of Async/Await and Actors, it's now easier and more fun than ever to design custom web API clients in Swift. The new version went through a radical redesign and I can't wait to share more about it.
  
 I'm going to focus on REST APIs and use [GitHub API](https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api) as an example. Before I jump in, here is a quick look at the final result:
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kc">APIClient</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="s">"api.github.com"</span><span class="p">)</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a client</span>
+<span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kc">APIClient</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"https://api.github.com"</span><span class="p">))</span>
 
-<span class="c1">// Using the client directly</span>
-<span class="k">let</span> <span class="nv">user</span><span class="p">:</span> <span class="kc">User</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="o">.</span><span class="kt">get</span><span class="p">(</span><span class="s">"/user"</span><span class="p">))</span>
-<span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="o">.</span><span class="kt">post</span><span class="p">(</span><span class="s">"/user/emails"</span><span class="p">,</span> <span class="kt">body</span><span class="p">:</span> <span class="p">[</span><span class="s">"kean@example.com"</span><span class="p">]))</span>
-
-<span class="c1">// Using a predefined API definition</span>
-<span class="k">let</span> <span class="nv">repos</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="kc">Resources</span><span class="o">.</span><span class="kt">users</span><span class="p">(</span><span class="s">"kean"</span><span class="p">)</span><span class="o">.</span><span class="kt">repos</span><span class="o">.</span><span class="kt">get</span><span class="p">)</span>
+<span class="c1">// Sending requests</span>
+<span class="k">let</span> <span class="nv">user</span><span class="p">:</span> <span class="kc">User</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="o">.</span><span class="kt">get</span><span class="p">(</span><span class="s">"/user"</span><span class="p">))</span><span class="o">.</span><span class="kt">value</span>
+<span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="o">.</span><span class="kt">post</span><span class="p">(</span><span class="s">"/user/emails"</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="p">[</span><span class="s">"kean@example.com"</span><span class="p">]))</span>
 </code></pre></div></div>
 
 > The code from this article is the basis of [kean/Get](https://github.com/kean/Get).
@@ -34,61 +38,61 @@ I'm going to focus on REST APIs and use [GitHub API](https://docs.github.com/en/
 
 ## Overview
 
-Every backend has its quirks and usually requires a client optimized for it. This article is a collection of ideas that you can use for writing your clients. The goal is to use the minimum number of abstractions and make the code easy to understand and extend.
+Every backend has its quirks and usually requires a client optimized for it. This article is a collection of ideas that you can use for writing one that matches your backend perfectly.
 
-The previous version of the client was built using [Alamofire](https://github.com/Alamofire/Alamofire) and [RxSwift](https://github.com/ReactiveX/RxSwift). It was a good design at the time, but with the recent Swift changes, I don’t think you need dependencies anymore.  I’m going with Apple technologies exclusively for this project: [URLSession](https://developer.apple.com/documentation/foundation/urlsession), [Codable](https://developer.apple.com/documentation/swift/codable), [Async/Await](https://developer.apple.com/videos/play/wwdc2021/10132/), and [Actors](https://developer.apple.com/videos/play/wwdc2021/10133/).
+The previous version of the client was built using [Alamofire](https://github.com/Alamofire/Alamofire) and [RxSwift](https://github.com/ReactiveX/RxSwift). It was a good design at the time, but with the recent Swift changes, I don’t think you need dependencies anymore.  I’m going with Apple technologies exclusively: [URLSession](https://developer.apple.com/documentation/foundation/urlsession), [Codable](https://developer.apple.com/documentation/swift/codable), [Async/Await](https://developer.apple.com/videos/play/wwdc2021/10132/), and [Actors](https://developer.apple.com/videos/play/wwdc2021/10133/).
 
 ## Implementing a Client
 
-Let’s start by defining a type for representing requests. It can be as complicated as you need, but this is a good starting point:
+Let’s start by defining a type for representing requests. It can be as complicated as you need, but here is a good starting point:
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="kc">Response</span><span class="o">&gt;</span> <span class="p">{</span>
     <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="xc">String</span>
-    <span class="k">var</span> <span class="nv">path</span><span class="p">:</span> <span class="xc">String</span>
+    <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="xc">String</span>
     <span class="k">var</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[</span><span class="xc">String</span><span class="p">:</span> <span class="xc">String</span><span class="p">]?</span>
-    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kc">AnyEncodable</span><span class="p">?</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="xc">Encodable</span><span class="p">?</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 To make it easier to define REST APIs, let's add a few factory methods:
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kc">Request</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">get</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[</span><span class="xc">String</span><span class="p">:</span> <span class="xc">String</span><span class="p">]?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">Request</span> <span class="p">{</span>
-        <span class="kc">Request</span><span class="p">(</span><span class="nv">method</span><span class="p">:</span> <span class="s">"GET"</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">get</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[</span><span class="xc">String</span><span class="p">:</span> <span class="xc">String</span><span class="p">]?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">Request</span> <span class="p">{</span>
+        <span class="kc">Request</span><span class="p">(</span><span class="nv">method</span><span class="p">:</span> <span class="s">"GET"</span><span class="p">,</span> <span class="nv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span>
     <span class="p">}</span>
     
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">path</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="xc">Encodable</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">Request</span> <span class="p">{</span>
-        <span class="kc">Request</span><span class="p">(</span><span class="nv">method</span><span class="p">:</span> <span class="s">"POST"</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="n">path</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="kc">AnyEncodable</span><span class="p">(</span><span class="n">body</span><span class="p">))</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="xc">Encodable</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">Request</span> <span class="p">{</span>
+        <span class="kc">Request</span><span class="p">(</span><span class="nv">method</span><span class="p">:</span> <span class="s">"POST"</span><span class="p">,</span> <span class="nv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="n">body</span><span class="p">)</span>
     <span class="p">}</span>
     
     <span class="c1">// ...</span>
 </code></pre></div></div>
 
-What do Swift developers love more than anything else? Type-safety. By separating each HTTP method, `Request` stops invalid parameter combinations at compile time. For example, you [shouldn't pass](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) body to GET requests, and `URLSession` throws an error at runtime if you try. With `Request`, you can't pass it.
+What do Swift developers love more than anything else? Type-safety. By separating each HTTP method, `Request` stops invalid parameter combinations at compile time. For example, you [shouldn't pass](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) body to GET requests, and `URLSession` throws an error at runtime if you try. With `Request`, it's a compile-time error.
 
 To execute the requests, you use a client[^2]. It's a small wrapper on top of `URLSession` that is easy to modify and extend. You initialize it with a host making it easy to change the environments at runtime.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="k">actor</span> <span class="kc">APIClient</span> <span class="p">{</span>
     <span class="kd">private</span> <span class="k">let</span> <span class="nv">session</span><span class="p">:</span> <span class="xc">URLSession</span>
-    <span class="kd">private</span> <span class="k">let</span> <span class="nv">host</span><span class="p">:</span> <span class="xc">String</span>
+    <span class="kd">private</span> <span class="k">let</span> <span class="nv">baseURL</span><span class="p">:</span> <span class="xc">URL</span>
     <span class="c1">// ..</span>
     
-    <span class="kd">public</span> <span class="k">init</span><span class="p">(</span><span class="nv">host</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span>
+    <span class="kd">public</span> <span class="k">init</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">,</span>
                 <span class="nv">configuration</span><span class="p">:</span> <span class="xc">URLSessionConfiguration</span> <span class="o">=</span> <span class="o">.</span><span class="xv">default</span><span class="p">,</span>
                 <span class="nv">delegate</span><span class="p">:</span> <span class="kc">APIClientDelegate</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">self</span><span class="o">.</span><span class="kt">host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">url</span> <span class="o">=</span> <span class="n">url</span>
         <span class="k">self</span><span class="o">.</span><span class="kt">session</span> <span class="o">=</span> <span class="xc">URLSession</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="n">configuration</span><span class="p">)</span>
         <span class="k">self</span><span class="o">.</span><span class="kt">delegate</span> <span class="o">=</span> <span class="n">delegate</span> <span class="p">??</span> <span class="kc">DefaultAPIClientDelegate</span><span class="p">()</span>
     <span class="p">}</span>
 </code></pre></div></div>
 
-[^2]: The client is defined as an actor, but in this case, it doesn't have to be – in the sample code there is no mutable state to protect. But by making it actor, I make sure the requests are created in started in the background. Based on my [performance testing](/post/nuke-9) in Nuke, creating requests is a relatively expensive operation and it can be advantageous to move it out of the main thread. In the case of the client, it's just a matter of changing "class" to "actor" – the rest of the APIs are already async, so there is no change in the APIs needed. But it can be swapped out back to "class".
+[^2]: The client is defined as an actor, but in this case, it doesn't have to be – in the sample code there is no mutable state to protect. But by making it actor, I make sure the requests are created and started in the background. Based on my [performance testing](/post/nuke-9) in Nuke, creating requests is a relatively expensive operation and it can be advantageous to move it out of the main thread. In the case of the client, it's just a matter of changing "class" to "actor" – the rest of the APIs are already async, so there is no change in the APIs needed. But it can be swapped out back to "class".
 
 There are two types of `send()` methods – one for `Decodable` types and one for `Void` that isn't decodable.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kc">APIClient</span> <span class="p">{</span>
     <span class="kd">public</span> <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="o">T</span><span class="p">:</span> <span class="xc">Decodable</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="o">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="o">T</span> <span class="p">{</span>
-        <span class="k">try</span> <span class="k">await</span> <span class="kt">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="kt">serializer</span><span class="o">.</span><span class="kt">decode</span><span class="p">)</span>
+        <span class="k">try</span> <span class="k">await</span> <span class="kt">send</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="kt">decode</span><span class="p">)</span>
     <span class="p">}</span>
     
     <span class="kd">public</span> <span class="kd">func</span> <span class="nf">send</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="xc">Void</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">Void</span> <span class="p">{</span>
@@ -97,13 +101,13 @@ There are two types of `send()` methods – one for `Decodable` types and one fo
 
     <span class="kd">private</span> <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="o">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="o">T</span><span class="o">&gt;</span><span class="p">,</span> 
                          <span class="n">_</span> <span class="nv">decode</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="xc">Data</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="o">T</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="o">T</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">request</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">makeRequest</span><span class="p">(</span><span class="kt">for</span><span class="p">:</span> <span class="n">request</span><span class="p">)</span>
-        <span class="k">let</span> <span class="p">(</span><span class="nv">data</span><span class="p">,</span> <span class="nv">response</span><span class="p">)</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">urlRequest</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">makeURLRequest</span><span class="p">(</span><span class="kt">for</span><span class="p">:</span> <span class="n">request</span><span class="p">)</span>
+        <span class="k">let</span> <span class="p">(</span><span class="nv">data</span><span class="p">,</span> <span class="nv">response</span><span class="p">)</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">send</span><span class="p">(</span><span class="n">urlRequest</span><span class="p">)</span>
         <span class="k">try</span> <span class="kt">validate</span><span class="p">(</span><span class="kt">response</span><span class="p">:</span> <span class="n">response</span><span class="p">,</span> <span class="kt">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="nf">decode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="p">}</span>
 
-    <span class="c1">// The final implementation is a bit more complicated because it supports auto-retries</span>
+    <span class="c1">// The final implementation uses a custom URLSession wrapper compatible with iOS 13.0</span>
     <span class="kd">private</span> <span class="kd">func</span> <span class="nf">send</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="xc">URLRequest</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="xc">Data</span><span class="p">,</span> <span class="xc">URLResponse</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">try</span> <span class="k">await</span> <span class="kt">session</span><span class="o">.</span><span class="xv">data</span><span class="p">(</span><span class="xv">for</span><span class="p">:</span> <span class="n">request</span><span class="p">,</span> <span class="xv">delegate</span><span class="p">:</span> <span class="k">nil</span><span class="p">)</span>
     <span class="p">}</span>
@@ -117,26 +121,31 @@ There are two types of `send()` methods – one for `Decodable` types and one fo
 <span class="p">}</span><span class="o">.</span><span class="xv">value</span>
 </code></pre></div></div>
 
-Getting back to `Codable`, I think we, as a developer community, have finally tackled the challenge of parsing JSON in Swift. So I'm not going to focus on it. If you want to learn more, I wrote [a post](https://kean.blog/post/codable-tips-and-tricks) a couple of years ago with some `Codable` tips – most are still relevant today. For example, it has [some ideas](https://kean.blog/post/codable-tips-and-tricks#5-encoding-patch-parameter) on encoding PATCH parameters, which is useful for REST APIs.
+Getting back to `Codable`, I think we, as a developer community, have finally tackled the challenge of parsing JSON in Swift. So I'm not going to focus on it. If you want to learn more, I wrote [a post](https://kean.blog/post/codable-tips-and-tricks) a couple of years ago with some `Codable` tips – most are still relevant today.
 
 The rest of the code is relatively straightforward. I'm using [`URLComponents`](https://developer.apple.com/documentation/foundation/urlcomponents) to create URLs, which is important because it [percent-encodes](https://en.wikipedia.org/wiki/Percent-encoding) the parts of the URLs that need it.
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="n">makeRequest</span><span class="o">&lt;</span><span class="o">T</span><span class="o">&gt;</span><span class="p">(</span><span class="o">for</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="o">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">URLRequest</span> <span class="p">{</span>
-    <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">makeURL</span><span class="p">(</span><span class="kt">path</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">path</span><span class="p">,</span> <span class="kt">query</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">query</span><span class="p">)</span>
-    <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">makeRequest</span><span class="p">(</span><span class="kt">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="kt">method</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">method</span><span class="p">,</span> <span class="kt">body</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">body</span><span class="p">)</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="n">makeURLRequest</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="n">for</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">URLRequest</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">makeURL</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">url</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">query</span><span class="p">)</span>
+    <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">makeURLRequest</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">method</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="kt">body</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="kd">func</span> <span class="nf">makeURL</span><span class="p">(</span><span class="nv">path</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[</span><span class="xc">String</span><span class="p">:</span> <span class="xc">String</span><span class="p">]?)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">URL</span> <span class="p">{</span>
-    <span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="xc">URL</span><span class="p">(</span><span class="xv">string</span><span class="p">:</span> <span class="n">path</span><span class="p">),</span>
-          <span class="k">var</span> <span class="nv">components</span> <span class="o">=</span> <span class="xc">URLComponents</span><span class="p">(</span><span class="xv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="xv">resolvingAgainstBaseURL</span><span class="p">:</span> <span class="k">false</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+<span class="kd">private</span> <span class="kd">func</span> <span class="nf">makeURL</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[(</span><span class="xc">String</span><span class="p">,</span> <span class="xc">String</span><span class="p">?)]?)</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">URL</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">makeURLComponents</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="xc">URLComponents</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="xv">isEmpty</span> <span class="p">?</span> <span class="s">"/"</span> <span class="p">:</span> <span class="n">url</span>
+        <span class="k">let</span> <span class="nv">isRelative</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="xv">starts</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="s">"/"</span><span class="p">)</span> <span class="o">||</span> <span class="xc">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">url</span><span class="p">)?</span><span class="o">.</span><span class="xv">scheme</span> <span class="o">==</span> <span class="k">nil</span>
+        <span class="k">if</span> <span class="n">isRelative</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="xc">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">relativeTo</span><span class="p">:</span> <span class="kt">configuration</span><span class="o">.</span><span class="kt">baseURL</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">url</span><span class="o">.</span><span class="xv">flatMap</span> <span class="p">{</span> <span class="xc">URLComponents</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="nv">$0</span><span class="p">,</span> <span class="nv">resolvingAgainstBaseURL</span><span class="p">:</span> <span class="k">true</span><span class="p">)</span> <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="xc">URLComponents</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">guard</span> <span class="k">var</span> <span class="nv">components</span> <span class="o">=</span> <span class="nf">makeURLComponents</span><span class="p">()</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">throw</span> <span class="xc">URLError</span><span class="p">(</span><span class="o">.</span><span class="xv">badURL</span><span class="p">)</span>
     <span class="p">}</span>
-    <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="xv">starts</span><span class="p">(</span><span class="xv">with</span><span class="p">:</span> <span class="s">"/"</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">components</span><span class="o">.</span><span class="xv">scheme</span> <span class="o">=</span> <span class="s">"https"</span>
-        <span class="n">components</span><span class="o">.</span><span class="xv">host</span> <span class="o">=</span> <span class="n">host</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="n">query</span> <span class="p">{</span>
-        <span class="n">components</span><span class="o">.</span><span class="xv">queryItems</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="xv">map</span><span class="p">(</span><span class="xc">URLQueryItem</span><span class="o">.</span><span class="xv">init</span><span class="p">)</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">query</span> <span class="o">=</span> <span class="n">query</span><span class="p">,</span> <span class="o">!</span><span class="n">query</span><span class="o">.</span><span class="xv">isEmpty</span> <span class="p">{</span>
+        <span class="n">components</span><span class="o">.</span><span class="xv">queryItems</span> <span class="o">=</span> <span class="n">query</span><span class="o">.</span><span class="xv">map</span><span class="p">(</span><span class="xc">URLQueryItem</span><span class="o">.</span><span class="kd">init</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="n">components</span><span class="o">.</span><span class="xv">url</span> <span class="k">else</span> <span class="p">{</span>
         <span class="k">throw</span> <span class="xc">URLError</span><span class="p">(</span><span class="o">.</span><span class="xv">badURL</span><span class="p">)</span>
@@ -147,14 +156,21 @@ The rest of the code is relatively straightforward. I'm using [`URLComponents`](
 
 The client works with JSON, so its sets the respective ["Content-Type"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type) and ["Accept"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) HTTP header values automatically.
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">makeRequest</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="xc">URL</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="kc">AnyEncodable</span><span class="p">?)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="xc">URLRequest</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">makeRequest</span><span class="p">(</span><span class="nv">url</span><span class="p">:</span> <span class="xc">URL</span><span class="p">,</span> <span class="nv">method</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="xc">Encodable</span><span class="p">?)</span> <span class="k">async</span> <span class="k">throws</span> <span class="xc">-&gt;</span> <span class="kt">URLRequest</span> <span class="p">{</span>
     <span class="k">var</span> <span class="nv">request</span> <span class="o">=</span> <span class="xc">URLRequest</span><span class="p">(</span><span class="xv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span>
+    <span class="n">request</span><span class="o">.</span><span class="xv">allHTTPHeaderFields</span> <span class="o">=</span> <span class="n">headers</span>
     <span class="n">request</span><span class="o">.</span><span class="xv">httpMethod</span> <span class="o">=</span> <span class="n">method</span>
     <span class="k">if</span> <span class="k">let</span> <span class="nv">body</span> <span class="o">=</span> <span class="n">body</span> <span class="p">{</span>
-        <span class="n">request</span><span class="o">.</span><span class="xv">httpBody</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">serializer</span><span class="o">.</span><span class="kt">encode</span><span class="p">(</span><span class="n">body</span><span class="p">)</span>
-        <span class="n">request</span><span class="o">.</span><span class="xv">setValue</span><span class="p">(</span><span class="s">"application/json"</span><span class="p">,</span> <span class="xv">forHTTPHeaderField</span><span class="p">:</span> <span class="s">"Content-Type"</span><span class="p">)</span>
+        <span class="n">request</span><span class="o">.</span><span class="xv">httpBody</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="xc">Task</span><span class="o">.</span><span class="xv">detached</span> <span class="p">{</span> <span class="p">[</span><span class="kt">encoder</span><span class="p">]</span> <span class="k">in</span>
+            <span class="k">try</span> <span class="n">encoder</span><span class="o">.</span><span class="xv">encode</span><span class="p">(</span><span class="kc">AnyEncodable</span><span class="p">(</span><span class="kt">value</span><span class="p">:</span> <span class="n">body</span><span class="p">))</span>
+        <span class="p">}</span><span class="o">.</span><span class="xv">value</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="xv">value</span><span class="p">(</span><span class="xv">forHTTPHeaderField</span><span class="p">:</span> <span class="s">"Content-Type"</span><span class="p">)</span> <span class="o">==</span> <span class="k">nil</span> <span class="p">{</span>
+            <span class="n">request</span><span class="o">.</span><span class="xv">setValue</span><span class="p">(</span><span class="s">"application/json"</span><span class="p">,</span> <span class="xv">forHTTPHeaderField</span><span class="p">:</span> <span class="s">"Content-Type"</span><span class="p">)</span>
+        <span class="p">}</span>
     <span class="p">}</span>
-    <span class="n">request</span><span class="o">.</span><span class="xv">setValue</span><span class="p">(</span><span class="s">"application/json"</span><span class="p">,</span> <span class="xv">forHTTPHeaderField</span><span class="p">:</span> <span class="s">"Accept"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="xv">value</span><span class="p">(</span><span class="xv">forHTTPHeaderField</span><span class="p">:</span> <span class="s">"Accept"</span><span class="p">)</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="n">request</span><span class="o">.</span><span class="xv">setValue</span><span class="p">(</span><span class="s">"application/json"</span><span class="p">,</span> <span class="xv">forHTTPHeaderField</span><span class="p">:</span> <span class="s">"Accept"</span><span class="p">)</span>
+    <span class="p">}</span>
     <span class="k">return</span> <span class="n">request</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -163,10 +179,10 @@ Being able to use async functions right inside the `makeRequest()` method withou
 
 The only remaining bit is a `validate()` method where I check that the response status code is acceptable. It also gives a delegate a chance to decide what error to throw. Most APIs will have a standard JSON format for errors – this is a good place to parse it.
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="xc">URLResponse</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="xc">Data</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">validate</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="xc">URLResponse</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="xc">Data</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
     <span class="k">guard</span> <span class="k">let</span> <span class="nv">httpResponse</span> <span class="o">=</span> <span class="n">response</span> <span class="k">as?</span> <span class="xc">HTTPURLResponse</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
     <span class="k">if</span> <span class="o">!</span><span class="p">(</span><span class="mi">200</span><span class="o">..&lt;</span><span class="mi">300</span><span class="p">)</span><span class="o">.</span><span class="xv">contains</span><span class="p">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="xv">statusCode</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">throw</span> <span class="kt">delegate</span><span class="o">.</span><span class="kt">client</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="kt">didReceiveInvalidResponse</span><span class="p">:</span> <span class="n">httpResponse</span><span class="p">,</span> <span class="kt">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="kc">APIError</span><span class="o">.</span><span class="kt">unacceptableStatusCode</span><span class="p">(</span><span class="n">httpResponse</span><span class="o">.</span><span class="xv">statusCode</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -294,7 +310,9 @@ This response is cacheable and will be *fresh* for 1 hour. When it becomes *stal
 
 HTTP caching is a flexible system where both the server and the client get a say over what gets cached and how. With HTTP, a server can set restrictions on which responses are cacheable, set an expiration age for responses, provide validators (`ETag`, `Last-Modified`) to check stale responses, force revalidation on each request, and more.
 
-`URLSession` (and `URLCache`) support HTTP caching out of the box. There is a [set of requirements](https://developer.apple.com/documentation/foundation/nsurlsessiondatadelegate/1411612-urlsession) for a response to be cached. It's not just the server that has control. For example, you can use [`URLRequest.CachePolicy`](https://developer.apple.com/documentation/foundation/nsurlrequest/cachepolicy) to modify caching behavior from the client. You can easily extend `APIClient` to support it if needed.
+`URLSession` (and `URLCache`) support HTTP caching out of the box. There is a [set of requirements](https://developer.apple.com/documentation/foundation/nsurlsessiondatadelegate/1411612-urlsession) for a response to be cached. It's not just the server that has control. For example, you can use [`URLRequest.CachePolicy`](https://developer.apple.com/documentation/foundation/nsurlrequest/cachepolicy) to modify caching behavior from the client. You can easily extend `APIClient` to support it if needed[^3].
+
+[^3]: The framework's `send()` method takes a closure with an `inout URLRequest` as a parameter allowing the user to modify any of the `URLRequest` properties.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kc">APIClient</span> <span class="p">{</span>
     <span class="kd">func</span> <span class="n">send</span><span class="o">&lt;</span><span class="o">Response</span><span class="o">&gt;</span><span class="p">(</span>
@@ -324,7 +342,7 @@ And if the `Request` type is not working for you, it's easy to extend too. You c
 
 ### Environments
 
-`APIClient` is initialized with a `host`, making it easy to switch between the environments in runtime. I typically have a debug menu in the apps with all sorts of debug settings, including an environment picker – it's fast and easy to build with SwiftUI. I added the code generating this screen in [a gist](https://gist.github.com/kean/846eba91cf3471071760ec0db3ddc23e).
+`APIClient` is initialized with a `baseURL`, making it easy to switch between the environments in runtime. I typically have a debug menu in the apps with all sorts of debug settings, including an environment picker – it's fast and easy to build with SwiftUI. I added the code generating this screen in [a gist](https://gist.github.com/kean/846eba91cf3471071760ec0db3ddc23e).
 
 <img width="452px" class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/02.png">
 
@@ -372,8 +390,7 @@ Usage:
 
 This API is visually appealing, but it can be a bit tedious to write and less discoverable than simply listing all available calls. I’m also still a bit cautious about over-using nesting. I used to avoid it in the past, but the recent improvements to the Xcode code completion made working with nested APIs much easier. But again, this is just an example.
 
-> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each property has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it's harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
-{:.warning}
+> There are man [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) online to model APIs as an enum. This approach might make your code harder to read and modify and lead to merge conflicts. When you add a new call, you should only need to make changes in one place.
 
 ## Tools
 
