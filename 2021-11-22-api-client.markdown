@@ -382,60 +382,23 @@ Generating `Codable` entities is also extremely easy. There are [a ton of tools]
 
 ### Logging
 
-[Pulse](https://kean.blog/pulse/home) is a powerful logging system for Apple Platforms. In addition to regular messages, it records `URLSession` tasks and allows you to inspect logs right from your iOS app using [Pulse Console](https://kean.blog/pulse/guides/pulseui). You can also share and view them in a dedicated [macOS app](https://kean.blog/pulse/guides/pulse-pro). 
+[Pulse](https://kean.blog/pulse/home) is a powerful logging system for Apple Platforms.
 
-<a href="/images/posts/api-client/08-full.png">
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/08.png">
-</a>
+<img class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/pulse.png">
 
-It's easy to integrate Pulse in an `APIClient` by modifying the `send()` method and providing a custom task delegate. The advantage of doing it at that level is that you don't need to worry about TLS and SSL pinning, and you collect more information than a typical network proxy does thanks to the direct access to `URLSession`.
+ It requests a single line to setup to work with `APIClient`. The advantage of doing it at that level is that you don't need to worry about TLS and SSL pinning, and you collect more information than a typical network proxy does thanks to the direct access to `URLSession`.
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">import</span> <span class="o">PulseCore</span>
-
-<span class="kd">public</span> <span class="k">actor</span> <span class="kc">APIClient</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="k">let</span> <span class="nv">logger</span> <span class="o">=</span> <span class="kt">LoggerStore</span><span class="o">.</span><span class="k">default</span>
-
-    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">send</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kc">URLRequest</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="xc">Data</span><span class="p">,</span> <span class="xc">URLResponse</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">delegate</span> <span class="o">=</span> <span class="kc">TaskDelegate</span><span class="p">()</span>
-        <span class="kd">func</span> <span class="nf">log</span><span class="p">(</span><span class="nv">response</span><span class="p">:</span> <span class="xc">URLResponse</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">,</span> <span class="nv">data</span><span class="p">:</span> <span class="xc">Data</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">,</span> <span class="nv">error</span><span class="p">:</span> <span class="xc">Error</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">logger</span><span class="o">.</span><span class="kt">storeRequest</span><span class="p">(</span><span class="n">delegate</span><span class="o">.</span><span class="kt">currentRequest</span> <span class="p">??</span> <span class="n">request</span><span class="p">,</span> <span class="kt">response</span><span class="p">:</span> <span class="n">response</span><span class="p">,</span>
-                <span class="kt">error</span><span class="p">:</span> <span class="n">error</span><span class="p">,</span> <span class="kt">data</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="kt">metrics</span><span class="p">:</span> <span class="n">delegate</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>
-        <span class="p">}</span>
-        <span class="k">do</span> <span class="p">{</span>
-            <span class="k">let</span> <span class="p">(</span><span class="nv">data</span><span class="p">,</span> <span class="nv">response</span><span class="p">)</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">session</span><span class="o">.</span><span class="xv">data</span><span class="p">(</span><span class="xv">for</span><span class="p">:</span> <span class="n">request</span><span class="p">,</span> <span class="xv">delegate</span><span class="p">:</span> <span class="n">delegate</span><span class="p">)</span>
-            <span class="kt">log</span><span class="p">(</span><span class="kt">response</span><span class="p">:</span> <span class="n">response</span><span class="p">,</span> <span class="kt">data</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
-            <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">response</span><span class="p">)</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
-            <span class="kt">log</span><span class="p">(</span><span class="kt">error</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span>
-            <span class="k">throw</span> <span class="n">error</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-
-<span class="kd">private</span> <span class="kd">final</span> <span class="kd">class</span> <span class="kc">TaskDelegate</span><span class="p">:</span> <span class="xc">NSObject</span><span class="p">,</span> <span class="xc">URLSessionTaskDelegate</span> <span class="p">{</span>
-    <span class="k">var</span> <span class="nv">currentRequest</span><span class="p">:</span> <span class="xc">URLRequest</span><span class="p">?</span>
-    <span class="k">var</span> <span class="nv">metrics</span><span class="p">:</span> <span class="xc">URLSessionTaskMetrics</span><span class="p">?</span>
-        
-    <span class="kd">func</span> <span class="nf">urlSession</span><span class="p">(</span><span class="n">_</span> <span class="nv">session</span><span class="p">:</span> <span class="xc">URLSession</span><span class="p">,</span> <span class="nv">task</span><span class="p">:</span> <span class="xc">URLSessionTask</span><span class="p">,</span>
-                    <span class="n">didFinishCollecting</span> <span class="nv">metrics</span><span class="p">:</span> <span class="xc">URLSessionTaskMetrics</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">self</span><span class="o">.</span><span class="kt">currentRequest</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="xv">currentRequest</span>
-        <span class="k">self</span><span class="o">.</span><span class="kt">metrics</span> <span class="o">=</span> <span class="n">metrics</span>
-    <span class="p">}</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kc">APIClient</span><span class="p">(</span><span class="kt">baseURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">(</span><span class="xv">string</span><span class="p">:</span> <span class="s">"https://api.github.com"</span><span class="p">))</span> <span class="p">{</span>
+    <span class="nv">$0</span><span class="o">.</span><span class="kt">sessionDelegate</span> <span class="o">=</span> <span class="kc">PulseCore</span><span class="o">.</span><span class="kc">URLSessionProxyDelegate</span><span class="p">()</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 > For a complete guide on using Pulse, see the [official documentation](https://kean.blog/pulse/guides/overview).
 {:.info}
 
-### Network Proxies
-
-Tools like [Proxyman](https://proxyman.io) or [Charles](https://www.charlesproxy.com) are indispensable for debugging your apps because they allow you not only to inspect the traffic but also manipulate the requests and responses without changing your app's code.
-
 ### Mocking
 
-My preferred way of testing ViewModels is by writing integration tests where I mock only the network responses. These tests are easy to write and maintain and they give you a lot of confidence in your app.
-
-There are a many mocking tools to chose from. I used [`Mocker`](https://github.com/WeTransfer/Mocker) for unit-testing `APIClient` itself.
+My preferred way of testing ViewModels is by writing integration tests where I mock only the network responses. There are a many mocking tools to chose from. I'm used WeTransfer's [`Mocker`](https://github.com/WeTransfer/Mocker) for unit-testing `APIClient` itself.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="k">let</span> <span class="nv">host</span> <span class="o">=</span> <span class="s">"api.github.com"</span>
 
