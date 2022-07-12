@@ -10,6 +10,12 @@ permalink: /post/triple-trouble
 uuid: 0526798f-a074-4365-8970-cb470579c358
 ---
 
+<div class="UpdatesSections" markdown="1">
+**Updates**
+
+- Jul 12, 2022. In iOS 16, there is now a clear way to do that: [`NavigationSplitView`](https://developer.apple.com/documentation/swiftui/navigationsplitview).
+</div>
+
 Triple-column navigation with sidebars, so hot right now. And it's much easier to implement than one might think. The main challenge is finding accurate information.
 
 I needed to build triple-column navigation for [Pulse](https://github.com/kean/Pulse.git) and after a lot of struggle got it working exactly the way I want – the way Apple Mail works. I created a [minimal project](https://github.com/kean/ThreeColumnNavigation) demonstrating how to get it working, and I'll go over some details in this short post.
