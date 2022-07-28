@@ -10,6 +10,13 @@ permalink: /post/pulse-store
 uuid: 424b2065-a294-4311-9bc7-f85ed82d1290
 ---
 
+<div class="UpdatesSections" markdown="1">
+**Updates**
+
+- Aug 16, 2022. Starting with [Pulse 2.0](/post/pulse-2), the ZIP archives were replaced with an SQLite-based document format in order to increase performance and remove the dependencies.
+
+</div>
+
 <div class="BlogVideo">
 <video autoplay loop muted playsinline preload="auto">
   <source src="{{ site.url }}/videos/pulse-store/01.mp4" type="video/mp4">
@@ -110,7 +117,7 @@ func copyStore(to storeURL: URL) throws {
 }
 ```
 
-> When I create a copy of a database, I set ["journal_mode"](https://www.sqlite.org/pragma.html#pragma_journal_mode) to "DELETE" to ensure there is no .wal file. I also use [VACUUM](https://sqlite.org/lang_vacuum.html) to reduce space.
+> When I create a copy of a database, I set ["journal_mode"](https://www.sqlite.org/pragma.html#pragma_journal_mode) to "OFF" to ensure there is no .wal file.
 {:.info}
 
 Opening an archive:
@@ -154,11 +161,9 @@ The great thing about ZIP archives is they are random access. Some archives, e.g
 > `Archive` doesn't implement a `RandomAccessCollection` protocol (only `Sequence`) but provides a `subscript(path: String)` which can be a bit misleading. If you look at [the implementation](https://github.com/weichsel/ZIPFoundation/blob/cf10bbff6ac3b873e97b36b9784c79866a051a8e/Sources/ZIPFoundation/Archive.swift#L229), every time it gets called, `Archive` iterates over the [central directory](https://en.wikipedia.org/wiki/ZIP_(file_format)#Structure) on disk in a sequential fashion (`O(N)`). I ended up constructing my own in-memory index of entries when the store is opened.
 {:.warning}
 
-As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.sqlite`), and a directory for blobs. While a database is usually relatively small, blobs can grow quite a bit because that's where all the network responses are. I have to unarchive a manifest and a database when opening a store, but with zip I can keep the blobs in an archive and access each individual blob on-demand (see `dataForEntry`)[^1].
+As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.sqlite`), and a directory for blobs. While a database is usually relatively small, blobs can grow quite a bit because that's where all the network responses are. I have to unarchive a manifest and a database when opening a store, but with zip I can keep the blobs in an archive and access each individual blob on-demand (see `dataForEntry`).
 
-[^1]: I’m glad I initially decided not to put blobs into the database. It would have prevented me from implementing some of these optimizations.
-
-> Blob store has another optimization in place where responses automatically get deduplicated. It calculates a cryptographic hash (sha256) for each response. If two responses have the same hash, only one blob gets stored. This is great especially if the app keeps fetching the resource that doesn't change over and over again.
+> Blob store has another optimization in place where responses automatically get deduplicated. It calculates a cryptographic hash (sha1) for each response. If two responses have the same hash, only one blob gets stored. This is great especially if the app keeps fetching the resource that doesn't change over and over again.
 {:.info}
 
 ### Opening Documents

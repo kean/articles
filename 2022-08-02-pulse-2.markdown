@@ -1,0 +1,161 @@
+---
+layout: post
+title: "Pulse 2.0"
+subtitle: Logger and network inspector for Apple platforms
+description: Logger and network inspector for Apple platforms
+date: 2022-08-16 09:00:00 -0500
+category: programming
+tags: programming
+permalink: /post/pulse-2
+fullscreen: true
+uuid: 7e686610-d8b7-4e91-9c0f-a6f65f313675
+---
+
+[Pulse](https://github.com/kean/Pulse) is a logging system for Apple Platforms. Pulse 2.0 is almost a complete rewrite that focuses on both adding the new major features that there are plenty of and optimizing the performance.
+
+## PulseUI
+
+The first feature developed for 2.0 was _pending requests_ – the console will now show pending tasks with their progress. It uses the new [`urlSession(_:didCreateTask:)`](https://developer.apple.com/documentation/foundation/urlsessiontaskdelegate/3929682-urlsession) method (iOS 16) to track the created tasks[^2]. The remote logger also supports this feature. And in addition to basic data tasks, Pulse now supports [downloads](https://developer.apple.com/documentation/foundation/urlsessiondownloadtask) and uploads.
+
+[^2]: If you want pending tasks to work on the previous versions of the OS, you can track the same events manually using [`NetworkLogger/logTaskCreated(_:)`](https://kean-docs.github.io/pulse/documentation/pulse/networklogger/logtaskcreated(_:)) API.
+
+<div class="BlogVideo NewScreenshot">
+<video autoplay loop muted playsinline preload="auto" alt="Custom context menu preview">
+  <source src="{{ site.url }}/videos/pulse-2/pending.mp4" type="video/mp4">
+</video>
+</div>
+
+### Improved Metrics
+
+The network inspector now also does a much better job of accurately displaying the information about the requests and their [metrics](https://developer.apple.com/documentation/foundation/urlsessiontaskmetrics). You can now see both the [original](https://developer.apple.com/documentation/foundation/urlsessiontask/1411572-originalrequest) and the [current](https://developer.apple.com/documentation/foundation/urlsessiontask/1411649-currentrequest) request. And it also displays individual transactions.
+
+In the example below, the response is stored in the disk cache but is expired and needs to be validated with the server. You can now clearly see what happens from the transaction list. The first one loads the response from the cache. And the second transaction validates it with the server that returns 304 (Not Modified). That's why you see "Source: Cache" – a new field on the summary page.
+
+<div class="BlogVideo NewScreenshot">
+<video autoplay loop muted playsinline preload="auto" alt="Custom context menu preview">
+  <source src="{{ site.url }}/videos/pulse-2/metrics.mp4" type="video/mp4">
+</video>
+</div>
+
+And there are more new fields and sections on the summary page. For example, it now shows a type of recorded task: `URLSessionDataTask`, `URLSessionDownloadTask`, etc. There are separate `host` and `path` fields in the request section making it easier to see and copy them. And if the URL contains query items, there are also displayed in pairs.
+
+### Insights
+
+In addition to tracking individual metrics, Pulse now also analyzes your traffic and presents some key insights in a visual way.
+
+<img class="NewScreenshot" alt="Insights screen" src="{{ site.url }}/images/posts/pulse-2/insights.png">
+
+It'll show you information like the duration of requests, total transfer size, domains, and recent errors and warnings. For example, it'll surface the requests with redirects and show how much time the app lost on them.
+
+The graphs on this screen are powered by [Swift Charts](https://developer.apple.com/documentation/Charts) (iOS 16). This API is not yet released and there will be more charts added to this screen when Xcode 14 goes into production this fall.
+
+<img class="NewScreenshot" alt="Warning about redirects" src="{{ site.url }}/images/posts/pulse-2/redirects.png">
+
+### Decoding Errors
+
+Unlike regular network proxies, Pulse works directly with `URLSession`. It makes it easier to integrate and see encrypted traffic. It also gives you more information about the requests that any proxy could get, and Pulse now takes more advantage of it.
+
+When you think about network requests from the perspective of an app, you can’t consider a request with failed decoding success. Yet a regular proxy will report 200 OK. There is a new configuration option in `NetworkLogger` to address that called [`isWaitingForDecoding`](https://kean-docs.github.io/pulse/documentation/pulse/networklogger/configuration/iswaitingfordecoding). When enabled, it gives the app control over when to complete the request. If the app reports a decoding error, Pulse will now display it directly in the response body, highlighting a field that produced the error.
+
+<img class="NewScreenshot" alt="File viewer showing a decoding error" src="{{ site.url }}/images/posts/pulse-2/file-view-decoding-errors.png">
+
+File viewer now supports more content types: PDF, Query Items, and HTML. There is now basic highlighting for HTML and an option to open it in a browser for preview. The file viewer is now also the default screen you see when you tap on a request, and you can also open it fullscreen.
+
+<img class="NewScreenshot" alt="File viewer showing HTML" src="{{ site.url }}/images/posts/pulse-2/file-view-html.png">
+
+There are ton of other minor fixes, tweaks and features across the app and there is no space to cover them. Many of them are thanks to the new APIs added to SwiftUI this year. For example, [custom previews](https://developer.apple.com/documentation/swiftui/form/contextmenu(menuitems:preview:)) for context menus.
+
+<div class="BlogVideo NewScreenshot">
+<video autoplay loop muted playsinline preload="auto" alt="Custom context menu preview">
+  <source src="{{ site.url }}/videos/pulse-2/context-preview.mp4" type="video/mp4">
+</video>
+</div>
+
+## Back to the Mac
+
+Pulse has a history on a Mac. The [initial version](https://kean.blog/images/posts/macos/cover-macos.png) looked and worked more like it was designed for an iPad despite being a native macOS app. Then came [Pulse Pro](https://github.com/kean/PulsePro) designed as a professional macOS app with a primary goal of working as a target for remote logging. But something was lost in that transition.
+
+Pulse Pro is a standalone app and not part of the PulseUI framework, and there was no longer any way to bundle PulseUI into a macOS app that [people asked for](https://github.com/kean/Pulse/issues/82). With version 2.0, PulseUI has a purpose-built macOS view designed to work well when integrated into the existing app. Pulse now also supports remote logging on a Mac, which is easy to enable using a settings screen.
+
+<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/pulseui-macos.png">
+
+## Any Platform
+
+In addition to iOS and macOS, Pulse is, as usual, also available on watchOS and tvOS. Both versions were updated to support most of the latest features (at practically no extra cost). For example, it also supports pending requests:
+
+<div class="BlogVideo NewScreenshot">
+<video autoplay loop muted playsinline preload="auto" alt="Remote logger on watchOS">
+  <source src="{{ site.url }}/videos/pulse-2/pulse-watchos-remote-logger.mp4" type="video/mp4">
+</video>
+</div>
+
+<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/pulse-watchos.png">
+
+If you are working on a tvOS app, you can also find Pulse useful. It provides the same features as a watchOS app: you can view logs directly on the device and it supports remote logging.
+
+<div class="BlogVideo NewScreenshot">
+<video autoplay loop muted playsinline preload="auto" alt="Remote logger on watchOS">
+  <source src="{{ site.url }}/videos/pulse-2/tvos-remote.mp4" type="video/mp4">
+</video>
+</div>
+
+## Documentation
+
+The [documentation](https://kean-docs.github.io/pulse/documentation/pulse/) for Pulse is rewritten from scratch and generated using [DocC](https://developer.apple.com/documentation/docc). With the addition of Pulse, all my frameworks now use DocC. It's used not just for generating the API references, but for articles as well. And most of the types have "extensions" as well as refining the documentation.
+
+<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/docc.png">
+
+## Performance
+
+The new features are exciting, but there are also some significant performance improvements under the hood I would like to mention.
+
+### Space Savings
+
+[LoggerStore](https://kean-docs.github.io/pulsecore/documentation/pulsecore/loggerstore) now uses up to **90% less space**. The main improvement comes from a simple yet effective change: compression. The request and response blobs are now compressed using Apple's [lzfse](https://en.wikipedia.org/wiki/LZFSE). I found it to be about x3 times faster than zlib and with often better compression ratio. The same compression is also used for remote logging.
+
+The small blobs (<16 KB) are now [efficiently stored](https://www.sqlite.org/intern-v-extern-blob.html) directly in SQLite. The limit might seem small, but it applies _after_ compression. If you take an example [repos.json](https://github.com/kean/Pulse/blob/master/App/Shared/Resources/repos.json) file with 3020 lines, it compresses from 161 KB to just over 11 KB which fits the inline limit.
+
+> When performing optimizations, it's crucial to measure. Make sure your test data well represents the real data. If you are working with Core Data or SQLite, you can use [DB Browser for SQLite](https://sqlitebrowser.org) to analyze the data. You can also use [sqlite3_analyzer](https://www.sqlite.org/sqlanalyze.html) to see exactly how much space each table and index takes.
+{:.info}
+
+There a bunch of other small improvements under the hood. For example, I switched from SHA256 to SHA1 for generating keys for blobs deduplication. SHA1 is 30% faster and uses just 40 characters instead of 64 for file names. 
+
+The new store also no longer stores any unstructured data – everything is stored in the database, including task metrics, and can be queried with SQL. You can track exactly how much space Pulse is taking on the new Store Details screen.
+
+<img class="NewScreenshot" alt="Store details" src="{{ site.url }}/images/posts/pulse-2/store-details.png">
+
+### Optimized for Images
+
+The logger now stores compressed thumbnails instead of full-resolution images. It uses HEIF for efficient storage, and the deduplication used for other blobs also applies. The savings are dramatic. For the image I used in the demo, I saved 99.9% of space.
+
+Thanks to these improvements, it became feasible to use Pulse with Nuke, so starting with [Nuke 11.1](https://github.com/kean/Nuke/releases/tag/11.1.0), there is now [a simple way](https://github.com/kean/Nuke/pull/583) to integrate the frameworks.
+
+<img class="NewScreenshot" alt="Pulse image viewer showing an image preview" src="{{ site.url }}/images/posts/pulse-2/image-viewer.png">
+
+### Document Format
+
+Pulse allows you to share logs and open them on another machine. For that reason, it has a custom document format (`.pulse`). When I created the [original format](/post/pulse-store) for v1.0, I decided to use ZIP archives as its base because of its compression and the ability to decompress contents (blobs) on-demand. I used an excellent [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) framework for this purpose. But after increasing the minimum deployment target in Pulse 2.0, I was finally able to use [lzfse](https://developer.apple.com/documentation/compression/algorithm/lzfse) and decided to re-evaluate this decision.
+
+In Pulse 2.0, the blobs are compressed not just before sharing, but also at rest, significantly reducing the store size. It also means they no longer need to be compressed before sharing, making it much faster. And with native [lzfse](https://developer.apple.com/documentation/compression/algorithm/lzfse) taking care of compression, I was able to remove [ZIPFoundation](https://github.com/weichsel/ZIPFoundation) reducing the framework size. I switched to SQLite, a [perfect choice](https://sqlite.org/appfileformat.html) for creating custom document formats.
+
+These are not the only improvements to sharing. The new Sharing Options screen allows you to limit how much data you want to share. By default, it only sends the logs from the current session, often dramatically reducing the shared file size.
+
+<img class="NewScreenshot" alt="Sharing options screen" src="{{ site.url }}/images/posts/pulse-2/sharing-options.png">
+
+## Integrations
+
+In addition to support for [Nuke](https://github.com/kean/Nuke), Pulse is easy integrate with any `URLSession`-based API clients, such as [Get](https://github.com/kean/Get). You can integrate it with Pulse 2.0 in under 20 seconds to view your network traffic in-app.
+
+<div class="BlogVideo NewScreenshot">
+<video muted controls playsinline alt="Custom context menu preview">
+  <source src="{{ site.url }}/videos/pulse-2/get-pulse.mp4" type="video/mp4">
+</video>
+</div>
+
+## Final Thoughts
+
+I can’t close this without talking a bit about SwiftU which 90% of Pulse is built with. It was developed in Xcode 14 (betas 3-5) and I was pleasantly surprised with the Canvas improvements.
+
+I think we are now at the inflection point where the pros of using SwiftUI clearly outweigh the cons. However, it's assuming you can target only the latest OS, e.g. iOS 16+. The issue isn't even the lack of the new APIs on the earlier versions, but the bugs and the differences in the behavior of the existing ones.
+
+Both [Pulse](https://github.com/kean/Pulse) and [Pulse Pro](https://github.com/kean/PulsePro) are open-source and free, as usual. And if you decide to use it in your app, please [support](https://github.com/sponsors/kean) it on GitHub.
