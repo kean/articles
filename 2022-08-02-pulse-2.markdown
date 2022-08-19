@@ -11,7 +11,7 @@ fullscreen: true
 uuid: 7e686610-d8b7-4e91-9c0f-a6f65f313675
 ---
 
-[Pulse](https://github.com/kean/Pulse) is a logging system for Apple platforms. Pulse 2.0 is almost a complete rewrite that focuses on both adding the new major features that there are plenty of and optimizing the performance.
+[Pulse](https://github.com/kean/Pulse) is a logging system for Apple platforms. Pulse 2.0 is almost a complete rewrite that focuses on both adding new major features that there are plenty and optimizing the performance.
 
 ## PulseUI
 
@@ -75,7 +75,7 @@ There are ton of other minor fixes, tweaks and features across the app and there
 
 Pulse has a history on a Mac. The [initial version](https://kean.blog/images/posts/macos/cover-macos.png) looked and worked more like it was designed for an iPad despite being a native macOS app. Then came [Pulse Pro](https://github.com/kean/PulsePro) designed as a professional macOS app with a primary goal of working as a target for remote logging. But something was lost in that transition.
 
-Pulse Pro is a standalone app and not part of the PulseUI framework, and there was no longer any way to bundle PulseUI into a macOS app that [people asked for](https://github.com/kean/Pulse/issues/82). With version 2.0, PulseUI has a purpose-built macOS view designed to work well when integrated into the existing app. Pulse now also supports remote logging on a Mac, which is easy to enable using a settings screen.
+Pulse Pro is a standalone app and not part of the PulseUI framework, and there was no longer any way to bundle PulseUI into a macOS app that [people asked for](https://github.com/kean/Pulse/issues/82). With version 2.0, PulseUI has a purpose-built macOS view designed to work well when integrated into the existing app. Pulse now also supports remote logging on a Mac, which is easy to enable using the Settings screen.
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/pulseui-macos.png">
 
@@ -154,6 +154,6 @@ In addition to support for [Nuke](https://github.com/kean/Nuke), Pulse is easy i
 
 ## Final Thoughts
 
-I can’t close this without talking a bit about SwiftU, which 90% of Pulse is built with. I developed it in Xcode 14 (betas 3-5), and I was pleasantly surprised with the Canvas improvements. I think we are now at the inflection point where the pros of using SwiftUI outweigh the cons, assuming you can target only the latest OS versions. The issue isn't even the lack of the new APIs on the earlier versions, but the differences in the behavior of the existing ones.
+I can’t close this without talking a bit about SwiftUI, which 90%+ of Pulse is built with. I developed it in Xcode 14 (betas 3-5), and I was pleasantly surprised with the Canvas improvements. I think we are now at the inflection point where the pros of using SwiftUI outweigh the cons, assuming you can target only the latest OS versions. The issue isn't even the lack of the new APIs on the earlier versions, but the differences in the behavior of the existing ones.
 
 Both [Pulse](https://github.com/kean/Pulse) and [Pulse Pro](https://github.com/kean/PulsePro) are open-source and free, as usual. And if you decide to use it in your app, please [support](https://github.com/sponsors/kean) it on GitHub.
