@@ -18,19 +18,22 @@ image:
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Jul 11, 2022. Updated to use the latest APIs introduced in Get 1.0
+- Aug 19, 2022. Updated to Get 2.0
 </div>
 
-It's been more than four years since my previous [API Client in Swift (Archived)](/post/api-client) post. A lot has changed since then. With the addition of Async/Await and Actors, it's now easier and more fun than ever to design custom web API clients in Swift. The new version went through a radical redesign and I can't wait to share more about it.
+It's been more than four years since my previous [API Client in Swift](/post/api-client) (archived) post. A lot has changed since then. With the addition of Async/Await and Actors, it's now easier and more fun than ever to design custom web API clients in Swift. The new version went through a radical redesign and I can't wait to share more about it.
  
 I'm going to focus on REST APIs and use [GitHub API](https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api) as an example. Before I jump in, here is a quick look at the final result:
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Create a client</span>
-<span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kc">APIClient</span><span class="p">(</span><span class="nv">baseURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"https://api.github.com"</span><span class="p">))</span>
+<span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kc">APIClient</span><span class="p">(</span><span class="kt">baseURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">(</span><span class="xv">string</span><span class="p">:</span> <span class="s">"https://api.github.com"</span><span class="p">))</span>
 
 <span class="c1">// Sending requests</span>
-<span class="k">let</span> <span class="nv">user</span><span class="p">:</span> <span class="kc">User</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="o">.</span><span class="kt">get</span><span class="p">(</span><span class="s">"/user"</span><span class="p">))</span><span class="o">.</span><span class="kt">value</span>
-<span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="o">.</span><span class="kt">post</span><span class="p">(</span><span class="s">"/user/emails"</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="p">[</span><span class="s">"kean@example.com"</span><span class="p">]))</span>
+<span class="k">let</span> <span class="nv">user</span><span class="p">:</span> <span class="kc">User</span> <span class="o">=</span> <span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="kc">Request</span><span class="p">(</span><span class="kt">path</span><span class="p">:</span> <span class="s">"/user"</span><span class="p">))</span><span class="o">.</span><span class="kt">value</span>
+
+<span class="k">var</span> <span class="nv">request</span> <span class="o">=</span> <span class="kc">Request</span><span class="p">(</span><span class="kt">path</span><span class="p">:</span> <span class="s">"/user/emails"</span><span class="p">,</span> <span class="kt">method</span><span class="p">:</span> <span class="o">.</span><span class="kt">post</span><span class="p">)</span>
+<span class="n">request</span><span class="o">.</span><span class="kt">body</span> <span class="o">=</span> <span class="p">[</span><span class="s">"kean@example.com"</span><span class="p">]</span>
+<span class="k">try</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="kt">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
 </code></pre></div></div>
 
 > The code from this article is the basis of [kean/Get](https://github.com/kean/Get).
@@ -47,28 +50,12 @@ The previous version of the client was built using [Alamofire](https://github.co
 Let’s start by defining a type for representing requests. It can be as complicated as you need, but here is a good starting point:
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="kc">Response</span><span class="o">&gt;</span> <span class="p">{</span>
-    <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="xc">String</span>
-    <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="xc">String</span>
+    <span class="k">var</span> <span class="nv">method</span><span class="p">:</span> <span class="kc">HTTPMethod</span>
+    <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="xc">URL?</span>
     <span class="k">var</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[</span><span class="xc">String</span><span class="p">:</span> <span class="xc">String</span><span class="p">]?</span>
     <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="xc">Encodable</span><span class="p">?</span>
 <span class="p">}</span>
 </code></pre></div></div>
-
-To make it easier to define REST APIs, let's add a few factory methods:
-
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kc">Request</span> <span class="p">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">get</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="p">[</span><span class="xc">String</span><span class="p">:</span> <span class="xc">String</span><span class="p">]?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">Request</span> <span class="p">{</span>
-        <span class="kc">Request</span><span class="p">(</span><span class="nv">method</span><span class="p">:</span> <span class="s">"GET"</span><span class="p">,</span> <span class="nv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">query</span><span class="p">:</span> <span class="n">query</span><span class="p">)</span>
-    <span class="p">}</span>
-    
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">post</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="xc">String</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="xc">Encodable</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">Request</span> <span class="p">{</span>
-        <span class="kc">Request</span><span class="p">(</span><span class="nv">method</span><span class="p">:</span> <span class="s">"POST"</span><span class="p">,</span> <span class="nv">url</span><span class="p">:</span> <span class="n">url</span><span class="p">,</span> <span class="nv">body</span><span class="p">:</span> <span class="n">body</span><span class="p">)</span>
-    <span class="p">}</span>
-    
-    <span class="c1">// ...</span>
-</code></pre></div></div>
-
-What do Swift developers love more than anything else? Type-safety. By separating each HTTP method, `Request` stops invalid parameter combinations at compile time. For example, you [shouldn't pass](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) body to GET requests, and `URLSession` throws an error at runtime if you try. With `Request`, it's a compile-time error.
 
 To execute the requests, you use a client[^2]. It's a small wrapper on top of `URLSession` that is easy to modify and extend. You initialize it with a host making it easy to change the environments at runtime.
 
@@ -81,7 +68,7 @@ To execute the requests, you use a client[^2]. It's a small wrapper on top of `U
                 <span class="nv">configuration</span><span class="p">:</span> <span class="xc">URLSessionConfiguration</span> <span class="o">=</span> <span class="o">.</span><span class="xv">default</span><span class="p">,</span>
                 <span class="nv">delegate</span><span class="p">:</span> <span class="kc">APIClientDelegate</span><span class="p">?</span> <span class="o">=</span> <span class="k">nil</span><span class="p">)</span> <span class="p">{</span>
         <span class="k">self</span><span class="o">.</span><span class="kt">url</span> <span class="o">=</span> <span class="n">url</span>
-        <span class="k">self</span><span class="o">.</span><span class="kt">session</span> <span class="o">=</span> <span class="xc">URLSession</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="n">configuration</span><span class="p">)</span>
+        <span class="k">self</span><span class="o">.</span><span class="kt">session</span> <span class="o">=</span> <span class="xc">URLSession</span><span class="p">(</span><span class="xv">configuration</span><span class="p">:</span> <span class="n">configuration</span><span class="p">)</span>
         <span class="k">self</span><span class="o">.</span><span class="kt">delegate</span> <span class="o">=</span> <span class="n">delegate</span> <span class="p">??</span> <span class="kc">DefaultAPIClientDelegate</span><span class="p">()</span>
     <span class="p">}</span>
 </code></pre></div></div>
@@ -187,20 +174,14 @@ The first piece is the `client(_:willSendRequest:)` delegate method that you can
 
 If your access tokens are short-lived, it is important to implement a proper refresh flow. Again, easy with async/await.
 
-<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">extension</span> <span class="kc">APIClient</span> <span class="p">{</span>
-    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">send</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="xc">URLRequest</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="xc">Data</span><span class="p">,</span> <span class="xc">URLResponse</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">do</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">actuallySend</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> 
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
-            <span class="k">guard</span> <span class="k">await</span> <span class="kt">delegate</span><span class="o">.</span><span class="kt">shouldClientRetry</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="kt">withError</span><span class="p">:</span> <span class="n">error</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span> <span class="k">throw</span> <span class="n">error</span> <span class="p">}</span>
-            <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">actuallySend</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="n">performRequest</span><span class="o">&lt;</span><span class="kt">T</span><span class="o">&gt;</span><span class="p">(</span><span class="nv">attempts</span><span class="p">:</span> <span class="xc">Int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="nv">send</span><span class="p">:</span> <span class="p">()</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="kt">T</span> <span class="p">{</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="nf">send</span><span class="p">()</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">delegate</span><span class="o">.</span><span class="kt">client</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="kt">shouldRetry</span><span class="p">:</span> <span class="n">task</span><span class="p">,</span> <span class="kt">error</span><span class="p">:</span> <span class="n">error</span><span class="p">,</span> <span class="kt">attempts</span><span class="p">:</span> <span class="n">attempts</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="n">error</span>
         <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">private</span> <span class="kd">func</span> <span class="nf">actuallySend</span><span class="p">(</span><span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="xc">URLRequest</span><span class="p">)</span> <span class="k">async</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="xc">Data</span><span class="p">,</span> <span class="xc">URLResponse</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">var</span> <span class="nv">request</span> <span class="o">=</span> <span class="n">request</span>
-        <span class="n">delegate</span><span class="o">.</span><span class="kt">client</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="kt">willSendRequest</span><span class="p">:</span> <span class="o">&amp;</span><span class="n">request</span><span class="p">)</span>
-        <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">session</span><span class="o">.</span><span class="xv">data</span><span class="p">(</span><span class="xv">for</span><span class="p">:</span> <span class="n">request</span><span class="p">,</span> <span class="xv">delegate</span><span class="p">:</span> <span class="k">nil</span><span class="p">)</span>
+        <span class="k">return</span> <span class="k">try</span> <span class="k">await</span> <span class="kt">performRequest</span><span class="p">(</span><span class="kt">attempts</span><span class="p">:</span> <span class="n">attempts</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="kt">send</span><span class="p">:</span> <span class="n">send</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -337,7 +318,7 @@ REST APIs are designed around resources. One of the ideas I had was to create a 
     <span class="kd">public</span> <span class="kd">struct</span> <span class="kc">UsersResource</span> <span class="p">{</span>
         <span class="kd">public</span> <span class="k">let</span> <span class="nv">path</span><span class="p">:</span> <span class="xc">String</span>
 
-        <span class="kd">public</span> <span class="k">var</span> <span class="nv">get</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="kc">User</span><span class="o">&gt;</span> <span class="p">{</span> <span class="o">.</span><span class="kt">get</span><span class="p">(</span><span class="kt">path</span><span class="p">)</span> <span class="p">}</span>
+        <span class="kd">public</span> <span class="k">var</span> <span class="nv">get</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="kc">User</span><span class="o">&gt;</span> <span class="p">{</span> <span class="o">.</span><span class="kt">init</span><span class="p">(</span><span class="kt">path</span><span class="p">: </span><span class="kt">path</span><span class="p">)</span> <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
@@ -349,7 +330,7 @@ REST APIs are designed around resources. One of the ideas I had was to create a 
     <span class="kd">public</span> <span class="kd">struct</span> <span class="kc">ReposResource</span> <span class="p">{</span>
         <span class="kd">public</span> <span class="k">let</span> <span class="nv">path</span><span class="p">:</span> <span class="xc">String</span>
 
-        <span class="kd">public</span> <span class="k">var</span> <span class="nv">get</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="p">[</span><span class="kc">Repo</span><span class="p">]</span><span class="o">&gt;</span> <span class="p">{</span> <span class="o">.</span><span class="kt">get</span><span class="p">(</span><span class="kt">path</span><span class="p">)</span> <span class="p">}</span>
+        <span class="kd">public</span> <span class="k">var</span> <span class="nv">get</span><span class="p">:</span> <span class="kc">Request</span><span class="o">&lt;</span><span class="p">[</span><span class="kc">Repo</span><span class="p">]</span><span class="o">&gt;</span> <span class="p">{</span> <span class="o">.</span><span class="kt">init</span><span class="p">(</span><span class="kt">path</span><span class="p">: </span><span class="kt">path</span><span class="p">)</span> <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
