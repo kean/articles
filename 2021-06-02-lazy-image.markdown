@@ -10,6 +10,12 @@ permalink: /post/lazy-image
 uuid: 608e88a5-d9e7-40af-8957-18ad1b5bb025
 ---
 
+<div class="UpdatesSections" markdown="1">
+**Updates**
+
+- Sep 5, 2022. Starting with [Nuke 11](https://github.com/kean/Nuke/releases/tag/11.0.0), docs are generated using DocC and the custom documentation website was removed.
+</div>
+
 [Nuke 10](https://github.com/kean/Nuke/releases/tag/10.0.0) is out, but this post is not about it. It's about a new package called [NukeUI](https://github.com/kean/NukeUI). It comes with two main components:
 
 - `LazyImage` for SwiftUI
