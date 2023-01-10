@@ -16,42 +16,42 @@ image:
   width: 640
 ---
 
-Today is my 10th anniversary of programming for Apple platforms, and what better way to celebrate it than with a new major release – [Pulse 3.0](https://github.com/kean/Pulse/releases/tag/3.0.0) is now available for download!
+Today is my 10th anniversary of programming for Apple platforms, and what better way to celebrate it than with a new major release – [Pulse 3.0](https://github.com/kean/Pulse/releases/tag/3.0.0) is out!
 
-I loved every year I worked on iOS, starting in 2012 with Objective-C. And now, thanks to Swift and SwiftUI, I'm able to target _all_ Apple platforms, which is incredible. For Pulse 3, I redesigned the entire app, enhancing the experience and achieving nearly complete feature parity between iOS, macOS, watchOS, and tvOS with the same codebase.
+I loved every year I worked on iOS. I started in 2012 with Objective-C and now, thanks to Swift and SwiftUI, I'm able to target _all_ Apple platforms, which is incredible. Pulse 3 is a complete overhaul. It enhances the experience and achieves nearly complete feature parity between iOS, macOS, watchOS, and tvOS with the same codebase.
 
-> [Pulse](https://github.com/kean/Pulse) is a network logger built with SwiftUI and available on all Apple platforms. It integrates on the URLSession level allowing it to see unencrypted traffic and task metrics available only on this level.
+> [Pulse](https://github.com/kean/Pulse) is a network logger built with SwiftUI. It integrates on the `URLSession` level allowing it to see unencrypted traffic and record task metrics available only on this level.
 {:.info}
 
 # iOS
 
-The original version of Pulse was designed quickly and targeted iOS, so many of the decisions were incompatible with other platforms. Fortunately, for nearly every issue, there was a better solution that aslo enhanced the experience on iOS and even simplified the code.
+The original version of Pulse was designed quickly and targeted only iOS, so many of the decisions were incompatible with other platforms. Fortunately, for nearly every issue, there was a better solution that also enhanced the experience on iOS while simplifying the code.
 
 ## Inspector
 
-The most dramatic changes are probably in the network inspector. The [previous version]({{ site.url }}/videos/pulse-2/metrics.mp4) had a convoluted navigation with a segmented control in the navigation bar that was hard to reach and didn't scale well for adding more features. More importantly, it was incompatible with other platforms.
+The most dramatic changes are probably in the network inspector. The [previous version]({{ site.url }}/videos/pulse-2/metrics.mp4) had a convoluted navigation with a segmented control in the navigation bar that was hard to reach and didn't scale for adding more features. More importantly, it was incompatible with other platforms. This design was there from 0.1 and it was time to improve it. 
 
-The simplest solution is often also the best. The inspector now uses a simple list with basic navigation links. The new version is clearer while surfacing important information. The primary navigation areas such as response and headers viewer are now much easier to reach because they are closer to the bottom of the screen.
+The simplest solution is often also the best. The inspector now uses a simple `List` with navigation links. The new version is clearer and surfaces important information. The primary navigation areas such as response and headers viewer are now much easier to reach because they are closer to the bottom of the screen.
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-inspector.png">
 
-The new navigation freed a lot of vertical space: The difference between the [old inspector]({{ site.url }}/images/posts/pulse-3/ios-old-inspector.png) and the new is apparent. For example, when you open the response, you are now effectively fullscreen. I also adopted [`searchable`](https://developer.apple.com/documentation/swiftui/view/searchable(text:placement:prompt:)-18a8f) API and redesigned the toolbar with results which now takes less space too.
+The new navigation freed a lot of vertical space. The difference between the [old inspector]({{ site.url }}/images/posts/pulse-3/ios-old-inspector.png) and the new one is stark. Before, the response viewer had an ad-hoc "show fullscreen" button. Not needed anymore. When you click "Response", you are effectively already fullscreen now.
+
+The response viewer itself is pretty cool because, unlike regular HTTP proxies, it can display [decoding errors](https://kean.blog/post/pulse-2#decoding-errors). And it's even better now because the theme of "more vertical space" extends to it as well. I adopted [`searchable`](https://developer.apple.com/documentation/swiftui/view/searchable(text:placement:prompt:)-18a8f) API so that the search bar now disappears when it's not needed. And I also redesigned the toolbar for jumping between search results. It is now displayed in the bottom-right corner, freeing even more vertical space. 
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-response-body.png">
 
-The metrics screen was also completely redesigned. It now clearly shows all transactions along with their types and details. And, of course, you can drill down for more detail.
+The metrics screen is also redesigned. It now clearly shows all individual transactions along with their [fetch types](https://developer.apple.com/documentation/foundation/urlsessiontaskmetrics/resourcefetchtype) and other details. It's now much easier to understand the lifetime of a request.
 
-In the following example, you immediately see that the task had three transactions: a redirect 301 (Moved permanently), followed by a cache lookup, and the request to validate it that returned 304 (Not Modified).
+In the following example, you immediately see that the task had three transactions: the first request was redirected with 301 (Moved Permanently), followed by a cache lookup with another request to validate it that returned 304 (Not Modified).
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-metrics.png">
 
 ## Text
 
-Sometimes text is the best interface. Text is now everywhere in Pulse. Where previously you had non-selectable labels, you now have text selection, search, and sharing – all the goods things you would expect from text. There are also two new sharing options: HTML and PDF. I’m sure a lot of people are going to be excited about PDF, especially if you enjoy printing out stuff at work.
+Text is often the best interface, and it's everywhere in Pulse. Where previously you had [non-selectable labels]({{ site.url }}/images/posts/pulse/ios-headers.png), it now uses fully featured text views with text selection, search, and sharing. There are also two new sharing options: HTML and PDF. I’m sure a lot of people will be particularly excited about PDF, especially if you print out code at work. To power these features, I had to rework how I create strings because the previous approach of writings different "renderers" for different outputs didn't scale well. 
 
-I had to completely redesign the approach for creating strings to power these features. Previously, I had an abstraction layer (a protocol) with different implementations: one for `NSAttributedString`, one for HTML, etc. It didn’t scale well because it required me to constantly change this (leaky) abstraction.
-
-In the new system, I render things into attributed strings and then convert them into other formats: `NSAttributedString -> HTML`, `NSAttributedString -> PDF`, `NSAttributedString -> Plain Text`. Much simpler and now with perfectly consistent outputs. SwiftUI previews were a massive help to iterate on it.
+In the new system I render things – messages, tasks, response bodies – into attributed strings. The strings are then converted into the requested output format: `NSAttributedString -> HTML`, `NSAttributedString -> PDF`, `NSAttributedString -> Plain Text`. It's much simpler and produces consistent results. SwiftUI previews were a massive help to iterate on it.
 
 <div class="full-width centering-container">
 <img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/ios-text.png">
@@ -59,21 +59,21 @@ In the new system, I render things into attributed strings and then convert them
 
 ### Navigation
 
-The main navigation also changes in Pusle 3. The `MainView` from the previous version had a tab bar, which is a good choice for iOS apps, but not for a tool that you are integrate into the existing app. Most large apps already have their debug menus, most likely designed as navigation views.
+The main navigation also changed in Pusle 3. The `MainView` from the previous version had a tab bar, which is a good choice for most iOS apps, but not for a tool that you are integrate into an existing app. Most large apps already have their own debug menus and they want to integrate Pulse there.
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-console-tabbar.png">
 
-In Pulse 3, the navigation is now centered around a single screen: `ConsoleView` that you can either push or present. The **Network** and the **Pins** screens became simply quick filters. And **Insights** and **Settings** are now accessible from the new context menu. It also provides quick access for actions that were previously buried in the settings, e.g. "Remove Logs".
+In Pulse 3, the navigation is now centered around a single screen: `ConsoleView` that you can either push or present. The **Network** and the **Pins** screens became simple filters. And **Insights** and **Settings** are now accessible from the new context menu. It also provides quick access for common actions, such as removing logs.
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-console-context-menu.png">
 
-**View as Text** is yet another new text-based feature. It renders the entire console output as text. You can still apply filters, search, expand and collapse network requests, and more. All screens in Pulse now also support Dynamic Type, so you can quickly increase or decrease font, especially in a simulator.
+**View as Text** is yet another new text-based feature. It renders the entire console output as text. But it's not static text: you can still apply filters, search, expand and collapse network requests, and more. And just like the response viewer, it displays decoding errors inline (see "id" highlighted in red).
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-text-view.png">
 
 ## Storage
 
-The storage [improvements](https://kean.blog/post/pulse-2#performance) were the primary focus in Pulse 2: massive space savings, improved document format for sharing, fully SQL-compatible storage – these are just some of the improvements introduced in Pulse 2. With this solid foundation, I was able to focus on `PulseUI` in this release, but there are still some improvements. For example, [`NetworkLogger`](https://kean-docs.github.io/pulse/documentation/pulse/networklogger) now has convenience APIs for fltering out sensitive data or just something you don't want logged for other reasons.
+The storage [improvements](https://kean.blog/post/pulse-2#performance) were the primary focus of Pulse 2: massive space savings, improved document format for sharing, and fully SQL-compatible storage – these are just some of the changes it introduced. With this solid foundation, I was able to focus on `PulseUI` in this release, but there are some improvements to the core framework as well. For example, [`NetworkLogger`](https://kean-docs.github.io/pulse/documentation/pulse/networklogger) now has convenience APIs for filtering out sensitive data or just something you don't want to be logged for other reasons.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">logger</span> <span class="o">=</span> <span class="kc">NetworkLogger</span> <span class="p">{</span>
     <span class="c1">// Includes only requests with the given domain.</span>
@@ -96,18 +96,18 @@ The storage [improvements](https://kean.blog/post/pulse-2#performance) were the 
 <span class="p">}</span>
 </code></pre></div></div>
 
-> Both `include` and `exclude` patterns support basic wildcards (`*`), but you can also turns them into regex patterns using `  isRegexEnabled`. 
+> Both `include` and `exclude` patterns support basic wildcards (`*`), but you can also turns them into regex patterns using `isRegexEnabled`. 
 {:.info}
 
 # tvOS
 
-The previous design on iOS was largely incompatible with other platforms, such as tvOS. But the new network inspector and console work with almost no modifications on tvOS (and watchOS, and macOS). I was stunned when I ran the new SwiftUI codebase on these other targets – it just worked for the most part. I needed to make only small adjustments. Well, of course, I'm also using native design, so many things come for free for me.
+Now let's talk about the big screen – Apple TV. The original iOS-centered design was largely incompatible with other platforms. But with the new simplified navigation, I was able to use the network inspector and console with almost no changes on tvOS (and other platforms, but more on that later). I was stunned when I ran the new SwiftUI codebase on these other targets – it just worked. I needed to make only small adjustments. Well, of course, I'm also using native design, so many things come for free.
 
 <div class="full-width centering-container">
 <img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/tvos-console-full.png">
 </div>
 
-The main thing I did end up tweaking on tvOS is navigation. To take advantage of the big screen, I combined two navigation stacks on a single screen, both in the console and in the network inspector.
+The main thing I did end up tweaking on tvOS is navigation to take advantage of the big screen. I combined two navigation stacks on a single screen, both in the console and in the network inspector. This way you can access common features, such as filters without ever leaving the console. It also enforces acceptable width for lists so that the existing cells from iOS work well in this context.
 
 <div class="full-width centering-container">
 <img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/tvos-inspector-full.png">
@@ -115,28 +115,35 @@ The main thing I did end up tweaking on tvOS is navigation. To take advantage of
 
 # watchOS
 
-The watchOS version got a complete overhaul and now has nearly complete feature parity with iOS. If you enjoy hiking with your Apple Watch Ultra and have a watchOS app to test, it's great, because that you can record and previews the logs on the device.
+The watchOS version got a complete overhaul as well and now has nearly complete feature parity with iOS. If you enjoy hiking with your Apple Watch Ultra and have a watchOS app to test – great. You can record and preview logs directly on the device. And when you are ready, you can easily share and view them on a bigger screen.
+
+> You can also connect to any device running Pulse remotely with [Pulse Pro](https://kean.blog/pulse/pro) and view logs in real-time on your Mac.
+{:.info}
 
 <img class="NewScreenshot" alt="Pulse Console on watchOS" src="{{ site.url }}/images/posts/pulse-3/watchos-console.png">
 
-I got a lot of features "for free" after reworking the iOS version. For example, console and network filters that were initially developed for [Pulse Pro](https://kean.blog/pulse/pro), now work on all platforms (and with nearly zero conditional code). But there are also some new SwiftUI APIs I integrated: `AttributedString`, `searchable`, charts, `ShareLink`, monospace digits for `Text`, destructive buttons, `buttonBorderShape`, and more.
+I got a lot of features "for free" after reworking the iOS version. For example, console and network filters that were initially developed for [Pulse Pro](https://kean.blog/pulse/pro) now work on all platforms (and with nearly zero conditional code). But there are also some new SwiftUI APIs I integrated on watchOS: `AttributedString`, `searchable`, charts, `ShareLink`, monospace digits for `Text`, destructive buttons, `buttonBorderShape`, and more.
+
+<img class="NewScreenshot" alt="Pulse Console on watchOS" src="{{ site.url }}/images/posts/pulse-3/watchos-inspector.png">
 
 # macOS
 
-The macOS version is back it's OG triple-column design from [App Kit is Done](https://kean.blog/post/appkit-is-done), but with new `NavigationSplitView` APis and 95% of the code shared with others platforms.
+The macOS version is back to its OG triple-column design from [App Kit is Done](https://kean.blog/post/appkit-is-done), but now with the new `NavigationSplitView` APIs and 90% of the code shared with others platforms.
 
 <div class="full-width centering-container">
 <img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/macos-inspector.png">
 </div>
 
- > The macOS version has probably changed the most over the last couple of years. 
- > 
- > The [first version]({{ site.url }}/images/posts/pulse-3/history/macos-01.png) from Pulse 0.x was almost embarrassingly bad, but I included it to have a reference point – it's great to see the progress. For [1.0]({{ site.url }}/images/posts/pulse-3/history/macos-02.png), I added proper macOS support with windowing, toolbars, and [triple-column](https://kean.blog/post/triple-trouble) navigation. The next major advancement was a mostly AppKit standalone [Pulse Pro app]({{ site.url }}/images/posts/pulse-3/history/macos-03.png) for viewing logs remotely shared from other devices. With the release of Pulse Pro, I cut the macOS version of the PulseUI console entirely. But with the recent SwiftUI refinements, I started to bring PulseUI back to the Mac. In Pulse 2, I reworked some of the Pulse Pro screens in SwiftUI and put it all together in a [simple view]({{ site.url }}/images/posts/pulse-3/history/macos-04.png).
- > 
- > Pulse 3 is a natural step in the SwiftUI-ification of the macOS codebase. I'm sure this isn't its final form yet. My next step is to fully rewrite Pulse Pro in SwiftUI – stay tuned, this is going to be fun.
+ The macOS version has probably changed the most over the last couple of years. 
+  
+The [first version]({{ site.url }}/images/posts/pulse-3/history/macos-01.png) from Pulse 0.x was almost embarrassingly bad, but I'll add it as a reference point – it's nice to see the progress. For [1.0]({{ site.url }}/images/posts/pulse-3/history/macos-02.png), I added proper macOS support with windows, toolbars, and [triple-column](https://kean.blog/post/triple-trouble) navigation. The next major advancement was a mostly AppKit standalone [Pulse Pro app]({{ site.url }}/images/posts/pulse-3/history/macos-03.png) for viewing logs remotely shared from other devices. With the release of Pulse Pro, I cut the macOS version of the PulseUI console entirely. But with the recent SwiftUI refinements, I started to bring PulseUI back to the Mac. In Pulse 2, I reworked some of the Pulse Pro screens in SwiftUI and put it all together in a [simple view]({{ site.url }}/images/posts/pulse-3/history/macos-04.png).
+ 
+Pulse 3 is a natural step in the SwiftUIfication of the macOS codebase. I'm sure this isn't its final form yet, so I don't want to focus on it as much right now. My next step is to fully rewrite Pulse Pro in SwiftUI – stay tuned for that!
 
-## Closing Thought
+## Closing Thoughts
 
-I think I finally figured out SwiftUI; writing it stared finally to feel as natural as writing UIKit. I use it for design, prototyping, and development – everything. It works great when you target a single platform, but it's even better with more than one. There is one condition though – it all comes down to the design. It needs to leverage SwiftUI strength to make it work best across platforms.
+I think I finally figured out SwiftUI – writing it stared to feel as natural as writing UIKit. I use it for everything: design, prototyping, and development. There are fewer and fewer places where I have to fallback to UIKit or AppKit.
 
-Pulse 3 development was completely insane wth 215 changed files with 8,597 additions and 8,044 deletions only including Swift code in just about 2 weeks. For me, it's now time to chill, and for you, please go and [check it out](https://github.com/kean/Pulse) and I hope you'll love it.
+SwiftUI works well when you target just a single platform, but you are making a multiplatform app, it's a complete game changer, and I hope Pulse is proof of that. There is one condition though – it all comes down to the design. You have to come up with the design solutions that are simple and compatible with other platforms, which is often a good thing because simpler things are easier accessible.
+
+Pulse 3 development was completely insane with 215 changed files with 8,597 additions and 8,044 deletions in just under 2 weeks. I also pulled a couple of all-nighters just to prove to myself that I still can after 10 years. And for me, it's now time to chill. I hope you would check out [Pulse 3](https://github.com/kean/Pulse) and you'd love it.
