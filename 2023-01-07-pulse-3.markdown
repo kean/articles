@@ -146,4 +146,4 @@ I think I finally figured out SwiftUI – writing it stared to feel as natural a
 
 SwiftUI works well when you target just a single platform, but you are making a multiplatform app, it's a complete game changer, and I hope Pulse is proof of that. There is one condition though – it all comes down to the design. You have to come up with the design solutions that are simple and compatible with other platforms, which is often a good thing because simpler things are easier accessible.
 
-Pulse 3 development was completely insane with 215 changed files with 8,597 additions and 8,044 deletions in just under 2 weeks. I also pulled a couple of all-nighters just to prove to myself that I still can after 10 years. And for me, it's now time to chill. I hope you would check out [Pulse 3](https://github.com/kean/Pulse) and you'd love it.
+Pulse 3 development was completely insane with 215 changed files with 8,597 additions and 8,044 deletions in just under 2 weeks. For me, it's now time to chill. I hope you would check out [Pulse 3](https://github.com/kean/Pulse) and you'd love it.
