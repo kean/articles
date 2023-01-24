@@ -12,7 +12,7 @@ uuid: 516bbd97-720b-4c53-9b6f-197b3534b11e
 
 Starting with iOS 15, SwiftUI supports search thanks to the new [.searchable](https://developer.apple.com/documentation/swiftui/adding-search-to-your-app) modifier. It was also extended with the support for tokens in iOS 16 which was exactly what I was waiting for. For me, it was a perfect opportunity to rethink search in [Pulse](https://github.com/kean/Pulse).
 
-[Pulse 3.2](https://github.com/kean/Pulse/releases/tag/3.2.0) introduces a few new features that make the tool _infinitely_ more useful. It introduces a new keyboard-oriented search with filters and scopes, and a completely redesigned console with powerful options for sorting and grouping data.
+Pulse is now _infinitely_ more useful thanks to two new major features in [version 3.2](https://github.com/kean/Pulse/releases/tag/3.2.0): a powerful search with filters and scopes, and a redesigned console that now supports sorting and grouping of messages.
 
 To start using the new search, simply press "Tab" to focus on a search field, and start typing. It will automatically suggest relevant _filters_, auto-complete certain entries like domains, and search in multiple _scopes_ like response headers and bodies.
 
