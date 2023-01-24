@@ -10,7 +10,7 @@ permalink: /post/pulse-search
 uuid: 516bbd97-720b-4c53-9b6f-197b3534b11e
 ---
 
-SwiftUI supports search thanks to the new [.searchable](https://developer.apple.com/documentation/swiftui/adding-search-to-your-app) modifier introduced in iOS 15 and extended with the support for tokens in iOS 16. For me, it was a perfect opportunity to rethink search in [Pulse](https://github.com/kean/Pulse).
+Starting with iOS 15, SwiftUI supports search thanks to the new [.searchable](https://developer.apple.com/documentation/swiftui/adding-search-to-your-app) modifier. It was also extended with the support for tokens in iOS 16 which was exactly what I was waiting for. For me, it was a perfect opportunity to rethink search in [Pulse](https://github.com/kean/Pulse).
 
 [Pulse 3.2](https://github.com/kean/Pulse/releases/tag/3.2.0) introduces a few new features that make the tool _infinitely_ more useful. It introduces a new keyboard-oriented search with filters and scopes, and a completely redesigned console with powerful options for sorting and grouping data.
 
@@ -93,11 +93,11 @@ Pulse searches in multiple scopes in parallel: request and response headers, bod
 
 <img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-06-scopes.png">
 
-This new search streamlines many user scenarios. For example, let's say you need to find a `userId` value from the `/login` response. Previously, you had to know the name of the path and search for it: `/login`, then open the response body, search again for `userId`, and only then you see it. Now you just search for `userId`, click it, and you are done.
+This new search streamlines many user scenarios. For example, let's say you need to find a `userId` value from the `/login` response. Previously, you had to know the name of the path and search for it: `/login`, then open the response body, search again for `userId`, and only then do you see it. Now you just search for `userId`, click it, and you are done.
 
 ## List
 
-`List` is known for its [performance issues](https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui). Unfortunately, it was a deal-breaker for Pulse where I need to display hundreds if not thousands of messages and do it in the revers order with the newest ones constantly getting inserted at the top. So I [switched to](https://kean.blog/post/not-list) `UITableView` and `NSTableView`, but kept using `List` on watchOS and tvOS.
+`List` is known for its [performance issues](https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui). Unfortunately, it was a deal-breaker for Pulse where I need to display hundreds if not thousands of messages and do it in the reverse order with the newest ones constantly getting inserted at the top. So I [switched to](https://kean.blog/post/not-list) `UITableView` and `NSTableView`, but kept using `List` on watchOS and tvOS.
 
 Previously, I only needed to display two types of cells, but now, I needed to introduce filters, scopes, new section headers, and, of course, cells for the search results. I didn’t want to pile onto the technical debt. So I had an idea. `List` is slow only when you display tons of cells. So let's just not. In version 3.2, I limit the number of displayed items to 100[^1] and extend the list when the user scrolls close to the bottom – simple.
 
@@ -113,7 +113,7 @@ I'm happy with this approach, but I wish there was a native solution. I'm suspec
 
 When reviewing logs, you often want to find answers to certain questions. For example, what are the requests that took the longest? What transferred the most data? Which ones returned HTML instead of the expected JSON? With version 3.2, you can now easily find answers to these and many other questions thanks to the new “Sort By” and “Group By” features available directly from the toolbar.
 
-The grouping I’m particularly excited about is “Group by Session”. It’ll show you a list of all your app’s sessions, so now it’s super easy to find logs from one of the earlier sessions. The groups are also infinitely nesteable: you can create a group, open it and create a group from the selected logs, and so on.
+The grouping I’m particularly excited about is “Group by Session”. It’ll show you a list of all your app’s sessions, so now it’s super easy to find logs from one of the earlier sessions. The groups are also infinitely nestable: you can create a group, open it and create a group from the selected logs, and so on.
 
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
@@ -123,7 +123,7 @@ The grouping I’m particularly excited about is “Group by Session”. It’ll
 
 ## Pins
 
-And last but not least, Pulse now has a proper replacement for the Pins tab that removed in version 3.0. It took me a while to finalize realize how to handle pins: it’s in the name – just literally _pin_ them to the top.
+And last but not least, Pulse now has a proper replacement for the Pins tab that was removed in version 3.0. It took me a while to finaly realize the obvious: it’s in the name – just literally _pin_ them to the top.
 
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
