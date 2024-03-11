@@ -65,7 +65,7 @@ We can start by finding the first match in the string. If we build this, the res
 
 There are many algorithms for generating state machines for regex, and for performing the actual matches. Each has its own performance characteristics and feature set.
 
-Some algorithms use DFA, which, as I mentioned in the [previous article]({{ site.url }} post/regex-compiler#whats-next), is not covered by this series – few modern engines use it. Most use NFA.
+Some algorithms use DFA, which, as I mentioned in the [previous article]({{ site.url }}/post/regex-compiler#whats-next), is not covered by this series – few modern engines use it. Most use NFA.
 
 I implemented two different matching algorithms for NFA.
 
