@@ -109,7 +109,7 @@ To delete a dependency, you would Option-Click on the dependency in the `Package
 
 ### Technical Limitations
 
-Of course, the `Package.swift` file is a Swift file, so if it is complicated enough, some of these things won't work. But it isn't a problem because it's just a bit of a convenience on top of a human-readable text file. If you are unhappy with a diff it creates, you'll change it. Currently, these features don't exist at all, even for simple package files. They do exist in Xcode GUI, but Xcode GUI is too limited for any sufficiently complicated app.
+Of course, the `Package.swift` file is a Swift file, so if it is complicated enough, some of these things won't work. But I think it's an acceptable and understadable trade-off because it's just a bit of a convenience on top of a human-readable source file. If you are unhappy with a diff it creates, you'll change it. Currently, these features don't exist at all, even for simple package files.
 
 ## Other Issues
 
