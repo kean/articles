@@ -14,7 +14,7 @@ I recently had the pleasure of migrating a relatively large project from CocoaPo
 
 ## Adding Dependencies
 
-The [existing process](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app) for adding dependencies to Xcode target involves multiple steps and is especially convoluted when you have multiple targets, like app extensions. I wanted to make sure that the experience of managing the dependencies is at least as good as in CocoaPods, so I borrowed a page from their playbook.
+The [existing process](https://developer.apple.com/documentation/xcode/adding-package-dependencies-to-your-app) for adding dependencies to Xcode target involves multiple steps and is especially convoluted when you have multiple targets, like app extensions. I wanted to make sure that the experience of managing the dependencies is at least as good as in CocoaPods, so I borrowed a page from their playbook. I'm also working with a situation where most of the code is in Xcode targets and can't be easily extracted to Swift packages. 
 
 I created a `Modules/Package.swift` file and defined a list of products that match my Xcode targets:
 
