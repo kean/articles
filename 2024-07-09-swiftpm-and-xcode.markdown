@@ -45,7 +45,7 @@ The "actual" dependencies are specified in the same `Modules/Package.swift` file
 
 ```swift
 enum XcodeSupport {
-    static let targets: [Product] = [
+    static let targets: [Targe] = [
         .target(name: "XcodeTarget_App", dependencies: [
             .product(name: "Pulse", package: "Pulse"),
             .product(name: "PulseUI", package: "Pulse"),
