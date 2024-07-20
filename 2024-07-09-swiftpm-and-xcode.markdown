@@ -7,6 +7,7 @@ date: 2024-07-09 09:00:00 -0500
 category: programming
 tags: programming
 permalink: /post/swiftpm-and-xcode
+mastodon: https://mastodon.social/@a_grebenyuk/112757641876624153
 uuid: 0bca7c93-0818-43fe-bc1d-8b0acad0cc17
 ---
 
@@ -45,7 +46,7 @@ The "actual" dependencies are specified in the same `Modules/Package.swift` file
 
 ```swift
 enum XcodeSupport {
-    static let targets: [Targe] = [
+    static let targets: [Target] = [
         .target(name: "XcodeTarget_App", dependencies: [
             .product(name: "Pulse", package: "Pulse"),
             .product(name: "PulseUI", package: "Pulse"),
@@ -58,7 +59,7 @@ enum XcodeSupport {
 }
 ```
 
-Now if you need to add a new dependency, you simply add it in `Modules/Package.swift`, and you are done. You never need to mess with `.pbproj`.
+Now if you need to add a new dependency, you simply add it in `Modules/Package.swift`, and you are done. You never need to mess with the `.pbpxroj` file.
 
 The dependencies, including the transient ones, are pinned in the `./MyApp.xcworkspace/xcshareddata/swiftpm/Package.resolved` file as usual. I added `Modules/Packages.resolved` to `.gitignore` to make sure if someone opens `Packages.swift`, the `Package.resolved` file never gets committed into the repo.
 
