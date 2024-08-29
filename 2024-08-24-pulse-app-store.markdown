@@ -9,6 +9,7 @@ tags: programming
 permalink: /post/pulse-app-store
 fullscreen: true
 disable-toc: true
+mastodon: https://mastodon.social/@a_grebenyuk/113045277333856450
 uuid: cee1039d-4379-48ae-8fb6-10a14abf6900
 ---
 
