@@ -61,18 +61,12 @@ There is more stuff coming in the future versions, including breakpoints. There 
 
 <img class="full-width JustVertMargins" src="/images/posts/pulse-app-store/app-store-03.png">
 
-## Development Journey
-
-Pulse has started as and continues to be my [hobby project](/post/swiftui-experiment) where I can push SwiftUI to the limit across all five Apple platforms. It's been a long journey to finally get it on the App Store, but there is still a lot of work to be done as there've been a ton of new APIs releases over the last year, so I'm looking forward to improving the apps with these new features. One of my other next steps is to officially release Pulse SDK and the Pulse companion app on visionOS.
-
 ## Pricing
 
-Pulse originally started as a project relying on [GitHub Sponsors](https://github.com/sponsors/kean) to fund its future development, but with a few exceptions, it hasn't proven to be successful. Pulse SDK continues to be free and open-source, and the companion apps that are finally out of beta will use a straightforward subscription model. By subscribing, you sponsor the project's future development and get access to these excellent companion apps to help accelerate the development of your projects.
+Pulse SDK continues to be free and open-source, and the companion apps that are finally out of beta will use a straightforward subscription model. By subscribing, you sponsor the project's future development and get access to these excellent companion apps to help accelerate the development of your projects.
 
 I'm grateful to the early sponsors, and if you were one of them and you'd like to get free access to the apps, please [reach out](mailto:studio@kean.blog) to me.
 
-## Final Thoughts
+## Future
 
-It feels strange that a Mac app turned out to be my first app on the App Store (quickly followed by an iOS app) after more than a decade of specializing in iOS apps. I am passionate about building native apps for Apple platforms, and there is still a lot for me to learn, so I'm looking forward to further enhancing my skills beyond iOS.
-
-I want to thank all the Pulse users, early sponsors, and beta testers. I hope you love using it and it helps you with your work, and I'm excited to continue pushing it forward using all the latest Apple tech.
+A lot more is coming in the future, including the upcoming Pulse SDK 5.0 release that will greatly simplify the integration experience. The app will also continue leaning into the strengths of its SDK. It will offer a better way to analyze your network traffic together with logs and other diagnostics from the device, including identifying logs from the same tasks and areas. Stay tuned!
