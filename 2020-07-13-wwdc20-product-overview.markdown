@@ -1,7 +1,7 @@
 ---
 layout: post
 title: WWDC20 Summary
-subtilte: An overview of the changes introduced on WWDC20 from the design and product perspective
+subtitle: An overview of the changes introduced on WWDC20 from the design and product perspective
 description: An overview of the changes introduced on WWDC20 from the design and product perspective
 date: 2020-07-13 9:00:00 -0400
 category: programming

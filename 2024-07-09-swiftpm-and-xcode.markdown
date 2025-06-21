@@ -61,7 +61,7 @@ enum XcodeSupport {
 
 Now if you need to add a new dependency, you simply add it in `Modules/Package.swift`, and you are done. You never need to mess with the `.pbpxroj` file.
 
-The dependencies, including the transient ones, are pinned in the `./MyApp.xcworkspace/xcshareddata/swiftpm/Package.resolved` file as usual. I added `Modules/Packages.resolved` to `.gitignore` to make sure if someone opens `Packages.swift`, the `Package.resolved` file never gets committed into the repo.
+The dependencies, including the transitive ones, are pinned in the `./MyApp.xcworkspace/xcshareddata/swiftpm/Package.resolved` file as usual. I added `Modules/Packages.resolved` to `.gitignore` to make sure if someone opens `Packages.swift`, the `Package.resolved` file never gets committed into the repo.
 
 ## Better Developer Experience
 
@@ -110,7 +110,7 @@ To delete a dependency, you would Option-Click on the dependency in the `Package
 
 ### Technical Limitations
 
-Of course, the `Package.swift` file is a Swift file, so if it is complicated enough, some of these things won't work. But I think it's an acceptable and understadable trade-off because it's just a bit of a convenience on top of a human-readable source file. If you are unhappy with a diff it creates, you'll change it. Currently, these features don't exist at all, even for simple package files.
+Of course, the `Package.swift` file is a Swift file, so if it is complicated enough, some of these things won't work. But I think it's an acceptable and understandable trade-off because it's just a bit of a convenience on top of a human-readable source file. If you are unhappy with a diff it creates, you'll change it. Currently, these features don't exist at all, even for simple package files.
 
 ## Other Issues
 

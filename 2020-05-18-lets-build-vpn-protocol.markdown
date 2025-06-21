@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Let's Build a VPN Protocol
-subtitle: How to implement a custom VPN client and server using Packet Tunner Provider
-description: A series about building a custom VPN protocol, client, and server, using Packet Tunner Provider (NEPacketTunnelProvider from Network Extension framework) and SwiftNIO
+subtitle: How to implement a custom VPN client and server using Packet Tunnel Provider
+description: A series about building a custom VPN protocol, client, and server, using Packet Tunnel Provider (NEPacketTunnelProvider from Network Extension framework) and SwiftNIO
 date: 2020-05-18 9:00:00 -0400
 category: programming
 tags: programming

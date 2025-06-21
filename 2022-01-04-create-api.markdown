@@ -29,7 +29,7 @@ One of the main examples I used was [GitHub REST API spec](https://github.com/gi
 
 ## Optimizations
 
-I just have to talk about performance. CreateAPI is optimized to run on multicore processors like M1 Pro/Max. There is parallelization at every stage; even parsing is partially parallelized. And code generation saturates _all_ available code. As a result, it processes 100K lines of OpenAPI specs in *less than a second*.
+I just have to talk about performance. CreateAPI is optimized to run on multicore processors like M1 Pro/Max. There is parallelization at every stage; even parsing is partially parallelized. And code generation saturates _all_ available cores. As a result, it processes 100K lines of OpenAPI specs in *less than a second*.
 
 CreateAPI was built entirely on a 10-Core M1 Pro, which made it feasible to work with these massive test inputs: 1KK of OpenAPI specs and 500K of generated Swift code. This beast compiles 500K lines of Swift code (heavily modularized) in less than 2 minutes – absolutely insane.
 
@@ -159,7 +159,7 @@ search-result-text-matches:
       ...
 ```
 
-Many tools fails to produce anything useful for these specs. Here's one example:
+Many tools fail to produce anything useful for these specs. Here's one example:
 
 ```swift
 public typealias SearchResultTextMatches = [SearchResultTextMatches]
@@ -191,7 +191,7 @@ public struct SearchResultTextMatch: Codable {
 
 Here is what happens under the hood:
 
-1. CreateAPI encounts a schema named `"search-result-text-matches"` of an `"array"` type.
+1. CreateAPI encounters a schema named `"search-result-text-matches"` of an `"array"` type.
 2. It checks the type of the element – it's an anonymous object defined inline.
 3. It generates a struct declaration for the element schema and names it `SearchResultTextMatch` - a singularized form of `"search-result-text-matches"`.
 4. It skips adding a typealias because it can be inlined later (can be disabled with `isInliningTypealiases`)

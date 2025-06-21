@@ -30,7 +30,7 @@ Data Race Safety is touted as one of the great Swift 6 features. You would expec
 
 <img class="NewScreenshot" src="/images/posts/swift-6/expectation-vs-reality.jpg">
  
-OK, this is just for laughs. Maybe it's the only reasonable way to implement it, but I think these design decisions combined with the lack of progressive disculosure is why this feature is often criticized and perceived the way it is. You want the compiler to help find the data races, and the data by itself can't cause a data race – it's how it's being used down to individual properties, which is why Sendable also appears to be too blunt of an instrument.
+OK, this is just for laughs. Maybe it's the only reasonable way to implement it, but I think these design decisions combined with the lack of progressive disclosure is why this feature is often criticized and perceived the way it is. You want the compiler to help find the data races, and the data by itself can't cause a data race – it's how it's being used down to individual properties, which is why Sendable also appears to be too blunt of an instrument.
 
 There's also been a notion that the new warnings are easy to fix. I'm sure some of them are, but that wasn't the case in my experience. In my frameworks and apps, I had to carefully think about almost every individual instance and then often update tests, etc, which was extremely time-consuming even in smaller well-maintained codebases. Migration seems easier once you've done it, but at this point, it's too late. I wouldn't underplay how complex it is, especially anything related to closures and delegates.
 

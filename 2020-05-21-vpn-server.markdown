@@ -12,7 +12,7 @@ published: false
 
 <!-- {% include ad-hor.html %} -->
 
-<!-- > This is a simplified sample, it doesn't follow the security and performnance best practices.
+<!-- > This is a simplified sample, it doesn't follow the security and performance best practices.
 {:.warning}
  -->
 

@@ -123,7 +123,7 @@ The grouping I’m particularly excited about is “Group by Session”. It’ll
 
 ## Pins
 
-And last but not least, Pulse now has a proper replacement for the Pins tab that was removed in version 3.0. It took me a while to finaly realize the obvious: it’s in the name – just literally _pin_ them to the top.
+And last but not least, Pulse now has a proper replacement for the Pins tab that was removed in version 3.0. It took me a while to finally realize the obvious: it’s in the name – just literally _pin_ them to the top.
 
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
@@ -135,4 +135,4 @@ And last but not least, Pulse now has a proper replacement for the Pins tab that
 
 I love building things, especially when I have full control over all aspects of the process. With Pulse, with a limited time, I try to work in quick bursts where I try to make a few good decisions to move it forwards and focus on them. I usually follow the make it work → make it right → make it fast mantra, and with SwiftUI, prototypes are often indistinguishable from the implementation, which is a massive time-saver.
 
-The new search and other list features make Pules infinitely more useful. They are available today on iOS and are coming soon to other platforms. I hope you give it a try!
+The new search and other list features make Pulse infinitely more useful. They are available today on iOS and are coming soon to other platforms. I hope you give it a try!

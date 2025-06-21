@@ -48,7 +48,7 @@ Large pull requests like that are hard to review. Eventually, the reviews become
 
 ### Big Merge Conflicts, Refactoring is Discouraged
 
-> **Scenario:** Alice has finished working on a feature. She's created a pull request with 1000 lines of code, 500 of which were made as part of refactoring, touching 80 files (renaiming some components, moving a few things around). By the time the review was completed, more changes had been merged into `develop` (integration branch), resulting in PR having merge conflicts.
+> **Scenario:** Alice has finished working on a feature. She's created a pull request with 1000 lines of code, 500 of which were made as part of refactoring, touching 80 files (renaming some components, moving a few things around). By the time the review was completed, more changes had been merged into `develop` (integration branch), resulting in PR having merge conflicts.
 
 In my view, the most detrimental problem with feature branches is that this strategy discourages refactoring. GitFlow encourages a 1-1 relation between features and branches. This means that refactoring tends to be part of the feature branch. Developers become wary of refactoring because even a small change may lead to a need to resolve merge conflicts later during integration. Such pull requests are also extremely painful for reviewers. Inevitably, the team ends up avoiding refactoring.
 
@@ -88,7 +88,7 @@ The shorter lived the branches are, the closer you get to a [Trunk-Based Develop
 
 ### Continuous Integration
 
-TBD enables continuous integration - developers can integrate their work more quicker and easier. You no longer end up in situations where developers are isolated in their own branches with no feedback from the team.
+TBD enables continuous integration - developers can integrate their work quicker and easier. You no longer end up in situations where developers are isolated in their own branches with no feedback from the team.
 
 ### Cheap Decomposition
 
@@ -118,7 +118,7 @@ Many developers who I talked with have adopted feature branches a few years ago 
 
 To me, personally, TBD seems like "a 25-dollar term for a 5-cent concept", but it is an important one. And it just might be the case that you're doing TBD without calling it this way.
 
-In this post, I've completely avoided how releases are managed in GitFlow and in TBD (I think GitFlow has a bit of an unwanted overhead and complexity). There are a lot of resources on both techniques, which you can jump into to see the differences.
+In this post, I've completely avoided how releases are managed in GitFlow and in TBD (I think GitFlow has a bit of unwanted overhead and complexity). There are a lot of resources on both techniques, which you can jump into to see the differences.
 
 There are definitely better articles about trunk-based development (see references), I encourage you to check them out.
 

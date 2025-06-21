@@ -16,7 +16,7 @@ uuid: d3d4d400-70f3-40a1-a8d3-bcfe9df881f8
 
 ## Designing a Protocol
 
-I want the protocol to be functional, but keep it as simple as possible. The goal is not to design a viable VPN protocol, but to demonstrate [Network Extension](shttps://developer.apple.com/documentation/networkextension) framework.
+I want the protocol to be functional, but keep it as simple as possible. The goal is not to design a viable VPN protocol, but to demonstrate [Network Extension](https://developer.apple.com/documentation/networkextension) framework.
 
 There are three things that our protocol is going to need to be able to do:
 
@@ -100,7 +100,7 @@ We could use either of these options. UDP is typically going to be faster, it is
 
 ## Packet Tunnel Provider
 
-The primary API for implementing your custom tunneling protocols in [`NEPacketTunnelProvider`](https://developer.apple.com/documentation/networkextension/nepackettunnelprovider), that allows you to tunnel traffic on an IP layer. They run as app extensions, running in the background handling network traffic.
+The primary API for implementing your custom tunneling protocols in [`NEPacketTunnelProvider`](https://developer.apple.com/documentation/networkextension/nepackettunnelprovider), that allows you to tunnel traffic on an IP layer. They run as app extensions in the background handling network traffic.
 
 > There is also an [NEAppProxyProvider](https://developer.apple.com/documentation/networkextension/neappproxyprovider) which is another subclass of the abstract `NETunnelProvider` class. It allows you to implement tunneling on a higher, app level. Unlike `NEPacketTunnelProvider`, it requires a device to be [*supervised*](https://support.apple.com/en-us/HT202837) and it only works for [*managed* apps](https://www.apple.com/business/docs/resources/Managing_Devices_and_Corporate_Data_on_iOS.pdf). It operates on a TCP/UDP level instead of IP level.
 {:.info}

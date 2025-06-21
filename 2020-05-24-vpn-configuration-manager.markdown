@@ -67,13 +67,13 @@ UserInfo={NSLocalizedDescription=permission denied}
 
 ## VPN Manager
 
-The primary interface for managing VPN configurations that use a custom VPN protocols is [`NETunnelProviderManager`](https://developer.apple.com/documentation/networkextension/netunnelprovidermanager), which is a sublcass of [`NEVPNManager`](https://developer.apple.com/documentation/networkextension/nevpnmanager).
+The primary interface for managing VPN configurations that use a custom VPN protocols is [`NETunnelProviderManager`](https://developer.apple.com/documentation/networkextension/netunnelprovidermanager), which is a subclass of [`NEVPNManager`](https://developer.apple.com/documentation/networkextension/nevpnmanager).
 
 > You can use [`NEVPNManager`](https://developer.apple.com/documentation/networkextension/nevpnmanager) without the tunnel provider to create and manage [personal VPN](https://developer.apple.com/documentation/networkextension/personal_vpn) configurations that use one of the built-in VPN protocols (IPsec or IKEv2).
 {:.info}
 
 
-The first thing that you want to do when your app starts is read the exiting configuration.
+The first thing that you want to do when your app starts is read the existing configuration.
 
 ```swift
 NETunnelProviderManager.loadAllFromPreferences { managers, error in
@@ -157,7 +157,7 @@ manager.saveToPreferences { error in
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left">
             <h3 class="no_toc">Tunnel Details</h3>
             <p>When the user taps "Install VPN Profile" button, a system alert is going appear and is going to guide the user through the process of installing the VPN profile. Once it's done, the system returns the user back to the app where <code>RouterView</code> presents a "Tunnel Details" screen from earlier.</p>
-            <blockquote class="info"><p><code>RouterView</code> is a component responsibly for top-level navigation in the BestVPN app.</p></blockquote>
+            <blockquote class="info"><p><code>RouterView</code> is a component responsible for top-level navigation in the BestVPN app.</p></blockquote>
             <p>In the next section, I'm going to cover the "Tunnel Details" screen and how it interact with the system settings in details.</p>
         </div>
         <!-- To the right: image -->
@@ -173,7 +173,7 @@ Now that the profile is installed, the same `NETunnelProviderManager` instance c
 
 ### Enabling Configuration
 
-Enabled VPN configuration have [`isEnabled`](https://developer.apple.com/documentation/networkextension/nevpnmanager/1406382-isenabled) flag set to `true`.
+Enabled VPN configurations have [`isEnabled`](https://developer.apple.com/documentation/networkextension/nevpnmanager/1406382-isenabled) flag set to `true`.
 
 > <h3 class="no_toc">Configuration Model</h3>
 >

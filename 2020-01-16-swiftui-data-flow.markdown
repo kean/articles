@@ -18,7 +18,7 @@ favorite: true
 </div>
 
 
-What makes SwiftUI different from UIKit? For one, it's the *layout system* that I already covered it in one of my [previous articles](/post/swiftui-layout-system). Another, and probably an even more dramatic change, is the *data flow*. 
+What makes SwiftUI different from UIKit? For one, it's the *layout system* that I already covered in one of my [previous articles](/post/swiftui-layout-system). Another, and probably an even more dramatic change, is the *data flow*. 
 
 In UIKit, you have a lot of decisions to make. Are you going to observe changes to data to refresh the UI (aka *views as a function of state*) or update the UI after performing every update (aka *views as a sequence of events*)? Are you going to set-up bindings using your favorite reactive programming framework or use a target-action mechanism? SwiftUI is an opinionated framework, it has answers to all of these questions.
 
@@ -449,7 +449,7 @@ Should you use `@StateObject` everywhere instead of `@ObservedObject`? The [answ
 
 ## @State
 
-When you fill that creating an `ObservableObject` is a bit too much for your use case, there is another tool called [`@State`]((https://developer.apple.com/documentation/swiftui/state)).
+When you feel that creating an `ObservableObject` is a bit too much for your use case, there is another tool called [`@State`]((https://developer.apple.com/documentation/swiftui/state)).
 
 > SwiftUI automatically manages the storage for your state properties. When the state value changes, the view invalidates its appearance and recomputes the body.
 >

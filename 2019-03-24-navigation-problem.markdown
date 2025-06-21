@@ -19,7 +19,7 @@ A Coordinator would typically end up creating new modules (Factory), manipulatin
 
 ## MVC
 
-Any MVC-based architecture already provides you with the tools to manage navigation. In this article I'm going to use MVP as an example. But the same principles can be apply to other patterns like MVC and MVVM.
+Any MVC-based architecture already provides you with the tools to manage navigation. In this article I'm going to use MVP as an example. But the same principles can be applied to other patterns like MVC and MVVM.
 
 > I use Factories which construct Model and Presenter objects and which have access to Context for DI. I also skip some protocol declarations and `final` keywords which I would normally use. And I use delegates which could be of course replaced with other mechanisms like closures.
 
@@ -145,7 +145,7 @@ As you probably noticed the usage is identical to how we present the steps of th
 
 The good thing about this approach is that, unlike Coordinators, it already has memory management sorted out. Views hold strong references to Presenters. Views also hold strong references to child Views (e.g. child view controllers). When we show `DeviceInstallationViewController` it is automatically retained by UIKIt and it also retains its presenter.
 
-> In the example, `DeviceInstallationViewController` is a navigation controller, but it could also be the initial view controller of the flow which would could the show the way we wanted.
+> In the example, `DeviceInstallationViewController` is a navigation controller, but it could also be the initial view controller of the flow which could then show the way we wanted.
 
 We were able to use class MVP components to implement the entire flow which means that we have a clear separation of concerns and also a clear way to write unit tests for the flow – we can fully test `DeviceInstallationModel` and we can fully test `DeviceInstallationPresenter`.
 

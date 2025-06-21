@@ -1,11 +1,11 @@
 ---
 layout: post
 title: Network Extension Overview
-description: Introduction Network Extension framework features
+description: Introduction to Network Extension framework features
 date: 2018-05-22 18:00:00 +0300
 category: programming
 tags: programming
-permalink: /post/network-extensions-into
+permalink: /post/network-extensions-intro
 uuid: 5d99141e-9678-43af-975c-8ca5f736cb4a
 ---
 

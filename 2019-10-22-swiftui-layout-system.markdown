@@ -56,7 +56,7 @@ Text("Hello World")
 ```
 </blockquote>
 
-The top layer of any custom view, like `ContentView`, is *layout neutral*. Its bounds are defined by the bounds of its body, in this case, `Text`. For the purposes of layout, you can treat the custom `ContentView` and `Text` as the same view. Now how did SwiftUI establish the bounds of the `ContentView` and why did it it position it in the center of the root view? To understand this, we need to understand how SwiftUI layout system works.
+The top layer of any custom view, like `ContentView`, is *layout neutral*. Its bounds are defined by the bounds of its body, in this case, `Text`. For the purposes of layout, you can treat the custom `ContentView` and `Text` as the same view. Now how did SwiftUI establish the bounds of the `ContentView` and why did it position it in the center of the root view? To understand this, we need to understand how SwiftUI layout system works.
 
 ### Layout Process
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Core Data Progressive Migrations"
-description: "Using NSPersistentStoreCoordinato and NSMigrationManager for progressive schema migrations in Core Data"
+description: "Using NSPersistentStoreCoordinator and NSMigrationManager for progressive schema migrations in Core Data"
 date: 2016-06-18 10:00:00 +0300
 category: programming
 tags: ios
@@ -10,7 +10,7 @@ redirect_from: /blog/core-data-progressive-migrations
 uuid: cdd8c605-9632-4de9-a370-2049aa69f8b4
 ---
 
-[Schema migration](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/Introduction.html#//apple_ref/doc/uid/TP40004399-CH1-SW1) is a daunting process but you must get it right. Otherwise you might end up breaking your app and corrupting user data in the process. This articles aims to make custom Core Data migrations more approachable.
+[Schema migration](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/Introduction.html#//apple_ref/doc/uid/TP40004399-CH1-SW1) is a daunting process but you must get it right. Otherwise you might end up breaking your app and corrupting user data in the process. This article aims to make custom Core Data migrations more approachable.
 
 When dealing with something as critical you want to keep things simple. With Core Data it means either avoiding migrations altogether, or using [lightweight migrations](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/vmLightweightMigration.html). However, sometimes custom migrations are unavoidable.
 

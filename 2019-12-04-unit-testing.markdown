@@ -90,7 +90,7 @@ Testing ViewModels or Presenters typically requires a significant amount of effo
 
 Am I saying that you should *not* test ViewModels and Views? Absolutely not. What I mean is that you should probably not test ViewModels in isolation by mocking all of the dependencies. This is where UI and integration tests come in. ViewModels can be a fantastic "end" in integration tests.
 
-There is also an unintendend consequence of creating too many unit tests for ViewModels with too many mocks – they become a barrier to refactoring[^7]. You make a change in a commonly used service and instead of only updating unit tests for this service, you also have too update all of the ViewModels and all of the mocks that they use. Eventually, these tests erode without significant investment in their maintenance.
+There is also an unintendend consequence of creating too many unit tests for ViewModels with too many mocks – they become a barrier to refactoring[^7]. You make a change in a commonly used service and instead of only updating unit tests for this service, you also have to update all of the ViewModels and all of the mocks that they use. Eventually, these tests erode without significant investment in their maintenance.
 
 ## High Quality Tests
 

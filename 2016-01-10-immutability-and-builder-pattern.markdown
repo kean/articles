@@ -10,7 +10,7 @@ redirect_from: /blog/immutability-and-builder-pattern
 uuid: 944811d2-f3f0-425c-8178-e317873e74cf
 ---
 
-We are all aware of the [advantages of immutable objects](https://www.objc.io/issues/7-foundation/value-objects/). These is often a desire to make all or most model objects immutable, but they tend to have a lot of properties. How do you initialize such objects without creating a [telescoping initializer](https://stackoverflow.com/questions/11748682/telescoping-constructor)?
+We are all aware of the [advantages of immutable objects](https://www.objc.io/issues/7-foundation/value-objects/). There is often a desire to make all or most model objects immutable, but they tend to have a lot of properties. How do you initialize such objects without creating a [telescoping initializer](https://stackoverflow.com/questions/11748682/telescoping-constructor)?
 
 {% include ad-hor.html %}
 
@@ -108,7 +108,7 @@ Let's dive straight into implementation but this time we will start with a base 
 @implementation Entity
 
 - (instancetype)initWithBuilder:(EntityBuilder *)builder {
-    // You can also assers that validate builder here
+    // You can also add assertions that validate builder here
     if (self = [super init]) {
         _ID = builder.ID;
     }

@@ -27,7 +27,7 @@ The intention of the article isn't to complain, but rather to review the documen
 
 ## Navigation
 
-When you open the [root SwiftUI documentation page](https://developer.apple.com/documentation/swiftui), you see is a small list of topics. In fact, what you see on the screenshot is the entire contents of the home page (apart from the brieft introductory text). There is no index where you can see all children pages. You need to drill down multiple pages to find what you are looking for.
+When you open the [root SwiftUI documentation page](https://developer.apple.com/documentation/swiftui), you see is a small list of topics. In fact, what you see on the screenshot is the entire contents of the home page (apart from the brief introductory text). There is no index where you can see all children pages. You need to drill down multiple pages to find what you are looking for.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/01.png">
 
@@ -45,7 +45,7 @@ If you want to compare it with how it could be done differently, here is a scree
 
 There are many things that Google does right on this page. First, unlike Apple documentation which appears as it was designed for mobile, Google takes full advantage of a bigger screen *and* it also works great on mobile. Second, you get a full overview and control of the navigation:
 
-- A complete and priotirized index of pages to the left with sensible categories
+- A complete and prioritized index of pages to the left with sensible categories
 - You can navigate different *types* of documentation using tabs at the top
 - There is a table of contents on the right, Apple doesn't have that
 
@@ -72,7 +72,7 @@ Back in the Objective-C days, Apple's focus was on providing guides offering a [
 
 ### Guides
 
-Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. There different documentation types are mixed in a bland mass of gray with an unconscionable amount of white space.
+Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. There are different documentation types are mixed in a bland mass of gray with an unconscionable amount of white space.
 
 For example, on the screenshot below you can find a tutorial, two guides, and multiple references. This page could benefit from color differentiation.
 
