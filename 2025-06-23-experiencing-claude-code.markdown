@@ -3,7 +3,7 @@ layout: post
 title: Claude Code Experience
 subtitle: A pragmatic take on AI coding with practical insights
 description: A pragmatic take on AI coding with practical insights
-date: 2025-07-23 09:00:00 -0500
+date: 2025-06-23 09:00:00 -0500
 category: programming
 tags: programming, ai, ios
 permalink: /post/experiencing-claude-code
@@ -143,7 +143,7 @@ Claude Code works best when you're already an expert who knows what to build and
 
 For junior developers, these tools present both opportunity and risk – they can accelerate learning by showing patterns and approaches, but there's danger in accepting generated code without understanding it. The fundamentals still matter.
 
-Some compare AI to the transition from assembly to high-level languages, but I'm not sure that's accurate. You still write and read the same code. The abstractions haven't changed. What's changed is velocity. I can now spend more time on design and architecture instead of mechanical code writing. The other parts are LLMs used as part of the existing products, with English as a sort of programming language for prompts.
+Some compare AI to the transition from assembly to high-level languages, but I'm not sure that's accurate. You still write and read the same code. The abstractions haven't changed. What's changed is velocity. I can now spend more time on design and architecture instead of mechanical code writing. But that's only part of the story. The other parts are LLMs used as part of the existing products, with English as a sort of programming language for prompts.
 
 Do I have any concerns about code quality or long-term maintenance implications? In my experience – the opposite. I love the craft of engineering software. Our material is code. With AI, you have the power to effortlessly mold it in any shape or form.
 
