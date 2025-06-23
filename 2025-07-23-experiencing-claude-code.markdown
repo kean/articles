@@ -7,7 +7,7 @@ date: 2025-07-23 09:00:00 -0500
 category: programming
 tags: programming, ai, ios
 permalink: /post/experiencing-claude-code
-mastodon: TBD
+mastodon: https://mastodon.social/@a_grebenyuk/114732714419844898
 uuid: a8d013bd-532e-4a9c-a252-422112781c68
 ---
 
