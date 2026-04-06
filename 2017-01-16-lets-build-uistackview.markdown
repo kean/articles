@@ -144,7 +144,7 @@ As the result, you get a simple but very useful layout. In terms of constraints,
  H:[Subview1]-(0)-[Subview2]
 </pre>
 
-This distribution is almost the same as <a href="#UIStackViewDistribution.fill">fill distribution</a>. The only different is the new <b>UISV-fill-equally</b> set of constraints. It forces all of the arranged views to have the same width (or height for vertical `UIStackView`).
+This distribution is almost the same as <a href="#UIStackViewDistribution.fill">fill distribution</a>. The only difference is the new <b>UISV-fill-equally</b> set of constraints. It forces all of the arranged views to have the same width (or height for vertical `UIStackView`).
 
 
 
@@ -600,7 +600,7 @@ The set of constraints is similar to the previous scenario: it uses an auxiliary
  Subview0.bottom == StackView.bottom
 </pre>
 
-This one seems easy at first but is actually quite tricky. Hiding subviews is quite simple, `UIStackView` just adds a single **UISV-hiding** constraint and recalculates the spacings. What's more complicated is how `UIStackView` reacts to `isHidden` changes and how it perform animations.
+This one seems easy at first but is actually quite tricky. Hiding subviews is quite simple, `UIStackView` just adds a single **UISV-hiding** constraint and recalculates the spacings. What's more complicated is how `UIStackView` reacts to `isHidden` changes and how it performs animations.
 
 The `UIStackView` promises to do everything automagically for you:
 

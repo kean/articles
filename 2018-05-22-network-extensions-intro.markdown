@@ -49,7 +49,7 @@ The `NETunnelProvider` APIs allow apps to implement the client side of a custom 
 
 The provider subclass should be added inside a special app extension target. The app extension will be automatically started by the system when necessary. In some cases, e.g. always-on VPN, the process running an extension will run indefinitely and will automatically be started even after the system restart.
 
-> You won't be able to run any of these app extensions in a simulator, and to run in on a device you will need to create an entitlement.
+> You won't be able to run any of these app extensions in a simulator, and to run it on a device you will need to create an entitlement.
 
 ### On-Device Network Content Filter
 

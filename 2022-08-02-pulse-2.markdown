@@ -37,7 +37,7 @@ In the example below, the response is stored in the disk cache but is expired an
 </video>
 </div>
 
-And there are more new fields and sections on the summary page. For example, it now shows a type of recorded task: `URLSessionDataTask`, `URLSessionDownloadTask`, etc. There are separate `host` and `path` fields in the request section making it easier to see and copy them. And if the URL contains query items, there are also displayed in pairs.
+And there are more new fields and sections on the summary page. For example, it now shows a type of recorded task: `URLSessionDataTask`, `URLSessionDownloadTask`, etc. There are separate `host` and `path` fields in the request section making it easier to see and copy them. And if the URL contains query items, they are also displayed in pairs.
 
 ### Insights
 
@@ -53,7 +53,7 @@ The graphs on this screen are powered by [Swift Charts](https://developer.apple.
 
 ### Decoding Errors
 
-Unlike regular network proxies, Pulse works directly with `URLSession`. It makes it easier to integrate and see encrypted traffic. It also gives you more information about the requests that any proxy could get.
+Unlike regular network proxies, Pulse works directly with `URLSession`. It makes it easier to integrate and see encrypted traffic. It also gives you more information about the requests than any proxy could get.
 
 When you think about network requests from the perspective of an app, you can’t consider a request with failed decoding success. Yet a regular proxy will report 200 OK. There is a new configuration option in `NetworkLogger` to address that called [`isWaitingForDecoding`](https://kean-docs.github.io/pulse/documentation/pulse/networklogger/configuration/iswaitingfordecoding). When enabled, it gives the app control over when to complete the request. If the app reports a decoding error, Pulse will now display it directly in the response body, highlighting the field that produced the error.
 
@@ -111,14 +111,14 @@ The new features are exciting, but there are also some significant performance i
 
 ### Space Savings
 
-[LoggerStore](https://kean-docs.github.io/pulsecore/documentation/pulsecore/loggerstore) now uses up to **90% less space**. The main improvement comes from a simple yet effective change: compression. The request and response blobs are now compressed using Apple's [lzfse](https://en.wikipedia.org/wiki/LZFSE). I found it to be about x3 times faster than zlib and with often better compression ratio. The same compression is also used for remote logging.
+[LoggerStore](https://kean-docs.github.io/pulsecore/documentation/pulsecore/loggerstore) now uses up to **90% less space**. The main improvement comes from a simple yet effective change: compression. The request and response blobs are now compressed using Apple's [lzfse](https://en.wikipedia.org/wiki/LZFSE). I found it to be about 3x faster than zlib and with often better compression ratio. The same compression is also used for remote logging.
 
 The small blobs (<16 KB) are now [efficiently stored](https://www.sqlite.org/intern-v-extern-blob.html) directly in SQLite. The limit might seem small, but it applies _after_ compression. If you take an example [repos.json](https://github.com/kean/Pulse/blob/master/App/Shared/Resources/repos.json) file with 3020 lines, it compresses from 161 KB to just over 11 KB which fits the inline limit.
 
 > When performing optimizations, it's crucial to measure. Make sure your test data well represents the real data. If you are working with Core Data or SQLite, you can use [DB Browser for SQLite](https://sqlitebrowser.org) to analyze the data. You can also use [sqlite3_analyzer](https://www.sqlite.org/sqlanalyze.html) to see exactly how much space each table and index takes.
 {:.info}
 
-There a bunch of other small improvements under the hood. For example, I switched from SHA256 to SHA1 for generating keys for blob deduplication. SHA1 is 30% faster and uses just 40 characters instead of 64 for file names. 
+There are a bunch of other small improvements under the hood. For example, I switched from SHA256 to SHA1 for generating keys for blob deduplication. SHA1 is 30% faster and uses just 40 characters instead of 64 for file names. 
 
 The new store also no longer stores any unstructured data – everything is stored in the database, including task metrics, and can be queried with SQL. You can track exactly how much space Pulse is taking on the new Store Details screen.
 

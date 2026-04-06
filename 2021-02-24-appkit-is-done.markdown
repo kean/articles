@@ -44,7 +44,7 @@ Want to learn how to build macOS apps or see some videos with rad UI interaction
 </div>
 
 
-The [first step](https://twitter.com/a_grebenyuk/status/1363882900136095745?s=20) was to get the navigation right. I knew I wanted to use triple-column navigation[^4]. SwiftUI makes this setup ease.
+The [first step](https://twitter.com/a_grebenyuk/status/1363882900136095745?s=20) was to get the navigation right. I knew I wanted to use triple-column navigation[^4]. SwiftUI makes this setup easy.
 
 ```swift
 struct ContentView: View {
@@ -165,7 +165,7 @@ DisclosureGroup(content: {
 
 ## Windows
 
-With the new [`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup) API introduces in Big Sur, SwiftUI takes care of certain platform behaviors. For example, users can open more than one window from the group simultaneously. When the user double-clicks on a list item in the main panel, it opens the details in a separate window. This happens automatically.
+With the new [`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup) API introduced in Big Sur, SwiftUI takes care of certain platform behaviors. For example, users can open more than one window from the group simultaneously. When the user double-clicks on a list item in the main panel, it opens the details in a separate window. This happens automatically.
 
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto">
@@ -334,7 +334,7 @@ To implement it, `PinsViewModel` sends a message to `MainViewModel`: "hey, open 
 
 To add a context menu to the view, use [`.contextMenu`](https://developer.apple.com/documentation/swiftui/view/contextmenu(menuitems:)) modifier. It's relatively easy to use and there are plenty of code samples online, including the official documentation.
 
-The context menus look different on different platforms. On iOS, you invoke a context menu using a long-press. On macOS, it's a right-click. You can add context menu to pretty much any views.
+The context menus look different on different platforms. On iOS, you invoke a context menu using a long-press. On macOS, it's a right-click. You can add a context menu to pretty much any view.
 
 [`Menu`](https://developer.apple.com/documentation/swiftui/menu) is a related component. Unlike `.contextMenu`, a menu has a `label` (can be a button) to be displayed on the screen. To invoke a menu, you press the button. On macOS the menu also automatically adds an arrow to the control.
 

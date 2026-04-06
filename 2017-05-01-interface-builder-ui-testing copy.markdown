@@ -35,13 +35,13 @@ Defining styles is a different thing. The cons of defining styles in IB are:
 - It's tedious to work with styles in the GUI
 - If you start changing any of the views' properties in IB you end up with two places to look when you want to know their final values: both IB and code.
 
-The pro of defining styles in IB is that you can visually see what the UI is going to look like without running an app. This is one the major reasons which make IB so appealing to me. But if we are not going to define any styles in IB how are we to actually achieve that? Fortunately, there is a very straightforward way to do that and it involves one of my favorite IB features which is `@IBDesignable`.
+The pro of defining styles in IB is that you can visually see what the UI is going to look like without running an app. This is one of the major reasons which make IB so appealing to me. But if we are not going to define any styles in IB how are we to actually achieve that? Fortunately, there is a very straightforward way to do that and it involves one of my favorite IB features which is `@IBDesignable`.
 
 ## @IBDesignable
 
 `@IBDesignable` enables live rendering of the custom views in Interface Builder. In order to enable live rendering of the entire View Controller UI we need to make its entire view `@IBDesignable`. Simple as that.
 
-The example in the screenshot in the begging of the article is rendered entirely by an `ActivityDetailsView` class. This view contains a table view and implements its data source to render the `Activity` model objects. Here's a part of the implementation of the `ActivityDetailsView.swift` file to get an idea how it might look like:
+The example in the screenshot in the beginning of the article is rendered entirely by an `ActivityDetailsView` class. This view contains a table view and implements its data source to render the `Activity` model objects. Here's a part of the implementation of the `ActivityDetailsView.swift` file to get an idea how it might look like:
 
 ```swift
 // @IBDesignable final class ActivityDetailsView: UIView, UITableViewDataSource, UITableViewDelegate {
@@ -146,10 +146,10 @@ The only part that is left is to add this view into the view controller. We can 
 
 ## Conclusion
 
-IB is not just a great tool for _creating_ the UI but it is also great for _testing_ it. By doing so you can dramatically reduce the number of times you need to run your app during the development cycle. You can rely on IB to test your layout, styles, and even some of the logic that displays your model objects (however, you should really invest time in unit testing in order to test the correctness of the later).
+IB is not just a great tool for _creating_ the UI but it is also great for _testing_ it. By doing so you can dramatically reduce the number of times you need to run your app during the development cycle. You can rely on IB to test your layout, styles, and even some of the logic that displays your model objects (however, you should really invest time in unit testing in order to test the correctness of the latter).
 
 > **WARNING** 
 >
 > The major issue with `@IBDesignable` is just how unstable the Interface Builder (as of Xcode 8.3) seems to be when it is used. You should definitely check if you can tolerate it before committing into this approach.
 
-I hope that Apple will continue improving IB. Imagine how great it would be if Storyboards were interactive in way Playgrounds are (see `PlaygroundPage` `liveView`. It would enable developers to do even more things with the UI without ever running their apps (e.g. test animations). In fact some teams actually [replaced Interface Builder with Playgrounds](https://youtu.be/A0VaIKK2ijM?t=26m47s).
+I hope that Apple will continue improving IB. Imagine how great it would be if Storyboards were interactive in the way Playgrounds are (see `PlaygroundPage` `liveView`. It would enable developers to do even more things with the UI without ever running their apps (e.g. test animations). In fact some teams actually [replaced Interface Builder with Playgrounds](https://youtu.be/A0VaIKK2ijM?t=26m47s).

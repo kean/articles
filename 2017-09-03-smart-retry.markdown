@@ -139,7 +139,7 @@ The documentation describes it really nicely. The basic idea is the `retryWhen` 
 
 A couple of important points to keep in mind are:
 
-- You should _not_ ignore errors observable sequence in your `notificationHandler`. If you do and for example just return a timer from the handler, then the timer will simply run in parallel with the source sequence! This would probably not want you intended.
+- You should _not_ ignore errors observable sequence in your `notificationHandler`. If you do and for example just return a timer from the handler, then the timer will simply run in parallel with the source sequence! This would probably not be what you intended.
 - In RxSwift 3.x if the trigger completes the source sequence also completes. This might not be what you expect. This behavior might change in [RxSwift 4](https://github.com/ReactiveX/RxSwift/issues/1082). I would suggest not to rely on it in your code.
 
 ### Delay Options

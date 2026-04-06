@@ -64,7 +64,7 @@ You probably already noticed one of the major advantages of `RxUI` compared to a
 
 ### RxView
 
-`RxView` is an analog of a SwiftUI `View`. There is one crucial difference. In `UIKit`, views are expensive, you can't simply recreate them each time. The is reflected in `RxView` design.
+`RxView` is an analog of a SwiftUI `View`. There is one crucial difference. In `UIKit`, views are expensive, you can't simply recreate them each time. This is reflected in `RxView` design.
 
 ```swift
 final class LoginViewController: UIViewController, RxView {
@@ -94,7 +94,7 @@ final class LoginViewController: UIViewController, RxView {
 }
 ```
 
-When you call `bind()`, the view automatically registers for the `RxObservableObject` updates delivered via `objectWillChange` property. When the object is changed, `refreshView()` is called automatically. `RxView` hooks into the display system such that `refreshView` called only once per one render cycle.
+When you call `bind()`, the view automatically registers for the `RxObservableObject` updates delivered via `objectWillChange` property. When the object is changed, `refreshView()` is called automatically. `RxView` hooks into the display system such that `refreshView` is called only once per one render cycle.
 
 Again, as you can see there is barely any explicit reactive code in this sample. If you are debugging, you can put a breakpoint right into `refreshView()` and directly query any of the view model properties.
 
@@ -167,7 +167,7 @@ final class LoginViewModel: RxObservableObject {
 
 Currently, if you change any of these properties, nothing happens yet. `objectWillChange` isn't going to fire. Now, how are we going to connect them, what are we going to do? Or, we are going to use a [super secret](https://forums.swift.org/t/property-wrappers-access-to-both-enclosing-self-and-wrapper-instance/32526) `_enclosingInstance` property wrapper subscript, right? No.
 
-When I showed `objectWillChange` implementation earlier, there wa a method call that I left out.
+When I showed `objectWillChange` implementation earlier, there was a method call that I left out.
 
 ```swift
 public extension RxObservableObject {

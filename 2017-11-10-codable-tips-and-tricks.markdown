@@ -99,7 +99,7 @@ Now I can indicate that I don't want to stop decoding in case of a single corrup
 <span class="p">}</span>
 </code></pre></div></div>
 
-Keep in mind that `decode([Safe<Post>].self, from:...` is still going to throw an error if the data doesn't contain an array of contain something other than an array.
+Keep in mind that `decode([Safe<Post>].self, from:...` is still going to throw an error if the data doesn't contain an array or contains something other than an array.
 
 > Ignoring errors is not always the best strategy. For example, if you are displaying bank accounts and the backend suddenly starts sending invalid data for one of them, it’s might be better to show an error than cause a heart attack!
 {:.warning}
@@ -223,7 +223,7 @@ You could also use the `Safe` type introduced in one of the previous sections. B
 
 In the previous example, I used a custom initializer and it turned out [pretty verbose](https://bugs.swift.org/browse/SR-6063). Fortunately, there are a few ways to make it more concise.
 
-### 4.1. Implitic Type Parameters
+### 4.1. Implicit Type Parameters
 
 The first obvious thing is to get rid of the explicit type parameters.
 
@@ -315,7 +315,7 @@ What I like about this approach is that it's declarative. It still uses automati
 
 ## 5. Encoding Patch Parameters
 
-And for the final type - the PATCH HTTP method. In REST, it is used to send a set of changes described to be applied to the entity.
+And for the final tip - the PATCH HTTP method. In REST, it is used to send a set of changes to be applied to the entity.
 
 - The keys not present in the request are ignored
 - If the key is present, the value gets updated (`null` deletes a value)

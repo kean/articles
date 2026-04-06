@@ -86,9 +86,9 @@ view.anchors.edges.pin(insets: 20, alignment: .center)
 
 <img src="https://user-images.githubusercontent.com/1567433/84931836-5cb7e400-b0a1-11ea-8342-ce76b151fcad.png" alt="pin edges with center alignment" width="400px"/>
 
-Not bad, huh? Barely any code, six constraints created covering one of the common UI use cases. And this is just one example. `Alignment` parameter in `pin()` is extremely powerful. It has two components: vertical and horizontal. It covers a lot of possible layouts that you'll might want to create.
+Not bad, huh? Barely any code, six constraints created covering one of the common UI use cases. And this is just one example. `Alignment` parameter in `pin()` is extremely powerful. It has two components: vertical and horizontal. It covers a lot of possible layouts that you might want to create.
 
-There are multiple ways to learn Align APIs. The APIs surface is small and easily discoverable using Xcode code completion. The [README](https://github.com/kean/Align) consains an illustrated guide. There is even a <a href="https://github.com/kean/Align/blob/master/Docs/align-cheat-sheet.pdf">cheat sheet</a> available.
+There are multiple ways to learn Align APIs. The APIs surface is small and easily discoverable using Xcode code completion. The [README](https://github.com/kean/Align) contains an illustrated guide. There is even a <a href="https://github.com/kean/Align/blob/master/Docs/align-cheat-sheet.pdf">cheat sheet</a> available.
 
 <a href="https://github.com/kean/Align/blob/master/Docs/align-cheat-sheet.pdf">
 <img alt="Align cheat sheet" class="Screenshot kb-legacy-card" src="/images/posts/align/align-cheat-sheet.png">
@@ -200,7 +200,7 @@ view.anchors.edges.pin(insets: 20, axis: .horizontal, alignment: .center)
 <img src="https://user-images.githubusercontent.com/1567433/84932039-af919b80-b0a1-11ea-9798-43a944f4b681.png" alt="pin edges with center alignment for horizontal axis" width="400px"/>
 
 
-Or pin the view to to a corner.
+Or pin the view to a corner.
 
 ```swift
 view.anchors.edges.pin(insets: 20, alignment: .topLeading)

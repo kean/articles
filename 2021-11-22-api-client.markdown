@@ -145,7 +145,7 @@ The only remaining bit is a `validate()` method where I check that the response 
 <span class="p">}</span>
 </code></pre></div></div>
 
-And that’s it, a baseline `APIClient`. It already covers most of the needs of most users and there many ways to extend it.
+And that’s it, a baseline `APIClient`. It already covers most of the needs of most users and there are many ways to extend it.
 
 ## Extending the Client
 
@@ -342,7 +342,7 @@ Usage:
 
 This API is visually appealing, but it can be a bit tedious to write and less discoverable than simply listing all available calls. I’m also still a bit cautious about over-using nesting. I used to avoid it in the past, but the recent improvements to the Xcode code completion made working with nested APIs much easier. But again, this is just an example.
 
-> There are man [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) online to model APIs as an enum. This approach might make your code harder to read and modify and lead to merge conflicts. When you add a new call, you should only need to make changes in one place.
+> There are many [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) online to model APIs as an enum. This approach might make your code harder to read and modify and lead to merge conflicts. When you add a new call, you should only need to make changes in one place.
 
 ## Tools
 
@@ -352,7 +352,7 @@ It's not just Swift that's getting better. The modern tooling is also fantastic.
 
 Remember the infamous [Working with JSON in Swift](https://developer.apple.com/swift/blog/?id=37) post from 2016? Yeah, we are way ahead now. Ask your backend developers to provide [OpenAPI](https://www.openapis.org/) spec for their APIs and use code generation to create `Codable` entities.
 
-[Postman](https://www.postman.com) and [Paw](https://paw.cloud) are great ways to explore APIs. You can import an OpenAPI spec and it will generate a Collection for you so that you have all the APIs always at your fingertips. GitHub API that's I'm using in the examples also [recently git](https://github.blog/2020-07-27-introducing-githubs-openapi-description/) its own OpenAPI spec. You can [download](https://github.com/github/rest-api-description) it and import it into Postman to try it.
+[Postman](https://www.postman.com) and [Paw](https://paw.cloud) are great ways to explore APIs. You can import an OpenAPI spec and it will generate a Collection for you so that you have all the APIs always at your fingertips. GitHub API that's I'm using in the examples also [recently got](https://github.blog/2020-07-27-introducing-githubs-openapi-description/) its own OpenAPI spec. You can [download](https://github.com/github/rest-api-description) it and import it into Postman to try it.
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/03.png">
 
@@ -367,7 +367,7 @@ Generating `Codable` entities is also extremely easy. There are [a ton of tools]
 
 <img class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/pulse.png">
 
- It requests a single line to setup to work with `APIClient`. The advantage of doing it at that level is that you don't need to worry about TLS and SSL pinning, and you collect more information than a typical network proxy does thanks to the direct access to `URLSession`.
+ It requires a single line to set up to work with `APIClient`. The advantage of doing it at that level is that you don't need to worry about TLS and SSL pinning, and you collect more information than a typical network proxy does thanks to the direct access to `URLSession`.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kc">APIClient</span><span class="p">(</span><span class="kt">baseURL</span><span class="p">:</span> <span class="xc">URL</span><span class="p">(</span><span class="xv">string</span><span class="p">:</span> <span class="s">"https://api.github.com"</span><span class="p">))</span> <span class="p">{</span>
     <span class="nv">$0</span><span class="o">.</span><span class="kt">sessionDelegate</span> <span class="o">=</span> <span class="kc">PulseCore</span><span class="o">.</span><span class="kc">URLSessionProxyDelegate</span><span class="p">()</span>
@@ -379,7 +379,7 @@ Generating `Codable` entities is also extremely easy. There are [a ton of tools]
 
 ### Mocking
 
-My preferred way of testing ViewModels is by writing integration tests where I mock only the network responses. There are a many mocking tools to chose from. I'm used WeTransfer's [`Mocker`](https://github.com/WeTransfer/Mocker) for unit-testing `APIClient` itself.
+My preferred way of testing ViewModels is by writing integration tests where I mock only the network responses. There are many mocking tools to choose from. I used WeTransfer's [`Mocker`](https://github.com/WeTransfer/Mocker) for unit-testing `APIClient` itself.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="k">let</span> <span class="nv">host</span> <span class="o">=</span> <span class="s">"api.github.com"</span>
 
@@ -411,7 +411,7 @@ My preferred way of testing ViewModels is by writing integration tests where I m
 
 [cURL](https://curl.se) doesn't need an introduction. There is an [extension](https://gist.github.com/kean/cacb6d2e6bafa912bf130d3db1c2f116) to `URLRequest` that I borrowed from Alamofire that I love. It creates a cURL command for `URLRequest`.
 
-Ideally, you should call `cURLDescription` on task's [`currentRequest`](https://developer.apple.com/documentation/foundation/urlsessiontask/1411649-currentrequest) - it's has all of the cookies and [additional HTTP headers](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/1411532-httpadditionalheaders) automatically added by the system.
+Ideally, you should call `cURLDescription` on task's [`currentRequest`](https://developer.apple.com/documentation/foundation/urlsessiontask/1411649-currentrequest) - it has all of the cookies and [additional HTTP headers](https://developer.apple.com/documentation/foundation/urlsessionconfiguration/1411532-httpadditionalheaders) automatically added by the system.
 
 ## Final Thoughts
 

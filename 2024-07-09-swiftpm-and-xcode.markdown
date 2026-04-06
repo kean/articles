@@ -38,7 +38,7 @@ enum XcodeSupport {
 }
 ```
 
-These products are neatly placed at the bottom of the `Package.swift` and have no source files except for the dummy files stored in `Modules/Sources/XcodeSupport/`. The libraries produced by these products is what's get added to "Frameworks, Libraries, and Embedded Content" in Xcode.
+These products are neatly placed at the bottom of the `Package.swift` and have no source files except for the dummy files stored in `Modules/Sources/XcodeSupport/`. The libraries produced by these products are what gets added to "Frameworks, Libraries, and Embedded Content" in Xcode.
 
 <img class="NewScreenshot" src="/images/posts/swiftpm-xcode/xcode-targets.png">
 
@@ -117,7 +117,7 @@ Of course, the `Package.swift` file is a Swift file, so if it is complicated eno
 In addition to the issues with the developer experience, which I can live with, there are a couple of major issues with no straightforward solutions that really sour the experience of using SwiftPM, especially coming from other package managers and platforms.
 
 - **Bundle Duplication**. Xcode is smart enough to link the dependencies used by more than one target dynamically, but, unfortunately, their bundles still [end up being duplicated](https://forums.developer.apple.com/forums/thread/749265) in all of the targets that depend on them.
-- **Invalid `Bundle.module`**. If you include a SwiftPM package that has resources in one of your Xcode test targets, the library is [not be able to locate](https://forums.swift.org/t/swift-5-3-swiftpm-resources-in-tests-uses-wrong-bundle-path/37051) its resources. I had to stop using `Bundle.module` and switched to an updated version that first looks for bundles in `ProcessInfo.processInfo.environment["XCTestBundlePath"]`.
+- **Invalid `Bundle.module`**. If you include a SwiftPM package that has resources in one of your Xcode test targets, the library is [not able to locate](https://forums.swift.org/t/swift-5-3-swiftpm-resources-in-tests-uses-wrong-bundle-path/37051) its resources. I had to stop using `Bundle.module` and switched to an updated version that first looks for bundles in `ProcessInfo.processInfo.environment["XCTestBundlePath"]`.
 - **Resolve Packages**. Xcode constantly restarts [package resolution](https://forums.swift.org/t/swiftpm-how-to-prevent-resolve-packages-from-stymying-developer-productivity-local-packages/63363), even as you type in your `Package.swift` file, which is especially problematic during rebasing or any other Git operations. I'm usually reserved with my comments, but I can't overstate how horrible the experience is. It's a good trade-off only if you are one person working on a small project in a single branch. There has to be a way to turn it off and a simple command like `swiftpm install` to resolve the dependencies.
 
 ## Final Thoughts

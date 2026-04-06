@@ -42,7 +42,7 @@ The easiest way to add entitlements is via <b>Signing & Capabilities</b> in Xcod
 
 <img alt="Xcode: add entitlements" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-01.png">
 
-One you go through the steps, you are going to see the following two entitlements appear in your apps' entitlements list:
+Once you go through the steps, you are going to see the following two entitlements appear in your apps' entitlements list:
 
 ```
 <key>com.apple.developer.networking.networkextension</key>
@@ -54,7 +54,7 @@ One you go through the steps, you are going to see the following two entitlement
 > You **don't** need a [**Personal VPN**](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_networking_vpn_api) entitlement which allows apps to create and control a custom system VPN configuration using [`NEVPNManager`](https://developer.apple.com/documentation/networkextension/nevpnmanager). The Packet Tunnel Provider entitlements are classified as enterprise VPNs and only require Network Extension entitlement.
 {:.info}
 
-If start interacting with Network Extension APIs and see the following error, most likely means that the entitlements are misconfigured:
+If you start interacting with Network Extension APIs and see the following error, it most likely means that the entitlements are misconfigured:
 
 ```swift
 Error Domain=NEConfigurationErrorDomain
@@ -158,7 +158,7 @@ manager.saveToPreferences { error in
             <h3 class="no_toc">Tunnel Details</h3>
             <p>When the user taps "Install VPN Profile" button, a system alert is going appear and is going to guide the user through the process of installing the VPN profile. Once it's done, the system returns the user back to the app where <code>RouterView</code> presents a "Tunnel Details" screen from earlier.</p>
             <blockquote class="info"><p><code>RouterView</code> is a component responsible for top-level navigation in the BestVPN app.</p></blockquote>
-            <p>In the next section, I'm going to cover the "Tunnel Details" screen and how it interact with the system settings in details.</p>
+            <p>In the next section, I'm going to cover the "Tunnel Details" screen and how it interacts with the system settings in detail.</p>
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right">
@@ -307,11 +307,11 @@ Debugging an extension is a bit tricky. When you start the app, Xcode automatica
 
 <img alt="Xcode: attaching debugger to the running process" width="440px" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-04.png">
 
-If the extension is already running, Xcode will attach the debugger to it. If it isn't running, Xcode is going to wait until it starts running. Now when you open a Debug Navigator, you are going to see two processed instead of one (typical to iOS app development).
+If the extension is already running, Xcode will attach the debugger to it. If it isn't running, Xcode is going to wait until it starts running. Now when you open a Debug Navigator, you are going to see two processes instead of one (typical to iOS app development).
 
 <img alt="Xcode: debugging multiple processes at the same time" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-05.png">
 
-I encourage you to test whether you are able to attach the debug to the extension.
+I encourage you to test whether you are able to attach the debugger to the extension.
 
 > <h3 class="no_toc">Troubleshooting Guide</h3>
 >
@@ -319,13 +319,13 @@ I encourage you to test whether you are able to attach the debug to the extensio
 >
 > <img class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-06.png">
 > 
-> - Make sure both the app and the app extensions has Packet Tunnel Network Extensions entitlement
+> - Make sure both the app and the app extension have Packet Tunnel Network Extensions entitlement
 > - An extension's bundle identifier must always be prefixed with an app's bundle identifier. If you change either later, make sure to update both to save yourself hours of debugging.
 > - An extension's `Info.plist` file must contain correct `NSExtensionPointIdentifier` and `NSExtensionPrincipalClass` values. If you changed the name of the `NEPacketTunnelProvider` subclass, make sure to update `NSExtensionPrincipalClass` to reflect it.
 >
 {:.error}
 
-Congratulations, if you reached this point, you know how to install a VPN configuration, enable it, start a VPN tunnel, and attach a debugger to it. This a great progress! In the next part, I'm going to cover the Packet Tunnel itself.
+Congratulations, if you reached this point, you know how to install a VPN configuration, enable it, start a VPN tunnel, and attach a debugger to it. This is great progress! In the next part, I'm going to cover the Packet Tunnel itself.
 
 <div class="kb-vert-insets">
 <a href="{{ site.url }}/post/packet-tunnel-provider">

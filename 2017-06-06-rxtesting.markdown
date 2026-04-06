@@ -116,7 +116,7 @@ driveOnScheduler(scheduler) {
 }
 ```
 
-That's it! If you were to run this test case we see the recorded events printed out to the console:
+That's it! If you were to run this test case you would see the recorded events printed out to the console:
 
 ```
 pages.events:

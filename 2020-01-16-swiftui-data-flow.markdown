@@ -31,7 +31,7 @@ SwiftUI offers a declarative approach to managing data. As you compose a hierarc
 
 <img alt="SwiftUI data flow diagram" class="NewScreenshot" src="/images/posts/swiftui-experience/swiftui-data-flow.png">
 
-SwiftUI provides a rich set of tools for propagating data changes across your app. Let's go over all of them, see what they do and when its best to use them. I'm even going to speculate a bit about how they are implemented under the hood.
+SwiftUI provides a rich set of tools for propagating data changes across your app. Let's go over all of them, see what they do and when it's best to use them. I'm even going to speculate a bit about how they are implemented under the hood.
 
 {% include ad-hor.html %}
 
@@ -188,7 +188,7 @@ Let's start with how you would typically *bind* the state to the views using a r
 
 This gets the job done. In case of `<~` binding it does it ion an elegant way – the syntax is minimal and the observation lifetime is automatically taken care of for you. As a result, the views always reflect the latest state of the model – something that SwiftUI also aims to do. How do you do the same thing in SwiftUI?
 
-To start observing the changes to the model, you use [`@ObservedObject`](https://developer.apple.com/documentation/swiftui/observedobject) property wrapper. An `@ObservedObject` must be initialized with a value confirming to [`ObservableObject`](https://developer.apple.com/documentation/combine/observableobject) protocol.
+To start observing the changes to the model, you use [`@ObservedObject`](https://developer.apple.com/documentation/swiftui/observedobject) property wrapper. An `@ObservedObject` must be initialized with a value conforming to [`ObservableObject`](https://developer.apple.com/documentation/combine/observableobject) protocol.
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">SearchView</span><span class="p">:</span> <span class="nf">View</span> <span class="p">{</span>
     <span class="SwiftUIPostHighlightedCode kd">@ObservedObject</span> <span class="k">var</span> <span class="nv">viewModel</span><span class="p">:</span> <span class="kt">SearchViewModel</span>
@@ -435,7 +435,7 @@ One of the common mistakes that people make when using SwiftUI is making assumpt
 > SwiftUI will create a new instance of `ArtistStore` every time a view is re-created, and it discards of the view structs quickly after computing the `body`. It might lead to loss of data or to the very least, performance inefficiencies.
 {:.error}
 
-New on Apple platforms is [@StateObject](https://developer.apple.com/documentation/swiftui/stateobject) property wrapper. The wrapped value must be an [observable object](https://developer.apple.com/documentation/combine/observableobject). `@StateObject` observed the changes to the wrapped object, similar to `@ObservedObject`. The key difference is that `@StateObject` manages the lifetime of the wrapped object for you. SwiftUI keeps the object alive for all lifetime of the view.
+New on Apple platforms is [@StateObject](https://developer.apple.com/documentation/swiftui/stateobject) property wrapper. The wrapped value must be an [observable object](https://developer.apple.com/documentation/combine/observableobject). `@StateObject` observes the changes to the wrapped object, similar to `@ObservedObject`. The key difference is that `@StateObject` manages the lifetime of the wrapped object for you. SwiftUI keeps the object alive for all lifetime of the view.
 
 ```swift
 struct ArtistList: View {

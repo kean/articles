@@ -11,7 +11,7 @@ uuid: f6bfea67-880f-462f-a08c-5b065a70f573
 
 Phantom types are used to parameterize generic types but never actually appear in their implementation. Why are they useful? For additional type safety.
 
-With phantom types, you can add extra information to your types and use it to restrict the code to make invalid situations impossible. Having more restrictions means less room for programming error, better, self-documenting code, and fewer tests. In practice, those restrictions can be quite complex which I would demonstrate on the three examples from my most recent projects:
+With phantom types, you can add extra information to your types and use it to restrict the code to make invalid situations impossible. Having more restrictions means less room for programming error, better, self-documenting code, and fewer tests. In practice, those restrictions can be quite complex which I will demonstrate with three examples from my most recent projects:
 
 - [Id Type](#id-type)
 - [Authentication Scopes](#authentication-scopes)

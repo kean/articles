@@ -180,7 +180,7 @@ Some basic things that are unproblematically done with Auto Layout are hard in S
 > **List**
 {:.error}
 
-The SwiftUI components library is small, but the components it offers are well-designed and work great. Except for `List`. I simply wasn't able to use it on macOS: junky scrolling, jumping scroll bar, slow reloads, delays when opening details, slow selection. I wrote a [separate post]({{ site.url }}/post/not-list) on how to fix it. I'm still using `List` on the rest of the platforms where I only display a subset of messages by default, so the performance is acceptable.
+The SwiftUI components library is small, but the components it offers are well-designed and work great. Except for `List`. I simply wasn't able to use it on macOS: janky scrolling, jumping scroll bar, slow reloads, delays when opening details, slow selection. I wrote a [separate post]({{ site.url }}/post/not-list) on how to fix it. I'm still using `List` on the rest of the platforms where I only display a subset of messages by default, so the performance is acceptable.
 
 ### Ugly
 

@@ -43,7 +43,7 @@ May 2015 – [RxSwift 1.0 is released](https://github.com/ReactiveX/RxSwift/rele
 
 MVVM was one of the first "alternative" patterns that were wildly adopted by iOS developers. Every newsletter in 2015 would have at least one article about MVVM and RxSwift or ReactiveCocoa.
 
-This pattern was [originally introduced](https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/) by Microsoft under the name MVVM back in 2005, but most of the ideas behind it were shared earilier by Martin Fowler in his article named [Presentation Model](https://martinfowler.com/eaaDev/PresentationModel.html) from 2004.
+This pattern was [originally introduced](https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/) by Microsoft under the name MVVM back in 2005, but most of the ideas behind it were shared earlier by Martin Fowler in his article named [Presentation Model](https://martinfowler.com/eaaDev/PresentationModel.html) from 2004.
 
 MVVM is a three-tier architecture. You have View which is active, ViewModel and Model. An _active_ View means that the View knows about the ViewModel and that it itself binds to the output of the ViewModel.
 

@@ -45,7 +45,7 @@ Let's start with dependencies. As the Swift ecosystem grows, it becomes increasi
 
 ### 2. RxSwift
 
-[RxSwift](https://github.com/ReactiveX/RxSwift) has become a must-have tool for me. It gives you all of the advantages of promises and [more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md). One of its underrated features, which happens to be one of me my favorite, is its built-in [testing support](https://kean.github.io/post/rxswift-testing). I will provide a couple of examples later in the "Usage" section demonstrating why you want your network calls to be observables.
+[RxSwift](https://github.com/ReactiveX/RxSwift) has become a must-have tool for me. It gives you all of the advantages of promises and [more](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Why.md). One of its underrated features, which happens to be one of my favorite, is its built-in [testing support](https://kean.github.io/post/rxswift-testing). I will provide a couple of examples later in the "Usage" section demonstrating why you want your network calls to be observables.
 
 > Another popular reactive programming framework is [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift). It's also a solid choice, and many people prefer it over RxSwift.
 {:.info}
@@ -147,9 +147,9 @@ extension API {
 }
 ```
 
-This approach closely resembles the way REST models resources, but it has it's downsides too - it's less auto-complete friendly, and it introduces a bunch of new types into the system.
+This approach closely resembles the way REST models resources, but it has its downsides too - it's less auto-complete friendly, and it introduces a bunch of new types into the system.
 
-> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each property has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
+> I've seen [suggestions](https://github.com/Moya/Moya/blob/master/docs/Examples/Basic.md) to model APIs as an enum where each property has a separate switch. This isn't ideal because you are setting yourself for merge conflicts, and it is harder to read and modify than other approaches. When you add a new call, you should ideally only need to make a change in one place.
 {:.warning}
 
 ## Client
@@ -231,7 +231,7 @@ _ = client.request(API.Customer.get())
 _ = client.request(API.Customer.patch(firstName: "First", lastName: "Last"))
 ```
 
-> It's a good practice to perform network calls only from the Model layer. I like to create "services" that represent the main app's features. For example, for a `API.Customer` would only be used directly inside `CustomerService` class.
+> It's a good practice to perform network calls only from the Model layer. I like to create "services" that represent the main app's features. For example, `API.Customer` would only be used directly inside `CustomerService` class.
 {:.info}
 
 The requests return [cold observables](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/HotAndColdObservables.md). So nothing is going to happen until someone subscribes to the observable. I'm not going to dive into details about RxSwift and how to use it, but I will show a couple of examples of why observables are so useful.

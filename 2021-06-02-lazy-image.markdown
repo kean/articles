@@ -76,7 +76,7 @@ I added support for GIF to `LazyImageView`, and `LazyImage` also got it without 
 
 If you think about it, animated images don't really make sense as a separate concept. It's just video! A common approach for addressing GIF inefficiencies is [replacing them with short videos](https://web.dev/replace-gifs-with-videos/) with no sound. An MP4 video file can be an order of magnitude lighter than an equivalent GIF and can also take advantage of hardware-accelerated rendering. 
 
-> For example, check out the ["AppKit is Done"](/post/appkit-is-done) post. It's all MP4 videos that are 2 MB on average. An equivalent GIFs would've taken tens of megabytes.
+> For example, check out the ["AppKit is Done"](/post/appkit-is-done) post. It's all MP4 videos that are 2 MB on average. Equivalent GIFs would've taken tens of megabytes.
 {:.info}
 
 So I thought `LazyImage` was a great opportunity to accelerate the switch to video. With `LazyImage`, displaying a short video is as easy as providing a video URL as a source.

@@ -15,7 +15,7 @@ I'm excited to introduce a new addition to Nuke - [RxNuke](https://github.com/ke
 
 {% include ad-hor.html %}
 
-Nuke's design has always prioritized simplicity, reliability, and performance. The core framework has a small API surface and only contains a minimum number of features to built upon. This is great for many reasons, but unfortunately, that left a gap between what Nuke supports out of the box and what users need. I received many requests about particular use cases like these:
+Nuke's design has always prioritized simplicity, reliability, and performance. The core framework has a small API surface and only contains a minimum number of features to build upon. This is great for many reasons, but unfortunately, that left a gap between what Nuke supports out of the box and what users need. I received many requests about particular use cases like these:
 
 > - "show stale response while validating the image"
 > - "wait until N images are loaded and only then proceed"
@@ -29,7 +29,7 @@ Each app has a different idea about how to configure their image loading pipelin
 
 In order to get started with RxNuke you should be familiar with the basics of RxSwift. Even if you don't you can already start taking advantage of RxNuke powerful features thanks to a number of [examples of common use cases](https://github.com/kean/RxNuke#use-cases) available in a RxNuke documentation.
 
-Let's starts with the basics. The initial version of RxNuke adds a single new `Loading` protocol with a set of methods which returns `Singles`.
+Let's start with the basics. The initial version of RxNuke adds a single new `Loading` protocol with a set of methods which return `Singles`.
 
 ```swift
 public protocol Loading {
@@ -88,7 +88,7 @@ Observable.concat(loader.loadImage(with: lowResUrl).orEmpty,
 
 Suppose you have multiple URLs for the same image. For instance, you might have uploaded an image taken from the camera. In such case, it would be beneficial to first try to get the local URL, and if that fails, try to get the network URL. It would be a shame to download the image that we may have already locally.
 
-This use case is very similar [Going From Low to High Resolution](#huc_low_to_high), but an addition of `.take(1)` guarantees that we stop execution as soon as we receive the first result.
+This use case is very similar to [Going From Low to High Resolution](#huc_low_to_high), but an addition of `.take(1)` guarantees that we stop execution as soon as we receive the first result.
 
 ```swift
 Observable.concat(loader.loadImage(with: localUrl).orEmpty,

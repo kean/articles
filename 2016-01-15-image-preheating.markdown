@@ -95,7 +95,7 @@ public final class ImagePrefetcher {
 }
 ```
 
-To start prefetching, call `startPrefetching(with:)` method. When you need the same image later to display it, simply use the `ImagePipeline` or view extensions to load the image. The pipeline will take care of coalescing the requests for new without starting any new downloads.
+To start prefetching, call `startPrefetching(with:)` method. When you need the same image later to display it, simply use the `ImagePipeline` or view extensions to load the image. The pipeline will take care of coalescing the requests for you without starting any new downloads.
 
 ```swift
 public extension ImagePrefetcher {
@@ -123,7 +123,7 @@ public extension ImagePrefetcher {
 
 ## SwiftUI
 
-SwiftUI currency doesn't provide an API for prefetching, and that's why I built [ScrollViewPrefetcher](https://github.com/kean/ScrollViewPrefetcher).
+SwiftUI currently doesn't provide an API for prefetching, and that's why I built [ScrollViewPrefetcher](https://github.com/kean/ScrollViewPrefetcher).
 
 > `ScrollViewPrefetcher` is pre-release software, use at your own risk. The API is suboptimal and will most likely change in the future.
 {:.warning}

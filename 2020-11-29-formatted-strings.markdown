@@ -92,7 +92,7 @@ if let range = text.range(of: NSLocalizedString("macbook.title-substring-link"))
 label.attributedText = string
 ```
 
-This is a little bit better than the previous solution as it gives more control to translators. There still can be a problem if a substring repeats two or more times into a full string – only the first match will get the custom attributes, and it might be the wrong one.
+This is a little bit better than the previous solution as it gives more control to translators. There still can be a problem if a substring repeats two or more times in a full string – only the first match will get the custom attributes, and it might be the wrong one.
 
 But the major issue is that this is going to be a massive pain to translate and can often lead to an issue where someone will update the original string but will forget to update one of the substrings.
 

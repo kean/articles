@@ -106,7 +106,7 @@ The main con of this model is that it is less ergonomic than some alternatives. 
 
 Thanks to the way `CancellationTokenSource` is implemented in Nuke, it is able to use a single shared lock for all of the sources. This is possible for two reasons. First, `CancellationTokenSource` never executes any of the registered closures inside a lock, eliminating the possibility of deadlocks. And second, critical sections executed inside the lock are extremely fast.
 
-Thanks to that optimizations, `CancellationTokenSource` becomes super cheap to use.
+Thanks to those optimizations, `CancellationTokenSource` becomes super cheap to use.
 
 ## Alternatives
 

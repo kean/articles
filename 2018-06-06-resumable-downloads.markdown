@@ -112,7 +112,7 @@ curl https://cloud.githubusercontent.com/assets/1567433/9781817/ecb16e82-57a0-11
 HTTP/1.1 412 Precondition Failed
 ```
 
-> Mozilla is doing a fantastic job documenting web technologies. If you'd to learn a bit more check their [HTTP Range Requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests) guide.
+> Mozilla is doing a fantastic job documenting web technologies. If you'd like to learn a bit more check their [HTTP Range Requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests) guide.
 
 ### Implementing ResumableData
 

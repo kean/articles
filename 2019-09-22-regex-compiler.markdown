@@ -17,7 +17,7 @@ Fortunately, there are very few concepts that you need to know, most of which we
 
 ## Regular Languages
 
-In [Regex, Part 1: Grammar]({{ site.url }}/post/regex-grammar) I briefly mentioned [Chomsky Hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy) of grammars. In [Regex, Part 2: Parser]({{ site.url }}/post/regex-parser) we implemented a parser which recognizes a regular expression language. This is a Type-2 language (or *context-free language*). Chomsky Hierarchy states that you need a [Pushdown Automatin](https://en.wikipedia.org/wiki/Pushdown_automaton) to recognize it. This is essentially what we implemented using Parser Combinators, but without mentioning it explicitly (there was already too much theory to go through!).
+In [Regex, Part 1: Grammar]({{ site.url }}/post/regex-grammar) I briefly mentioned [Chomsky Hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy) of grammars. In [Regex, Part 2: Parser]({{ site.url }}/post/regex-parser) we implemented a parser which recognizes a regular expression language. This is a Type-2 language (or *context-free language*). Chomsky Hierarchy states that you need a [Pushdown Automaton](https://en.wikipedia.org/wiki/Pushdown_automaton) to recognize it. This is essentially what we implemented using Parser Combinators, but without mentioning it explicitly (there was already too much theory to go through!).
 
 Now, if you look at Chomsky Hierarchy more closely, there is also Type-3 grammars (or *regular grammars*) which define *regular languages*. This sounds familiar, doesn't it? It says that you need [Finite State Automaton](https://en.wikipedia.org/wiki/Finite-state_machine) to recognize these languages. What does it all mean?
 
@@ -29,7 +29,7 @@ There are a lot of parallels between what we were doing in the previous articles
 
 **\*** In our case, these both of these are the same thing – *regular expression language*. We used Pushdown Automaton to recognize a regular expression language (Type-2 language). And now we will use this language to generate Finite State Automaton.
 
-At this point, you are either excited or confused. If it's the later, don't worry, continue with the series and revisit it later.
+At this point, you are either excited or confused. If it's the latter, don't worry, continue with the series and revisit it later.
 
 > [**Pushdown Automaton**](https://www.tutorialspoint.com/automata_theory/pushdown_automata_introduction.htm) *(Additional Reading)*
 >
@@ -190,7 +190,7 @@ As usual, you can find the full compiler implementation at [kean/Regex](https://
 
 > **NFA vs DFA** *(Additional Reading)*
 >
-> Most of the state machines in the article were non-deterministic (or NFA). The moment you introduce epsilon transitions you add non-determinism. Non-determinism means that a state machine has multiple valid transitions from the same state and with the same input. Most of the regex engines use NFA but there are some that use DFA. I'm not covering the later in the series.
+> Most of the state machines in the article were non-deterministic (or NFA). The moment you introduce epsilon transitions you add non-determinism. Non-determinism means that a state machine has multiple valid transitions from the same state and with the same input. Most of the regex engines use NFA but there are some that use DFA. I'm not covering the latter in the series.
 
 <div class="kb-vert-insets">
 <a href="{{ site.url }}/post/regex-matcher">

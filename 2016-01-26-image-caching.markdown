@@ -25,7 +25,7 @@ In addition to on-disk cache, it's imperative to have a separate in-memory cache
 > ## TL;DR
 - Each resource can define its caching policy via HTTP cache headers
 - HTTP cache supports expiration and validation of cached responses
-- Aggressive caching is a most viable strategy for static images, validation is useful for profile pictures, etc
+- Aggressive caching is the most viable strategy for static images, validation is useful for profile pictures, etc
 - Foundation's URL Loading System supports HTTP caching
 - There are multiple ways to adjust URL Loading System's cache management (NSURLRequestCachePolicy etc)
 - NSCache can be used for in-memory cache, it requires proper configuration (total cost limit, cost per object)
@@ -102,7 +102,7 @@ Let's focus on a [NSURLRequestCachePolicy](https://developer.apple.com/library/i
 - `.ReturnCacheDataElseLoad` - similar to the previous policy, but allows client to load data from the server. Sometimes it's convenient to set this property as a default to enable aggressive caching without worrying about "offline" mode. Note that this policy effectively disables cache validation.
 - `.ReloadIgnoringCacheData` - always load data from the server. This option prevents cache data from ever being used, you can't use it to force validation.
 
-`NSURLSession` also provides a comprehensive set of delegate methods. One those methods is [URLSessionSession(_:&#8203;dataTask:&#8203;willCacheResponse:&#8203;completionHandler:)](https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSURLSessionDataDelegate_protocol/index.html#//apple_ref/occ/intfm/NSURLSessionDataDelegate/URLSession:dataTask:willCacheResponse:completionHandler:) from `NSURLSessionDataDelegate` which. It might be used to prevent caching of specific URLs, providing a custom `userInfo` for cache responses and more. Note that this method is called only if the `NSURLSession` decides to cache the response. You can't use it to force `NSURLSession` to cache responses which headers explicitly disable caching.
+`NSURLSession` also provides a comprehensive set of delegate methods. One of those methods is [URLSessionSession(_:&#8203;dataTask:&#8203;willCacheResponse:&#8203;completionHandler:)](https://developer.apple.com/library/ios/documentation/Foundation/Reference/NSURLSessionDataDelegate_protocol/index.html#//apple_ref/occ/intfm/NSURLSessionDataDelegate/URLSession:dataTask:willCacheResponse:completionHandler:) from `NSURLSessionDataDelegate`. It might be used to prevent caching of specific URLs, providing a custom `userInfo` for cache responses and more. Note that this method is called only if the `NSURLSession` decides to cache the response. You can't use it to force `NSURLSession` to cache responses which headers explicitly disable caching.
 
 One of the other great things about `NSURLSession` is that it has its own way of limiting the number of concurrent connections via `HTTPMaximumConnectionsPerHost` property of the `NSURLSessionConfiguration`. It only limits the number of HTTP connections and not the number of concurrent session tasks (`NSURLSessionTask`). Given that, if the client starts a new request which can be served by a fresh cached response then it would be served immediately, no matter how many other tasks are executing at the given moment.
 

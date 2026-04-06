@@ -100,7 +100,7 @@ ModifiedNoun ::= Adjective Noun | Adjective, ModifiedNoun`
 
 > [**Chomsky Hierarchy**](https://en.wikipedia.org/wiki/Chomsky_hierarchy) *(Additional Reading)*
 >
-> In the 1950s, Noan Chomsky created a hierarchy of grammars. There are four categories of formal grammars in the *Chomsky Hierarchy*, spanning from Type 0, the most general, to Type 3, the most restrictive. Each layer is different in terms of the restriction applied to the production rules, the class of language it generates, the type of automaton that recognizes it.
+> In the 1950s, Noam Chomsky created a hierarchy of grammars. There are four categories of formal grammars in the *Chomsky Hierarchy*, spanning from Type 0, the most general, to Type 3, the most restrictive. Each layer is different in terms of the restriction applied to the production rules, the class of language it generates, the type of automaton that recognizes it.
 >
 > Most programming languages are defined using Type 2 grammars, or [Context-Free Grammars](https://en.wikipedia.org/wiki/Context-free_grammar) (CFG). In context-free grammars, all production rules must have only one (non-terminal) symbol on the left-hand side. It essentially means that regardless in which context the non-terminal symbol appears, it should be also interpreted the same way. Context-free grammars can be recognized using [pushdown automata](https://en.wikipedia.org/wiki/Pushdown_automaton).
 >
@@ -126,7 +126,7 @@ Unfortunately, there is no single EBNF standard. There is a [ISO/IEC 14977 stand
 
 I think we are now ready to define an actual regex grammar! You can start either constructing it bottom-up or top-down, depending on what you prefer. I will start doing it top-down.
 	
-The regex begins with an optional [Start of String of Line Anchor](https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions#Start) followed the expression.
+The regex begins with an optional [Start of String of Line Anchor](https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions#Start) followed by the expression.
 
 <img alt="Regex formal grammar" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_regex.png" style="max-height:115px">
 
@@ -164,7 +164,7 @@ GroupNonCapturingModifier ::= "?:"
 
 This is the first example where we used recursion. When a parser encounters an opening parentheses, it checks whether the group is [Non-Capturing](https://docs.microsoft.com/en-us/dotnet/standard/base-types/grouping-constructs-in-regular-expressions#noncapturing_group) and then parses a subexpression until in encounters a matching closing parentheses.
 
-> Note: not all parse generator support *indirect* recursion like we used here.
+> Note: not all parser generators support *indirect* recursion like we used here.
 
 I think you get the idea. You can find a complete regex [grammar](https://github.com/kean/Regex/blob/master/grammar.ebnf) along with a [railroad diagram]({{ site.url }}/images/misc/grammar-diagram.xhtml) on GitHub.
 

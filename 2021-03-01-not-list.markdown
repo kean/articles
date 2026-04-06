@@ -14,7 +14,7 @@ Despite the [previous post]({{ site.url }}/post/appkit-is-done) title, it wasn't
 
 ## Performance
 
-The main issue I ran into was performance. The initial test with a decently sized data set with 150 000[^1] entries was miserable, even after all possible database optimizations. I saw junky scrolling, slow reloads, even opening details was slow!
+The main issue I ran into was performance. The initial test with a decently sized data set with 150 000[^1] entries was miserable, even after all possible database optimizations. I saw janky scrolling, slow reloads, even opening details was slow!
 
 The root cause of the slow reloads was the infamous `List` [automatic diffs](https://www.hackingwithswift.com/articles/210/how-to-fix-slow-list-updates-in-swiftui) that you _still_ can't disable. The workaround from the article was not working anymore. The diff computation is slow in itself, but it also breaks [`fetchBatchSize`](https://developer.apple.com/documentation/coredata/nsfetchrequest/1506558-fetchbatchsize) making matters worse[^2].
 

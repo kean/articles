@@ -38,7 +38,7 @@ I do have high test coverage in my frameworks, like <a href="https://github.com/
 </div>
 
 
-Code coverage also ignores priorities. Not every piece of code is the same. You get the most value by covering the code that is mission-critical, complex and is a common source of regressions. Good testing is based on careful analysis and risk management. You have to have skills in this area, or you are likely to waste a lot of time and effort which could be spend elsewhere.
+Code coverage also ignores priorities. Not every piece of code is the same. You get the most value by covering the code that is mission-critical, complex and is a common source of regressions. Good testing is based on careful analysis and risk management. You have to have skills in this area, or you are likely to waste a lot of time and effort which could be spent elsewhere.
 
 ## XCTest vs Quick
 
@@ -90,7 +90,7 @@ Testing ViewModels or Presenters typically requires a significant amount of effo
 
 Am I saying that you should *not* test ViewModels and Views? Absolutely not. What I mean is that you should probably not test ViewModels in isolation by mocking all of the dependencies. This is where UI and integration tests come in. ViewModels can be a fantastic "end" in integration tests.
 
-There is also an unintendend consequence of creating too many unit tests for ViewModels with too many mocks – they become a barrier to refactoring[^7]. You make a change in a commonly used service and instead of only updating unit tests for this service, you also have to update all of the ViewModels and all of the mocks that they use. Eventually, these tests erode without significant investment in their maintenance.
+There is also an unintended consequence of creating too many unit tests for ViewModels with too many mocks – they become a barrier to refactoring[^7]. You make a change in a commonly used service and instead of only updating unit tests for this service, you also have to update all of the ViewModels and all of the mocks that they use. Eventually, these tests erode without significant investment in their maintenance.
 
 ## High Quality Tests
 
@@ -133,6 +133,6 @@ Take the advice from this article with a grain of salt. The culture of test auto
 [^2]: [Nimble](https://github.com/Quick/Nimble) is a separate framework and can be used with XCTest. So if that's your cup of tea, you have options.
 [^3]: I made this number up. UIKit is a problem because its answer to every little programmatic error is crash. Fortunately, Apple is making a u-turn with SwiftUI.
 [^4]: I'm also skeptical about one of the commonly listed advantages of unit testing – serving as executable documentation. You know what else serves as great documentation? Documentation. The problem is, unit tests are not as easy to read as you might want. If the behavior is not documented, I will just go and read the source code every time.
-[^5]: This includes business logic, algoritnms, parsing, storage, [migrations]({{ site.url }}/post/core-data-progressive-migrations#testing), etc. But don't test configuration. And keep your models fat!
+[^5]: This includes business logic, algorithms, parsing, storage, [migrations]({{ site.url }}/post/core-data-progressive-migrations#testing), etc. But don't test configuration. And keep your models fat!
 [^6]: I wish I could back up this claim with some hard numbers, but all I can say is that this is based on my extensive experience with both MVP and MVVM.
 [^7]: Did I just say that unit tests become a barrier for refactoring? Yes, especially for relatively simple components covered with too many too basic unit tests. Nobody wants to maintain or update the tests which they perceive to be too basic and of low value.

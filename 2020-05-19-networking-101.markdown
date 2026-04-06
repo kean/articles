@@ -131,15 +131,15 @@ All of the information that you saw from the captures in this section is also vi
 
 What is VPN (Virtual Private Network)? Originally, VPN was designed to establish secure connections between a computer and a protected or private corporate network, using an otherwise insecure public network. This typically involved "making" a computer part of the private network so that the computers within the network could address it. 
 
-In recent years, VPNs also blown up in popularity in the consumer market as a way to stay secure and anonymous when going online, and also enjoying unrestricted network access by hiding the source of the traffic. Business and personal VPN are typically very different products. I'm going to focus primarily on personal VPN in this series, as it involves slightly less complexity to deal with.
+In recent years, VPNs also blew up in popularity in the consumer market as a way to stay secure and anonymous when going online, and also enjoying unrestricted network access by hiding the source of the traffic. Business and personal VPN are typically very different products. I'm going to focus primarily on personal VPN in this series, as it involves slightly less complexity to deal with.
 
-### How Does It Works?
+### How Does It Work?
 
 The key idea behind VPN is surprisingly simple: 
 
 > - Take all of the IP packets[^1] coming from the system
 > - Encrypt them
-> - Encapsulated encrypted data blobs in the VPN packets
+> - Encapsulate encrypted data blobs in the VPN packets
 > - Send the VPN packets to the VPN server (over UDP/TCP)
 
 The IP packets end up being wrapped in another IP packets, a networking version of a Russian nesting doll.
@@ -235,7 +235,7 @@ This is enough information to start working on our toy VPN protocol.
 [^4]: That's not always the case and it depends on your browser. For example, [Firefox now uses](https://blog.mozilla.org/blog/2020/02/25/firefox-continues-push-to-bring-dns-over-https-by-default-for-us-users/) DNS over HTTPS by default.
 [^5]: You could memorize an IPv4 address, but try memorizing `2400:cb00:2048:1::c629:d7a2` (IPv6).
 [^6]: If you are using HTTPS, you are generally good. Only the destination server is going to be able to read HTTP headers and body of your requests.
-[^7]: OpenVPN supports two modes: static key (using a pre-shared key) and TLS (using SSL/TLS and certificates for authentication and key exchange). In this example, you see the later.
+[^7]: OpenVPN supports two modes: static key (using a pre-shared key) and TLS (using SSL/TLS and certificates for authentication and key exchange). In this example, you see the latter.
 
 
 <!-- All of this stuff is currently specific for this invividual post. I will make it part of the intrastructure later. -->

@@ -32,7 +32,7 @@ The idea of feature branches seems very natural and straightforward at first. De
 
 > **Scenario:** You are close to the end of the two week sprint. Alice and Bob both finish their features and create pull requests. There were no previous integrations of their code.
 
-In this scenario, the team now has to spend an unknown amount of time to review the changes, make necessary adjustments and resolve conflicts. It's uncertain how much time this would take and there is a risk of failing to deliver the features that the team had committed to during sprint planning. The team is under pressure to complete the sprint quickly and has a risk of introducing regressions or merging the code that does not meat team's quality standards.
+In this scenario, the team now has to spend an unknown amount of time to review the changes, make necessary adjustments and resolve conflicts. It's uncertain how much time this would take and there is a risk of failing to deliver the features that the team had committed to during sprint planning. The team is under pressure to complete the sprint quickly and has a risk of introducing regressions or merging the code that does not meet team's quality standards.
 
 This problem arises even if there is just one feature branch waiting to be reviewed. Nevertheless, more often than not, developers tend to complete the work closer to the end of the sprint.
 
@@ -60,7 +60,7 @@ In my view, the most detrimental problem with feature branches is that this stra
 
 ### Prevents Continuous Delivery
 
-> **Scenario:** Alice is working on feature A in a feature branch. The team (e.g. product owner, UX designer) is interested in receiving each new iteration of this feature to see how good well the ideas have turned out to be and start producing feedback as soon as possible.
+> **Scenario:** Alice is working on feature A in a feature branch. The team (e.g. product owner, UX designer) is interested in receiving each new iteration of this feature to see how well the ideas have turned out to be and start producing feedback as soon as possible.
 
 *Continuous delivery* is an extension of continuous integration. If you practice *continuous delivery* you would normally have a single integration branch with an automated workflow, which produces nightly build (your situation might be different). In order to deliver the features to the customer, the feature branch needs to be merged into the integration branch, but you can't do this unless the feature is *done*. As a result, you end up using some ad-hoc way to deliver a build.
 

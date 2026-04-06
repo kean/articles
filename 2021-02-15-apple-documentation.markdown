@@ -72,7 +72,7 @@ Back in the Objective-C days, Apple's focus was on providing guides offering a [
 
 ### Guides
 
-Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. There are different documentation types are mixed in a bland mass of gray with an unconscionable amount of white space.
+Apple still writes guides in some form. But there is a problem – they are too short, too basic, and too hard to find. You typically want to separate different types of documentation because they all serve different purposes. Google does this, but Apple does the opposite. Different documentation types are mixed in a bland mass of gray with an unconscionable amount of white space.
 
 For example, on the screenshot below you can find a tutorial, two guides, and multiple references. This page could benefit from color differentiation.
 

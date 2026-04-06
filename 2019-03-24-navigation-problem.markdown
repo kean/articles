@@ -29,7 +29,7 @@ We need a domain area for our example. Let's pretend that we live in a world of 
 
 ### Managing Multiple Screens
 
-First, we need to be able to connect to the lock. This is an activity the requires multiple screens to complete:
+First, we need to be able to connect to the lock. This is an activity that requires multiple screens to complete:
 
 - We need to locate the device in the network
 - Ask the user to enter the credentials to log in
@@ -257,7 +257,7 @@ A more advanced design might include a separate component which would know about
 - Transitions can be reused between modules
 - Transitions can be used by Views which can't show new screens by themselves
 
-Another potential change that you could make is to actually use the term `Flow` for modules which don't have their own UI and only manager navigation between the screens. So `DeviceInstallationPresenter` would than be called `DeviceInstallationFlow` but it would still have it's own model if needed – `DeviceInstallationModel`. This might make the separation a bit more clear but I personally prefer the term `Presenter`.
+Another potential change that you could make is to actually use the term `Flow` for modules which don't have their own UI and only manager navigation between the screens. So `DeviceInstallationPresenter` would then be called `DeviceInstallationFlow` but it would still have its own model if needed – `DeviceInstallationModel`. This might make the separation a bit more clear but I personally prefer the term `Presenter`.
 
 ## Final Thoughts
 

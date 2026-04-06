@@ -125,7 +125,7 @@ The same code works on both platforms. Please keep in mind that `NavigationView`
 
 There is also one caveat when it comes to programmatic navigation. You should be able to change the value of the `isActive` binding to active a navigation link, but it doesn't always work. It does if you set it twice using good old `DispatchQueue.main.async`. Looks like a defect. I'm sure there are other workarounds, but this isn't even a problem in my case because Pulse doesn't need programmatic navigation, and the default tab selection works fine as is.
 
-Despite some limitations, this solution works for me it and it uses `NavigationView` in a way in which it (seems?) it was designed to be used. This shouldn't be some obscure knowledge that justifies a separate blog post, but here we are.
+Despite some limitations, this solution works for me and it uses `NavigationView` in a way in which it (seems?) it was designed to be used. This shouldn't be some obscure knowledge that justifies a separate blog post, but here we are.
 
 > You can find the complete implementation [on GitHub](https://github.com/kean/ThreeColumnNavigation).
 {:.info}

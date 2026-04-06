@@ -9,7 +9,7 @@ permalink: /post/regex-matcher
 uuid: 0b507d56-2cd1-402f-be3e-f1f39645e3d3
 ---
 
-Previously on [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex), we learned about formal grammars and [defined]({{ site.url }}/post/regex-grammar) one for regex, [parsed]({{ site.url }}/post/regex-parser) the pattern, and [compiled]({{ site.url }}/post/regex-compiler) it to Nondeterministic Finite Automaton (NFA) There is now only one thing left to do – use NFA to find *matches* in the input strings.
+Previously on [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex), we learned about formal grammars and [defined]({{ site.url }}/post/regex-grammar) one for regex, [parsed]({{ site.url }}/post/regex-parser) the pattern, and [compiled]({{ site.url }}/post/regex-compiler) it to Nondeterministic Finite Automaton (NFA). There is now only one thing left to do – use NFA to find *matches* in the input strings.
 
 > Matcher is still a work in progress. I'm sure I got at least some of it wrong. I'm confident in the parser and the compiler, but there doesn't seem to be a single best matching algorithm – they all seem to address different problems in different ways. In this post, I explore two algorithms that are, to the very least, simple and clear from the CS standpoint. They are not necessarily going to be the best in practice.
 {:.warning}
@@ -202,7 +202,7 @@ When an algorithm finds a potential match, it doesn't stop the search immediatel
 
 Both algorithms are designed to solve the same problem, but they are different in many aspects, including performance and provided features.
 
-DFS can be very fast given when the pattern is well written. In many cases, it can return the result in [linear time](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions#linear-comparison-without-backtracking) and faster than the BFS version would. But it doesn't prevent [catastrophic backtracking](#catastrophic_backtracking). It places the responsibility on the developer to come up with the optimal regex pattern.
+DFS can be very fast when the pattern is well written. In many cases, it can return the result in [linear time](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions#linear-comparison-without-backtracking) and faster than the BFS version would. But it doesn't prevent [catastrophic backtracking](#catastrophic_backtracking). It places the responsibility on the developer to come up with the optimal regex pattern.
 
 BFS, on the other hand, is immune to catastrophic backtracking[^7]. One of the engines that uses a similar algorithm is [RE2](https://github.com/google/re2) created by Google. Its [goal](https://github.com/google/re2/wiki/WhyRE2) is to be able to handle regular expressions from untrusted users.
 

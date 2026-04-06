@@ -89,7 +89,7 @@ dyld: Symbol not found: _$s9PulseCore18NetworkLoggerEventO12taskDidStartyA2C04Ta
 
 ### Library Evolution
 
-My understanding, and I might be wrong here, is that the problem has to do with [Library Evolution](https://swift.org/blog/library-evolution/) (or the lack thereof it). The way library evolution work is by generating a `.swiftmodule` folder for your framework.
+My understanding, and I might be wrong here, is that the problem has to do with [Library Evolution](https://swift.org/blog/library-evolution/) (or the lack thereof). The way library evolution works is by generating a `.swiftmodule` folder for your framework.
 
 <img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/05.png">
 
@@ -121,7 +121,7 @@ public struct ConsoleView : SwiftUI.View {
 ...
 ```
 
-These are a lot of intricacies when it comes to `.swiftinterface` but the main takeaways are:
+There are a lot of intricacies when it comes to `.swiftinterface` but the main takeaways are:
 
 - Xcode doesn't generate `.swiftinterface` for Swift packages, even linked dynamically as frameworks
 - Without library evolution, an XCFramework can't reference symbols from a framework built from a source Swift package
@@ -146,7 +146,7 @@ If I were more diligent, I would've learned about the limitations before startin
 
 I'm now thinking, could Xcode do something to at least communicate the problem early? It couldn't when I was writing a manifest, initially the package dependency was in a different repo. But it could probably throw a more user-friendly error during dependency resolution saying that the configuration isn't supported.
 
-The main thing is that with a few hiccups but I was able to achieve what I needed and Pulse could now be distributed.
+The main thing is that with a few hiccups I was able to achieve what I needed and Pulse could now be distributed.
 
 {% include references-start.html %}
 
@@ -159,4 +159,4 @@ The main thing is that with a few hiccups but I was able to achieve what I neede
 {% include references-end.html %}
 
 [^1]: This solution works fine if your dependencies are also distributed as Swift binary frameworks, or Objective-C frameworks for that matter.
-[^2]: Unfortunately, there was another small hiccup after I made this (massive) change. When I added `PulseUI` and `Pulse` to my app, I assumed that `PulseCore` would be automatically added as a transitive dependency. It turned out not to be the case. It worked during deployment, my guess is that all the binaries produced from Swift packages are copied to the bundle during the deployment. But it failed during Archive. And it failed when I tried dragging an product to a simulator.
+[^2]: Unfortunately, there was another small hiccup after I made this (massive) change. When I added `PulseUI` and `Pulse` to my app, I assumed that `PulseCore` would be automatically added as a transitive dependency. It turned out not to be the case. It worked during deployment, my guess is that all the binaries produced from Swift packages are copied to the bundle during the deployment. But it failed during Archive. And it failed when I tried dragging a product to a simulator.

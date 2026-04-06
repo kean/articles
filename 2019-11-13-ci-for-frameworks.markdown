@@ -12,7 +12,7 @@ uuid: 3826c7ed-4ede-4eee-bbde-69fa0e4e96a5
 
 I created my first [framework](https://github.com/kean/DFCache) in 2014. It supported one platform, one package manager, and initially had no unit tests. The latest [Nuke](https://github.com/kean/Nuke) version, on the other hand, supports all four major Apple platforms, three package managers, and multiple Xcode and Swift versions.
 
-Working on an open-source framework posses a different set of challenges compared to typical app development. Many frameworks are used by thousands of apps that rely on their quality. Yet there is no dedicated QA team. So how is possible to maintain quality? 
+Working on an open-source framework poses a different set of challenges compared to typical app development. Many frameworks are used by thousands of apps that rely on their quality. Yet there is no dedicated QA team. So how is it possible to maintain quality? 
 
 This is a story of how I went from manually testing my frameworks to having hundreds of unit tests and multiple automatic checks running on every change, and how you can implement a similar setup in your project.
 
@@ -31,7 +31,7 @@ The answer to this question often depends on who you ask. For many people, conti
 
 For me as a developer spending a lot of time working on apps in large (20+ people) and often distributed teams, continuous integration is primarily about the _people_ and the _practices_. It is a way to significantly reduce integration risks. When I think about continuous integration in that context, I think about practices like [trunk-based development]({{ site.url }}/post/trunk-based-development), feature-flags, avoiding long-running feature branches, concurrent development of consecutive releases, automating code reviews.
 
-However, working on open-source frameworks posses a different set of challenges. There are no deadlines, no project resource utilizations, and, paradoxically, there are not a lot of people working on these projects. Take [Alamofire](https://github.com/Alamofire/Alamofire) for example, which is _the most popular_ open-source framework in the Apple ecosystem, yet it is essentially written by [two people](https://github.com/Alamofire/Alamofire/graphs/contributors)[^1]!
+However, working on open-source frameworks poses a different set of challenges. There are no deadlines, no project resource utilizations, and, paradoxically, there are not a lot of people working on these projects. Take [Alamofire](https://github.com/Alamofire/Alamofire) for example, which is _the most popular_ open-source framework in the Apple ecosystem, yet it is essentially written by [two people](https://github.com/Alamofire/Alamofire/graphs/contributors)[^1]!
 
 For me as a developer of open-source frameworks, continuous integration is primarily about the tools. I want to be able to quickly test the changes that I make with as many automated tests as possible in as many different environments as possible, including different Xcode versions. In this article, I will primarily focus on the tools, not the practice.
 
@@ -105,7 +105,7 @@ for destination in "${destinations[@]}"; do
 done
 ```
 
-What is does is builds the framework first (`xcodebuild build-for-testing`) and then runs tests for each of the provided destinations (`xcodebuild test-without-building`)[^5]. You can find [an output](https://travis-ci.org/kean/Nuke/jobs/609788368) of this job on Travis.
+What it does is build the framework first (`xcodebuild build-for-testing`) and then runs tests for each of the provided destinations (`xcodebuild test-without-building`)[^5]. You can find [an output](https://travis-ci.org/kean/Nuke/jobs/609788368) of this job on Travis.
 
 > [`xcpretty`](https://github.com/xcpretty/xcpretty) is a third-party tool that comes pre-installed in Travis CI. It's a great tool that formats `xcodebuild` output in a nice structured way. `xcpretty` is not the only pre-installed tool. It also comes with Bundler, Carthage, SwiftLint, CocoaPods and a bunch of other tools. And of course, you can install your own tools.
 
@@ -165,7 +165,7 @@ It's a good idea to put installation code into an `install` script. It shows in 
 
 <img alt="Travis CI screeshot" class="kb-legacy-card" src="{{ site.url }}/images/posts/ci-for-oss/install_phase.png">
 
-Running validations in separate jobs allow you to [parallelize the work](https://docs.travis-ci.com/user/speeding-up-the-build/#parallelizing-your-builds-across-virtual-machines) across multiple virtual machines. And if the job fails, it won't fail the rest of the build, which I think is important. You don't want a single SwiftLint warning to stop all the rest of the validations from running, it could slow down the feedback cycle. You want to surface all of the issues with the build in one go.
+Running validations in separate jobs allows you to [parallelize the work](https://docs.travis-ci.com/user/speeding-up-the-build/#parallelizing-your-builds-across-virtual-machines) across multiple virtual machines. And if the job fails, it won't fail the rest of the build, which I think is important. You don't want a single SwiftLint warning to stop all the rest of the validations from running, it could slow down the feedback cycle. You want to surface all of the issues with the build in one go.
 
 <img alt="Travis CI screenshot" class="kb-legacy-card" src="{{ site.url }}/images/posts/ci-for-oss/job-failed.png">
 
@@ -203,7 +203,7 @@ jobs:
 
 ### Test Suites
 
-[Nuke](https://github.com/kean/Nuke) has more than one test suit.
+[Nuke](https://github.com/kean/Nuke) has more than one test suite.
 
 <img alt="Xcode screenshot with multiple schemes" class="kb-legacy-card" style="max-height: 120px" src="{{ site.url }}/images/posts/ci-for-oss/nuke-schemes.png">
 
@@ -290,7 +290,7 @@ Delivering software is easy, maintaining quality and velocity is hard. Continuou
 
 [^1]: Not counting [Mattt](https://github.com/mattt) since he hasn't been actively involved in the project since 2015.
 [^2]: Large companies typically want to run their software on-premise and the obvious choice for them is [Jenkins](https://jenkins.io) which provides flexibility and scalability. Jenkins is free but not every company can afford running it – you need to invest time and money in maintaining it. For smaller companies, cloud solutions are often the best choice. For example, I had been using [BuddyBuild](https://www.buddybuild.com) when working for a startup in 2018. [BuddyBuild](https://techcrunch.com/2018/01/02/apple-buys-app-development-service-buddybuild/) was acquired by Apple in 2018 and they have not been accepting new customers since. The future of BuddyBuild within Apple is still unclear.
-[^3]: Travis CI is not the only free cloud CI service. Some project has already started using [GitHub Actions](https://github.com/features/actions) which is currently in beta. There is also [Circle CI](https://circleci.com) and other tools.
+[^3]: Travis CI is not the only free cloud CI service. Some projects have already started using [GitHub Actions](https://github.com/features/actions) which is currently in beta. There is also [Circle CI](https://circleci.com) and other tools.
 [^4]: In case you want to build pushes to branches, I would suggest filtering which branches to build. In Nuke, I currently build only `master` branch: `branches: only: - master`.
 [^5]: The  `-destination`  option of `xcodebuild` may be specified multiple times to cause `xcodebuild` to perform the specified action on multiple destinations. Unfortunately, I was not able to make it work on Travis CI, it was constantly hanging when starting simulators.
 [^6]: The Generations view in the Allocations instrument is useful for investigating memory use for a particular feature of your framework. For example, to test a particular feature, you first click Mark Generation button in the Allocations instrument. Then you activate the feature, in Nuke it could be load and process a few images. Then you repeat a few times. At the end, make sure that after invoking a feature, the size of each marked generation stays relatively the same. For more information, see [Apple Documentation](https://developer.apple.com/documentation/xcode/improving_your_app_s_performance/reducing_your_app_s_memory_use/gathering_information_about_memory_use).

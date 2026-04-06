@@ -76,11 +76,11 @@ I’m surprised nobody linked official Apple documentation in the thread. If I m
 - [Apple WWDC videos](https://developer.apple.com/videos/) – probably the main source for me. You can often find information not available anywhere else. It’s a bit unfortunate because finding what you are looking for in a video can be time-consuming.
 - [Apple Developer documentation](https://developer.apple.com/documentation/) – not quite as good as it used to be, but is still a valuable resource
 - [Apple Tutorials: Develop Apps for iOS](https://developer.apple.com/tutorials/app-dev-training/) – Apple recent venture in the tutorial-creation business. I went through these tutorials and they are well made and informative, but a bit dry.
-- [The Swift Programming Language](https://docs.swift.org/swift-book/) – reading this book is how I learned Swift. It's a concise and well-written book and is a must-read. You can learn through it instead using a course.
+- [The Swift Programming Language](https://docs.swift.org/swift-book/) – reading this book is how I learned Swift. It's a concise and well-written book and is a must-read. You can learn through it instead of using a course.
 - [Swift Evolution](https://apple.github.io/swift-evolution/) – the programming guide doesn't cover everything and sometimes the best source of information on the newest Swift features can be the Swift Evolution proposals
 - [Human Interface Guidelines (HIG)](https://developer.apple.com/design/human-interface-guidelines/ios/overview/themes/) – design is a major part of iOS development and engineers are often relied on to provide their input. This is a must-read resource for any Apple engineer.
-- [Apple Developer News and Updates](https://developer.apple.com/news/) – add it to your RSS reader to learn about the latest updates on the platforms. For example, about deadlines to switching to new Xcode vresions or SDKs.
-- [Swift Forums](https://forums.swift.org) – if you want to keep be up to date with the latest proposals or even participate in discussions
+- [Apple Developer News and Updates](https://developer.apple.com/news/) – add it to your RSS reader to learn about the latest updates on the platforms. For example, about deadlines for switching to new Xcode versions or SDKs.
+- [Swift Forums](https://forums.swift.org) – if you want to keep up to date with the latest proposals or even participate in discussions
 
 </div>
 

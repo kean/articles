@@ -33,7 +33,7 @@ RangeQuantifier ::= "{" Number ( "," Number? )? "}"
 
 ### Start with a Function
 
-How do we approach this? It's usually best start with a function.
+How do we approach this? It's usually best to start with a function.
 
 ```swift
 func parseRangeQuantifier(_ string: Substring) -> (RangeQuantifier, Substring)? {
@@ -527,7 +527,7 @@ Parser combinators (or *monadic* parsers) are a great example of functional prog
 
 In contrast with parser generators, this method of building parsers is fully extensible. You can use the full power of Swift or any other programming language to define special combinators or special parsers of any kind. There is also very little you need to learn before you can start using parser combinators, especially if you are familiar with functional programming.
 
-The code from the article is available in a [playground]({{ site.url }}/playgrounds/parsers.zip). You can find the complete regex parser implementation in [kean/Regex](https://github.com/kean/Regex). With a parser completed, we can now produce a structured representation of the pattern and compile it. This will be the focus on the upcoming article. Stay tuned!
+The code from the article is available in a [playground]({{ site.url }}/playgrounds/parsers.zip). You can find the complete regex parser implementation in [kean/Regex](https://github.com/kean/Regex). With a parser completed, we can now produce a structured representation of the pattern and compile it. This will be the focus of the upcoming article. Stay tuned!
 
 <div class="kb-vert-insets">
 <a href="{{ site.url }}/post/regex-compiler">

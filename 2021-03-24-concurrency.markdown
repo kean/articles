@@ -188,7 +188,7 @@ Now the entire system is synchronized on a single serial dispatch queue!
 
 If you synchronize on the main queue, the important words are "synchronizing" and "queue". The queue doesn't have to be your main queue. Using the main queue does make it easier to avoid UI updates from the background queue, but [Thread Sanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html) catches those immediately, so it's relatively easy to avoid.
 
-There is also a flaw in synchronizing on main. If your subsystems assume they are only called from a single queue, they are not thread-safe. If you accidentally call any of them from the background, you can _introduce subtle bugs_ which are harder to find than simple UI updates from the background, unless you fill your code with assertions. And if your app becomes big enough that it can no longer afford to operate strickly on the main queue, you are going to be up to major rethinking of your components (been there).
+There is also a flaw in synchronizing on main. If your subsystems assume they are only called from a single queue, they are not thread-safe. If you accidentally call any of them from the background, you can _introduce subtle bugs_ which are harder to find than simple UI updates from the background, unless you fill your code with assertions. And if your app becomes big enough that it can no longer afford to operate strictly on the main queue, you are going to be up to major rethinking of your components (been there).
 
 If you need thread-safety and mutable state, the actor model is probably your best bet. From the two [concurrency models](https://web.mit.edu/6.005/www/fa14/classes/17-concurrency/): shared memory and messages passing, I find the latter to be more appealing.
 
@@ -235,7 +235,7 @@ It's always best to avoid concurrency or mutable state, but sometimes it's not f
 
 [^5]: And servers! Modern server-side frameworks, such as [SwiftNIO](https://github.com/apple/swift-nio) also embraced concurrency and non-blocking I/O.
 
-Measuring is an art on its own. Modern CPUs with different cache levels and other optimizations make it hard to reasons about performance. But at least make sure to measure in Release mode (with compiler optimizations on) and check that you are getting consistent results. The absolute measurements might not always be accurate, but the relative values will guide you in the right direction. Avoid premature optimization, but also don't paint yourself into a corner where the only way to improve performance is to rewrite half of the app.
+Measuring is an art on its own. Modern CPUs with different cache levels and other optimizations make it hard to reason about performance. But at least make sure to measure in Release mode (with compiler optimizations on) and check that you are getting consistent results. The absolute measurements might not always be accurate, but the relative values will guide you in the right direction. Avoid premature optimization, but also don't paint yourself into a corner where the only way to improve performance is to rewrite half of the app.
 
 Nuke has many optimizations, some impractical, so don't just go and copy them. I just finished watching [F1 Season 3](https://www.formula1.com/en/latest/article.watch-the-unmissable-trailer-for-season-3-of-netflixs-drive-to-survive.1ZMsRiYIvxZEPV9iqzatsx.html) (which was phenomenal, by the way). I can't say that I'm a huge F1 fan, but I appreciate things designed for performance and a bit of competition. I'm not always stopping where a sane person should.
 

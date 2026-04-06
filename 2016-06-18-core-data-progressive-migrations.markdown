@@ -44,7 +44,7 @@ try psc.addPersistentStore(
 
 When you add a store that uses *mom_v1* to the `NSPersistentStoreCoordinator`, it automatically creates an [inferred mapping model](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/vmLightweightMigration.html#//apple_ref/doc/uid/TP40004399-CH4-SW2) between *mom_v1* and *mom_v2* and performs a lightweight migration.
 
-Imagine you now need to add *mom_v3* with changes that can’t be carried out by lightweight migration - you need a [custom mapping model](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/vmMappingOverview.html) from *mom_v2*. You jump through all the hoops required to create one. But then comes the problem. How does `NSPersistentStoreCoordinator` works with custom and inferred mappings?
+Imagine you now need to add *mom_v3* with changes that can’t be carried out by lightweight migration - you need a [custom mapping model](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/vmMappingOverview.html) from *mom_v2*. You jump through all the hoops required to create one. But then comes the problem. How does `NSPersistentStoreCoordinator` work with custom and inferred mappings?
 
 Here are some pieces of documentation that we get:
 

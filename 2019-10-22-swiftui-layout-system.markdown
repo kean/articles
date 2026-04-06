@@ -233,7 +233,7 @@ struct Frame: View {
 
 Like any other view, the child ultimately chooses its own size. It is important to understand this property of the SwiftUI layout system.
 
-We used `alignment` to position the child inside the frame. Other instruments can be used to position the child in its parent's coordinate space, like [`position(x:y:)`](https://developer.apple.com/documentation/swiftui/view/3278632-position) and [`offset(x:y:)`](https://developer.apple.com/documentation/swiftui/view/3278608-offset). And [`frame(width:height:alignment:)`](https://developer.apple.com/documentation/swiftui/view/3278572-frame) is not the only way to specify a frame for the view. There is another variation that allows you to specify [minimum, maximum and ideal width and/or height](https://developer.apple.com/documentation/swiftui/view/3278571-frame) which I not cover in this post.
+We used `alignment` to position the child inside the frame. Other instruments can be used to position the child in its parent's coordinate space, like [`position(x:y:)`](https://developer.apple.com/documentation/swiftui/view/3278632-position) and [`offset(x:y:)`](https://developer.apple.com/documentation/swiftui/view/3278608-offset). And [`frame(width:height:alignment:)`](https://developer.apple.com/documentation/swiftui/view/3278572-frame) is not the only way to specify a frame for the view. There is another variation that allows you to specify [minimum, maximum and ideal width and/or height](https://developer.apple.com/documentation/swiftui/view/3278571-frame) which I will not cover in this post.
 
 ## Stacks
 

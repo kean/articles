@@ -125,7 +125,7 @@ How does Nuke Docs achieve this performance?
 - Small amount of JavaScript[^4]
 - The search index is loaded lazily when you open search; the time before the user enters the first 2 letters is enough to fetch it
 
-[^4]: It looks like building a website without a framework isn’t a common affair these days. A lot of the answers online are from years ago, and most use jquery. It’s a bit painful to translate it to vanilla JavaScript every time, but I think it was worth it to avoid a dependency. Some site have 30 lines of JavaScript but downloads 4000 lines of jquery to use one function.
+[^4]: It looks like building a website without a framework isn’t a common affair these days. A lot of the answers online are from years ago, and most use jquery. It’s a bit painful to translate it to vanilla JavaScript every time, but I think it was worth it to avoid a dependency. Some sites have 30 lines of JavaScript but downloads 4000 lines of jquery to use one function.
 
 > If you want to learn more about how to build the client-side search, see the [dedicated post]({{ site.url }}/post/client-side-search).
 {:.info}
