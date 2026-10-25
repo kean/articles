@@ -43,7 +43,10 @@ Now Playing makes use of the extra space too. Instead of stacking everything in 
 
 We also made Now Playing a bit nicer visually. The background now takes its colors from the podcast artwork, so the player adapts to each of your favorite shows, from the purple of The Vergecast to the warm orange of The Journal.
 
+<figure class="PostFigure">
 <img class="NewScreenshot" alt="Now Playing themed with the colors of six different podcasts" src="/images/posts/iphone-duo/now-playing-themes.png">
+<figcaption>Now Playing in the colors of six different shows</figcaption>
+</figure>
 
 > Pocket Casts is free, and you can [download it on the App Store](https://apps.apple.com/app/id414834813).
 {:.info}
