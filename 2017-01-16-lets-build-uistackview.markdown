@@ -3,6 +3,7 @@ layout: post
 title: "Let's Build UIStackView"
 description: "Explores how UIStackView works under the hood to build its open source replacement - Arranged"
 date: 2017-01-16 10:00:00 +0300
+last_modified_at: 2021-11-22
 category: programming
 tags: ios
 permalink: /post/lets-build-uistackview

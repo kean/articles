@@ -4,6 +4,7 @@ title: "LazyImage"
 subtitle: Lazy image loading for SwiftUI
 description: Lazy image loading for SwiftUI
 date: 2021-06-02 09:00:00 -0500
+last_modified_at: 2022-09-05
 category: programming
 tags: programming
 permalink: /post/lazy-image

@@ -3,6 +3,7 @@ layout: post
 title: "Cancellation Token"
 description: "A unified model for cooperative cancellation of asynchronous operations"
 date: 2017-12-15 18:00:00 +0300
+last_modified_at: 2021-11-22
 category: programming
 tags: ios
 permalink: /post/cancellation-token

@@ -4,6 +4,7 @@ title: "Triple Trouble"
 subtitle: Implementing triple-column navigation in SwiftUI using NavigationView
 description: Implementing triple-column navigation in SwiftUI using NavigationView
 date: 2021-02-14 10:00:00 -0500
+last_modified_at: 2022-07-12
 category: programming
 tags: programming
 permalink: /post/triple-trouble

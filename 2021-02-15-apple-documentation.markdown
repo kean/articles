@@ -4,6 +4,7 @@ title: "Apple Documentation"
 subtitle: Everything that is wrong with Apple's documentation
 description: Everything that is wrong with Apple's documentation
 date: 2021-02-15 10:00:00 -0500
+last_modified_at: 2022-06-11
 category: programming
 tags: programming
 permalink: /post/apple-documentation

@@ -4,6 +4,7 @@ title: "SwiftUI Data Flow"
 subtitle: Everything you need to know about data flow in SwiftUI
 description: A guide on SwiftUI data flow, covering all of the property wrappers, including @Published, @State, @ObservedObject; looking for parallels in reactive programming (RxSwift, ReactiveSwift)
 date: 2020-01-16 10:00:00 -0500
+last_modified_at: 2020-07-01
 category: programming
 tags: programming
 permalink: /post/swiftui-data-flow

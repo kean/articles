@@ -4,6 +4,7 @@ title: "What's a Document"
 subtitle: A quick write-up on selecting a document format for Pulse
 description: A quick write-up on selecting a document format for Pulse
 date: 2021-03-15 10:00:00 -0500
+last_modified_at: 2022-08-16
 category: programming
 tags: programming
 permalink: /post/pulse-store

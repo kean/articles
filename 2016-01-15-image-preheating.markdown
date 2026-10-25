@@ -3,6 +3,7 @@ layout: post
 title: "Image Prefetching"
 description: "An effective way to improve user experience by loading data ahead of time in anticipation of its use"
 date: 2016-01-12 20:30:05 +0300
+last_modified_at: 2021-04-03
 category: programming
 tags: swift, ios, nuke
 permalink: /post/image-preheating
