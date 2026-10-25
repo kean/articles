@@ -75,9 +75,9 @@ The skill can't see layout, though. It has no way to know that a header ends up 
 
 How do you let agents "see" your app? Fortunately, Xcode 27 arrived at exactly the right time. Its [MCP server](https://developer.apple.com/documentation/xcode/giving-external-agents-access-to-xcode) gained new [DeviceInteraction tools](https://redalemeden.com/derived-data/2026/what-new-in-xcode-27-mcp-bridge/) that let agents take screenshots, read the view hierarchy, and tap through the app on a simulator. I started with baby steps, checking a few flows at a time, and quickly scaled it to more than a thousand screenshots and flows, tested and validated completely automatically.
 
-The first run was deliberately quick. An agent walked the high-traffic flows on the Duo simulator (Podcasts, podcast page, Playlists, Discover, player), screenshotting every step, and logged 20 issues in Linear. Agents fixed those too, one worktree and PR per issue across parallel simulators, each PR with before/after screenshots so I could verify fixes without building the branch.
+The first run was deliberately quick. An agent walked the high-traffic flows on the Duo simulator (Podcasts, podcast page, Playlists, Discover, player), screenshotting every step, and filed the first batch of issues. Agents fixed those too, one worktree and PR per issue across parallel simulators, each PR with before/after screenshots so I could verify fixes without building the branch.
 
-Then came the full sweep, covering ~700 screens across iPhone, Duo, iPad, Slide Over, and other window sizes: about 1,700 screenshots in total.
+Then came the full sweep of the app across iPhone, Duo, iPad, Slide Over, and other window sizes: about 1,700 screenshots in total.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="A gallery of 1,201 iPhone Duo screenshots grouped by area" src="/images/posts/iphone-duo/screenshot-sweep.png">
@@ -89,9 +89,9 @@ Then came the full sweep, covering ~700 screens across iPhone, Duo, iPad, Slide 
 
 ## Reporting Issues
 
-The sweep logged 955 observations, most of which needed no issue: already tracked, accepted, or since fixed on trunk. To filter them, 10 agents independently reviewed all the screenshots without seeing the sweep's notes, candidates were de-duplicated against existing issues, and I checked every screenshot that became an issue myself.
+The sweep logged nearly a thousand observations, most of which needed no issue: already tracked, accepted, or since fixed on trunk. To filter them, a second set of agents independently reviewed all the screenshots without seeing the sweep's notes, candidates were de-duplicated against existing issues, and I checked every screenshot that became an issue myself.
 
-In the end, the full sweep left 27 more issues. 25 went straight into triage with screenshots (1 High, 15 Medium, 9 Low), and I skipped 2. Each has repro steps, the affected screens, and a likely cause in code where the agent could find one. Here's the High one, the "Edit" button from the beginning of this post:
+What was left went straight into triage. Each issue has screenshots, repro steps, the affected screens, and a likely cause in code where the agent could find one. Here's the only High-priority one, the "Edit" button from the beginning of this post:
 
 > **Fix "Edit" in the multi-select actions sheet hidden under the status pill on iPhone Duo.** The sheet is presented full width, so when it's tall (6 or more actions), the header row lands exactly where the status pill is drawn. Edit is covered, and a tap at its position does nothing, so the user can't open Rearrange Actions. *Likely cause:* `MultiSelectActionController.xib` pins the header buttons 16 pt from the trailing edge instead of the safe area. The same fix was made for `ShelfActionsViewController.xib` in an earlier issue; this is the sibling that was missed.
 
@@ -102,13 +102,13 @@ The same fix loop ran on the new batch. The fix for this one is [#5394](https://
 <figcaption>Before and after screenshots in the fix for the multi-select actions sheet</figcaption>
 </figure>
 
-Overall, counting the ones I found myself, the agents and I logged 56 issues during this project, and the vast majority of them were on point.
+Overall, counting the ones I found myself, the agents and I logged **56 issues** during this project, and the vast majority of them were on point.
 
 ## Regression Testing
 
-Next came regression testing, using the agent skills I'd been building to automate it. The library had 77 scenarios across 12 areas, from account and deep links to sync and Up Next. Each one is a list of steps with basic expectations written in plain language, but the agents use their own judgment along the way to flag anything that looks off, so it covers far more ground than a traditional XCUITest suite would.
+Next came regression testing, using the agent skills I'd been building to automate it. The library had 77 scenarios, from account and deep links to sync and Up Next. Each one is a list of steps with basic expectations written in plain language, but the agents use their own judgment along the way to flag anything that looks off, so it covers far more ground than a traditional XCUITest suite would.
 
-Agents drive the app on simulators using seven test accounts, from Free to one with 150+ podcasts, so scenarios that change data don't step on each other. A second agent with no simulator access then reads the code behind each finding, marks it verified or rejected, and writes down the likely cause before anything gets filed.
+Agents drive the app on simulators using a set of test accounts, from Free to one with 150+ podcasts, so scenarios that change data don't step on each other. A second agent with no simulator access then reads the code behind each finding, marks it verified or rejected, and writes down the likely cause before anything gets filed.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="A regression run with agents driving the app on several simulators" src="/images/posts/iphone-duo/qa-run.png">
