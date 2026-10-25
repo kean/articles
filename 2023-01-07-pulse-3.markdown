@@ -54,7 +54,7 @@ Text is often the best interface, and it's everywhere in Pulse. Where previously
 In the new system I render things – messages, tasks, response bodies – into attributed strings. The strings are then converted into the requested output format: `NSAttributedString -> HTML`, `NSAttributedString -> PDF`, `NSAttributedString -> Plain Text`. It's much simpler and produces consistent results. SwiftUI previews were a massive help to iterate on it.
 
 <div class="full-width centering-container">
-<img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/ios-text.png">
+<img alt="The same network request rendered as an attributed string and HTML on an iPhone in portrait and as a PDF in landscape" class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/ios-text.png">
 </div>
 
 ### Navigation
@@ -104,13 +104,13 @@ The storage [improvements](https://kean.blog/post/pulse-2#performance) were the 
 Now let's talk about the big screen – Apple TV. The original iOS-centered design was largely incompatible with other platforms. But with the new simplified navigation, I was able to use the network inspector and console with almost no changes on tvOS (and other platforms, but more on that later). I was stunned when I ran the new SwiftUI codebase on these other targets – it just worked. I needed to make only small adjustments. Well, of course, I'm also using native design, so many things come for free.
 
 <div class="full-width centering-container">
-<img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/tvos-console-full.png">
+<img alt="Pulse console on Apple TV: a list of network requests on the left and quick filters, store, and settings on the right" class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/tvos-console-full.png">
 </div>
 
 The main thing I did end up tweaking on tvOS is navigation to take advantage of the big screen. I combined two navigation stacks on a single screen, both in the console and in the network inspector. This way you can access common features, such as filters without ever leaving the console. It also enforces acceptable width for lists so that the existing cells from iOS work well in this context.
 
 <div class="full-width centering-container">
-<img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/tvos-inspector-full.png">
+<img alt="Pulse network inspector on Apple TV: request and response details on the left and transfer sizes and timing metrics on the right" class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/tvos-inspector-full.png">
 </div>
 
 # watchOS
@@ -131,7 +131,7 @@ I got a lot of features "for free" after reworking the iOS version. For example,
 The macOS version is back to its OG triple-column design from [App Kit is Done](https://kean.blog/post/appkit-is-done), but now with the new `NavigationSplitView` APIs and 90% of the code shared with others platforms.
 
 <div class="full-width centering-container">
-<img class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/macos-inspector.png">
+<img alt="Pulse on macOS in a three-column layout: the console, the selected request's details, and its network metrics" class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/macos-inspector.png">
 </div>
 
  The macOS version has probably changed the most over the last couple of years. 

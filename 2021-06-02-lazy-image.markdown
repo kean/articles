@@ -99,8 +99,8 @@ And it works great even in the lists.
 
 If you compare the performance metrics, there is a massive difference. Video playback doesn't use CPU when running on the device, has minimum impact on battery, and consumes much less memory.
 
-<img width="300px" class="Screenshot" src="{{ site.url }}/images/posts/lazy-image/perf-mp4.png"> 
-<img width="300px" class="Screenshot" src="{{ site.url }}/images/posts/lazy-image/perf-gif.png">
+<img alt="Xcode debug gauges for MP4 playback: 0% CPU, 45.2 MB memory, low energy impact" width="300px" class="Screenshot" src="{{ site.url }}/images/posts/lazy-image/perf-mp4.png"> 
+<img alt="Xcode debug gauges for GIF playback: 45% CPU, 113.8 MB memory, high energy impact" width="300px" class="Screenshot" src="{{ site.url }}/images/posts/lazy-image/perf-gif.png">
 
 It required a bit of digging into AVKit because there was no high-level API to play videos from memory. I ended up using an asset (`AVAsset`) with a custom `AVAssetResourceLoaderDelegate`:
 

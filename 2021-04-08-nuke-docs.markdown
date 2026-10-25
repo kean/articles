@@ -18,9 +18,9 @@ Nuke has beautiful [new documentation]({{ site.url }}/nuke/guides/welcome) with 
 
 Sorry for the ambiguity in the title; I’m not suggesting annihilating all the documentation.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-01.png">
+<img alt="Nuke Docs “Image View Extensions” page, with the guide navigation on the left, the page content in the middle, and an “On this page” outline on the right" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-01.png">
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-03.png">
+<img alt="Nuke Docs search popup with the query “prio” showing matching sections from several guides" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-03.png">
 
 ## Documentation
 
@@ -56,7 +56,7 @@ My main focus was on guides, and this is what the post is also about. I initiall
 
 It's rare for an open-source framework in the Apple ecosystem to have a dedicated site for documentation. Vapor comes to mind; it has a [documentation page](https://docs.vapor.codes/4.0/) created using [Material](https://squidfunk.github.io/mkdocs-material/) theme for [MkDocs](https://www.mkdocs.org). It looks great; I love Vapor docs! You can build something similar quickly and easily.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/vapor-01.png">
+<img alt="Vapor Docs “Routing” page built with the Material theme for MkDocs, with a navigation sidebar and a table of contents" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/vapor-01.png">
 
 So I'm going to use MkDocs, right? No... I wanted to use the design from [kean.blog]({{ site.url }}) that many people seem to love. I also wanted to learn a bit more about frontend. So what technology am I using? It's just static HTML generated using [Jekyll](https://jekyllrb.com), CSS, and, of course, JavaScript. And, you know, I kind of like it, JavaScript.
 
@@ -66,7 +66,7 @@ I already had a nice design for the main page content from [kean.blog]({{ site.u
 
 For the navigation model, I simply used the same design found on [Vapor docs](https://docs.vapor.codes/4.0/). This is pretty much what everyone is using [except for Apple]({{ site.url }}/post/apple-documentation).
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-02.png">
+<img alt="Nuke Docs page with six numbered callouts: the pinned header, the sidebar, the badge and subtitle, a code block, the content width, and the table of contents" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/nuke-02.png">
 
 <div class="kb-new-li" markdown="1">
 
@@ -87,19 +87,19 @@ A great website is responsive: it takes advantage of the big screens while also 
 
 Of course, Nuke Docs takes advantage of the big screens by displaying all of the navigation elements at the same time.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-01.png">
+<img alt="Nuke Docs in Safari Responsive Design Mode at 1024 × 1078, with the sidebar, the page content, and the table of contents side by side" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-01.png">
 
 Many people use an iPad as a second screen, and I optimized the site for it. There is space for both the sidebar and the full-width page content (730px).
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-02.png">
+<img alt="Nuke Docs in Responsive Design Mode on an iPad, with the sidebar next to full-width page content and the table of contents collapsed into an “On this page” button" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-02.png">
 
 Of course, it also works on iPhones (even on 4"). All features are available on mobile, including the table of contents and even search.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-06.png">
+<img alt="Nuke Docs in Responsive Design Mode on an iPhone 8: the Caching page and, next to it, search results for “prio”" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-06.png">
 
 And there is even a layout for big iPhone screens where the width allows you to put a smaller version of the sidebar on the page. If you were to display the page content full-width, it would be comically large. With a sidebar, it’s just right.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-03.png">
+<img alt="Nuke Docs on an iPhone 8 Plus in landscape, with a compact sidebar next to the page content" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/resp-03.png">
 
 ## Performance
 
@@ -109,11 +109,11 @@ When you open a typical web page, you often see hundreds of resources downloaded
 
 Here are some numbers. When you open it for the first time (nothing in cache), the total transfer size is 28 KB, and everything loads in less than 100ms from a single domain. Sure, it's a simple page, but check out Vapor Docs [networking]({{ site.url }}/images/posts/nuke-docs/vapor-perf.png) for comparison: 8 domains, 22 documents, 1.03 MB, 666ms. It’s still super fast compared to other websites. But faster is faster.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/perf-01.png">
+<img alt="Safari Web Inspector network tab for the first visit to Nuke Docs: eight resources from kean.blog, 28.2 KB transferred in 93.7 ms" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/perf-01.png">
 
 The subsequent page opens are even faster; it's pretty much instant. The only resource that is loaded is HTML for this page.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/perf-02.png">
+<img alt="Web Inspector network tab for a subsequent page load: only the 5.76 KB HTML document is transferred, while CSS and scripts come from the memory cache" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/perf-02.png">
 
 How does Nuke Docs achieve this performance?
 
@@ -132,7 +132,7 @@ How does Nuke Docs achieve this performance?
 
 I put it in a macOS app as a joke and I'm pretty sure it runs faster than my SwiftUI apps.
 
-<img class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/macos.png">
+<img alt="The Nuke Docs SwiftUI page running inside a macOS app window" class="Screenshot" src="{{ site.url }}/images/posts/nuke-docs/macos.png">
 
 ## Conclusion
 

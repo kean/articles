@@ -23,7 +23,7 @@ With the [Pulse](https://github.com/kean/Pulse) framework, you can record logs a
 The new app is designed to be flexible, expansive, and precise while using all the familiar macOS patterns. It makes it easy to navigate large log files with table and text modes, filters, scroller markers, an all-new network inspector, JSON filters, and more.
 
 <a href="{{ site.url }}/images/posts/pulse-pro/main-console-04.png">
-<img class="full-width JustVertMargins" src="{{ site.url }}/images/posts/pulse-pro/main-console-04.png">
+<img alt="Pulse Pro console on macOS: a filters panel, a table of log messages and network requests, and the metrics of the selected request" class="full-width JustVertMargins" src="{{ site.url }}/images/posts/pulse-pro/main-console-04.png">
 </a>
 
 ## Remote Logging 
@@ -76,7 +76,7 @@ Remote Logging is implemented using the new Apple [`Network`](https://developer.
 
 The [previous version](https://kean.blog/pulse/guides/pulse-macos) of the Pulse macOS app was fairly limited. It had an inflexible interface with many iOS-isms. There was only one mode to display information – a list view. You couldn't toggle between vertical and horizontal layouts. Most of the text in the app was non-selectable. Overall, it just wasn't taking full advantage of the platform. It was a nice native macOS app, but you couldn't call it a professional app by any stretch of the imagination.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/cover-macos.png">
+<img alt="The previous Pulse macOS app: a sidebar menu, a list of messages, and the metrics of a selected network request" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/cover-macos.png">
 
 Mac apps are flexible and adjust to how we individually use them. The first change that I made for Pulse Pro was to replace the list view with a fully adjustable table[^1].
 
@@ -106,7 +106,7 @@ OK, at this point, you might think these are the table stakes for a macOS app. A
 
 Filters were also fully redesigned. You know how in many apps you configure the filters, but then your only options are to either reset them all or change them back to the defaults manually. In Pulse Pro, you can toggle and reset each filter individually, which is surprisingly convenient. You can collapse the sections you rarely use, and the app saves your preferences. To show filters, hit `Cmd+Option+F` or click the toolbar item.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/table-view-05.png">
+<img alt="Pulse Pro filters panel with General, Levels, Labels, and Time Period sections, each with its own reset button, next to the message table" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/table-view-05.png">
 
 ## Text Mode
 
@@ -122,21 +122,21 @@ Toggle the “List” mode, and Pulse Pro will generate the formatted text based
 
 The text view itself is also pretty powerful. You can search, filter by line, show line numbers, and change some basic settings like font size. I'm also adding the same minimap as in the console soon – more on it later.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/text-view-02.png">
+<img alt="Pulse Pro text view settings menu with Line Numbers, Increase Font, Decrease Font, and Reset Font" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/text-view-02.png">
 
 You can also toggle “Show Responses” to see nicely formatted network responses inline with your logs. Unlike the traditional plain text logging system, you can make this choice on the display time instead of the time of logging, which is great.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/text-view-03.png">
+<img alt="Pulse Pro console in text mode with Show Responses enabled, displaying formatted JSON responses inline with the log messages" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/text-view-03.png">
 
 ## Network Tab
 
 Now let's talk a bit about networking. The previous app also had a separate "Network" tab, but in reality, it was just the same interface reused from the "Console" tab with a filter applied. With Pulse Pro, the network tab was completely redesigned. It now has its own view designed from scratch with its own columns and its own filters.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/networking-tab-01.png">
+<img alt="Pulse Pro network tab: a table of requests with method, URL, status code, duration, and response size above the selected request's JSON response" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/networking-tab-01.png">
 
 Networks filters were also designed from scratch. The most powerful filter is probably "General" where you can add as many custom filters as you'd like with an easy-to-use interface. You can filter by URL, host, method, request or response body or headers, and more.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/networking-tab-02.png">
+<img alt="Pulse Pro network filters: a custom URL filter, status code range, content type, time period, host, and duration" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/networking-tab-02.png">
 
 ## Response Viewer
 
@@ -170,33 +170,33 @@ The app is a hybrid of SwiftUI and AppKit, but I think it's fair to say that mos
 
 The all-new filters panel doesn't have any AppKit code:
 
-<img width="433px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-01.png">
+<img alt="SwiftUI preview of the Pulse Pro network filters panel" width="433px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-01.png">
 
 The preferences window and the new status bar menu[^2] I wrote entirely in SwiftUI. The preferences appear differently in the Canvas than in the app because you can't use `Settings` in the previews.
 
 [^2]: I created a single menu item with a custom SwiftUI view wrapped into [`NSHostingView`](https://developer.apple.com/documentation/swiftui/nshostingview). Initially, there was an issue where it would only receive user events when one of the app's windows was key. But thanks to [this answer](https://stackoverflow.com/a/64089921/1486308), I got it working.
 
-<img width="612px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-08.png">
+<img alt="SwiftUI preview of the Pulse Pro Remote Logging preferences with port and service name fields" width="612px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-08.png">
 
-<img width="352px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-09.png">
+<img alt="SwiftUI preview of the Pulse Pro status bar menu with a Remote Logging toggle and a list of devices" width="352px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-09.png">
 
 I wrote table views using AppKit. I could probably build them using SwiftUI's new [`Table`](https://developer.apple.com/documentation/swiftui/table) API, but it's available only in Monterey. By briefly going through it, I'm not sure it supports user-configurable columns, and there are probably more limitations. Fortunately, there is no pressure to write your views using only SwiftUI, and [`NSTableView`](https://developer.apple.com/documentation/appkit/nstableview) is very easy to use.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-03.png">
+<img alt="Xcode preview of the AppKit network requests table" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-03.png">
 
 The text views are also built AppKit (`NSTextView` and `NSAttributedString`). But the toolbar at the bottom is built using SwiftUI.
 
 I'm pretty sure I can also replace it with SwiftUI in the future by adopting [`AttributedString`](https://developer.apple.com/documentation/foundation/attributedstring) – also Monterey-only. I'm not sure about the line numbers. I used `NSRulerView` to implement it, so the lack of it in `Text` might end up being a deal-breaker. But, again, I don't see any problem with using AppKit for it.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-04.png">
+<img alt="Xcode preview of the JSON text view with line numbers and a SwiftUI search and filter toolbar at the bottom" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-04.png">
 
 The Metrics view was largely unchanged in Pulse Pro and it's still written with SwiftUI. The only change I made was to replace the "key-value" views with `NSTextView` to make the text selectable. In hindsight, I could probably use the new [`textSelection(_:)`](https://developer.apple.com/documentation/swiftui/view/textselection(_:)) API, but too late for that.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-07.png">
+<img alt="SwiftUI preview of the Metrics view with a request's timing breakdown, data transfer, and protocol details" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-07.png">
 
 And the existing welcome screen is also implemented using only SwiftUI. I updated it a bit for the new version.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-11.png">
+<img alt="SwiftUI preview of the Pulse Pro welcome screen with options to open a document or start the remote logger and a list of recent documents" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/canvas-11.png">
 
 And it's not just the individual screens or components. The entire app navigation is also done using SwiftUI. I'm using `NavigationView`, `WindowGroup`, `Settings`, `handlesExternalEvents`, `Commands` to manage windows, toolbars, and command menus. The window management API is fairly limited, so I have to access the underlying windows sometimes. I do that to close windows programmatically, listen to [`willCloseNotification`](https://developer.apple.com/documentation/appkit/nswindow/1419400-willclosenotification) events, making the existing window a key window, and more.
 

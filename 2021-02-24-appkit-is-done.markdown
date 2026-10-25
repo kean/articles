@@ -19,8 +19,8 @@ Well, not like Carbon. Don't be [so dramatic](https://www.youtube.com/watch?v=Cl
 
 More like [Core Foundation](https://developer.apple.com/documentation/corefoundation). It's still there behind the scenes, but programmers use high-level Objective-C and Swift wrappers from Foundation. If something is missing, you can call an underlying C API. The relation between SwiftUI and AppKit is similar, for now[^6].
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/macos/cover-macos.png">
-<!-- <img class="NewScreenshot" src="{{ site.url }}/images/posts/macos/03-macos-final.png"> -->
+<img alt="Pulse for macOS, written entirely in SwiftUI: a sidebar with filters, a list of log messages, and the metrics of a selected network request" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/cover-macos.png">
+<!-- <img alt="Pulse for macOS showing the console, a selected network request, and its metrics" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/03-macos-final.png"> -->
 
 This is a native [macOS app](https://github.com/kean/Pulse) written entirely in SwiftUI, from `@main` to bottom. Not a prototype, not a toy. A full-featured app. The intention is to deliver the best macOS experience possible.
 
@@ -132,7 +132,7 @@ private func toggleSidebar() {
 
 To add a "Toggle Sidebar" shortcut, use [`SidebarCommands`](https://developer.apple.com/documentation/swiftui/sidebarcommands).
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/macos/01-menu-items.png">
+<img alt="Pulse View menu with Show Tab Bar, Show All Tabs, Toggle Toolbar, Toggle Sidebar, and Enter Full Screen" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/01-menu-items.png">
 
 > If you have a group of items, put them in [`ToolbarItemGroup`](https://developer.apple.com/documentation/swiftui/toolbaritemgroup). This will ensure proper positioning and spacing.
 {:.info}

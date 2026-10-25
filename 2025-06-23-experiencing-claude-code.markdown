@@ -49,7 +49,7 @@ I created a small standalone app target ([PR #24598](https://github.com/wordpres
 
 It generated code, but it ignored our coding standards. That's when it hit me. While Claude *can* explore your project automatically by reading files and running bash commands, it starts from zero every time unless you pre-configure it using `CLAUDE.md`. Think of it as Claude's onboarding document. The better you write it, the better code Claude writes for you.
 
-<img class="NewScreenshot" src="/images/posts/claude/give-claude-context.png">
+<img alt="Slide titled “Give Claude more context” listing where CLAUDE.md files live: enterprise root and ~/.claude (shared across all projects), project CLAUDE.md (checked in), and CLAUDE.local.md (not checked in)" class="NewScreenshot" src="/images/posts/claude/give-claude-context.png">
 
 > You can generate a `CLAUDE.md` file using `/init`. The file should include coding standards, project structure, common patterns, and any domain-specific knowledge. The goal is to update it regularly as you discover what Claude needs to know. This file is part of CLAUDE.md [memory management](https://docs.anthropic.com/en/docs/claude-code/memory) with a few more tools at your disposal.
 {:.info}
@@ -82,7 +82,7 @@ I started with short one-liner prompts, with predictably poor results. After a w
 
 I typically make one change at a time for easier review. Claude is more accurate with focused tasks. Asking it to do too much usually fails as it makes too many assumptions that can be hard to correct later. Even with detailed prompts, expect multiple iterations. It rarely one-shots changes unless the changes themselves aren't very specific like generating mock data.
 
-<img class="NewScreenshot" src="/images/posts/claude/common-workflows.png">
+<img alt="Slide titled “Common workflows” with three example prompts: explore, plan, confirm, code, commit; write tests, commit, code, iterate, commit; and write code, screenshot result, iterate" class="NewScreenshot" src="/images/posts/claude/common-workflows.png">
 
 I often skip the planning, especially for small changes. As you get more experienced with Claude, you are more likely to generate what you want on the first plan. There doesn't seem to be that much science around prompts. For me, as long as you include some relevant details, it works fine. Don't overthink it.
 
@@ -130,7 +130,7 @@ Your mileage may vary, but for common tasks, I'm easily **2x more productive**. 
 
 I'm especially looking forward to sharing the workflows I learned with a team so we could all take advantage of the Claude instances configured to have the same idea of how to write code.
 
-<img class="NewScreenshot" src="/images/posts/claude/share-with-team.png">
+<img alt="Slide titled “Share with your team”: a table of where memory, slash commands, permissions, and MCP servers are configured at the enterprise, global, shared project, and personal project levels" class="NewScreenshot" src="/images/posts/claude/share-with-team.png">
 
 ## Final Thoughts
 

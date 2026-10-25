@@ -30,19 +30,19 @@ The intention of the article isn't to complain, but rather to review the documen
 
 When you open the [root SwiftUI documentation page](https://developer.apple.com/documentation/swiftui), you see is a small list of topics. In fact, what you see on the screenshot is the entire contents of the home page (apart from the brief introductory text). There is no index where you can see all children pages. You need to drill down multiple pages to find what you are looking for.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/01.png">
+<img alt="The SwiftUI documentation home page: a short list of topics grouped into Essentials, User Interface, Data and Events, and Previews in Xcode" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/01.png">
 
 The first item on the list is not part of this documentation, it's a link that opens the root page containing all [SwiftUI Tutorials](https://developer.apple.com/tutorials/SwiftUI).
 
 The categories are rather arbitrary. They can't be specific given how few there are. There is no way of knowing whether what you are looking for is going to be in the category without opening the page first. When you drill down the navigation hierarchy the only sense of where you are in the documentation hierarchy is a navigation strip at the top.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/02.png">
+<img alt="The “Configuring Views” article in Apple documentation, with a breadcrumb as the only indication of where you are" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/02.png">
 
 Now, to go to a different page, you need to either navigate back or hope that the links in a "See Also" section at the very bottom of the page are going to be relevant to you. The image next to "See Also" links indicates that it is a dropdown. It isn't, it's just a link.
 
 If you want to compare it with how it could be done differently, here is a screenshot from [developer.android.com](https://developer.android.com/guide/navigation/navigation-nested-graphs)
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/03.png">
+<img alt="Android “Nested navigation graphs” guide with top-level tabs, a full navigation sidebar on the left, and a table of contents on the right" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/03.png">
 
 There are many things that Google does right on this page. First, unlike Apple documentation which appears as it was designed for mobile, Google takes full advantage of a bigger screen *and* it also works great on mobile. Second, you get a full overview and control of the navigation:
 
@@ -52,8 +52,8 @@ There are many things that Google does right on this page. First, unlike Apple d
 
 But this is comparing apples to oranges. The Google documentation page is what a developer looking to build something for Android sees. It covers all topics, including basics, architecture, navigation, persistence, deployment, etc. I was comparing it with the SwiftUI page. What does the home page look like?
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/05.png">
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/04.png">
+<img alt="The Featured tab of the Apple Developer Documentation home page, highlighting three articles about widgets" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/05.png">
+<img alt="The Technologies tab of Apple Developer Documentation: an alphabetical list of 237 frameworks" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/04.png">
 
 The "Featured" tab is slick, minimal, but hardly useful. And the "Technologies" tab is an alphabetically sorted list of everything there is. Documentation should be a comprehensive system with multiple types of content.
 
@@ -77,7 +77,7 @@ Apple still writes guides in some form. But there is a problem – they are too 
 
 For example, on the screenshot below you can find a tutorial, two guides, and multiple references. This page could benefit from color differentiation.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/07.png">
+<img alt="SwiftUI Views and Controls page listing a tutorial, two articles, and API references together with nothing but small icons to tell them apart" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/07.png">
 
 ### API Reference
 
@@ -87,15 +87,15 @@ You often don't even need a reference as a document. To learn about APIs, you ca
 
 Let's take [`NavigationView`](https://developer.apple.com/documentation/swiftui/navigationview) page as an example. This page is classified as a reference which is indicated by the fact that there is no icon and it says "struct".
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/10.png">
+<img alt="SwiftUI View Layout and Presentation page listing NavigationView as a struct with no icon, alongside TabView and HSplitView" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/10.png">
 
 But when you open the page, there is a mini-guide there.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/08.png">
+<img alt="NavigationView documentation page with an overview and a code example" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/08.png">
 
 And the reference? Empty.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/09.png">
+<img alt="Topics section of the NavigationView page, listing only an initializer and a link to view modifiers" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/09.png">
 
 This page doesn't serve as a reference. For example, there is no way of knowing from this page that you can apply a [`navigationViewStyle(_:)`](https://developer.apple.com/documentation/swiftui/navigationview/navigationviewstyle(_:)) modifier to `NavigationView`. Apple themselves made it hard to generate a good reference for SwiftUI because of the way APIs are designed using generics. This problem appears not only in the documentation, but also in code completion, and in other systems that were not updated to accommodate the SwiftUI API design.
 
@@ -109,7 +109,7 @@ There are other little things that make this not a great API reference. As share
 - Extensions with constraints don't state the constraints
 - Long argument lists have no indentation
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/11.jpeg">
+<img alt="Scheduler method signatures in Apple documentation, with long argument lists wrapped without indentation" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/11.jpeg">
 
 ### Video
 

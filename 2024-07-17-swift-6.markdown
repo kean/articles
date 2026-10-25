@@ -17,7 +17,7 @@ I love using Swift and have no thoughts about switching back to Objective-C, but
 
 If you want to migrate a large codebase to support Swift 6 mode, you need to fix thousands of compiler warnings that become errors once you enable this mode. For example, if you have any global variables, they are now errors.
 
-<img class="NewScreenshot" src="/images/posts/swift-6/variable-error.png">
+<img alt="Xcode error on a global “var counter = 0”: Var 'counter' is not concurrency-safe because it is non-isolated global shared mutable state, with three suggested fixes" class="NewScreenshot" src="/images/posts/swift-6/variable-error.png">
 
 I think we might need to go back to the drawing board starting from right around here and re-establish what a compiler error is or should be:
 
@@ -28,7 +28,7 @@ A compiler can have additional helpful diagnostics and show them as warnings if 
 
 Data Race Safety is touted as one of the great Swift 6 features. You would expect the compiler to be smart enough to help you automatically find and eliminate the hard-to-debug concurrency issues and code smells, but the reality is quite different with too much of the work shifted to the developer.
 
-<img class="NewScreenshot" src="/images/posts/swift-6/expectation-vs-reality.jpg">
+<img alt="Expectations vs. reality meme: a muscular Doge labeled “Swift 6 achieves data race safety” and a small sad Cheems labeled “Variable is an error”" class="NewScreenshot" src="/images/posts/swift-6/expectation-vs-reality.jpg">
  
 OK, this is just for laughs. Maybe it's the only reasonable way to implement it, but I think these design decisions combined with the lack of progressive disclosure is why this feature is often criticized and perceived the way it is. You want the compiler to help find the data races, and the data by itself can't cause a data race – it's how it's being used down to individual properties, which is why Sendable also appears to be too blunt of an instrument.
 

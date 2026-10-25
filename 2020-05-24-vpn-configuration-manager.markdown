@@ -298,7 +298,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
 > Don't rename the `NEPacketTunnelProvider` class. If you do, make sure to update `Info.plist` file with a new class name, otherwise the extension is going to start crashing on launch.
 > 
-> <img class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-03.png">
+> <img alt="Info.plist NSExtension dictionary with NSExtensionPointIdentifier set to com.apple.networkextension.packet-tunnel and NSExtensionPrincipalClass set to $(PRODUCT_MODULE_NAME).PacketTunnelProvider" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-03.png">
 {:.warning}
 
 Now when you run the app on the device, and install the profile, it should automatically start the extension.
@@ -317,7 +317,7 @@ I encourage you to test whether you are able to attach the debugger to the exten
 >
 > App extensions are quite unforgiving and debugging them can become a nightmare. If you are not able to attach the debugger or the extension process crashes without reaching `PacketTunnelProvider` go through the following troubleshooting guide.
 >
-> <img class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-06.png">
+> <img alt="Xcode debugging the vpn-tunnel extension on an iPhone, stopped on an NSInvalidArgumentException thrown by -[__NSDictionaryM setObject:forKey:]" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-06.png">
 > 
 > - Make sure both the app and the app extension have Packet Tunnel Network Extensions entitlement
 > - An extension's bundle identifier must always be prefixed with an app's bundle identifier. If you change either later, make sure to update both to save yourself hours of debugging.

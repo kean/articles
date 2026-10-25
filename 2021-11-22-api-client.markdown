@@ -297,7 +297,7 @@ And if the `Request` type is not working for you, it's easy to extend too. You c
 
 `APIClient` is initialized with a `baseURL`, making it easy to switch between the environments in runtime. I typically have a debug menu in the apps with all sorts of debug settings, including an environment picker – it's fast and easy to build with SwiftUI. I added the code generating this screen in [a gist](https://gist.github.com/kean/846eba91cf3471071760ec0db3ddc23e).
 
-<img width="452px" class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/02.png">
+<img alt="iOS Environment screen for picking the API environment: dev, test (selected), stage, and prod, each with its host name" width="452px" class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/02.png">
 
 ## Defining an API
 
@@ -355,7 +355,7 @@ Remember the infamous [Working with JSON in Swift](https://developer.apple.com/s
 
 [Postman](https://www.postman.com) and [Paw](https://paw.cloud) are great ways to explore APIs. You can import an OpenAPI spec and it will generate a Collection for you so that you have all the APIs always at your fingertips. GitHub API that's I'm using in the examples also [recently got](https://github.blog/2020-07-27-introducing-githubs-openapi-description/) its own OpenAPI spec. You can [download](https://github.com/github/rest-api-description) it and import it into Postman to try it.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/03.png">
+<img alt="Postman with the GitHub API collection imported, showing a GET /users/:username request and its JSON response" class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/03.png">
 
 Generating `Codable` entities is also extremely easy. There are [a ton of tools](https://openapi.tools) available for working with OpenAPI specs. I also created one optimized for [Get](https://github.com/kean/Get), named [CreateAPI](https://github.com/kean/CreateAPI) – check it out.
 
@@ -366,7 +366,7 @@ Generating `Codable` entities is also extremely easy. There are [a ton of tools]
 
 [Pulse](https://kean.blog/pulse/home) is a powerful logging system for Apple Platforms.
 
-<img class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/pulse.png">
+<img alt="Pulse on iPhone, Mac, and Apple Watch, showing the console with logs and network requests and the metrics of a selected request" class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/pulse.png">
 
  It requires a single line to set up to work with `APIClient`. The advantage of doing it at that level is that you don't need to worry about TLS and SSL pinning, and you collect more information than a typical network proxy does thanks to the direct access to `URLSession`.
 
