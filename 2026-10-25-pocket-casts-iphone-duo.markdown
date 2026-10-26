@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Pocket Casts Unfolded
-subtitle: What it took to bring the app to iPhone Duo
+title: Pocket Casts on iPhone Duo
+subtitle: New features, 1,700 screenshots, and a lot of help from agents
 description: "How we updated Pocket Casts for iPhone Duo with a bigger mini player and a new Now Playing, and tested hundreds of screens to catch layout issues."
 date: 2026-10-25 09:00:00 -0400
 category: programming
@@ -149,6 +149,6 @@ And if your app isn't great on large screens yet, Duo is where it catches up wit
 
 With the broken screens out of the way, there's a lot more coming to Pocket Casts soon, so stay tuned. If you want to be on the latest beta, you can [ask to join it](https://support.pocketcasts.com/knowledge-base/beta-testing/). Pocket Casts is free, and you can [download it on the App Store](https://apps.apple.com/app/id414834813).
 
-I haven't gotten a Duo yet, but I tried one at an Apple Store on release day. My first impression was that it's primarily a great iPad that folds into your pocket, with some interesting ideas about navigation. I was less convinced by the iPhone experience on the outer screen, given its size and weight, but I'm curious to see where Apple takes it.
+My first impression was that it's primarily a great iPad that folds into your pocket, with some interesting ideas about navigation. I was less convinced by the iPhone experience on the outer screen, given its size and weight, but I'm curious to see where Apple takes it.
 
 As a developer, though, it was exciting to work on Duo, come up with new solutions together with the design team, and try new techniques to build for it.
