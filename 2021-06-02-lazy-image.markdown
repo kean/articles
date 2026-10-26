@@ -69,7 +69,7 @@ I also added an escape hatch similar to [SwiftUI Introspect](https://github.com/
 
 ## Animated Images
 
-The main target (Nuke) always had easy [integration with Gifu](https://kean.blog/nuke/guides/image-formats#gif) or other GIF rendering engines. And with NukeUI, you don't need to do anything. NukeUI adds [Gifu](https://github.com/kaishin/Gifu) as a dependency by default. Gifu is a relatively small Swift library, and if you install it using SPM, it ends up in the same binary, so there is barely any overhead. It also keeps [Nuke](https://github.com/kean/Nuke) light because it doesn't contain a rendering engine like some other frameworks do.
+The main target (Nuke) always had easy [integration with Gifu](https://kean-docs.github.io/nuke/documentation/nuke/image-formats) or other GIF rendering engines. And with NukeUI, you don't need to do anything. NukeUI adds [Gifu](https://github.com/kaishin/Gifu) as a dependency by default. Gifu is a relatively small Swift library, and if you install it using SPM, it ends up in the same binary, so there is barely any overhead. It also keeps [Nuke](https://github.com/kean/Nuke) light because it doesn't contain a rendering engine like some other frameworks do.
 
 I added support for GIF to `LazyImageView`, and `LazyImage` also got it without me having to do anything. But there is a problem with GIF – it's inefficient. 
 

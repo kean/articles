@@ -20,7 +20,7 @@ image:
 </video>
 </div>
 
-The search is for [Nuke Docs]({{ site.url}}/nuke/guides/welcome) is built using [lunr.js](https://lunrjs.com) which is a simple client-side search engine which is relatively easy to use.
+The search is for [Nuke Docs](https://web.archive.org/web/20220124105503/https://kean.blog/nuke/guides/welcome) is built using [lunr.js](https://lunrjs.com) which is a simple client-side search engine which is relatively easy to use.
 
 ## Populating Index
 
@@ -43,7 +43,7 @@ First, you need to populate a search index. In Nuke Docs, an index is a JSON fil
 ]
 ```
 
-As an output, I get a simple [`search-index.json`](https://kean.blog/nuke/assets/search-index.json) file with an array of pages. When the user presses the search button (or an `f` key), the app fetches it and populates the lunr.js index.
+As an output, I get a simple `search-index.json` file with an array of pages. When the user presses the search button (or an `f` key), the app fetches it and populates the lunr.js index.
 
 ```javascript
 function populateSearchIndex(json) {
@@ -86,7 +86,7 @@ I search for a complete match boosting its score (`^2`) and for a prefix using a
 
 The search works, but only for complete pages: you can't jump to subheadings. Fortunately, I already had [jekyll-anchor-headings](https://github.com/allejo/jekyll-anchor-headings) set up for the table of contents, so all I needed to do was preprocess the pages. I take a page, split it into chunks using simple regex[^5], find anchor links, strip HTML and Liquid tags from content, and voila – now the search index has parts of pages split based on subheadings instead of complete pages.
 
-I don't want to paste the complete code here, but you can always find it on the [website](https://kean.blog/nuke/guides/welcome). As for the UI, you can find it there as well; it was challenging to get the search view to work precisely the way I wanted it to with keyboard navigation, automatic scrolling, nice highlighting, etc.
+I don't want to paste the complete code here, but you can always find it on the [website](https://web.archive.org/web/20220124105503/https://kean.blog/nuke/guides/welcome). As for the UI, you can find it there as well; it was challenging to get the search view to work precisely the way I wanted it to with keyboard navigation, automatic scrolling, nice highlighting, etc.
 
 [^5]: `.content.split(/(<h[^>]*>.*?<\/h.>)/g)`. Parsing HTML with regex is generally not a good idea, but it works well in this controlled environment.
 

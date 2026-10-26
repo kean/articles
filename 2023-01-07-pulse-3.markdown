@@ -117,12 +117,12 @@ The main thing I did end up tweaking on tvOS is navigation to take advantage of 
 
 The watchOS version got a complete overhaul as well and now has nearly complete feature parity with iOS. If you enjoy hiking with your Apple Watch Ultra and have a watchOS app to test – great. You can record and preview logs directly on the device. And when you are ready, you can easily share and view them on a bigger screen.
 
-> You can also connect to any device running Pulse remotely with [Pulse Pro](https://kean.blog/pulse/pro) and view logs in real-time on your Mac.
+> You can also connect to any device running Pulse remotely with [Pulse Pro](https://pulselogger.com) and view logs in real-time on your Mac.
 {:.info}
 
 <img class="NewScreenshot" alt="Pulse Console on watchOS" src="{{ site.url }}/images/posts/pulse-3/watchos-console.png">
 
-I got a lot of features "for free" after reworking the iOS version. For example, console and network filters that were initially developed for [Pulse Pro](https://kean.blog/pulse/pro) now work on all platforms (and with nearly zero conditional code). But there are also some new SwiftUI APIs I integrated on watchOS: `AttributedString`, `searchable`, charts, `ShareLink`, monospace digits for `Text`, destructive buttons, `buttonBorderShape`, and more.
+I got a lot of features "for free" after reworking the iOS version. For example, console and network filters that were initially developed for [Pulse Pro](https://pulselogger.com) now work on all platforms (and with nearly zero conditional code). But there are also some new SwiftUI APIs I integrated on watchOS: `AttributedString`, `searchable`, charts, `ShareLink`, monospace digits for `Text`, destructive buttons, `buttonBorderShape`, and more.
 
 <img class="NewScreenshot" alt="Pulse Console on watchOS" src="{{ site.url }}/images/posts/pulse-3/watchos-inspector.png">
 

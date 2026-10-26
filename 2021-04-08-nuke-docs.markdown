@@ -14,7 +14,7 @@ image:
   width: 640
 ---
 
-Nuke has beautiful [new documentation]({{ site.url }}/nuke/guides/welcome) with quick search and all-new guides. It’s a relatively simple site, but there are a few things I really enjoy about it. This post is a write-up about some design and technical decisions behind it. I'm not an expert in frontend, so take what you see here with a grain of salt.
+Nuke has beautiful [new documentation](https://web.archive.org/web/20220124105503/https://kean.blog/nuke/guides/welcome) with quick search and all-new guides. It’s a relatively simple site, but there are a few things I really enjoy about it. This post is a write-up about some design and technical decisions behind it. I'm not an expert in frontend, so take what you see here with a grain of salt.
 
 Sorry for the ambiguity in the title; I’m not suggesting annihilating all the documentation.
 
@@ -50,7 +50,7 @@ As for **tutorials**, there are a couple, most notably [Nuke Tutorial for iOS: G
 
 And now to **guides**. Guides are a mix of everything: they can describe how to solve a specific problem, explain some high-level concepts, or serve as a subset of an API reference. Most importantly, guides should tell a cohesive story; I think about them as a small book split into chapters.
 
-My main focus was on guides, and this is what the post is also about. I initially started putting them on GitHub, but it was hard to navigate, and I found the experience of using them just in general unappealing. Take simple things like charters per line, for example. GitHub crams 135 characters in a single line, while the ideal is about 90. That's why I decided to bite the bullet and build [Nuke Docs]({{ sire.url }}/nuke/guides/welcome).
+My main focus was on guides, and this is what the post is also about. I initially started putting them on GitHub, but it was hard to navigate, and I found the experience of using them just in general unappealing. Take simple things like charters per line, for example. GitHub crams 135 characters in a single line, while the ideal is about 90. That's why I decided to bite the bullet and build [Nuke Docs](https://web.archive.org/web/20220124105503/https://kean.blog/nuke/guides/welcome).
 
 ## Technology
 

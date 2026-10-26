@@ -10,13 +10,13 @@ permalink: /post/open-sourcing-pulse
 uuid: 629d1d3a-3b4f-4c0c-b6a3-873bf6ea7f42
 ---
 
-[Pulse](https://kean.blog/pulse/home) is now [open-source](https://github.com/kean/Pulse.git). It includes the frameworks, the document-based apps for viewing the logs, and the demo projects.
+[Pulse](https://pulselogger.com) is now [open-source](https://github.com/kean/Pulse.git). It includes the frameworks, the document-based apps for viewing the logs, and the demo projects.
 
 <img alt="The Pulse project in Xcode, with the package sources, apps, and demos in the navigator and the scheme menu listing the iOS, macOS, watchOS, and tvOS targets" width="533px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/oss.png">
 
 There are two main reasons for open-sourcing it.
 
-- **Transparency**. The network logging setup [ranges](https://kean.blog/pulse/guides/networking) from manual to fully automatic. Fully automated logging requires swizzling. Regardless of what you decide to use, I want it to be fully transparent what the framework does under the hood.
+- **Transparency**. The network logging setup [ranges](https://kean-docs.github.io/pulse/documentation/pulse/networklogging-article) from manual to fully automatic. Fully automated logging requires swizzling. Regardless of what you decide to use, I want it to be fully transparent what the framework does under the hood.
 
 - **Development**. Open-source is about building things together. There are a lot of things that can be added to Pulse. If you needed to add a feature, now you can.
 

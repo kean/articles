@@ -74,7 +74,7 @@ Remote Logging is implemented using the new Apple [`Network`](https://developer.
 
 ## Table Mode
 
-The [previous version](https://kean.blog/pulse/guides/pulse-macos) of the Pulse macOS app was fairly limited. It had an inflexible interface with many iOS-isms. There was only one mode to display information – a list view. You couldn't toggle between vertical and horizontal layouts. Most of the text in the app was non-selectable. Overall, it just wasn't taking full advantage of the platform. It was a nice native macOS app, but you couldn't call it a professional app by any stretch of the imagination.
+The [previous version](https://web.archive.org/web/20211019211530/https://kean.blog/pulse/guides/pulse-macos) of the Pulse macOS app was fairly limited. It had an inflexible interface with many iOS-isms. There was only one mode to display information – a list view. You couldn't toggle between vertical and horizontal layouts. Most of the text in the app was non-selectable. Overall, it just wasn't taking full advantage of the platform. It was a nice native macOS app, but you couldn't call it a professional app by any stretch of the imagination.
 
 <img alt="The previous Pulse macOS app: a sidebar menu, a list of messages, and the metrics of a selected network request" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-pro/cover-macos.png">
 

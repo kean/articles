@@ -365,7 +365,7 @@ Generating `Codable` entities is also extremely easy. There are [a ton of tools]
 
 ### Logging
 
-[Pulse](https://kean.blog/pulse/home) is a powerful logging system for Apple Platforms.
+[Pulse](https://pulselogger.com) is a powerful logging system for Apple Platforms.
 
 <img alt="Pulse on iPhone, Mac, and Apple Watch, showing the console with logs and network requests and the metrics of a selected request" class="NewScreenshot" src="{{ site.url }}/images/posts/api-client/pulse.png">
 
@@ -376,7 +376,7 @@ Generating `Codable` entities is also extremely easy. There are [a ton of tools]
 <span class="p">}</span>
 </code></pre></div></div>
 
-> For a complete guide on using Pulse, see the [official documentation](https://kean.blog/pulse/guides/overview).
+> For a complete guide on using Pulse, see the [official documentation](https://kean-docs.github.io/pulse/documentation/pulse/).
 {:.info}
 
 ### Mocking
