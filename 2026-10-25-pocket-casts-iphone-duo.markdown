@@ -16,7 +16,7 @@ image:
 
 A few months ago, I switched to the Pocket Casts team, and it's been a busy start. I've done a lot of work modernizing the app, including adopting [Liquid Glass](https://blog.pocketcasts.com/2026/06/11/liquid-glass/), helped with the new [Apple TV app](https://blog.pocketcasts.com/2026/07/27/pocket-casts-on-the-big-screen/), and shipped hundreds of fixes along the way. So when Apple announced iPhone Duo, I was excited to add support for it, even though we had very limited time.
 
-Take the "Edit" button in one of the Pocket Casts sheets. On iPhone Duo, it landed right under the status pill, where you couldn't tap it. It's a tiny bug, and there were dozens like it. Pocket Casts has hundreds of screens, sheets, alerts, and deep links, and iPhone Duo changes the size and shape of every one of them. How do you find all of these issues, fix them, and check everything again after every round of fixes, in time for the launch? Here's what we shipped, and then how I got there with the help of agents.
+The biggest surprise was the horizontal safe area. There were issues with it everywhere, and Pocket Casts has hundreds of screens, sheets, and alerts. How do you find all of them, fix them, and check everything again after every round of fixes, in time for the launch? Here's what we shipped, and then how I got there with the help of agents.
 
 ## What's New
 
@@ -27,7 +27,7 @@ We updated the app for iPhone Duo, and, of course, the first step was making the
 <figcaption>The Podcasts tab with the tab bar on the side</figcaption>
 </figure>
 
-The main changes are in the mini player and Now Playing. Once you unfold, the mini player has room for more controls, including skip buttons and a scrubber, so you can control playback without opening the full player.
+The main changes are in the mini player and Now Playing. Once you unfold, the mini player has room for skip buttons and a progress bar, so you can control playback without opening the full player.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="Discover with the mini player on the unfolded iPhone Duo" src="/images/posts/iphone-duo/discover.png" width="1540" height="1113" loading="lazy" decoding="async">
@@ -55,13 +55,13 @@ We also made Now Playing a bit nicer visually. The background now takes its colo
 
 The new features are the fun part. The rest of the app looks like it should just work. It never just works, and getting there took an enormous amount of testing and fixing, especially for the horizontal safe area.
 
-Duo also exposed a bigger gap. A large screen on demand is the whole point of the device, and parts of the app needed more love on a big screen, like split views and popovers where they make sense. That will take more than one release, so the plan for this one was to fix everything that was broken and ship the new mini player and Now Playing.
+Duo also exposed a bigger gap: parts of the app needed more love on a big screen, like split views and popovers. That will take more than one release, so this one was about fixing what was broken and shipping the new mini player and Now Playing.
 
 Last year, in [Claude Code Experience]({{ site.url }}/post/experiencing-claude-code), I wrote that I was still working with Claude interactively, one change at a time, but could see myself "parallelizing the work using git worktrees." Duo is where that happened: agents driving several simulators at once, every fix in its own worktree, and other agents checking their work. Here's how it went, with numbers.
 
 ## Apple's Skill Goes First
 
-Apple's [Prepare for iPhone Duo](https://developer.apple.com/iphone-duo/prepare/) guide starts with the Xcode `app resizability` skill. You ask the coding assistant to "get my app ready for iPhone Duo", and it looks for what breaks when a window changes size: `UIScreen.main`, orientation checks, and idiom checks. For other agents, `xcrun agent skills export` gives you the skill as files. I had it split the work into small PRs, one per kind of change, so each could be reviewed and reverted on its own:
+Apple's [Prepare for iPhone Duo](https://developer.apple.com/iphone-duo/prepare/) guide starts with the Xcode `app resizability` skill. You ask the coding assistant to "get my app ready for iPhone Duo", and it looks for what breaks when a window changes size: `UIScreen.main`, orientation checks, and idiom checks[^1]. I had it split the work into small PRs, one per kind of change, so each could be reviewed and reverted on its own:
 
 - **Screen to view.** Hairlines use the view's display scale, layouts size from their own width, small-screen layouts compare the available height, and Display Zoom comes from the window's screen.
 - **Idiom to size class.** Form sheets are picked by size class instead of the iPad idiom (25 files), and the remaining idiom checks read the trait collection.
@@ -92,11 +92,11 @@ Then came the full sweep of the app across iPhone, Duo, iPad, Slide Over, and ot
 
 The sweep logged nearly a thousand observations. Most were noise: already tracked, working as intended, or fixed by the time I looked. To filter them, a second set of agents independently reviewed all the screenshots without seeing the sweep's notes. Candidates were then de-duplicated against existing issues, and I checked every screenshot that became an issue myself.
 
-What was left went straight into triage. Each issue has screenshots, repro steps, the affected screens, and a likely cause in code where the agent could find one. Here's the only High-priority one, the "Edit" button from the beginning of this post:
+What was left went straight into triage. Each issue has screenshots, repro steps, the affected screens, and a likely cause in code where the agent could find one. Here's the only High-priority one:
 
 > **Fix "Edit" in the multi-select actions sheet hidden under the status pill on iPhone Duo.** The sheet is presented full width, so when it's tall (6 or more actions), the header row lands exactly where the status pill is drawn. Edit is covered, and a tap at its position does nothing, so the user can't open Rearrange Actions. *Likely cause:* `MultiSelectActionController.xib` pins the header buttons 16 pt from the trailing edge instead of the safe area. The same fix was made for `ShelfActionsViewController.xib` in an earlier issue; this is the sibling that was missed.
 
-The same fix loop ran on the new batch. The fix for this one is [#5394](https://github.com/Automattic/pocket-casts-ios/pull/5394), an XIB constraint change. The PR has the root cause, the test steps, and the screenshots, and notes that the iPhone before/after screenshots are pixel-identical, which is the check I'd otherwise skip.
+The same fix loop ran on the new batch. The fix for this one is [#5394](https://github.com/Automattic/pocket-casts-ios/pull/5394), an XIB constraint change[^2]. The PR has the root cause, the test steps, and before/after screenshots, including ones from a regular iPhone showing that nothing changed there, a check I'd otherwise skip.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="Before and after screenshots in a pull request" src="/images/posts/iphone-duo/pr-screenshots.png" width="1540" height="1191" loading="lazy" decoding="async">
@@ -107,28 +107,29 @@ Overall, counting the ones I found myself, the agents and I logged **56 issues**
 
 ## Regression Testing
 
-Then it was time for regression testing, which I'd been slowly handing over to agents. The suite had 77 scenarios, from account and deep links to sync and Up Next. Each one is a list of steps with basic expectations written in plain language, but the agents use their own judgment along the way to flag anything that looks off, so it covers far more ground than a traditional XCUITest suite would.
+Then came regression testing, which I'd been slowly handing over to agents. The suite had 77 scenarios, from account and deep links to sync and Up Next[^3]. Each is a list of steps and expectations in plain language, but agents use their own judgment to flag anything that looks off, so it covers far more ground than an XCUITest suite.
 
-Agents drive the app on simulators using a set of test accounts, from Free to one with 150+ podcasts, so scenarios that change data don't step on each other. A second agent with no simulator access then reads the code behind each finding, marks it verified or rejected, and writes down the likely cause before anything gets filed.
+It's still experimental, but I find agents drive tests end to end with a higher success rate. They make decisions on the spot and reason across test cases. It's not free, though: runs are slower, cost tokens, and aren't deterministic, which is both a pro and a con.
+
+A second agent then reads the code behind each finding, verifies or rejects it, and notes the likely cause before anything gets filed.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="A regression run with agents driving the app on several simulators" src="/images/posts/iphone-duo/qa-run.png" width="1712" height="710" loading="lazy" decoding="async">
 <figcaption>A regression run: agents drive the app on several simulators in parallel, then verify the findings</figcaption>
 </figure>
 
-Across all runs, that's now **more than a hundred issues**. Most are relatively minor, but papercuts hurt, and I've already addressed a bunch of them.
+Across all runs, that's now **more than a hundred issues**. Most are minor, but papercuts hurt, and I've already fixed a bunch of them.
 
-I now run the suite before every release. It packs about 24 hours of testing into a few hours and gives me tremendous confidence that all the main flows, and even the obscure ones, work.
+I now run the suite before every release. It packs about 24 hours of testing into a few hours[^4] and gives me tremendous confidence that every flow, even the obscure ones, works.
 
-> Since Duo, I've kept iterating on the regression suite. It's now faster, has many more scenarios, and comes with a dedicated reporter optimized for our needs.
-{:.ok}
+Since Duo, the suite has gotten faster and gained many more scenarios and a dedicated reporter.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="A QA report for a full regression run" src="/images/posts/iphone-duo/qa-report.png" width="1310" height="770" loading="lazy" decoding="async">
 <figcaption>The new QA reporter</figcaption>
 </figure>
 
-I'm also incorporating video walkthroughs everywhere, including bug reports and regression runs. Each one shows the app side by side with the logs and an explanation, stitched together into a single video for convenience.
+I'm also adding video walkthroughs to bug reports and regression runs. Each one shows the app side by side with the logs and an explanation in a single video.
 
 <figure class="PostFigure">
 <div class="BlogVideo NewScreenshot">
@@ -136,7 +137,7 @@ I'm also incorporating video walkthroughs everywhere, including bug reports and 
 	<source src="{{ site.url }}/videos/iphone-duo/qa-walkthrough.mp4" type="video/mp4">
 </video>
 </div>
-<figcaption>A video walkthrough of a bug found in a regression run, with the steps, logs, and the issue next to the app</figcaption>
+<figcaption>A walkthrough of a bug from a regression run</figcaption>
 </figure>
 
 ## If You're Adopting Duo
@@ -152,3 +153,11 @@ With the broken screens out of the way, there's a lot more coming to Pocket Cast
 My first impression was that it's primarily a great iPad that folds into your pocket, with some interesting ideas about navigation. I was less convinced by the iPhone experience on the outer screen, given its size and weight, but I'm curious to see where Apple takes it.
 
 As a developer, though, it was exciting to work on Duo, come up with new solutions together with the design team, and try new techniques to build for it.
+
+[^1]: If you use a different agent, `xcrun agent skills export` gives you the skill as files.
+
+[^2]: Yes, the app has a bunch of those, and I don't mind them. I wish choosing between UIKit and SwiftUI was simpler, but agents make it even more complicated.
+
+[^3]: Agents use a set of test accounts, from Free to one with 150+ podcasts, so scenarios that change data don't step on each other.
+
+[^4]: That's the total time the individual agents spend testing the app. With sharding, I can scale it up, and the token cost grows linearly. A full run now takes around 4 hours.
