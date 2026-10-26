@@ -5,18 +5,14 @@ subtitle: How to implement a custom VPN client and server using Packet Tunnel Pr
 description: A series about building a custom VPN protocol, client, and server, using Packet Tunnel Provider (NEPacketTunnelProvider from Network Extension framework) and SwiftNIO
 date: 2020-05-18 9:00:00 -0400
 category: programming
-tags: programming
+tags: [networking]
+series: vpn
 permalink: /post/lets-build-vpn-protocol
 favorite: true
 uuid: 4f4b6cb2-192f-4a1c-bafb-f1e84baee96d
 ---
 
 It's been two years since [Network Extension, Part 1 - Introduction](/post/network-extensions-into). You've been asking for Part 2. Here it finally is.
-
-> - [Let's Build a VPN Protocol](/post/lets-build-vpn-protocol) (You are here)
-> - [Prologue: How Does VPN Work?](/post/networking-101)
-> - [VPN, Part 1: VPN Profiles](/post/vpn-configuration-manager)
-> - [VPN, Part 2: Packet Tunnel Provider](/post/packet-tunnel-provider)
 
 {% include ad-hor.html %}
 

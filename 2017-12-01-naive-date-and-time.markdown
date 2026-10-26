@@ -4,7 +4,7 @@ title: "Naive Date and Time"
 description: "Foundation offers great APIs for manipulating dates with <i>time zones</i>, however, it might be missing a few things"
 date: 2017-12-01 18:00:00 +0300
 category: programming
-tags: ios
+tags: [swift]
 permalink: /post/naive-date-time
 uuid: 60d37e50-dd6b-40e5-bfa9-c22e21a7a5a9
 ---

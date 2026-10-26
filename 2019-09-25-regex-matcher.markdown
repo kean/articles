@@ -4,7 +4,8 @@ title: "Regex, Part 3: Matcher"
 description: Explore two different regex matching algorithms
 date: 2019-09-25 9:00:00 +0300
 category: programming
-tags: programming
+tags: [computer-science]
+series: regex
 permalink: /post/regex-matcher
 uuid: 0b507d56-2cd1-402f-be3e-f1f39645e3d3
 ---

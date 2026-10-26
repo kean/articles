@@ -5,7 +5,7 @@ subtitle: An overview of the changes introduced on WWDC20 from the design and pr
 description: An overview of the changes introduced on WWDC20 from the design and product perspective
 date: 2020-07-13 9:00:00 -0400
 category: programming
-tags: programming
+tags: [ios]
 permalink: /post/wwdc20-summary
 uuid: 28a04491-8aee-4483-9c23-bc4e05955e15
 ---

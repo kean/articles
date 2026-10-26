@@ -5,7 +5,7 @@ subtitle: Xcode integration with SwiftPM and its flaws
 description: SwiftPM and Xcode
 date: 2024-07-09 09:00:00 -0500
 category: programming
-tags: programming
+tags: [tools]
 permalink: /post/swiftpm-and-xcode
 mastodon: https://mastodon.social/@a_grebenyuk/112757641876624153
 uuid: 0bca7c93-0818-43fe-bc1d-8b0acad0cc17

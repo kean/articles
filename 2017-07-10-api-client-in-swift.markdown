@@ -4,7 +4,7 @@ title: "API Client in Swift"
 description: "How to implement a declarative and powerful API client using Alamofire, RxSwift, and Codable"
 date: 2017-07-10 9:00:00 +0300
 category: programming
-tags: ios
+tags: [networking, rxswift]
 permalink: /post/api-client
 uuid: 543b6221-e3ec-4636-be57-6e6eb501e1f6
 ---

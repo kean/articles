@@ -5,7 +5,7 @@ subtitle: "In-depth look at HTTP cache and Foundation's URL Loading System to ca
 description: Using URLCache (HTTP cache) and Foundation's URL Loading System to cache and validate images. Storing images in memory using NSCache.
 date: 2016-01-26 15:30:05 +0300
 category: programming
-tags: swift, ios, http, nsurlsession
+tags: [networking, performance, nuke]
 permalink: /post/image-caching
 redirect_from: /blog/image-caching
 uuid: d9cd6b09-75ec-4873-a9ef-c7457cc40b34

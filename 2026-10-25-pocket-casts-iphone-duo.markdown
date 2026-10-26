@@ -5,7 +5,7 @@ subtitle: What it took to bring the app to iPhone Duo
 description: "How we updated Pocket Casts for iPhone Duo with a bigger mini player and a new Now Playing, and tested hundreds of screens to catch layout issues."
 date: 2026-10-25 09:00:00 -0400
 category: programming
-tags: programming, ai, ios
+tags: [ai, testing, ios]
 permalink: /post/pocket-casts-iphone-duo
 uuid: 3f6b0c1e-8a52-4d7e-9b14-c2e5a7d90f38
 image:

@@ -6,7 +6,8 @@ description: Integrating NSTableView with SwiftUI
 date: 2021-03-01 10:00:00 -0500
 last_modified_at: 2021-11-22
 category: programming
-tags: programming
+tags: [swiftui, macos, performance, pulse]
+series: pulse
 permalink: /post/not-list
 uuid: 29cb612c-2e35-406d-a27a-a9c1b9f9c122
 ---

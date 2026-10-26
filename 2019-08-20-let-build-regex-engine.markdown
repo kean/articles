@@ -4,7 +4,8 @@ title: Let's Build a Regex Engine
 description: How to understand the language of <code>&lt;\/?[\w\s]*&gt;|&lt;.+[\W]&gt;</code>
 date: 2019-08-20 9:00:00 +0300
 category: programming
-tags: programming
+tags: [computer-science]
+series: regex
 permalink: /post/lets-build-regex
 uuid: ea30401f-f344-4dcc-830c-d513e2f52193
 favorite: true
@@ -15,12 +16,6 @@ favorite: true
 Ever wondered how regex works under the hood? How does it understand an incantation like `"<\/?[\w\s]*>|<.+[\W]>"` and magically produces a desired result? This series is going to describe exactly how it works and how to implement a feature-rich regex engine.
 
 Now you might be wondering, why would you want to do that? Well, turns out, this is a fantastic learning opportunity. Parsers, compilers, finite automaton, graphs, trees, extended grapheme clusters - it has everything! Last but not least, you get a chance to learn regex.
-
-> - [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex) (You are here)
-> - [Regex, Prologue: Grammar]({{ site.url }}/post/regex-grammar)
-> - [Regex, Part 1: Parser]({{ site.url }}/post/regex-parser)
-> - [Regex, Part 2: Compiler]({{ site.url }}/post/regex-compiler)
-> - [Regex, Part 3: Matcher]({{ site.url }}/post/regex-matcher)
 
 {% include ad-hor.html %}
 

@@ -5,7 +5,8 @@ subtitle: Designing and implementing Pulse for watchOS
 description: Designing and implementing Pulse for watchOS
 date: 2021-03-29 09:00:00 -0500
 category: programming
-tags: programming
+tags: [swiftui, pulse]
+series: pulse
 permalink: /post/time-to-debug
 uuid: de347c14-59c3-4f15-9824-1cfc1781f299
 image:

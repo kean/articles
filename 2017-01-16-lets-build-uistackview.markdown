@@ -5,7 +5,7 @@ description: "Explores how UIStackView works under the hood to build its open so
 date: 2017-01-16 10:00:00 +0300
 last_modified_at: 2021-11-22
 category: programming
-tags: ios
+tags: [uikit]
 permalink: /post/lets-build-uistackview
 redirect_from: /blog/lets-build-uistackview
 uuid: 89038ab2-a19b-4be3-9a3f-7ab2d58530d6

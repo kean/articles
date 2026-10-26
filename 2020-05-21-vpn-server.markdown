@@ -4,7 +4,7 @@ title: "VPN, Part 3: Server"
 description: Coming Soon
 date: 2020-05-21 9:00:00 -0400
 category: programming
-tags: programming
+tags: [networking]
 permalink: /post/vpn-server
 uuid: 9ad44da3-9386-4be8-8413-3cdc125e9b4c
 published: false

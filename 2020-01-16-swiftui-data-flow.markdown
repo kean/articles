@@ -6,7 +6,7 @@ description: A guide on SwiftUI data flow, covering all of the property wrappers
 date: 2020-01-16 10:00:00 -0500
 last_modified_at: 2020-07-01
 category: programming
-tags: programming
+tags: [swiftui]
 permalink: /post/swiftui-data-flow
 uuid: c5358288-8c59-41e0-a790-521b52f89921
 favorite: true

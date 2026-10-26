@@ -6,7 +6,7 @@ description: Everything that is wrong with Apple's documentation
 date: 2021-02-15 10:00:00 -0500
 last_modified_at: 2022-06-11
 category: programming
-tags: programming
+tags: [tools]
 permalink: /post/apple-documentation
 uuid: 97629671-7fb5-481a-a020-38e2aab4175d
 ---

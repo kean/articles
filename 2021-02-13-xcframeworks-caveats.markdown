@@ -5,7 +5,8 @@ subtitle: Caveats of using XCFrameworks with Swift Package Manager
 description: Caveats of using XCFrameworks
 date: 2021-02-13 10:00:00 -0500
 category: programming
-tags: programming
+tags: [tools, pulse]
+series: pulse
 permalink: /post/xcframeworks-caveats
 uuid: d99799b5-aa4b-4403-8b65-aa639db7dc10
 ---

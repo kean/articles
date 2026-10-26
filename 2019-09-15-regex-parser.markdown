@@ -4,7 +4,8 @@ title: "Regex, Part 1: Parser"
 description: Exploring Parser Combinators (or <i>monadic</i> parsers) which are a great example of functional programming used to bring practical benefits
 date: 2019-09-15 9:00:00 +0300
 category: programming
-tags: programming
+tags: [computer-science]
+series: regex
 permalink: /post/regex-parser
 uuid: b1b60dba-0872-49ac-9120-dff4f4006f89
 ---

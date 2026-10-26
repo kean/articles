@@ -6,7 +6,7 @@ description: Building a modern web API client using Async/Await
 date: 2021-11-21 09:00:00 -0500
 last_modified_at: 2022-08-19
 category: programming
-tags: programming
+tags: [networking, concurrency]
 favorite: true
 permalink: /post/new-api-client
 uuid: 681de9e6-02c7-4e55-ab73-630625edac63

@@ -5,7 +5,7 @@ subtitle: Applying SwiftUI ideas to improve the developer experience of using Rx
 description: Applying SwiftUI ideas to RxSwift
 date: 2021-02-16 10:00:00 -0500
 category: programming
-tags: programming
+tags: [rxswift, swiftui]
 permalink: /post/rxui
 uuid: 6d873c89-a3cd-4173-a73b-cd6ba2a89e15
 ---

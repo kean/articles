@@ -4,7 +4,7 @@ title: "TLS Explained"
 description: Coming Soon
 date: 2020-07-01 9:00:00 -0400
 category: programming
-tags: programming
+tags: [networking]
 permalink: /post/tls-explained
 uuid: 39da1edc-0108-426b-8859-b836a1a1d125
 published: false

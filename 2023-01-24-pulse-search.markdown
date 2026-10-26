@@ -5,7 +5,7 @@ subtitle: Search, filter, sort, group, pin
 description: Search, filter, sort, group, pin
 date: 2023-01-24 09:00:00 -0500
 category: programming
-tags: programming
+tags: [swiftui, pulse]
 permalink: /post/pulse-search
 uuid: 516bbd97-720b-4c53-9b6f-197b3534b11e
 ---

@@ -5,7 +5,7 @@ description: "A unified model for cooperative cancellation of asynchronous opera
 date: 2017-12-15 18:00:00 +0300
 last_modified_at: 2021-11-22
 category: programming
-tags: ios
+tags: [concurrency]
 permalink: /post/cancellation-token
 uuid: f6bfea67-880f-462f-a08c-5b065a70f573
 ---

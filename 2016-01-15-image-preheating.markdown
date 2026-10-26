@@ -5,7 +5,7 @@ description: "An effective way to improve user experience by loading data ahead 
 date: 2016-01-12 20:30:05 +0300
 last_modified_at: 2021-04-03
 category: programming
-tags: swift, ios, nuke
+tags: [uikit, performance, nuke]
 permalink: /post/image-preheating
 redirect_from: /blog/image-preheating
 uuid: 7ca6cd36-1cb2-4825-93af-3c8e291b9960

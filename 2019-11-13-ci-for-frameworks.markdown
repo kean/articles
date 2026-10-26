@@ -5,7 +5,7 @@ subtitle: How I went from manually testing my frameworks to having hundreds of u
 description: Setting up Travis CI for a Swift framework. Ideas for the jobs, including SwiftLint validation, multiple environments, test suites, validating demo projects and packages.
 date: 2019-11-13 10:00:00 -0500
 category: programming
-tags: programming
+tags: [testing, tools]
 permalink: /post/ci-for-frameworks
 uuid: 3826c7ed-4ede-4eee-bbde-69fa0e4e96a5
 ---

@@ -5,7 +5,7 @@ description: "Introduced in Swift 4 to replace NSCoding APIs, Codable also featu
 date: 2017-11-10 18:00:00 +0300
 last_modified_at: 2021-11-21
 category: programming
-tags: ios
+tags: [swift]
 permalink: /post/codable-tips-and-tricks
 uuid: 8b6a08fa-ba58-4f9a-b607-7bd4d1171f7f
 cover: /images/posts/codable_cover.png

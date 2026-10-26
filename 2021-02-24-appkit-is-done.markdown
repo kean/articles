@@ -5,7 +5,8 @@ subtitle: Learn how to build delightful macOS apps using only SwiftUI
 description: Learn how to build delightful macOS apps using only SwiftUI
 date: 2021-02-24 10:00:00 -0500
 category: programming
-tags: programming
+tags: [swiftui, macos, pulse]
+series: pulse
 permalink: /post/appkit-is-done
 uuid: ef480460-ee95-4504-b4b1-ec133703b6b3
 favorite: true

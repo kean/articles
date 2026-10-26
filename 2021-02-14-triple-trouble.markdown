@@ -6,7 +6,8 @@ description: Implementing triple-column navigation in SwiftUI using NavigationVi
 date: 2021-02-14 10:00:00 -0500
 last_modified_at: 2022-07-12
 category: programming
-tags: programming
+tags: [swiftui, macos, pulse]
+series: pulse
 permalink: /post/triple-trouble
 uuid: 0526798f-a074-4365-8970-cb470579c358
 ---

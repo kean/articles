@@ -4,7 +4,7 @@ title: "Three Use Cases of Phantom Types"
 description: "Adding additional type safety using phantom types on the examples"
 date: 2017-11-24 18:00:00 +0300
 category: programming
-tags: ios
+tags: [swift]
 permalink: /post/phantom-types
 uuid: f6bfea67-880f-462f-a08c-5b065a70f573
 ---

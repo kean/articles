@@ -6,7 +6,8 @@ description: A quick write-up on selecting a document format for Pulse
 date: 2021-03-15 10:00:00 -0500
 last_modified_at: 2022-08-16
 category: programming
-tags: programming
+tags: [persistence, pulse]
+series: pulse
 permalink: /post/pulse-store
 uuid: 424b2065-a294-4311-9bc7-f85ed82d1290
 ---

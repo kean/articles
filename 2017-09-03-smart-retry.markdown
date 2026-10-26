@@ -4,7 +4,7 @@ title: "Smart Retry"
 description: "Combining retryWhen operator with Reachability and delay options inspired by RxSwiftExt to implement auto-retries"
 date: 2017-09-03 10:00:00 +0300
 category: programming
-tags: ios
+tags: [networking, rxswift]
 permalink: /post/smart-retry
 uuid: 134b8103-bc6b-4e34-bf8f-4c1a551a4473
 ---

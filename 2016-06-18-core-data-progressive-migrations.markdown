@@ -4,7 +4,7 @@ title: "Core Data Progressive Migrations"
 description: "Using NSPersistentStoreCoordinator and NSMigrationManager for progressive schema migrations in Core Data"
 date: 2016-06-18 10:00:00 +0300
 category: programming
-tags: ios
+tags: [persistence]
 permalink: /post/core-data-progressive-migrations
 redirect_from: /blog/core-data-progressive-migrations
 uuid: cdd8c605-9632-4de9-a370-2049aa69f8b4

@@ -5,7 +5,7 @@ subtitle: Why most unit testing is a waste in Swift and how to extract the most 
 description: Why most unit testing is a waste in Swift and how to extract the most value from tests. Comparing XCTest and Quick, analyzing test coverage, building an effective testing pyramid.
 date: 2019-12-04 10:00:00 -0500
 category: programming
-tags: programming
+tags: [testing]
 permalink: /post/unit-testing
 uuid: 4a6eb769-e0c6-4507-a45f-f73abece8a5b
 ---

@@ -4,7 +4,7 @@ title: "Interface Builder: Previews"
 description: "Using Interface Builder to quickly preview features on different screen sizes and in different orientations"
 date: 2017-05-01 10:00:00 +0300
 category: programming
-tags: ios
+tags: [uikit, tools]
 permalink: /post/interface-builder-ui-testing
 redirect_from: /blog/interface-builder-ui-testing
 uuid: 5236b644-6093-4896-9318-def1e4ffaf80

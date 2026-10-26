@@ -4,7 +4,7 @@ title: "Align: Intuitive Auto Layout"
 description: "I'm thrilled to introduce a new intuitive and powerful Auto Layout library - Align"
 date: 2017-11-17 18:00:00 +0300
 category: programming
-tags: ios
+tags: [uikit]
 permalink: /post/align
 uuid: 00e90200-1ef8-479e-aea7-62b98a148c2e
 ---

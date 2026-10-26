@@ -5,7 +5,8 @@ subtitle: Using Network Extension framework to create and manage VPN profiles
 description: Building a SwiftUI app that users NETunnelProviderManager (Network Extension framework) to create and manage VPN configuration profiles
 date: 2020-05-24 9:00:00 -0400
 category: programming
-tags: programming
+tags: [networking]
+series: vpn
 permalink: /post/vpn-configuration-manager
 uuid: 21837a5f-3848-46c6-aa58-7f80410cd077
 minutes: 10

@@ -4,7 +4,7 @@ title: Future&lt;Value, Error&gt;
 description: Future – a streamlined Future&lt;Value, Error&gt; implementation with functional interface
 date: 2018-11-12 9:00:00 +0300
 category: programming
-tags: programming
+tags: [concurrency, swift]
 permalink: /post/future
 uuid: b1b94ee1-c736-4e89-85a9-69cfe5ab6880
 ---

@@ -5,7 +5,7 @@ subtitle: Using XMLParser and NSAttributedString to add support for basic format
 description: Using XMLParser and NSAttributedString to add support for basic formatting in localizable strings
 date: 2020-11-29 9:00:00 -0400
 category: programming
-tags: programming
+tags: [uikit]
 permalink: /post/formatted-strings
 uuid: 3fc81326-49ae-4daf-894f-1a3d49f457c0
 ---

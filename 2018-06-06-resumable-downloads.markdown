@@ -4,7 +4,7 @@ title: "Resumable Downloads"
 description: Exploring how resumable downloads - one of my favorite new features in Nuke 7 - are implemented using HTTP range requests
 date: 2018-06-06 18:00:00 +0300
 category: programming
-tags: programming
+tags: [networking, nuke]
 permalink: /post/resumable-downloads
 uuid: 7ba0839a-0983-419a-b74e-43a75af31520
 ---

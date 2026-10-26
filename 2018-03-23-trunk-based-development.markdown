@@ -4,7 +4,7 @@ title: "Trunk-Based Development"
 description: Why feature branches might prevent continuous integration and discourage refactoring and what other branching strategies are worth considering.
 date: 2018-03-23 18:00:00 +0300
 category: programming
-tags: programming
+tags: [tools]
 permalink: /post/trunk-based-development
 uuid: f7b08862-3571-4c61-a7a2-9a5f742fc10a
 favorite: true

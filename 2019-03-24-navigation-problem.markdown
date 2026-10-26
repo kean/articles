@@ -4,7 +4,7 @@ title: Navigation Problem
 description: How to solve it without Coordinators and why Coordinators might be not an optimal solution for you
 date: 2019-03-24 9:00:00 +0300
 category: programming
-tags: programming
+tags: [architecture, uikit]
 permalink: /post/navigation-problem
 uuid: 11f62862-1a42-4eef-9dcc-f8c15a8a19c0
 ---

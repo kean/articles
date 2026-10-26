@@ -5,7 +5,7 @@ subtitle: Logging experience reimagined
 description: Logging experience reimagined
 date: 2021-10-05 09:00:00 -0500
 category: programming
-tags: programming
+tags: [swiftui, macos, pulse]
 permalink: /post/pulse-pro
 uuid: 8f1c9545-868c-41a3-be93-b675a86c3bb6
 fullscreen: true

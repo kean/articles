@@ -5,7 +5,7 @@ subtitle: How to build client-side search with lunr.js
 description: How to build client-side search with lunr.js
 date: 2021-04-09 09:00:00 -0500
 category: programming
-tags: programming
+tags: [tools, nuke]
 permalink: /post/client-side-search
 uuid: 73543c14-bc64-4bf3-8913-210e2dbf1268
 image:

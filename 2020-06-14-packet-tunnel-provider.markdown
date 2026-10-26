@@ -5,7 +5,8 @@ subtitle: Using NEPacketTunnelProvider to implement a VPN client
 description: A tutorial on NEPacketTunnelProvider usage to implement an iOS client for a custom tunneling protocol
 date: 2020-06-14 9:00:00 -0400
 category: programming
-tags: programming
+tags: [networking]
+series: vpn
 permalink: /post/packet-tunnel-provider
 uuid: d3d4d400-70f3-40a1-a8d3-bcfe9df881f8
 ---

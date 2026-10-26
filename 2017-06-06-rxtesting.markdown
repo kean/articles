@@ -4,7 +4,7 @@ title: "RxSwift Testing"
 description: "Unit testing paging in a scroll view using RxSwift testing infrastructure - RxTest"
 date: 2017-06-06 10:00:00 +0300
 category: programming
-tags: ios
+tags: [rxswift, testing]
 permalink: /post/rxswift-testing
 redirect_from:
     - /blog/rxswift-testing

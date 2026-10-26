@@ -6,7 +6,8 @@ description: Wrapping up the series on Pulse development
 date: 2021-03-30 09:00:00 -0500
 last_modified_at: 2021-04-02
 category: programming
-tags: programming
+tags: [swiftui, pulse]
+series: pulse
 favorite: true
 permalink: /post/swiftui-experiment
 uuid: 4559025a-577f-495f-93d8-dfc0c49f5b35

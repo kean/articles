@@ -5,7 +5,7 @@ subtitle: The actor model and other concurrency patterns used in Nuke
 description: The actor model and other concurrency patterns used in Nuke
 date: 2021-03-24 10:00:00 -0500
 category: programming
-tags: programming
+tags: [concurrency, performance, nuke]
 permalink: /post/concurrency
 favorite: true
 uuid: 199e4057-2c6b-41ef-87c3-1ad6ef934fa8

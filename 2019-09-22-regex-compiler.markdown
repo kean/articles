@@ -4,7 +4,8 @@ title: "Regex, Part 2: Compiler"
 description: What are Type-2 (or <i>regular</i>) languages? How can Finite State Automaton be used to recognize them? Where do regex fit into all this?
 date: 2019-09-22 9:00:00 +0300
 category: programming
-tags: programming
+tags: [computer-science]
+series: regex
 permalink: /post/regex-compiler
 uuid: 65e6cd7b-0551-4ffc-987e-7e51cd38d81f
 ---
