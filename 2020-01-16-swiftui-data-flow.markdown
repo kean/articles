@@ -450,7 +450,7 @@ Should you use `@StateObject` everywhere instead of `@ObservedObject`? The [answ
 
 ## @State
 
-When you feel that creating an `ObservableObject` is a bit too much for your use case, there is another tool called [`@State`]((https://developer.apple.com/documentation/swiftui/state)).
+When you feel that creating an `ObservableObject` is a bit too much for your use case, there is another tool called [`@State`](https://developer.apple.com/documentation/swiftui/state).
 
 > SwiftUI automatically manages the storage for your state properties. When the state value changes, the view invalidates its appearance and recomputes the body.
 >

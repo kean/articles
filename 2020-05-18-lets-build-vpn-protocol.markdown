@@ -12,7 +12,7 @@ favorite: true
 uuid: 4f4b6cb2-192f-4a1c-bafb-f1e84baee96d
 ---
 
-It's been two years since [Network Extension, Part 1 - Introduction](/post/network-extensions-into). You've been asking for Part 2. Here it finally is.
+It's been two years since [Network Extension, Part 1 - Introduction](/post/network-extensions-intro). You've been asking for Part 2. Here it finally is.
 
 {% include ad-hor.html %}
 

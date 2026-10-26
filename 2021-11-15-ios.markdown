@@ -91,7 +91,7 @@ There are so many [technologies](https://developer.apple.com/documentation/techn
 
 I received a ton of recommendations in the original [poll](https://twitter.com/a_grebenyuk/status/1458158375942950916?s=20). Here I'm going to list the ones that didn't make the shortlist, in no particular order. A word of caution – Apple platforms are constantly evolving, make sure what you are reading is up-to-date.
 
-- [objc.io](objc.io)
+- [objc.io](https://www.objc.io)
 - [Donny Walls](https://twitter.com/DonnyWals)'s [blog](https://www.donnywals.com/the-blog/) and [books](https://www.donnywals.com/books/)
 - [Point·Free](https://www.pointfree.co)
 - [The Ultimate Kickstart Bundle](https://editorscut.gumroad.com/l/kickstart-bundle)
