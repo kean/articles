@@ -10,6 +10,7 @@ permalink: /post/client-side-search
 uuid: 73543c14-bc64-4bf3-8913-210e2dbf1268
 image:
   path: /images/posts/client-side-search/cover.png
+  thumbnail: /images/posts/client-side-search/cover-thumb.webp
   height: 1280
   width: 640
 ---

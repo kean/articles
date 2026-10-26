@@ -5,7 +5,7 @@ subtitle: Open-source developer tools
 description: Open-source developer tools
 date: 2021-07-06 09:00:00 -0500
 category: programming
-tags: [pulse]
+tags: [pulse, whats-new]
 permalink: /post/open-sourcing-pulse
 uuid: 629d1d3a-3b4f-4c0c-b6a3-873bf6ea7f42
 ---

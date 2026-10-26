@@ -5,7 +5,7 @@ subtitle: A pragmatic take on AI coding with practical insights
 description: A pragmatic take on AI coding with practical insights
 date: 2025-06-23 09:00:00 -0500
 category: programming
-tags: [ai, tools]
+tags: [tools]
 permalink: /post/experiencing-claude-code
 mastodon: https://mastodon.social/@a_grebenyuk/114732714419844898
 uuid: a8d013bd-532e-4a9c-a252-422112781c68

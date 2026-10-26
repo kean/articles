@@ -5,13 +5,14 @@ subtitle: Third time the charm
 description: Third time the charm
 date: 2023-01-10 09:00:00 -0500
 category: programming
-tags: [swiftui, pulse]
+tags: [swiftui, pulse, whats-new]
 permalink: /post/pulse-3
 uuid: 0869d9fd-18f5-419a-a741-a407c7c91537
 fullscreen: true
 disable-toc: true
 image:
   path: /images/posts/pulse-3/cover.png
+  thumbnail: /images/posts/pulse-3/cover-thumb.webp
   height: 1280
   width: 640
 ---

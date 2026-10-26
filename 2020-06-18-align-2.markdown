@@ -5,7 +5,7 @@ subtitle: Layout anchors, reimagined
 description: An Auto Layout library in Swift that introduces an improved version of Auto Layout anchors
 date: 2020-06-18 9:00:00 -0400
 category: programming
-tags: [uikit]
+tags: [uikit, whats-new]
 permalink: /post/align-2
 uuid: 63031829-f890-4724-895e-57632ef67870
 ---

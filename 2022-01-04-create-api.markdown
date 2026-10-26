@@ -5,7 +5,7 @@ subtitle: Delightful code generation for OpenAPI specs
 description: Delightful code generation for OpenAPI specs
 date: 2022-01-04 09:00:00 -0500
 category: programming
-tags: [networking, tools]
+tags: [networking, tools, whats-new]
 permalink: /post/create-api
 uuid: 183dcd4d-27dd-4d08-924f-16b76888a5ad
 ---

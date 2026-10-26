@@ -12,6 +12,7 @@ uuid: ef480460-ee95-4504-b4b1-ec133703b6b3
 favorite: true
 image:
   path: /images/posts/macos/cover-macos.png
+  thumbnail: /images/posts/macos/cover-macos-thumb.webp
   height: 1280
   width: 640
 ---

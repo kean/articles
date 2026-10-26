@@ -14,6 +14,7 @@ slug: swiftui-experiment
 uuid: 4559025a-577f-495f-93d8-dfc0c49f5b35
 image:
   path: /images/posts/swiftui-exp/cover.png
+  thumbnail: /images/posts/swiftui-exp/cover-thumb.webp
   height: 1280
   width: 640
 ---

@@ -5,7 +5,7 @@ subtitle: Building a multiplatform tool using SwiftUI
 description: Using SwiftUI to build a cross-platform (iOS and macOS) app.
 date: 2021-01-31 10:00:00 -0500
 category: programming
-tags: [swiftui, pulse]
+tags: [swiftui, pulse, whats-new]
 series: pulse
 permalink: /post/pulse
 slug: pulse

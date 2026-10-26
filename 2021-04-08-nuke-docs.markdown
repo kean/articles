@@ -10,6 +10,7 @@ permalink: /post/nuke-docs
 uuid: d258c2e5-dcbc-42ff-8f18-700067ecea95
 image:
   path: /images/posts/nuke-docs/cover.png
+  thumbnail: /images/posts/nuke-docs/cover-thumb.webp
   height: 1280
   width: 640
 ---

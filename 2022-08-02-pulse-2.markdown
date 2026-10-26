@@ -5,7 +5,7 @@ subtitle: Logger and network inspector for Apple platforms
 description: Logger and network inspector for Apple platforms
 date: 2022-08-16 09:00:00 -0500
 category: programming
-tags: [pulse]
+tags: [pulse, whats-new]
 permalink: /post/pulse-2
 fullscreen: true
 uuid: 7e686610-d8b7-4e91-9c0f-a6f65f313675

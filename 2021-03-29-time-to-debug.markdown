@@ -11,6 +11,7 @@ permalink: /post/time-to-debug
 uuid: de347c14-59c3-4f15-9824-1cfc1781f299
 image:
   path: /images/posts/time-to-debug/ttl-cover.png
+  thumbnail: /images/posts/time-to-debug/ttl-cover-thumb.webp
   height: 1280
   width: 640
 ---

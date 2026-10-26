@@ -6,7 +6,7 @@ description: Lazy image loading for SwiftUI
 date: 2021-06-02 09:00:00 -0500
 last_modified_at: 2022-09-05
 category: programming
-tags: [swiftui, nuke]
+tags: [swiftui, nuke, whats-new]
 permalink: /post/lazy-image
 uuid: 608e88a5-d9e7-40af-8957-18ad1b5bb025
 ---

@@ -11,6 +11,7 @@ favorite: true
 uuid: 199e4057-2c6b-41ef-87c3-1ad6ef934fa8
 image:
   path: /images/posts/concurrency/concurrency-cover.png
+  thumbnail: /images/posts/concurrency/concurrency-cover-thumb.webp
   height: 1280
   width: 640
 ---

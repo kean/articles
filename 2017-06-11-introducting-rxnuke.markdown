@@ -4,7 +4,7 @@ title: "Introducing RxNuke"
 description: "I'm excited to introduce a new addition to Nuke - RxNuke which brings the power of RxSwift to your image loading pipelines"
 date: 2017-06-11 21:00:00 +0300
 category: programming
-tags: [rxswift, nuke]
+tags: [rxswift, nuke, whats-new]
 permalink: /post/introducing-rxnuke
 slug: introducing-rxnuke
 uuid: 687bb115-e04c-4c6f-9990-786793ba8685

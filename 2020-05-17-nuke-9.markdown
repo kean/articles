@@ -6,7 +6,7 @@ description: Overview of Nuke 9, a new iteration of an image loading and caching
 date: 2020-05-17 9:00:00 -0400
 last_modified_at: 2021-01-28
 category: programming
-tags: [performance, nuke]
+tags: [performance, nuke, whats-new]
 permalink: /post/nuke-9
 favorite: true
 uuid: 3f0ab615-9905-4fb9-9480-0ffe1952422a
