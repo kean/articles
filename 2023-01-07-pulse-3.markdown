@@ -23,11 +23,11 @@ I loved every year I worked on iOS. I started in 2012 with Objective-C and now, 
 > [Pulse](https://github.com/kean/Pulse) is a network logger built with SwiftUI. It integrates on the `URLSession` level allowing it to see unencrypted traffic and record task metrics available only on this level.
 {:.info}
 
-# iOS
+## iOS
 
 The original version of Pulse was designed quickly and targeted only iOS, so many of the decisions were incompatible with other platforms. Fortunately, for nearly every issue, there was a better solution that also enhanced the experience on iOS while simplifying the code.
 
-## Inspector
+### Inspector
 
 The most dramatic changes are probably in the network inspector. The [previous version]({{ site.url }}/videos/pulse-2/metrics.mp4) had a convoluted navigation with a segmented control in the navigation bar that was hard to reach and didn't scale for adding more features. More importantly, it was incompatible with other platforms. This design was there from 0.1 and it was time to improve it. 
 
@@ -47,7 +47,7 @@ In the following example, you immediately see that the task had three transactio
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-metrics.png">
 
-## Text
+### Text
 
 Text is often the best interface, and it's everywhere in Pulse. Where previously you had [non-selectable labels]({{ site.url }}/images/posts/pulse/ios-headers.png), it now uses fully featured text views with text selection, search, and sharing. There are also two new sharing options: HTML and PDF. I’m sure a lot of people will be particularly excited about PDF, especially if you print out code at work. To power these features, I had to rework how I create strings because the previous approach of writing different "renderers" for different outputs didn't scale well. 
 
@@ -57,7 +57,7 @@ In the new system I render things – messages, tasks, response bodies – into 
 <img alt="The same network request rendered as an attributed string and HTML on an iPhone in portrait and as a PDF in landscape" class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/ios-text.png">
 </div>
 
-### Navigation
+#### Navigation
 
 The main navigation also changed in Pulse 3. The `MainView` from the previous version had a tab bar, which is a good choice for most iOS apps, but not for a tool that you integrate into an existing app. Most large apps already have their own debug menus and they want to integrate Pulse there.
 
@@ -71,7 +71,7 @@ In Pulse 3, the navigation is now centered around a single screen: `ConsoleView`
 
 <img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-3/ios-text-view.png">
 
-## Storage
+### Storage
 
 The storage [improvements](https://kean.blog/post/pulse-2#performance) were the primary focus of Pulse 2: massive space savings, improved document format for sharing, and fully SQL-compatible storage – these are just some of the changes it introduced. With this solid foundation, I was able to focus on `PulseUI` in this release, but there are some improvements to the core framework as well. For example, [`NetworkLogger`](https://kean-docs.github.io/pulse/documentation/pulse/networklogger) now has convenience APIs for filtering out sensitive data or just something you don't want to be logged for other reasons.
 
@@ -99,7 +99,7 @@ The storage [improvements](https://kean.blog/post/pulse-2#performance) were the 
 > Both `include` and `exclude` patterns support basic wildcards (`*`), but you can also turns them into regex patterns using `isRegexEnabled`. 
 {:.info}
 
-# tvOS
+## tvOS
 
 Now let's talk about the big screen – Apple TV. The original iOS-centered design was largely incompatible with other platforms. But with the new simplified navigation, I was able to use the network inspector and console with almost no changes on tvOS (and other platforms, but more on that later). I was stunned when I ran the new SwiftUI codebase on these other targets – it just worked. I needed to make only small adjustments. Well, of course, I'm also using native design, so many things come for free.
 
@@ -113,7 +113,7 @@ The main thing I did end up tweaking on tvOS is navigation to take advantage of 
 <img alt="Pulse network inspector on Apple TV: request and response details on the left and transfer sizes and timing metrics on the right" class="centered-child large-screenshot JustVertMargins" src="{{ site.url }}/images/posts/pulse-3/tvos-inspector-full.png">
 </div>
 
-# watchOS
+## watchOS
 
 The watchOS version got a complete overhaul as well and now has nearly complete feature parity with iOS. If you enjoy hiking with your Apple Watch Ultra and have a watchOS app to test – great. You can record and preview logs directly on the device. And when you are ready, you can easily share and view them on a bigger screen.
 
@@ -126,7 +126,7 @@ I got a lot of features "for free" after reworking the iOS version. For example,
 
 <img class="NewScreenshot" alt="Pulse Console on watchOS" src="{{ site.url }}/images/posts/pulse-3/watchos-inspector.png">
 
-# macOS
+## macOS
 
 The macOS version is back to its OG triple-column design from [App Kit is Done](https://kean.blog/post/appkit-is-done), but now with the new `NavigationSplitView` APIs and 90% of the code shared with others platforms.
 
