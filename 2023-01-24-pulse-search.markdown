@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Search
+title: "Searching Network Logs in Pulse"
 subtitle: Search, filter, sort, group, pin
 description: Search, filter, sort, group, pin
 date: 2023-01-24 09:00:00 -0500
