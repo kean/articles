@@ -45,7 +45,7 @@ We also made Now Playing a bit nicer visually. The background now takes its colo
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="Now Playing themed with the colors of six different podcasts" src="/images/posts/iphone-duo/now-playing-themes.png" width="1540" height="1570" loading="lazy" decoding="async">
-<figcaption>Now Playing in the colors of six different shows</figcaption>
+<figcaption>Six shows, six moods</figcaption>
 </figure>
 
 > Pocket Casts is free, and you can [download it on the App Store](https://apps.apple.com/app/id414834813).
@@ -53,11 +53,9 @@ We also made Now Playing a bit nicer visually. The background now takes its colo
 
 ## Harder Than It Looks
 
-The new features are the fun part. The rest of the app looks like it should just work, but getting there took an enormous amount of testing and fixing, especially for the horizontal safe area.
+The new features are the fun part. The rest of the app looks like it should just work. It never just works, and getting there took an enormous amount of testing and fixing, especially for the horizontal safe area.
 
 Duo also exposed a bigger gap. A large screen on demand is the whole point of the device, and parts of the app needed more love on a big screen, like split views and popovers where they make sense. That will take more than one release, so the plan for this one was to fix everything that was broken and ship the new mini player and Now Playing.
-
-I started by preparing: watching Apple's videos, testing the app myself, researching, planning, and updating my QA setup. Then came development, and that's where agents came in.
 
 Last year, in [Claude Code Experience]({{ site.url }}/post/experiencing-claude-code), I wrote that I was still working with Claude interactively, one change at a time, but could see myself "parallelizing the work using git worktrees." Duo is where that happened: agents driving several simulators at once, every fix in its own worktree, and other agents checking their work. Here's how it went, with numbers.
 
@@ -76,23 +74,23 @@ The skill can't see layout, though. It has no way to know that a header ends up 
 
 ## Smoke Test, Then Full Blast
 
-How do you let agents "see" your app? Fortunately, Xcode 27 arrived at exactly the right time. Its [MCP server](https://developer.apple.com/documentation/xcode/giving-external-agents-access-to-xcode) gained new [DeviceInteraction tools](https://redalemeden.com/derived-data/2026/what-new-in-xcode-27-mcp-bridge/) that let agents take screenshots, read the view hierarchy, and tap through the app on a simulator. I started with baby steps, checking a few flows at a time, and quickly scaled it to more than a thousand screenshots and flows, tested and validated completely automatically.
+How do you let agents "see" your app? Fortunately, Xcode 27 arrived at exactly the right time. Its [MCP server](https://developer.apple.com/documentation/xcode/giving-external-agents-access-to-xcode) gained new [DeviceInteraction tools](https://redalemeden.com/derived-data/2026/what-new-in-xcode-27-mcp-bridge/) that let agents take screenshots, read the view hierarchy, and tap through the app on a simulator.
 
 The first run was deliberately quick. An agent walked the high-traffic flows on the Duo simulator (Podcasts, podcast page, Playlists, Discover, player), screenshotting every step, and filed the first batch of issues. Agents fixed those too, one worktree and PR per issue across parallel simulators, each PR with before/after screenshots so I could verify fixes without building the branch.
 
-Then came the full sweep of the app across iPhone, Duo, iPad, Slide Over, and other window sizes: about 1,700 screenshots in total.
+Then came the full sweep of the app across iPhone, Duo, iPad, Slide Over, and other window sizes: about 1,700 screenshots in total. Watching Claude spawn dozens of agents and simulators, eating up so much RAM that 64 GB starts to feel small, never gets old.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="A gallery of 1,201 iPhone Duo screenshots grouped by area" src="/images/posts/iphone-duo/screenshot-sweep.png" width="1540" height="1320" loading="lazy" decoding="async">
 <figcaption>The screenshot sweep for iPhone Duo, grouped by area</figcaption>
 </figure>
 
-> One gap: agents can't drive the unfolded Duo yet, which looks like an Xcode issue. The sweep covers the folded pose, and I used iPad mini in landscape to check the regular × regular layouts. Fortunately, the folded version has the same layout with toolbars on the right – horizontal safe area turned out to be the biggest challenge.
+> One gap: agents can't drive the unfolded Duo yet, which looks like an Xcode issue. The sweep covers the folded pose, and I used iPad mini in landscape to check the regular × regular layouts.
 {:.warning}
 
-## Reporting Issues
+## Agents All the Way Down
 
-The sweep logged nearly a thousand observations, most of which needed no issue: already tracked, accepted, or since fixed on trunk. To filter them, a second set of agents independently reviewed all the screenshots without seeing the sweep's notes, candidates were de-duplicated against existing issues, and I checked every screenshot that became an issue myself.
+The sweep logged nearly a thousand observations. Most were noise: already tracked, working as intended, or fixed by the time I looked. To filter them, a second set of agents independently reviewed all the screenshots without seeing the sweep's notes. Candidates were then de-duplicated against existing issues, and I checked every screenshot that became an issue myself.
 
 What was left went straight into triage. Each issue has screenshots, repro steps, the affected screens, and a likely cause in code where the agent could find one. Here's the only High-priority one, the "Edit" button from the beginning of this post:
 
@@ -102,14 +100,14 @@ The same fix loop ran on the new batch. The fix for this one is [#5394](https://
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="Before and after screenshots in a pull request" src="/images/posts/iphone-duo/pr-screenshots.png" width="1540" height="1191" loading="lazy" decoding="async">
-<figcaption>Before and after screenshots in the fix for the multi-select actions sheet</figcaption>
+<figcaption>The Edit button, finally tappable</figcaption>
 </figure>
 
 Overall, counting the ones I found myself, the agents and I logged **56 issues** during this project, and the vast majority of them were on point.
 
 ## Regression Testing
 
-Next came regression testing, using the agent skills I'd been building to automate it. The library had 77 scenarios, from account and deep links to sync and Up Next. Each one is a list of steps with basic expectations written in plain language, but the agents use their own judgment along the way to flag anything that looks off, so it covers far more ground than a traditional XCUITest suite would.
+Then it was time for regression testing, which I'd been slowly handing over to agents. The suite had 77 scenarios, from account and deep links to sync and Up Next. Each one is a list of steps with basic expectations written in plain language, but the agents use their own judgment along the way to flag anything that looks off, so it covers far more ground than a traditional XCUITest suite would.
 
 Agents drive the app on simulators using a set of test accounts, from Free to one with 150+ podcasts, so scenarios that change data don't step on each other. A second agent with no simulator access then reads the code behind each finding, marks it verified or rejected, and writes down the likely cause before anything gets filed.
 
@@ -119,6 +117,8 @@ Agents drive the app on simulators using a set of test accounts, from Free to on
 </figure>
 
 Across all runs, that's now **more than a hundred issues**. Most are relatively minor, but papercuts hurt, and I've already addressed a bunch of them.
+
+I now run the suite before every release. It packs about 24 hours of testing into a few hours and gives me tremendous confidence that all the main flows, and even the obscure ones, work.
 
 > Since Duo, I've kept iterating on the regression suite. It's now faster, has many more scenarios, and comes with a dedicated reporter optimized for our needs.
 {:.ok}
@@ -141,12 +141,14 @@ I'm also incorporating video walkthroughs everywhere, including bug reports and 
 
 ## If You're Adopting Duo
 
-Start with Apple's skill, but don't expect it to do the whole job. Most of what broke for us was layout, and most of that came down to the horizontal safe area. Anything pinned to the screen edges instead of the safe area ends up under the status pill or the toolbar on the side, and the only reliable way I found to catch it was to look at every screen in every size. That's where the 1,700 screenshots came from.
+Start with Apple's skill, but don't expect it to do the whole job. Most of what broke for us was layout, and most of that came down to the horizontal safe area. Anything pinned to the screen edges instead of the safe area ends up under the status pill or the toolbar on the side, and the only reliable way I found to catch it was to look at every screen in every size.
 
-And if your app isn't great on large screens yet, Duo is where it catches up with you. Fixing what's broken is the easy part. Making the app feel at home on a big screen is the real work, and I feel like for many apps, Duo will be a great excuse to finally put more resources into it. iPad gets all of it for free.
+And if your app isn't great on large screens yet, Duo is where it catches up with you. Making the app feel at home on a big screen is the real work, and I feel like for many apps, Duo will be a great excuse to finally put more resources into it. iPad gets all of it for free.
 
 ## What's Next
 
-With the broken screens out of the way, there's a lot more coming to Pocket Casts soon, so stay tuned. If you want to be on the latest beta, you can [ask to join it](https://support.pocketcasts.com/knowledge-base/beta-testing/).
+With the broken screens out of the way, there's a lot more coming to Pocket Casts soon, so stay tuned. If you want to be on the latest beta, you can [ask to join it](https://support.pocketcasts.com/knowledge-base/beta-testing/). Pocket Casts is free, and you can [download it on the App Store](https://apps.apple.com/app/id414834813).
 
-Pocket Casts is free, and you can [download it on the App Store](https://apps.apple.com/app/id414834813).
+I haven't gotten a Duo yet, but I tried one at an Apple Store on release day. My first impression was that it's primarily a great iPad that folds into your pocket, with some interesting ideas about navigation. I was less convinced by the iPhone experience on the outer screen, given its size and weight, but I'm curious to see where Apple takes it.
+
+As a developer, though, it was exciting to work on Duo, come up with new solutions together with the design team, and try new techniques to build for it.
