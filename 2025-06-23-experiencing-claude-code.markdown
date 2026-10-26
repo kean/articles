@@ -9,6 +9,7 @@ tags: [ai, tools]
 permalink: /post/experiencing-claude-code
 mastodon: https://mastodon.social/@a_grebenyuk/114732714419844898
 uuid: a8d013bd-532e-4a9c-a252-422112781c68
+favorite: true
 ---
 
 There's a lot of anxiety around AI coding, but what people often fear is uncertainty. The best way to address it is through action. These tools aren't going away, so I decided to give one of the latest ones a fair shot this week.
