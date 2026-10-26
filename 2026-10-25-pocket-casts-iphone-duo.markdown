@@ -23,28 +23,28 @@ Take the "Edit" button in one of the Pocket Casts sheets. On iPhone Duo, it land
 We updated the app for iPhone Duo, and, of course, the first step was making the tab bar, toolbars, and native navigation work correctly, folded and unfolded.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Podcasts on iPhone Duo" src="/images/posts/iphone-duo/podcasts.png">
+<img class="NewScreenshot" alt="Podcasts on iPhone Duo" src="/images/posts/iphone-duo/podcasts.png" width="1540" height="1182">
 <figcaption>The Podcasts tab with the tab bar on the side</figcaption>
 </figure>
 
 The main changes are in the mini player and Now Playing. Once you unfold, the mini player has room for more controls, including skip buttons and a scrubber, so you can control playback without opening the full player.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Discover with the mini player on the unfolded iPhone Duo" src="/images/posts/iphone-duo/discover.png">
+<img class="NewScreenshot" alt="Discover with the mini player on the unfolded iPhone Duo" src="/images/posts/iphone-duo/discover.png" width="1540" height="1113" loading="lazy" decoding="async">
 <figcaption>Discover with the expanded mini player</figcaption>
 </figure>
 
 Now Playing makes use of the extra space too. Instead of stacking everything in a single column, it shows its tabs, like Transcript and Chapters, side by side with the controls, so you can follow along with the transcript while you listen.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Now Playing with the transcript on the unfolded iPhone Duo" src="/images/posts/iphone-duo/now-playing.png">
+<img class="NewScreenshot" alt="Now Playing with the transcript on the unfolded iPhone Duo" src="/images/posts/iphone-duo/now-playing.png" width="1540" height="1113" loading="lazy" decoding="async">
 <figcaption>Now Playing with the transcript side by side</figcaption>
 </figure>
 
 We also made Now Playing a bit nicer visually. The background now takes its colors from the podcast artwork, so the player adapts to each of your favorite shows, from the purple of The Vergecast to the warm orange of The Journal.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Now Playing themed with the colors of six different podcasts" src="/images/posts/iphone-duo/now-playing-themes.png">
+<img class="NewScreenshot" alt="Now Playing themed with the colors of six different podcasts" src="/images/posts/iphone-duo/now-playing-themes.png" width="1540" height="1570" loading="lazy" decoding="async">
 <figcaption>Now Playing in the colors of six different shows</figcaption>
 </figure>
 
@@ -83,7 +83,7 @@ The first run was deliberately quick. An agent walked the high-traffic flows on 
 Then came the full sweep of the app across iPhone, Duo, iPad, Slide Over, and other window sizes: about 1,700 screenshots in total.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="A gallery of 1,201 iPhone Duo screenshots grouped by area" src="/images/posts/iphone-duo/screenshot-sweep.png">
+<img class="NewScreenshot" alt="A gallery of 1,201 iPhone Duo screenshots grouped by area" src="/images/posts/iphone-duo/screenshot-sweep.png" width="1540" height="1320" loading="lazy" decoding="async">
 <figcaption>The screenshot sweep for iPhone Duo, grouped by area</figcaption>
 </figure>
 
@@ -101,7 +101,7 @@ What was left went straight into triage. Each issue has screenshots, repro steps
 The same fix loop ran on the new batch. The fix for this one is [#5394](https://github.com/Automattic/pocket-casts-ios/pull/5394), an XIB constraint change. The PR has the root cause, the test steps, and the screenshots, and notes that the iPhone before/after screenshots are pixel-identical, which is the check I'd otherwise skip.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Before and after screenshots in a pull request" src="/images/posts/iphone-duo/pr-screenshots.png">
+<img class="NewScreenshot" alt="Before and after screenshots in a pull request" src="/images/posts/iphone-duo/pr-screenshots.png" width="1540" height="1191" loading="lazy" decoding="async">
 <figcaption>Before and after screenshots in the fix for the multi-select actions sheet</figcaption>
 </figure>
 
@@ -114,7 +114,7 @@ Next came regression testing, using the agent skills I'd been building to automa
 Agents drive the app on simulators using a set of test accounts, from Free to one with 150+ podcasts, so scenarios that change data don't step on each other. A second agent with no simulator access then reads the code behind each finding, marks it verified or rejected, and writes down the likely cause before anything gets filed.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="A regression run with agents driving the app on several simulators" src="/images/posts/iphone-duo/qa-run.png">
+<img class="NewScreenshot" alt="A regression run with agents driving the app on several simulators" src="/images/posts/iphone-duo/qa-run.png" width="1712" height="710" loading="lazy" decoding="async">
 <figcaption>A regression run: agents drive the app on several simulators in parallel, then verify the findings</figcaption>
 </figure>
 
@@ -124,7 +124,7 @@ Across all runs, that's now **more than a hundred issues**. Most are relatively 
 {:.ok}
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="A QA report for a full regression run" src="/images/posts/iphone-duo/qa-report.png">
+<img class="NewScreenshot" alt="A QA report for a full regression run" src="/images/posts/iphone-duo/qa-report.png" width="1310" height="770" loading="lazy" decoding="async">
 <figcaption>The new QA reporter</figcaption>
 </figure>
 
@@ -132,7 +132,7 @@ I'm also incorporating video walkthroughs everywhere, including bug reports and 
 
 <figure class="PostFigure">
 <div class="BlogVideo NewScreenshot">
-<video controls muted playsinline preload="auto">
+<video controls muted playsinline preload="auto" width="1162" height="960">
 	<source src="{{ site.url }}/videos/iphone-duo/qa-walkthrough.mp4" type="video/mp4">
 </video>
 </div>
