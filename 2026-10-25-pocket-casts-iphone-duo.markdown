@@ -22,7 +22,7 @@ Take the "Edit" button in one of the Pocket Casts sheets. On iPhone Duo, it land
 
 We updated the app for iPhone Duo, and, of course, the first step was making the tab bar, toolbars, and native navigation work correctly, folded and unfolded.
 
-<figure class="PostFigure">
+<figure class="PostFigure PostFigure--wide">
 <img class="NewScreenshot" alt="Podcasts on iPhone Duo" src="/images/posts/iphone-duo/podcasts.png" width="1540" height="1182">
 <figcaption>The Podcasts tab with the tab bar on the side</figcaption>
 </figure>
