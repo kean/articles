@@ -14,9 +14,9 @@ image:
   height: 1280
 ---
 
-A few months ago, I switched to the Pocket Casts team, and it's been a busy start. I've done a lot of work modernizing the app, including adopting [Liquid Glass](https://blog.pocketcasts.com/2026/06/11/liquid-glass/), helped with the new [Apple TV app](https://blog.pocketcasts.com/2026/07/27/pocket-casts-on-the-big-screen/), and shipped hundreds of fixes along the way. So when Apple announced iPhone Duo, I was excited to add support for it, even though we had very limited time.
+When Apple announced iPhone Duo, we had a couple of weeks to get Pocket Casts ready for the launch, no device to test on, and no native apps to look at for examples – no pressure. I'd switched to the team a few months earlier, and after adopting [Liquid Glass](https://blog.pocketcasts.com/2026/06/11/liquid-glass/) and helping with the new [Apple TV app](https://blog.pocketcasts.com/2026/07/27/pocket-casts-on-the-big-screen/), I was excited to take it on.
 
-The biggest surprise was the horizontal safe area. There were issues with it everywhere, and Pocket Casts has hundreds of screens, sheets, and alerts. How do you find all of them, fix them, and check everything again after every round of fixes, in time for the launch? Here's what we shipped, and then how I got there with the help of agents.
+The biggest surprise was the horizontal safe area. On Duo, the status bar is a pill on the right edge of the screen, and when you unfold, the tab bar and toolbars stack vertically under it, so apps have to keep clear of the right edge. There were issues with it everywhere, and Pocket Casts has hundreds of screens, sheets, and alerts. How do you find all of them, fix them, and check everything again after every round of fixes, in time for the launch? Here's what we shipped, and then how I got there with the help of agents.
 
 ## What's New
 
@@ -24,7 +24,7 @@ We updated the app for iPhone Duo, and, of course, the first step was making the
 
 <figure class="PostFigure PostFigure--wide">
 <img class="NewScreenshot" alt="Podcasts on iPhone Duo" src="/images/posts/iphone-duo/podcasts.png" width="1540" height="1182">
-<figcaption>The Podcasts tab with the tab bar on the side</figcaption>
+<figcaption>The Podcasts tab, with the status pill and the tab bar on the right edge</figcaption>
 </figure>
 
 The main changes are in the mini player and Now Playing. Once you unfold, the mini player has room for skip buttons and a progress bar, so you can control playback without opening the full player.
@@ -107,20 +107,32 @@ Overall, counting the ones I found myself, the agents and I logged **56 issues**
 
 ## Regression Testing
 
-Then came regression testing, which I'd been slowly handing over to agents. The suite had 77 scenarios, from account and deep links to sync and Up Next[^3]. Each is a list of steps and expectations in plain language, but agents use their own judgment to flag anything that looks off, so it covers far more ground than an XCUITest suite.
+Then came regression testing, which I'd been slowly handing over to agents. The suite had 77 scenarios, from account and deep links to sync and Up Next[^3]. Each one lists what must be true in plain language, not the steps to check it, so it reads more like acceptance criteria than a test:
 
-It's still experimental, but I find agents drive tests end to end with a higher success rate. They make decisions on the spot and reason across test cases. It's not free, though: runs are slower, cost tokens, and aren't deterministic, which is both a pro and a con.
+```markdown
+## Reorder, remove and clear
+setup: `--fixture up-next:5`
 
-A second agent then reads the code behind each finding, verifies or rejects it, and notes the likely cause before anything gets filed.
+- Dragging a row by its handle moves it, and the order survives relaunch
+- Swiping to remove takes the episode out without playing or archiving it
+- Clear asks for confirmation, then shows the empty state
+- Settings > Up Next History restores the cleared queue
+```
+
+The agent works out the steps itself, and the `setup` line fills Up Next with five episodes first, so it doesn't spend time getting there. Agents also flag anything else that looks off along the way, so the suite covers far more ground than XCUITests. A second agent then reads the code behind each finding, verifies or rejects it, and notes the likely cause before anything gets filed.
 
 <figure class="PostFigure">
 <img class="NewScreenshot" alt="A regression run with agents driving the app on several simulators" src="/images/posts/iphone-duo/qa-run.png" width="1712" height="710" loading="lazy" decoding="async">
 <figcaption>A regression run: agents drive the app on several simulators in parallel, then verify the findings</figcaption>
 </figure>
 
-Across all runs, that's now **more than a hundred issues**. Most are minor, but papercuts hurt, and I've already fixed a bunch of them.
+It's still experimental, but I find agents drive tests end to end with a higher success rate. They make decisions on the spot and reason across test cases. It's not free, though: runs are slower, cost tokens, and aren't deterministic, which is both a pro and a con.
+
+## Before Every Release
 
 I now run the suite before every release. It packs about 24 hours of testing into a few hours[^4] and gives me tremendous confidence that every flow, even the obscure ones, works.
+
+Across all runs, it has found **more than a hundred issues**. Most are minor, but papercuts hurt, and I've already fixed a bunch of them.
 
 Since Duo, the suite has gotten faster and gained many more scenarios and a dedicated reporter.
 
@@ -152,7 +164,7 @@ With the broken screens out of the way, there's a lot more coming to Pocket Cast
 
 My first impression was that it's primarily a great iPad that folds into your pocket, with some interesting ideas about navigation. I was less convinced by the iPhone experience on the outer screen, given its size and weight, but I'm curious to see where Apple takes it.
 
-As a developer, though, it was exciting to work on Duo, come up with new solutions together with the design team, and try new techniques to build for it.
+As a developer, though, it was exciting to work on Duo, come up with new solutions together with the design team, and try new techniques to build for it. The lesson I'll take to the next project is simpler: look at every screen. That used to be too expensive to even try, so you'd test the main flows and hope for the rest. Now agents do it, and they can do it again after every round of fixes.
 
 [^1]: If you use a different agent, `xcrun agent skills export` gives you the skill as files.
 
