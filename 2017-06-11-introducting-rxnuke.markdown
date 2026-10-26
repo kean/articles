@@ -6,6 +6,7 @@ date: 2017-06-11 21:00:00 +0300
 category: programming
 tags: [rxswift, nuke]
 permalink: /post/introducing-rxnuke
+slug: introducing-rxnuke
 uuid: 687bb115-e04c-4c6f-9990-786793ba8685
 ---
 

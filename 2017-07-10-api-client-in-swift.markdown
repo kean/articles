@@ -6,6 +6,7 @@ date: 2017-07-10 9:00:00 +0300
 category: programming
 tags: [networking, rxswift]
 permalink: /post/api-client
+slug: api-client
 uuid: 543b6221-e3ec-4636-be57-6e6eb501e1f6
 ---
 

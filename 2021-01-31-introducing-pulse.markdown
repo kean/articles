@@ -8,6 +8,7 @@ category: programming
 tags: [swiftui, pulse]
 series: pulse
 permalink: /post/pulse
+slug: pulse
 uuid: a66c8ed5-555b-4755-a16a-45b7d71b9958
 ---
 

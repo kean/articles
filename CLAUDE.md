@@ -18,6 +18,7 @@ All articles use Jekyll-style YAML front matter with the following fields:
 - `tags`: YAML list of 1–4 topics (e.g., `[swiftui, macos]`), never a comma-separated string, which Jekyll splits on spaces. Each tag must match a file in the site repo's `_topics/`: `ai`, `architecture`, `computer-science`, `concurrency`, `ios`, `macos`, `networking`, `nuke`, `performance`, `persistence`, `pulse`, `rxswift`, `swift`, `swiftui`, `testing`, `tools`, `uikit`
 - `series`: Optional, for parts of a multi-part series (`regex`, `vpn`, `pulse`), defined in the site repo's `_data/series.yml`. Parts are ordered by date
 - `permalink`: URL path (e.g., "/post/nuke-docs")
+- `slug`: Only when the filename slug differs from the last part of the `permalink`; set it to that last part (e.g., `learn-ios` for `/post/learn-ios`). The feed builds each entry's ID from the slug, so a mismatch gives the entry an ID that isn't its URL
 - `uuid`: Unique identifier
 - `mastodon`: Optional Mastodon post URL
 

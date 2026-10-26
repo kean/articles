@@ -6,6 +6,7 @@ date: 2017-12-01 18:00:00 +0300
 category: programming
 tags: [swift]
 permalink: /post/naive-date-time
+slug: naive-date-time
 uuid: 60d37e50-dd6b-40e5-bfa9-c22e21a7a5a9
 ---
 

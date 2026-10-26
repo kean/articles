@@ -9,6 +9,7 @@ category: programming
 tags: [networking, concurrency]
 favorite: true
 permalink: /post/new-api-client
+slug: new-api-client
 uuid: 681de9e6-02c7-4e55-ab73-630625edac63
 image:
   path: /images/posts/api-client/cover.png

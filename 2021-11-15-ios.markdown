@@ -7,6 +7,7 @@ date: 2021-11-15 09:00:00 -0500
 category: programming
 tags: [ios]
 permalink: /post/learn-ios
+slug: learn-ios
 uuid: a074c914-6d07-4b0a-8911-667e6f0cc76d
 ---
 

@@ -6,6 +6,7 @@ date: 2017-06-06 10:00:00 +0300
 category: programming
 tags: [rxswift, testing]
 permalink: /post/rxswift-testing
+slug: rxswift-testing
 redirect_from:
     - /blog/rxswift-testing
     - /rxswift-testing

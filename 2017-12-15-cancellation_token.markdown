@@ -7,6 +7,7 @@ last_modified_at: 2021-11-22
 category: programming
 tags: [concurrency]
 permalink: /post/cancellation-token
+slug: cancellation-token
 uuid: f6bfea67-880f-462f-a08c-5b065a70f573
 ---
 

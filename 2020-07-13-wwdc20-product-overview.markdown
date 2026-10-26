@@ -7,6 +7,7 @@ date: 2020-07-13 9:00:00 -0400
 category: programming
 tags: [ios]
 permalink: /post/wwdc20-summary
+slug: wwdc20-summary
 uuid: 28a04491-8aee-4483-9c23-bc4e05955e15
 ---
 

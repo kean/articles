@@ -7,6 +7,7 @@ category: programming
 tags: [computer-science]
 series: regex
 permalink: /post/lets-build-regex
+slug: lets-build-regex
 uuid: ea30401f-f344-4dcc-830c-d513e2f52193
 favorite: true
 ---
