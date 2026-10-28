@@ -18,8 +18,6 @@ Ever wondered how regex works under the hood? How does it understand an incantat
 
 Now you might be wondering, why would you want to do that? Well, turns out, this is a fantastic learning opportunity. Parsers, compilers, finite automaton, graphs, trees, extended grapheme clusters - it has everything! Last but not least, you get a chance to learn regex.
 
-{% include ad-hor.html %}
-
 ## Regular Expressions
 
 Regular expression patterns can be as simple as "[`https?`](https://regex101.com/r/z6Lypq/1)", where "`?`" is a [Zero or One Quantifier](https://docs.microsoft.com/en-us/dotnet/standard/base-types/quantifiers-in-regular-expressions) and which matches either `http` or `https`. Or as complex as [this](https://regex101.com/r/95Clhd/1), which validates an email address, I think:

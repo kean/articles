@@ -10,8 +10,6 @@ uuid: 39da1edc-0108-426b-8859-b836a1a1d125
 published: false
 ---
 
-{% include ad-hor.html %}
-
 {% include references-start.html %}
 
 - https://developer.apple.com/documentation/network/building_a_custom_peer-to-peer_protocol

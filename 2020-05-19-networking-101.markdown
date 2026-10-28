@@ -14,8 +14,6 @@ minutes: 10
 
 Before jumping into the Network Extension framework, you need to know a bit of theory about VPN and networking in general. If you are already familiar with networking and VPN, feel free to skip this article. If you are not, this article has a quick overview/refresher on the network protocols, it outlines the problem that VPN is aimed to solve, and then analyzes one of the existing VPN protocols.
 
-{% include ad-hor.html %}
-
 > **Prerequisites**
 >
 > There are no prerequisites for going through this article, but the general knowledge of the networking protocols is going to be a plus. This article makes heavy use of [Wireshark](https://www.wireshark.org). If you are not familiar with this tool, I would suggest installing it (it is free), and inspecting one or two [sample captures](https://wiki.wireshark.org/SampleCaptures).

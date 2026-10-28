@@ -11,8 +11,6 @@ uuid: b1b94ee1-c736-4e89-85a9-69cfe5ab6880
 
 Inspired by the Swift core team's recent activity in the [proposal to add `Result<Value, Error>`](https://github.com/apple/swift-evolution/blob/master/proposals/0235-add-result.md) to the Swift Standard Library, I started working on a new version of [Future](https://github.com/kean/Future) – a `Future` implementation. The initial goal was to provide a small and simple `Future<Value, Error>` class with typed errors, but eventually, I challenged myself to code the `Future` that would feel like a part of the Swift Standard Library. For me, that meant building an idiomatic Swift implementation with a streamlined functional API and good performance.
 
-{% include ad-hor.html %}
-
 ## Future
 
 A future represents a result of computation which may be available now, or in the future, or never. Essentially, a future is an object to which you attach callbacks, instead of passing them into a function that performs a computation.

@@ -19,8 +19,6 @@ Consuming a web service API was a major part of almost all the projects that I w
 - The next major project I've worked on used [AFNetworking](https://github.com/AFNetworking/AFNetworking) – a new modern framework at the time. Later, we wrapped the API calls using our in-house [Promises/A+](https://promisesaplus.com) to make things like chaining requests easier. This was well before [PromiseKit](https://github.com/mxcl/PromiseKit) first appeared on GitHub. The JSON responses were parsed manually with a help of a simple [safe_cast](https://gist.github.com/kean/3600ad35c818a6b28caa3e0fa026d478) macro.
 - At my previous project, we had a custom API layer written on top of `NSURLSession` (no `AFNetworking`). It had some advanced stuff in it such as [batch HTTP requests](https://tools.ietf.org/id/draft-snell-http-batch-00.html#http-batch). We used a simple in-house JSON framework similar in terms of features to one of the first Swift JSON wrappers [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
 
-{% include ad-hor.html %}
-
 Each of these approaches had its strengths and weaknesses. And in this article, I'd like to share my latest networking stack. It has a small yet powerful API, type-safe authorization scopes, endpoints modeled in a declarative and concise way, and support for OAuth 2 "refresh access token" flow. It takes full advantage of the open-source frameworks to achieve all of these powerful features.
 
 > The code from the post is [available here](https://gist.github.com/kean/64b9fc0963fd430594fdb3eb848bccf3) (requires Swift 4).

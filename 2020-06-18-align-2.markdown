@@ -16,8 +16,6 @@ uuid: 63031829-f890-4724-895e-57632ef67870
 
 This weekend, I decided to revisit one of my early frameworks - [Align](https://github.com/kean/Align). I thought it had some good ideas behind it, but there was still a lot of room for improvement. I ended up re-engineering major parts of it, even taking some inspiration from SwiftUI. I'm thrilled with the results and I can't wait to show it to you now.
 
-{% include ad-hor.html %}
-
 ## Introduction
 
 The core idea is still the same: introducing a better, safer, more ergonomic version of Auto Layout anchors. Anchors are great, but they have some unfortunate design decisions:

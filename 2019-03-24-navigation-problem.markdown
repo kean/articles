@@ -15,8 +15,6 @@ There seems to be a reason why this happens. Coordinators often break separation
 
 A Coordinator would typically end up creating new modules (Factory), manipulating data (Model), deciding what to do display based on that data (Controller), and pushing content on screen using UIKit objects (View). Model, View, Controller, Model, View... are you getting this? These are not three separate components, this is one component, and this is the problem.
 
-{% include ad-hor.html %}
-
 ## MVC
 
 Any MVC-based architecture already provides you with the tools to manage navigation. In this article I'm going to use MVP as an example. But the same principles can be applied to other patterns like MVC and MVVM.

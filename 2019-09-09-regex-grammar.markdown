@@ -12,8 +12,6 @@ uuid: 733fbc2a-7f42-4bad-b8a9-026733e110fd
 
 Before writing a parser for a regular expression *language*, one needs to define the rules of the language, or *grammar*. When you learn a new (programming) language, like [Swift](https://docs.swift.org/swift-book/LanguageGuide/TheBasics.html) or [Regex](https://docs.microsoft.com/en-us/dotnet/standard/base-types/regular-expression-language-quick-reference), you typically go through a guide written in a natural language like English. This is a great way to learn a language, but it's not the optimal way to describe it.
 
-{% include ad-hor.html %}
-
 > **Note.** This article outlines some of the theory behind languages and grammars. If that's not what you are interested in, you can skip it and jump straight into [parsing]({{ site.url }}/post/regex-parser). I would still recommend revisiting this article later.
 
 The syntaxes of most programming languages in use today are defined through [*formal grammars*](https://en.wikipedia.org/wiki/Formal_grammar). If you've opened the [Swift Language Reference](https://docs.swift.org/swift-book/ReferenceManual/AboutTheLanguageReference.html) before, you've probably seen the blocks like this:

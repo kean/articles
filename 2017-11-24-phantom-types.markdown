@@ -17,8 +17,6 @@ With phantom types, you can add extra information to your types and use it to re
 - [Authentication Scopes](#authentication-scopes)
 - [Layout Anchors](#layout-anchors)
 
-{% include ad-hor.html %}
-
 ## Id Type
 
 The `Id` type represents an identifier of a model entity. It gets parametrized with an `Entity` which is used by the compiler when comparing different types of `Id`s. This way the compiler prevents you from accidentally mixing up different ids. Essentially each entity has its own type of id (e.g. `Id<User>`, `Id<Image>`, etc).

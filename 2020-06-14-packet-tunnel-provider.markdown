@@ -13,8 +13,6 @@ uuid: d3d4d400-70f3-40a1-a8d3-bcfe9df881f8
 
  With most of the groundwork covered in ["How Does VPN Work?"](/post/networking-101), let's go ahead and design a protocol.
 
-{% include ad-hor.html %}
-
 ## Designing a Protocol
 
 I want the protocol to be functional, but keep it as simple as possible. The goal is not to design a viable VPN protocol, but to demonstrate [Network Extension](https://developer.apple.com/documentation/networkextension) framework.

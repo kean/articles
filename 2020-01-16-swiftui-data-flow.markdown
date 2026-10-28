@@ -34,8 +34,6 @@ SwiftUI offers a declarative approach to managing data. As you compose a hierarc
 
 SwiftUI provides a rich set of tools for propagating data changes across your app. Let's go over all of them, see what they do and when it's best to use them. I'm even going to speculate a bit about how they are implemented under the hood.
 
-{% include ad-hor.html %}
-
 ## @Published
 
 The first and most basic one is [`@Published`](https://developer.apple.com/documentation/combine/published). 

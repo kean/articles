@@ -14,8 +14,6 @@ The parser, introduced in the [previous article]({{ site.url }}/post/regex-parse
 
 Fortunately, there are very few concepts that you need to know, most of which we already covered in the previous articles. In this article, you will start seeing all the pieces coming together. Are you excited?
 
-{% include ad-hor.html %}
-
 ## Regular Languages
 
 In [Regex, Part 1: Grammar]({{ site.url }}/post/regex-grammar) I briefly mentioned [Chomsky Hierarchy](https://en.wikipedia.org/wiki/Chomsky_hierarchy) of grammars. In [Regex, Part 2: Parser]({{ site.url }}/post/regex-parser) we implemented a parser which recognizes a regular expression language. This is a Type-2 language (or *context-free language*). Chomsky Hierarchy states that you need a [Pushdown Automaton](https://en.wikipedia.org/wiki/Pushdown_automaton) to recognize it. This is essentially what we implemented using Parser Combinators, but without mentioning it explicitly (there was already too much theory to go through!).

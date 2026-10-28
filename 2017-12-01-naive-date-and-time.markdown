@@ -12,8 +12,6 @@ uuid: 60d37e50-dd6b-40e5-bfa9-c22e21a7a5a9
 
 Foundation offers [great APIs](https://developer.apple.com/documentation/foundation/dates_and_times) for manipulating dates with time zones (e.g. working with something like `2017-09-29T15:00:00+0300`). However, sometimes it might be a bit frustrating when you just need a **naive** date or time.
 
-{% include ad-hor.html %}
-
 So what exactly is a naive date or a naive time? They are called "naive" because they don't have a time zone associated with them. For example:
 
 ```swift

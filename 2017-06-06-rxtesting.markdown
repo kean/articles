@@ -17,8 +17,6 @@ One of my favorite features of RxSwift is its testing infrastructure, RxTest. It
 
 > Requirements: Xcode 8.3, Swift 3.1, RxSwift 3.5
 
-{% include ad-hor.html %}
-
 ## Paging
 
 One of the main components responsible for paging in our app is `PagingScrollViewModel`.

@@ -18,8 +18,6 @@ Proponents of unit testing claim that tests help you understand the requirements
 
 Unfortunately, it's incredibly easy to write poorly designed tests that don't test anything important, which are slow to run, which are hard to maintain, and which make refactoring harder, not easier. It is possible to have negative value tests. Writing tests is easy. How to write good ones?
 
-{% include ad-hor.html %}
-
 ## Code Coverage
 
 First, we need to set the right goals. For example, achieving 100% code coverage. An optimistic goal. Easily measurable. That's what we are going to optimize for, right? No.

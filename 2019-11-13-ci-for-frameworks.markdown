@@ -16,8 +16,6 @@ Working on an open-source framework poses a different set of challenges compared
 
 This is a story of how I went from manually testing my frameworks to having hundreds of unit tests and multiple automatic checks running on every change, and how you can implement a similar setup in your project.
 
-{% include ad-hor.html %}
-
 <img alt="Travis CI screenshot demonstrating multiple jobs" src="{{ site.url }}/images/posts/ci-for-oss/travis-ci.png">
 
 ## What is CI

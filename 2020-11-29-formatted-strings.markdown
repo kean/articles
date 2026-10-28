@@ -16,8 +16,6 @@ How do you localize a text label that has rich formatting?
 
 Unfortunately, there are not a lot of built-in options in the Apple SDKs, so people often end up using sub-optimal approaches.
 
-{% include ad-hor.html %}
-
 ## Poor Practices
 
 > <h3 style="margin-top: 15px;">Concatenated Strings</h3>

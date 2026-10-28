@@ -16,8 +16,6 @@ When dealing with something as critical you want to keep things simple. With Cor
 
 **Prerequisite:** [Core Data Model Versioning and Data Migration Programming Guide](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreDataVersioning/Articles/Introduction.html#//apple_ref/doc/uid/TP40004399-CH1-SW1)
 
-{% include ad-hor.html %}
-
 > ## TL;DR
 - Core Data doesn't support *progressive migrations* out of the box (via some boolean option)
 - Existing libraries that do are often hard and unsafe to use

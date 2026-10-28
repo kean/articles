@@ -15,8 +15,6 @@ Everything about SwiftUI is new. And the layout system is no exception. SwiftUI 
 
 I have always been fascinated by the layout systems. I built an [open-source UIStackView replacement]({{ site.url }}/post/lets-build-uistackview), designed a [convenience API]({{ site.url }}/post/align) on top of Auto Layout (granted, many people did). I also have experience working with the layout systems on the web, including [Flexbox](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox). I can't be more excited to dig deep into the SwiftUI layout system to see what it has to offer.
 
-{% include ad-hor.html %}
-
 ## Layout Basics
 
 Let's start with the most basic "Hello World" example.

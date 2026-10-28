@@ -15,8 +15,6 @@ Creating views in code has a lot of benefits - you get to reuse styles, create a
 
 In this post, I'd like to share some of the practices that I use when writing view code. It is nothing groundbreaking, however, there might be some things worth taking away.
 
-{% include ad-hor.html %}
-
 ## Example
 
 Let's jump straight into the code. Here's an example of a view that displays a user (full code available in a <a href="{{ site.url }}/playgrounds/creating_views.playground.zip">playground</a>):

@@ -14,8 +14,6 @@ The key for solving any problem is decomposition. [The grammar]({{ site.url }}/i
 
 One of the options is to use [parser generators](https://en.wikipedia.org/wiki/Comparison_of_parser_generators). This is a great option and I will probably revisit it in the future posts. But this one, it's about something else.
 
-{% include ad-hor.html %}
-
 ## Parsing Ranges
 
 Let's start with a relatively simple non-terminal symbol - [Range Quantifier](https://docs.microsoft.com/en-us/dotnet/standard/base-types/quantifiers-in-regular-expressions). There are three versions of range quantifiers:

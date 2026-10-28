@@ -14,8 +14,6 @@ uuid: 00e90200-1ef8-479e-aea7-62b98a148c2e
 
 If you'd like to learn about *why it exists*, *who is it for*, and why it might be the best tool for you, please continue. The best place to start using it is in a Playground [available in the project](https://github.com/kean/Align). It's going to feel instantly familiar!
 
-{% include ad-hor.html %}
-
 ## Why
 
 The primary motivation for releasing Align was [Chris Eidhof's article](http://chris.eidhof.nl/post/micro-autolayout-dsl/) in which he shares his concerns about the current state of Auto Layout tools in Swift. When I was deciding how to work with Auto Layout in my recent Swift project I came to the same conclusions as Chris did. Among the tools that I've investigated (and took the best ideas from) were:

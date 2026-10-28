@@ -18,8 +18,6 @@ uuid: 3f0ab615-9905-4fb9-9480-0ffe1952422a
 
 [Nuke 9](https://github.com/kean/Nuke/releases/tag/9.0.0) is a culmination of *five years* of development. The project started soon after Swift release, as a continuation of [DFImageManager](https://github.com/kean/DFImageManager), an Objective-C image loading framework[^1]. I put a lot of effort and care into each and every iteration of Nuke, but Nuke 9 feels special.
 
-{% include ad-hor.html %}
-
 Nuke 9 is packed with improvements across the board: [SwiftUI integration](https://kean-docs.github.io/nukeui/documentation/nukeui/fetchimage), [Combine support](https://web.archive.org/web/20201002130815/https://github.com/kean/ImagePublisher), new [builder API](https://web.archive.org/web/20201208154907/https://github.com/kean/ImageTaskBuilder), fantastic [new API reference](https://web.archive.org/web/20210206002335/https://kean-org.github.io/docs/nuke/reference/9.0.0/) generated using [SwiftDoc](https://github.com/SwiftDocOrg/swift-doc), completely reworked [documentation](https://github.com/kean/Nuke/tree/master), support for more [image formats](https://github.com/kean/Nuke/blob/9.0.0-rc.2/Documentation/Guides/image-formats.md), new advanced versions of `ImageProcessing` and `ImageDecoding` protocols, and more. However, in this post, I would like to talk about something else.
 
 What makes Nuke truly stand out? The answer is **performance**. Every feature in Nuke is engineered with performance in mind. The goal of the entire framework is to display images to the user as quickly as possible. There have been a lot of performance-related changes introduced in Nuke over the years, and I would like to give an overview of some of them.

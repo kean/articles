@@ -14,8 +14,6 @@ minutes: 10
 
 Every [App Extension](https://developer.apple.com/app-extensions/) requires an app, and Network Extensions are no exception. Before we jump into the nitty-gritty details of the packet tunnel itself, let me walk you through the app. 
 
-{% include ad-hor.html %}
-
 ## Introduction
 
 The app is not just a container for an extension. It is also going to serve as a way to install and manage the VPN configuration. Let's call our service **BestVPN**.

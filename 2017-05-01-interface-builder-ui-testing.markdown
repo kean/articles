@@ -15,8 +15,6 @@ The recent changes to <a href='https://developer.apple.com/xcode/interface-build
 
 <img alt="Xcode screenshot demonstrating UI previews" src="{{ site.url }}/images/ib_designable/ib_screen_01.png" class="Screenshot">
 
-{% include ad-hor.html %}
-
 ## Using Interface Builder
 
 There are two major things that you can do in Interface Builder to get your job done: layout and styles.

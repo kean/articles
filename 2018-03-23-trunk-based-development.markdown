@@ -14,8 +14,6 @@ Selecting a good branching strategy is an important step for any team, especiall
 
 Before we begin, let's quickly review what *continuous integration* is. It often gets associated with a set of *tools* which are used to build and test projects on continuous basis. But we should not forget that it is actually a *practice* which requires developers to apply the ideas behind it:
 
-{% include ad-hor.html %}
-
 > Continuous Integration (CI) is a development practice that requires developers to integrate code into a shared repository several times a day. Each check-in is then verified by an automated build, allowing teams to detect problems early.
 >
 > *- ToughtWorks. Continuous Integration.*

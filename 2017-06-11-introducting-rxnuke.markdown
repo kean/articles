@@ -14,8 +14,6 @@ I'm excited to introduce a new addition to Nuke - [RxNuke](https://github.com/ke
 
 <img alt="RxNuke logo" src="{{ site.url }}/images/posts/introducing_rxnuke_01.png" class="Screenshot">
 
-{% include ad-hor.html %}
-
 Nuke's design has always prioritized simplicity, reliability, and performance. The core framework has a small API surface and only contains a minimum number of features to build upon. This is great for many reasons, but unfortunately, that left a gap between what Nuke supports out of the box and what users need. I received many requests about particular use cases like these:
 
 > - "show stale response while validating the image"

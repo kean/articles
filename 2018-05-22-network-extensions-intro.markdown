@@ -16,8 +16,6 @@ The Network Extension is an expansive framework. It provides a set of APIs that 
 
 This is **the first post in a series** about the Network Extension framework. I'm going to start with a high-level overview, dive deep into some of the most interesting extensions and explore a couple of apps that already take the powerful features provided by this fantastic framework.
 
-{% include ad-hor.html %}
-
 ## Prerequisites
 
 It's best to read this series when you're already familiar with the basics of network protocols. It should be enough to understand the basics of IP, TCP and UDP, and a bit about VPN. There is a lot of information available online. Regardless of whether you go through a tutorial or [an RFC](https://tools.ietf.org/html/rfc791), I would recommend installing [Wireshark](https://www.wireshark.org) and inspecting one or two [sample captures](https://wiki.wireshark.org/SampleCaptures).

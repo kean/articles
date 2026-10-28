@@ -15,8 +15,6 @@ Previously on [Let's Build a Regex Engine]({{ site.url }}/post/lets-build-regex)
 > Matcher is still a work in progress. I'm sure I got at least some of it wrong. I'm confident in the parser and the compiler, but there doesn't seem to be a single best matching algorithm – they all seem to address different problems in different ways. In this post, I explore two algorithms that are, to the very least, simple and clear from the CS standpoint. They are not necessarily going to be the best in practice.
 {:.warning}
 
-{% include ad-hor.html %}
-
 ## Matching
 
 What do we mean when we say "match"?

@@ -13,8 +13,6 @@ Resumable downloads were introduced in [Nuke 7](https://github.com/kean/Nuke/rel
 
 The resumable downloads are built using [HTTP range requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests). There are at least two ways to implement range requests with `URLSession`. The first one is to use `URLSessionDownloadTask` which has resumable downloads built-in, the second is to use `URLSessionDataTask` and handle HTTP range requests manually. I'm going to cover both in this article.
 
-{% include ad-hor.html %}
-
 ## URLSession Download Tasks
 
 [`URLSessionDownloadTask`](https://developer.apple.com/documentation/foundation/urlsessiondownloadtask) handles all the intricacies of HTTP range requests for you. Let's quickly go through how to use `URLSessionDownloadTasks`.

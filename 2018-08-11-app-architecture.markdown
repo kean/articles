@@ -13,8 +13,6 @@ uuid: e0b6da16-7dc6-49d0-8ea5-e68c3500b7d2
 
 From the day when iOS SDK was introduced, we've seen many changes in the way we develop software for iPhones. One of the hot topics is always app architecture. We've seen quite a few over the years. I think it's a good time to put them in some context and try to see what the future of iOS development might look like.
 
-{% include ad-hor.html %}
-
 ## The Past
 
 Let's go back to the biblical times, the year 2008. A guy named Scott Forstall goes on stage in Apple Town Hall, Cupertino and [unveils iOS SDK](https://www.youtube.com/watch?v=2dODtKBl8L4) to the world. One of the public classes introduced is `UIViewController` and the official app architecture to be used is MVC.

@@ -14,8 +14,6 @@ uuid: 4f4b6cb2-192f-4a1c-bafb-f1e84baee96d
 
 It's been two years since [Network Extension, Part 1 - Introduction](/post/network-extensions-intro). You've been asking for Part 2. Here it finally is.
 
-{% include ad-hor.html %}
-
 ## VPN
 
 What is VPN? Originally, a VPN (Virtual Private Network) was designed to establish secure connections between a computer and a protected or private corporate network, using an otherwise insecure public network (such as the Internet). In recent years, VPNs also grew in popularity in the consumer market as a way to stay secure and anonymous when going online, and also enjoying unrestricted network access by hiding the source of traffic.

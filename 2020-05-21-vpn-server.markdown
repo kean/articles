@@ -10,8 +10,6 @@ uuid: 9ad44da3-9386-4be8-8413-3cdc125e9b4c
 published: false
 ---
 
-<!-- {% include ad-hor.html %} -->
-
 <!-- > This is a simplified sample, it doesn't follow the security and performance best practices.
 {:.warning}
  -->

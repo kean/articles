@@ -17,8 +17,6 @@ The requirements are fairly straightforward. Let's say you have an observable se
 - Use exponential backoff or other delay options
 - Retry immediately when a network connection is re-established
 
-{% include ad-hor.html %}
-
 This sounds like a tall order for a single `retryWhen` operator, but it's actually flexible enough to support all of those requirements. In this post, I'm going to create a new custom `retry` operator which would wrap this entire logic.
 
 > The complete implementation is available [here](https://gist.github.com/kean/e2bc38106d19c249c04162714e7be321).

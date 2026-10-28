@@ -15,8 +15,6 @@ uuid: 28a04491-8aee-4483-9c23-bc4e05955e15
 
 Design and product teams are often focused on the product and are not necessarily keen on following the latest platform technology updates. Developers, on the other hand, are primarily focused on technical sessions. There is often no one directly responsible for platform evolution. This means that the new platform features often end up not being supported for months and years.
 
-{% include ad-hor.html %}
-
 It takes a special kind of geek to follow every little platform update, both from a developer and the design perspective. Fortunately, I am this geek. I watched the videos and prepared a <a href="/assets/wwdc20-summary.key.zip"><strong>WWDC20 Summary</strong></a> (iPhone and iPad only) to make it easy to communicate all of the latest platform updates to your product and design teams.
 
 <a href="/assets/wwdc20-summary.key.zip">

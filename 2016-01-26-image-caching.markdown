@@ -16,8 +16,6 @@ Caching is a great way to improve application performance and end-user experienc
 
 Why HTTP cache? It's an industry standard that fits the needs of most users. HTTP provides all kinds of tools for caching and chances are that your server already supports it.
 
-{% include ad-hor.html %}
-
 In addition to on-disk cache, it's imperative to have a separate in-memory cache for fast access to decompressed images that are ready for display.
 
 *This guide focuses on images, but it applies to the other areas too. Its purpose is to answer some of the common questions about caching, and to provide references to more comprehensive sources.*
