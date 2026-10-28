@@ -21,8 +21,8 @@ Well, not like Carbon. Don't be [so dramatic](https://www.youtube.com/watch?v=Cl
 
 More like [Core Foundation](https://developer.apple.com/documentation/corefoundation). It's still there behind the scenes, but programmers use high-level Objective-C and Swift wrappers from Foundation. If something is missing, you can call an underlying C API. The relation between SwiftUI and AppKit is similar, for now[^6].
 
-<img alt="Pulse for macOS, written entirely in SwiftUI: a sidebar with filters, a list of log messages, and the metrics of a selected network request" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/cover-macos.png">
-<!-- <img alt="Pulse for macOS showing the console, a selected network request, and its metrics" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/03-macos-final.png"> -->
+<img alt="Pulse for macOS, written entirely in SwiftUI: a sidebar with filters, a list of log messages, and the metrics of a selected network request" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/cover-macos.webp">
+<!-- <img alt="Pulse for macOS showing the console, a selected network request, and its metrics" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/03-macos-final.webp"> -->
 
 This is a native [macOS app](https://github.com/kean/Pulse) written entirely in SwiftUI, from `@main` to bottom. Not a prototype, not a toy. A full-featured app. The intention is to deliver the best macOS experience possible.
 
@@ -134,7 +134,7 @@ private func toggleSidebar() {
 
 To add a "Toggle Sidebar" shortcut, use [`SidebarCommands`](https://developer.apple.com/documentation/swiftui/sidebarcommands).
 
-<img alt="Pulse View menu with Show Tab Bar, Show All Tabs, Toggle Toolbar, Toggle Sidebar, and Enter Full Screen" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/01-menu-items.png">
+<img alt="Pulse View menu with Show Tab Bar, Show All Tabs, Toggle Toolbar, Toggle Sidebar, and Enter Full Screen" class="NewScreenshot" src="{{ site.url }}/images/posts/macos/01-menu-items.webp">
 
 > If you have a group of items, put them in [`ToolbarItemGroup`](https://developer.apple.com/documentation/swiftui/toolbaritemgroup). This will ensure proper positioning and spacing.
 {:.info}
@@ -393,7 +393,7 @@ If that wasn't enough, here is a dozen more tips.
 - Use [`.keyboardShortcut`](https://developer.apple.com/documentation/swiftui/keyboardshortcut) to add shortcuts for common actions that are _not_ in the app menu. For example, `.keyboardShortcut("f", modifiers: [.shift, .option])`.
 - Use [`.keyboardShortcut(.defaultAction)`](https://developer.apple.com/documentation/swiftui/keyboardshortcut/defaultaction) on a button to make it a default button (will use accent color) and register it for Return (↩) keyboard shortcut. Use [`.cancelAction`](https://developer.apple.com/documentation/swiftui/keyboardshortcut/cancelaction) for Escape.
 - To change your app's accent color, add a new color to your assets catalog and set it as a "Global Accent Color Name" in the build settings. On Big Sur, the system uses your app's accent color by default, but the user can change the accent color to one of the predefined colors. Make sure your app looks great with all of them.
-- Use [`GeometryReader`](https://developer.apple.com/documentation/swiftui/geometryreader) for layouts where SwiftUI layout system doesn't cut it. I used it for [metrics chart]({{ site.url }}/images/posts/macos/02-metrics.png).
+- Use [`GeometryReader`](https://developer.apple.com/documentation/swiftui/geometryreader) for layouts where SwiftUI layout system doesn't cut it. I used it for [metrics chart]({{ site.url }}/images/posts/macos/02-metrics.webp).
 - When adding commands, use [CommandGroupPlacement](https://developer.apple.com/documentation/swiftui/commandgroupplacement) to place items in one of the standard locations. For example, for "Open" command, use [`.newItem`](https://developer.apple.com/documentation/swiftui/commandgroupplacement/newitem).
 - SwiftUI has several built-in command groups, e.g. [`SidebarCommands`](https://developer.apple.com/documentation/swiftui/sidebarcommands), [`ToolbarCommands`](https://developer.apple.com/documentation/swiftui/toolbarcommands), [`TextEditingCommands`](https://developer.apple.com/documentation/swiftui/texteditingcommands), [`TextFormattingCommands`](https://developer.apple.com/documentation/swiftui/textformattingcommands).
 - SwiftUI [layout system](https://kean.blog/post/swiftui-layout-system) and [data flow](https://kean.blog/post/swiftui-data-flow) are the same on macOS and iOS, see the linked posts to learn more. Gotta learn these first.

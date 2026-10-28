@@ -43,13 +43,13 @@ And there are more new fields and sections on the summary page. For example, it 
 
 In addition to tracking individual metrics, Pulse now also analyzes your traffic and presents some key insights in a visual way.
 
-<img class="NewScreenshot" alt="Insights screen" src="{{ site.url }}/images/posts/pulse-2/insights.png">
+<img class="NewScreenshot" alt="Insights screen" src="{{ site.url }}/images/posts/pulse-2/insights.webp">
 
 It'll show you information like the duration of requests, total transfer size, domains, and recent errors and warnings. For example, it'll surface the requests with redirects and show how much time the app lost on them.
 
 The graphs on this screen are powered by [Swift Charts](https://developer.apple.com/documentation/Charts) (iOS 16). This API is not yet released and there will be more charts added to this screen when Xcode 14 goes into production this fall.
 
-<img class="NewScreenshot" alt="Warning about redirects" src="{{ site.url }}/images/posts/pulse-2/redirects.png">
+<img class="NewScreenshot" alt="Warning about redirects" src="{{ site.url }}/images/posts/pulse-2/redirects.webp">
 
 ### Decoding Errors
 
@@ -57,11 +57,11 @@ Unlike regular network proxies, Pulse works directly with `URLSession`. It makes
 
 When you think about network requests from the perspective of an app, you can’t consider a request with failed decoding success. Yet a regular proxy will report 200 OK. There is a new configuration option in `NetworkLogger` to address that called [`isWaitingForDecoding`](https://kean-docs.github.io/pulse/documentation/pulse/networklogger/configuration/iswaitingfordecoding). When enabled, it gives the app control over when to complete the request. If the app reports a decoding error, Pulse will now display it directly in the response body, highlighting the field that produced the error.
 
-<img class="NewScreenshot" alt="File viewer showing a decoding error" src="{{ site.url }}/images/posts/pulse-2/file-view-decoding-errors.png">
+<img class="NewScreenshot" alt="File viewer showing a decoding error" src="{{ site.url }}/images/posts/pulse-2/file-view-decoding-errors.webp">
 
 File viewer now supports more content types: PDF, Query Items, and HTML. There is now basic highlighting for HTML and an option to open it in a browser for preview. The file viewer is now also the default screen you see when you tap on a request, and you can also open it fullscreen.
 
-<img class="NewScreenshot" alt="File viewer showing HTML" src="{{ site.url }}/images/posts/pulse-2/file-view-html.png">
+<img class="NewScreenshot" alt="File viewer showing HTML" src="{{ site.url }}/images/posts/pulse-2/file-view-html.webp">
 
 There are a ton of other minor fixes, tweaks and features across the app and there is no space to cover them. Many of them are thanks to the new APIs added to SwiftUI this year. For example, [custom previews](https://developer.apple.com/documentation/swiftui/view/contextmenu(menuitems:preview:)) for context menus.
 
@@ -77,7 +77,7 @@ Pulse has a history on a Mac. The [initial version](https://kean.blog/images/pos
 
 Pulse Pro is a standalone app and not part of the PulseUI framework, and there was no longer any way to bundle PulseUI into a macOS app that [people asked for](https://github.com/kean/Pulse/issues/82). With version 2.0, PulseUI has a purpose-built macOS view designed to work well when integrated into the existing app. Pulse now also supports remote logging on a Mac, which is easy to enable using the Settings screen.
 
-<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/pulseui-macos.png">
+<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/pulseui-macos.webp">
 
 ## Any Platform
 
@@ -89,7 +89,7 @@ In addition to iOS and macOS, Pulse is, as usual, also available on watchOS and 
 </video>
 </div>
 
-<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/pulse-watchos.png">
+<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/pulse-watchos.webp">
 
 If you are working on a tvOS app, you can also find Pulse useful. It provides the same features as a watchOS app: you can view logs directly on the device and it supports remote logging.
 
@@ -103,7 +103,7 @@ If you are working on a tvOS app, you can also find Pulse useful. It provides th
 
 The [documentation](https://kean-docs.github.io/pulse/documentation/pulse/) for Pulse is rewritten from scratch and generated using [DocC](https://developer.apple.com/documentation/docc). With the addition of Pulse, all my frameworks now use DocC. It's used not just for generating API references, but for articles as well. And most of the types have "extensions" as well as refining the documentation.
 
-<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/docc.png">
+<img class="NewScreenshot" alt="PulseUI on macOS" src="{{ site.url }}/images/posts/pulse-2/docc.webp">
 
 ## Performance
 
@@ -122,7 +122,7 @@ There are a bunch of other small improvements under the hood. For example, I swi
 
 The new store also no longer stores any unstructured data – everything is stored in the database, including task metrics, and can be queried with SQL. You can track exactly how much space Pulse is taking on the new Store Details screen.
 
-<img class="NewScreenshot" alt="Store details" src="{{ site.url }}/images/posts/pulse-2/store-details.png">
+<img class="NewScreenshot" alt="Store details" src="{{ site.url }}/images/posts/pulse-2/store-details.webp">
 
 ### Optimized for Images
 
@@ -130,7 +130,7 @@ The logger now stores compressed thumbnails instead of full-resolution images. I
 
 Thanks to these improvements, it became feasible to use Pulse with Nuke, so starting with [Nuke 11.1](https://github.com/kean/Nuke/releases/tag/11.1.0), there is now [a simple way](https://github.com/kean/Nuke/pull/583) to integrate the frameworks.
 
-<img class="NewScreenshot" alt="Pulse image viewer showing an image preview" src="{{ site.url }}/images/posts/pulse-2/image-viewer.png">
+<img class="NewScreenshot" alt="Pulse image viewer showing an image preview" src="{{ site.url }}/images/posts/pulse-2/image-viewer.webp">
 
 ### Document Format
 
@@ -140,7 +140,7 @@ In Pulse 2.0, the blobs are compressed not just before sharing, but also at rest
 
 These are not the only improvements to sharing. The new Sharing Options screen allows you to limit how much data you want to share. By default, it only sends the logs from the current session, often dramatically reducing the shared file size.
 
-<img class="NewScreenshot" alt="Sharing options screen" src="{{ site.url }}/images/posts/pulse-2/sharing-options.png">
+<img class="NewScreenshot" alt="Sharing options screen" src="{{ site.url }}/images/posts/pulse-2/sharing-options.webp">
 
 ## Integrations
 

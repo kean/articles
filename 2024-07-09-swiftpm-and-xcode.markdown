@@ -40,7 +40,7 @@ enum XcodeSupport {
 
 These products are neatly placed at the bottom of the `Package.swift` and have no source files except for the dummy files stored in `Modules/Sources/XcodeSupport/`. The libraries produced by these products are what gets added to "Frameworks, Libraries, and Embedded Content" in Xcode.
 
-<img alt="Xcode “Frameworks, Libraries, and Embedded Content” section listing a single XcodeTarget_App library" class="NewScreenshot" src="/images/posts/swiftpm-xcode/xcode-targets.png">
+<img alt="Xcode “Frameworks, Libraries, and Embedded Content” section listing a single XcodeTarget_App library" class="NewScreenshot" src="/images/posts/swiftpm-xcode/xcode-targets.webp">
 
 The "actual" dependencies are specified in the same `Modules/Package.swift` file:
 
@@ -69,7 +69,7 @@ With a few extra steps, I achieved my goals, and I think it was an acceptable so
 
 You invoke the "Add Package Dependency" action and it shows the existing dialog.
 
-<img alt="Xcode Add Package Dependency dialog with the Nuke package selected and its README shown" class="NewScreenshot" src="/images/posts/swiftpm-xcode/add-package.png">
+<img alt="Xcode Add Package Dependency dialog with the Nuke package selected and its README shown" class="NewScreenshot" src="/images/posts/swiftpm-xcode/add-package.webp">
 
 When you select a package, Xcode either creates a new `Package.swift` file in the root project directory or adds a dependency to the existing file:
 

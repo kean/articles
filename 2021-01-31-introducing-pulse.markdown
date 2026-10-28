@@ -20,11 +20,11 @@ There are tools that can help: [Wireshark](https://www.wireshark.org), [Proxyman
 
 What I wished iOS had is a simple analog of [Safari Web Inspector](https://developer.apple.com/safari/tools/). So I built just that. It also turned out to be a macOS app thanks to SwiftUI.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-02.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-01.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-01-console.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-03-share.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-02.webp">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-01.webp">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-01-console.webp">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.webp">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/pulse/pulse-03-share.webp">
 
 
 ## Pulse

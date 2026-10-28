@@ -54,7 +54,7 @@ extension PrefetchingDemoViewController: UICollectionViewDataSourcePrefetching {
 
 This code sample comes straight from [Nuke Demo](https://github.com/kean/NukeDemo). So does the following screenshot:
 
-<img alt="Nuke Demo prefetching screen on iPhone: a four-column photo grid with the first and last visible cells labeled 0 and 27" width="342px" src="{{ site.url }}/images/posts/prefetch/prefetch.png">
+<img alt="Nuke Demo prefetching screen on iPhone: a four-column photo grid with the first and last visible cells labeled 0 and 27" width="342px" src="{{ site.url }}/images/posts/prefetch/prefetch.webp">
 
 There are 32 items on the screen (the last row is partially visible). When you open it for the first time, the prefetch API asks the app to start prefetching for indices `[32-55]`. As you scroll, the prefetch "window" changes. You receive `cancelPrefetchingForItemsAt` calls for items no longer in the prefetch window.
 

@@ -23,7 +23,7 @@ There are going to be two primary screens:
 - A **Welcome** screen with a button to install a VPN profile
 - A **Tunnel Details** screen for managing the installed profile
 
-<img alt="VPN iOS app screenshot welcome page" width="325px" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-02.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img alt="VPN iOS app screenshot details page" width="325px" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-03.png">
+<img alt="VPN iOS app screenshot welcome page" width="325px" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-02.webp">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img alt="VPN iOS app screenshot details page" width="325px" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-03.webp">
 
 I'm going to build the app using SwiftUI and share some of the details regarding Network Extensions.
 
@@ -39,7 +39,7 @@ First, we are going to need an entitlement for our app:
 
 The easiest way to add entitlements is via <b>Signing & Capabilities</b> in Xcode.
 
-<img alt="Xcode: add entitlements" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-01.png">
+<img alt="Xcode: add entitlements" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-01.webp">
 
 Once you go through the steps, you are going to see the following two entitlements appear in your apps' entitlements list:
 
@@ -161,7 +161,7 @@ manager.saveToPreferences { error in
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right">
-            <img alt="VPN iOS app screenshot: details page" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-03.png">
+            <img alt="VPN iOS app screenshot: details page" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-03.webp">
         </div>
     </div>
 </div>
@@ -216,7 +216,7 @@ final class TunnelDetailsViewModel: ObservableObject {
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right">
-            <img alt="iOS VPN settings page screenshot" src="{{ site.url }}/images/posts/vpn-tunnel/settings-01.jpeg">
+            <img alt="iOS VPN settings page screenshot" src="{{ site.url }}/images/posts/vpn-tunnel/settings-01.webp">
         </div>
     </div>
 </div>
@@ -269,16 +269,16 @@ manager.onDemandRules = [onDemandRule]
 
 Now let's quickly create a [Packet Tunnel Provider](https://developer.apple.com/documentation/networkextension/packet_tunnel_provider) extension itself to see if it actually works.
 
-<img alt="Xcode: creating packet tunnel provider extension" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-01.png">
+<img alt="Xcode: creating packet tunnel provider extension" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-01.webp">
 
-<img alt="Xcode: creating packet tunnel provider extension" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-02.png">
+<img alt="Xcode: creating packet tunnel provider extension" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-02.webp">
 
 > Xcode automatically creates a bundle identifier for an extensions in a form of `<app-bundle-identifier>.<extension-name>`. An extension's bundle identifier must always be prefixed with an app's bundle identifier. If you change either later, make sure to update both to save yourself hours of debugging.
 {:.warning}
 
 When the extension is created, you must always set up entitlement to match the app.
 
-<img alt="Xcode: setting entitlements for packet tunnel provider extension" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-04.png">
+<img alt="Xcode: setting entitlements for packet tunnel provider extension" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-app-04.webp">
 
 By default, Xcode creates an `NEPacketTunnelProvider` subclass automatically for you.
 
@@ -297,14 +297,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
 > Don't rename the `NEPacketTunnelProvider` class. If you do, make sure to update `Info.plist` file with a new class name, otherwise the extension is going to start crashing on launch.
 > 
-> <img alt="Info.plist NSExtension dictionary with NSExtensionPointIdentifier set to com.apple.networkextension.packet-tunnel and NSExtensionPrincipalClass set to $(PRODUCT_MODULE_NAME).PacketTunnelProvider" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-03.png">
+> <img alt="Info.plist NSExtension dictionary with NSExtensionPointIdentifier set to com.apple.networkextension.packet-tunnel and NSExtensionPrincipalClass set to $(PRODUCT_MODULE_NAME).PacketTunnelProvider" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-03.webp">
 {:.warning}
 
 Now when you run the app on the device, and install the profile, it should automatically start the extension.
 
 Debugging an extension is a bit tricky. When you start the app, Xcode automatically attaches the debugger to it. It is not going to happen with the extension. To attach a debugger to an extension, go to **Debug / Attach to Process by PID or Name...** and add the name of your extension.
 
-<img alt="Xcode: attaching debugger to the running process" width="440px" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-04.png">
+<img alt="Xcode: attaching debugger to the running process" width="440px" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-04.webp">
 
 If the extension is already running, Xcode will attach the debugger to it. If it isn't running, Xcode is going to wait until it starts running. Now when you open a Debug Navigator, you are going to see two processes instead of one (typical to iOS app development).
 
@@ -316,7 +316,7 @@ I encourage you to test whether you are able to attach the debugger to the exten
 >
 > App extensions are quite unforgiving and debugging them can become a nightmare. If you are not able to attach the debugger or the extension process crashes without reaching `PacketTunnelProvider` go through the following troubleshooting guide.
 >
-> <img alt="Xcode debugging the vpn-tunnel extension on an iPhone, stopped on an NSInvalidArgumentException thrown by -[__NSDictionaryM setObject:forKey:]" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-06.png">
+> <img alt="Xcode debugging the vpn-tunnel extension on an iPhone, stopped on an NSInvalidArgumentException thrown by -[__NSDictionaryM setObject:forKey:]" class="Screenshot kb-legacy-card" src="{{ site.url }}/images/posts/vpn-tunnel/vpn-tunnel-06.webp">
 > 
 > - Make sure both the app and the app extension have Packet Tunnel Network Extensions entitlement
 > - An extension's bundle identifier must always be prefixed with an app's bundle identifier. If you change either later, make sure to update both to save yourself hours of debugging.

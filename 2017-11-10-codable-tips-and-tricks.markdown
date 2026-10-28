@@ -23,7 +23,7 @@ I've just finished migrating our app to [Codable](https://developer.apple.com/do
 > You can [download](/playgrounds/codable.playground.zip) a Swift Playground with all of the code from this article.
 {:.info}
 
-<img alt="Xcode screenshot showing Codable example" src="{{ site.url }}/images/posts/codable_screen_01.png" class="Screenshot">
+<img alt="Xcode screenshot showing Codable example" src="{{ site.url }}/images/posts/codable_screen_01.webp" class="Screenshot">
 
 Apple introduced `Codable` in Swift 4 with a [motivation](https://github.com/apple/swift-evolution/blob/master/proposals/0167-swift-encoders.md#motivation) to replace old `NSCoding` APIs. Unlike `NSCoding` it has first-class JSON support making it a great option not just for persisting data but also for decoding JSON responses from web APIs.
 

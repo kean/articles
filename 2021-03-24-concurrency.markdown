@@ -30,13 +30,13 @@ Nuke is often used during scrolling, so it has to be fast and never add unnecess
 </video>
 </div>
 
-There isn't much to say about Pulse: you can't have threading issues if you [don't have]({{ site.url }}/images/misc/m1.jpg) threading. But when you need it, concurrency is notoriously hard to get right. So what do you do?
+There isn't much to say about Pulse: you can't have threading issues if you [don't have]({{ site.url }}/images/misc/m1.webp) threading. But when you need it, concurrency is notoriously hard to get right. So what do you do?
 
 ## Overview
 
 If you group the primary components in Nuke based on the concurrency primitives, you'll end up with roughly four groups. There isn't one pattern that dominates. Each situation requires a unique approach.
 
-<img alt="Diagram grouping Nuke components by concurrency primitive: view extensions on the main queue; ImagePipeline, ImagePrefetcher, and DataLoader on serial dispatch queues; ImageCache and DataCache behind locks; processing and decoding operations running in parallel" class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/concurrency-cover.png">
+<img alt="Diagram grouping Nuke components by concurrency primitive: view extensions on the main queue; ImagePipeline, ImagePrefetcher, and DataLoader on serial dispatch queues; ImageCache and DataCache behind locks; processing and decoding operations running in parallel" class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/concurrency-cover.webp">
 
 There is a tiny portion of code that is not thread-safe and can only run from the main thread because it updates UI components, be it UIKit or SwiftUI. This code has assertions to catch errors early: `assert(Thread.isMainThread)`. The rest of the code operates in the background and this is what the article covers.
 
@@ -222,7 +222,7 @@ I'm using atomics (`OSAtomicIncrement32`, `OSCompareAndSwap32`) in a couple of p
 
 [^8]: You can learn more about why these warnings get emitted in the [following post](http://www.russbishop.net/the-law).
 
-<img alt="Xcode showing repeated Thread Sanitizer “Swift access race” warnings on an OSAtomicIncrement64 call that takes a pointer to _nextTaskId" class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/access-race.png">
+<img alt="Xcode showing repeated Thread Sanitizer “Swift access race” warnings on an OSAtomicIncrement64 call that takes a pointer to _nextTaskId" class="NewScreenshot" src="{{ site.url }}/images/posts/concurrency/access-race.webp">
 
 Turns out, `&` operator [doesn't do](https://github.com/apple/swift-evolution/blob/master/proposals/0282-atomics.md#interaction-with-implicit-pointer-conversions) what you might think it does. I had to switch to using pointers to continue using atomics.
 

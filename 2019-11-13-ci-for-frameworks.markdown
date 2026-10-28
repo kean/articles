@@ -16,7 +16,7 @@ Working on an open-source framework poses a different set of challenges compared
 
 This is a story of how I went from manually testing my frameworks to having hundreds of unit tests and multiple automatic checks running on every change, and how you can implement a similar setup in your project.
 
-<img alt="Travis CI screenshot demonstrating multiple jobs" src="{{ site.url }}/images/posts/ci-for-oss/travis-ci.png">
+<img alt="Travis CI screenshot demonstrating multiple jobs" src="{{ site.url }}/images/posts/ci-for-oss/travis-ci.webp">
 
 ## What is CI
 
@@ -165,7 +165,7 @@ It's a good idea to put installation code into an `install` script. It shows in 
 
 Running validations in separate jobs allows you to [parallelize the work](https://docs.travis-ci.com/user/speeding-up-the-build/#parallelizing-your-builds-across-virtual-machines) across multiple virtual machines. And if the job fails, it won't fail the rest of the build, which I think is important. You don't want a single SwiftLint warning to stop all the rest of the validations from running, it could slow down the feedback cycle. You want to surface all of the issues with the build in one go.
 
-<img alt="Travis CI screenshot" class="kb-legacy-card" src="{{ site.url }}/images/posts/ci-for-oss/job-failed.png">
+<img alt="Travis CI screenshot" class="kb-legacy-card" src="{{ site.url }}/images/posts/ci-for-oss/job-failed.webp">
 
 ### Environments
 
@@ -203,7 +203,7 @@ jobs:
 
 [Nuke](https://github.com/kean/Nuke) has more than one test suite.
 
-<img alt="Xcode screenshot with multiple schemes" class="kb-legacy-card" style="max-height: 120px" src="{{ site.url }}/images/posts/ci-for-oss/nuke-schemes.png">
+<img alt="Xcode screenshot with multiple schemes" class="kb-legacy-card" style="max-height: 120px" src="{{ site.url }}/images/posts/ci-for-oss/nuke-schemes.webp">
 
 So what I do as part of each build is run these two of the additional test suites which I don't normally run: Thread Safety Tests and Performance Tests.
 

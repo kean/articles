@@ -17,7 +17,7 @@ This post is about how one bad assumption about XCFrameworks turned into multipl
 
 Last week I started working on a binary distribution for [Pulse](https://github.com/kean/Pulse). My initial dependency graph, before knowing anything about XCFrameworks, was this:
 
-<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/01.png">
+<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/01.webp">
 
 `PulseUI` and `Pulse` were Swift packages, each in its own repo. My initial goal was to distribute only `PulseUI` as a binary package.
 
@@ -25,7 +25,7 @@ Last week I started working on a binary distribution for [Pulse](https://github.
 
 My initial naive approach was to simply build `PulseUI` as an XCFramework.
 
-<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/02.png">
+<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/02.webp">
 
 This was based on an assumption that XCFrameworks can have dependencies on Swift Packages.
 
@@ -70,7 +70,7 @@ let package = Package(
 
 This is where I encountered the first red flag: there was no way to specify a dependency for a `.binaryTarget`. I went to Google and what I wished I found was this:
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/04.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/04.webp">
 
 But unfortunately, this picture is from the very end (`38:16`) of the [WWDC video from 2019](https://developer.apple.com/videos/play/wwdc2019/416/) which reduced its chances of me finding it on Google quite dramatically. What I found instead was [this thread](https://forums.swift.org/t/swiftpm-binary-target-with-sub-dependencies/40197) on Swift Forums which explains a workaround on how to add sub-dependencies for binary targets using fake targets which put me on a sidetrack[^1]. I thought OK, so you are saying there is a chance.
 
@@ -92,7 +92,7 @@ dyld: Symbol not found: _$s9PulseCore18NetworkLoggerEventO12taskDidStartyA2C04Ta
 
 My understanding, and I might be wrong here, is that the problem has to do with [Library Evolution](https://swift.org/blog/library-evolution/) (or the lack thereof). The way library evolution works is by generating a `.swiftmodule` folder for your framework.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/05.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/05.webp">
 
 One of the key parts of `.swiftmodule` is a textual `.swiftinterface` file which is a representation of the public interfaces of your framework.
 
@@ -135,11 +135,11 @@ What I ended up doing eventually is rewriting the framework so that there are no
 
 **Before**
 
-<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/02.png">
+<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/02.webp">
 
 **After**
 
-<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/03.png">
+<img height="200px" alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/xcframeworks/03.webp">
 
 With this approach, I was finally able to ship my frameworks[^2]. As a final test, I uploaded the app with the frameworks to TestFlight.
 

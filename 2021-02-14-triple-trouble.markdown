@@ -28,9 +28,9 @@ I needed to build triple-column navigation for [Pulse](https://github.com/kean/P
 > This solution requires Big Sur. And on iPad, you can't customize it, which you'll probably want to. This post is focused on macOS.
 {:.warning}
 
-<img alt="Triple-column navigation macOS" class="NewScreenshot" src="{{ site.url }}/images/posts/triple-trouble/macos.png">
+<img alt="Triple-column navigation macOS" class="NewScreenshot" src="{{ site.url }}/images/posts/triple-trouble/macos.webp">
 
-<img alt="Triple-column navigation iPad" class="NewScreenshot" src="{{ site.url }}/images/posts/triple-trouble/ipad.png">
+<img alt="Triple-column navigation iPad" class="NewScreenshot" src="{{ site.url }}/images/posts/triple-trouble/ipad.webp">
 
 ## NavigationView
 

@@ -31,7 +31,7 @@ Search is just one of the features introduced in version 3.2. So let me show you
 
 When you open search for the first time, it shows you a list of available filters and search scopes. And if you've used one before, it’ll be on the top of the suggestions list with a prefilled value. Hit "Tab", and it'll add the suggestion filter. Or hit "Return", and it'll use the input as a plain search term (or wildcard, or regex).
 
-<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-01-welcome.png">
+<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-01-welcome.webp">
 
 To add a search bar, I use the new API introduced in iOS 16 that supports tokens and fallback to the previous API on the earlier versions:
 
@@ -66,7 +66,7 @@ struct ConsoleListView: View {
 
 When you select the “tokens”, they are displayed directly in the search bar, and you can easily remove them. It’s a nice feature because it saves a lot of vertical space and is consistent with many other apps on iOS, e.g. Mail.
 
-<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-05-tokens.png">
+<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-05-tokens.webp">
 
 > SwiftUI also provides a default UI for displaying suggested search tokens (`suggestedTokens`), but it's a bit limited and covers the entire screen.
 {:.info}
@@ -91,7 +91,7 @@ Pulse is smart about the suggested filters. Just to give you a few examples:
 
 Pulse searches in multiple scopes in parallel: request and response headers, bodies, and URLs. You can also select what scopes to use if you don't need all. You can see all the matches in the results list, and when you select one, it opens the response viewer, highlights the matches, and scrolls to the selected one.
 
-<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-06-scopes.png">
+<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-06-scopes.webp">
 
 This new search streamlines many user scenarios. For example, let's say you need to find a `userId` value from the `/login` response. Previously, you had to know the name of the path and search for it: `/login`, then open the response body, search again for `userId`, and only then do you see it. Now you just search for `userId`, click it, and you are done.
 
@@ -105,7 +105,7 @@ Previously, I only needed to display two types of cells, but now, I needed to in
 
 With these changes, I was finally able to use `List` on iOS and macOS, remove a lot of duplicated code, and while at it, I also introduced a slightly refined design for cells that is now consistent across platforms. There is also a new toolbar because I knew switching between regular messages and network requests needed a prime spot. You now also switch to "Logs" and see only plain messages without requests, which is new.
 
-<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-04-console.png">
+<img class="NewScreenshot" alt="Pulse search" src="{{ site.url }}/images/posts/pulse-search/search-04-console.webp">
 
 I'm happy with this approach, but I wish there was a native solution. I'm suspecting, there is no need to diff _all_ the elements to animate the changes on the screen. Or, at least, please, please, give us the option to disable the diffing.
 

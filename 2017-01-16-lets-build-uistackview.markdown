@@ -52,7 +52,7 @@ The distribution determines how the stack view lays out its arranged views along
 
 > A layout where the stack view resizes its arranged views so that they fill the available space along the stack view’s axis. When the arranged views do not fit within the stack view, it shrinks the views according to their compression resistance priority. If the arranged views do not fill the stack view, it stretches the views according to their hugging priority.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/01.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/01.webp" class="PostStackView_Screenshot">
 
 #### Constraints
 
@@ -121,7 +121,7 @@ As the result, you get a simple but very useful layout. In terms of constraints,
 
 > A layout where the stack view resizes its arranged views so that they fill the available space along the stack view’s axis. The views are resized so that they are all the same size along the stack view’s axis.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/02.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/02.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-fill-equally:</b>
@@ -156,7 +156,7 @@ This distribution is almost the same as <a href="#UIStackViewDistribution.fill">
 
 > A layout where the stack view resizes its arranged views so that they fill the available space along the stack view’s axis. Views are resized proportionally based on their intrinsic content size along the stack view’s axis.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/03.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/03.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-fill-proportionally:</b>
@@ -210,7 +210,7 @@ Also, notice that the priority of the constraints is higher than both content hu
 
 > A layout where the stack view positions its arranged views so that they fill the available space along the stack view’s axis. When the arranged views do not fill the stack view, it pads the spacing between the views evenly. If the arranged views do not fit within the stack view, it shrinks the views according to their compression resistance priority.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/04.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/04.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-distributing-edge:</b>
@@ -250,7 +250,7 @@ This configuration requires extra spacers (`_UIOLAGapGuide`) [between subsequent
 
 > A layout that attempts to position the arranged views so that they have an equal center-to-center spacing along the stack view’s axis, while maintaining the spacing property’s distance between views. If the arranged views do not fit within the stack view, it shrinks the spacing until it reaches the minimum spacing defined by its spacing property. If the views still do not fit, the stack view shrinks the arranged views according to their compression resistance priority.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/05.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/05.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-distributing-edge:</b>
@@ -298,7 +298,7 @@ The minimum spacing is again achieved by **UISV-spacing** constraints which all 
 
 > A layout where the stack view resizes its arranged views so that they fill the available space perpendicular to the stack view’s axis.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/01.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/01.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-alignment:</b>
@@ -329,7 +329,7 @@ This configuration is exactly the same as the very first one: [fill distribution
 
 > A layout for vertical stacks where the stack view aligns the leading edge of its arranged views along its leading edge.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/06.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/06.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-alignment:</b>
@@ -382,7 +382,7 @@ Now why is that so complicated? Why is layout spacer necessary and is it necessa
 
 > A layout where the stack view aligns the center of its arranged views with its center along its axis.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/07.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/07.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-alignment:</b>
@@ -428,7 +428,7 @@ This and the following alignment (.trailing) is very similar to a [leading align
 
 > A layout for vertical stacks where the stack view aligns the trailing edge of its arranged views along its trailing edge.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/08.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/08.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-alignment:</b>
@@ -470,7 +470,7 @@ This and the following alignment (.trailing) is very similar to a [leading align
 
 > A layout where the stack view aligns its arranged views based on their first baseline. This alignment is only valid for horizontal stacks.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/09.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/09.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-alignment:</b>
@@ -524,7 +524,7 @@ The set of constraints is similar to the previous scenario: it uses an auxiliary
 
 > A layout where the stack view aligns its arranged views based on their last baseline. This alignment is only valid for horizontal stacks.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/10.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/10.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-alignment:</b>
@@ -578,7 +578,7 @@ The set of constraints is similar to the previous scenario: it uses an auxiliary
 
 > The stack view automatically updates its layout whenever views are added, removed or inserted into the arrangedSubviews array, or whenever one of the arranged views's isHidden property changes.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/11.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/11.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-hiding:</b>
@@ -633,7 +633,7 @@ This way some of the responsibilities get delegated to the user of the library, 
 
 > A Boolean value that determines whether the stack view lays out its arranged views relative to its layout margins. If true, the stack view will layout its arranged views relative to its layout margins. If false, it lays out the arranged views relative to its bounds.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/12.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/12.webp" class="PostStackView_Screenshot">
 
 <pre>
 UISV-alignment:
@@ -670,7 +670,7 @@ UISV-alignment:
 
 > A Boolean value that determines whether the vertical spacing between views is measured from their baselines. If YES, the vertical space between views are measured from the last baseline of a text-based view, to the first baseline of the view below it. Top and bottom views are also positioned so that their closest baseline is the specified distance away from the stack view’s edge. This property is only used by vertical stack views.
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/13.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/13.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-spacing:</b>
@@ -699,7 +699,7 @@ The stack modifies **UISV-spacing** constraints by using `.firstBaseline` and `.
 
 ### Single Subview, Alignment.Center
 
-<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/14.png" class="PostStackView_Screenshot">
+<img alt="Stack view screenshot" src="{{ site.url }}/images/stack_view/14.webp" class="PostStackView_Screenshot">
 
 <pre>
 <b>UISV-canvas-connection:</b>

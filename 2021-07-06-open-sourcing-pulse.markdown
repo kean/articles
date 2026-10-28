@@ -12,7 +12,7 @@ uuid: 629d1d3a-3b4f-4c0c-b6a3-873bf6ea7f42
 
 [Pulse](https://pulselogger.com) is now [open-source](https://github.com/kean/Pulse.git). It includes the frameworks, the document-based apps for viewing the logs, and the demo projects.
 
-<img alt="The Pulse project in Xcode, with the package sources, apps, and demos in the navigator and the scheme menu listing the iOS, macOS, watchOS, and tvOS targets" width="533px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/oss.png">
+<img alt="The Pulse project in Xcode, with the package sources, apps, and demos in the navigator and the scheme menu listing the iOS, macOS, watchOS, and tvOS targets" width="533px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/oss.webp">
 
 There are two main reasons for open-sourcing it.
 

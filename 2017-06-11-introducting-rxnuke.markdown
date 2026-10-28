@@ -12,7 +12,7 @@ uuid: 687bb115-e04c-4c6f-9990-786793ba8685
 
 I'm excited to introduce a new addition to Nuke - [RxNuke](https://github.com/kean/RxNuke) which brings the power of [RxSwift](https://github.com/ReactiveX/RxSwift) to your image loading pipelines.
 
-<img alt="RxNuke logo" src="{{ site.url }}/images/posts/introducing_rxnuke_01.png" class="Screenshot">
+<img alt="RxNuke logo" src="{{ site.url }}/images/posts/introducing_rxnuke_01.webp" class="Screenshot">
 
 Nuke's design has always prioritized simplicity, reliability, and performance. The core framework has a small API surface and only contains a minimum number of features to build upon. This is great for many reasons, but unfortunately, that left a gap between what Nuke supports out of the box and what users need. I received many requests about particular use cases like these:
 

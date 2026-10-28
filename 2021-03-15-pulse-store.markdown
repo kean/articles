@@ -33,7 +33,7 @@ Registering your custom document type and *extension* is straightforward: you ca
 - Database (`.sqlite`)
 - Directory with blobs
 
-<img alt="Finder showing a Pulse document as a directory containing a blobs folder, logs.sqlite, and manifest.json" width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/01.png">
+<img alt="Finder showing a Pulse document as a directory containing a blobs folder, logs.sqlite, and manifest.json" width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/01.webp">
 
 Now, how do you turn a directory into a file? Science!
 
@@ -52,7 +52,7 @@ What's the use case? [Pulse](https://github.com/kean/Pulse) is a logging system.
 
 [^6]: Turns out, if your document is 500 MB or larger, you [might be asked](https://support.apple.com/en-us/HT202887) to save your document, spreadsheet, or presentation as a package.
 
-<img alt="Finder showing an unarchived Pages document with Data, Index, and Metadata folders and preview images" width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/02.png">
+<img alt="Finder showing an unarchived Pages document with Data, Index, and Metadata folders and preview images" width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/02.webp">
 
 When you open a document, Pages unarchives it and puts it in memory. Archiving a Pages document makes a lot of sense as it saves a bit of space.
 
@@ -64,7 +64,7 @@ One of the main _disadvantages_ of ZIP, or other binary formats, is its content 
 
 Xcode project files also consist of multiple files, but they are not archives.
 
-<img alt="Finder context menu for PulseApp.xcodeproj with Show Package Contents highlighted" width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/03.png">
+<img alt="Finder context menu for PulseApp.xcodeproj with Show Package Contents highlighted" width="500px" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/03.webp">
 
 Xcode project files are [packages](https://en.wikipedia.org/wiki/Package_(macOS)) (a macOS concept). It is a directory displayed to the user as a single file.
 
@@ -172,7 +172,7 @@ As mentioned earlier, each Pulse store has a manifest (`.json`), a database (`.s
 
 Setting the supported document type was pretty easy. I just followed the [sample code](https://developer.apple.com/documentation/uikit/view_controllers/building_a_document_browser_app_for_custom_file_formats). After adding the document type to the plist, I got the system to recognize my documents and even auto-generate an icon.
 
-<img alt="A logs-2021-03-14_15-02.pulse document with a system-generated Pulse icon, above the Pulse app in the Dock" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/m1.png">
+<img alt="A logs-2021-03-14_15-02.pulse document with a system-generated Pulse icon, above the Pulse app in the Dock" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/m1.webp">
 
 When the user double-clicks the document, the app receives an [`onOpenURL()`](https://developer.apple.com/documentation/swiftui/view/onopenurl(perform:)) callback.
 

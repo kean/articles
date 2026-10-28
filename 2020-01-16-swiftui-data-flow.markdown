@@ -30,7 +30,7 @@ In UIKit, you have a lot of decisions to make. Are you going to observe changes 
 
 SwiftUI offers a declarative approach to managing data. As you compose a hierarchy of views, you also indicate data dependencies for the views. When the data changes, either due to an external event or because of an action taken by the user, SwiftUI automatically updates the affected parts of the interface. As a result, the framework automatically performs most of the work traditionally done by view controllers. This approach is often referred to as *unidirectional data flow*.
 
-<img alt="SwiftUI data flow diagram" class="NewScreenshot" src="/images/posts/swiftui-experience/swiftui-data-flow.png">
+<img alt="SwiftUI data flow diagram" class="NewScreenshot" src="/images/posts/swiftui-experience/swiftui-data-flow.webp">
 
 SwiftUI provides a rich set of tools for propagating data changes across your app. Let's go over all of them, see what they do and when it's best to use them. I'm even going to speculate a bit about how they are implemented under the hood.
 
@@ -97,7 +97,7 @@ Now, what this all means is that by making property `@Published`, you are able t
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
-			<img alt="Xcode screenshot" src="{{ site.url }}/images/posts/swiftui-data-flow/published.png">
+			<img alt="Xcode screenshot" src="{{ site.url }}/images/posts/swiftui-data-flow/published.webp">
         </div>
     </div>
 </div>

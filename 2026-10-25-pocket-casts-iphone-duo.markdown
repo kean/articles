@@ -11,6 +11,7 @@ uuid: 3f6b0c1e-8a52-4d7e-9b14-c2e5a7d90f38
 image:
   path: /images/posts/iphone-duo/cover.png
   thumbnail: /images/posts/iphone-duo/cover-thumb.webp
+  card: /images/posts/iphone-duo/cover.webp
   width: 2560
   height: 1280
 ---
@@ -24,28 +25,28 @@ The biggest surprise was the horizontal safe area. On Duo, the status bar is a p
 We updated the app for iPhone Duo, and, of course, the first step was making the tab bar, toolbars, and native navigation work correctly, folded and unfolded.
 
 <figure class="PostFigure PostFigure--wide">
-<img class="NewScreenshot" alt="Podcasts on iPhone Duo" src="/images/posts/iphone-duo/podcasts.png" width="1540" height="1182">
+<img class="NewScreenshot" alt="Podcasts on iPhone Duo" src="/images/posts/iphone-duo/podcasts.webp" width="1540" height="1182">
 <figcaption>The Podcasts tab, with the status pill and the tab bar on the right edge</figcaption>
 </figure>
 
 The main changes are in the mini player and Now Playing. Once you unfold, the mini player has room for skip buttons and a progress bar, so you can control playback without opening the full player.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Discover with the mini player on the unfolded iPhone Duo" src="/images/posts/iphone-duo/discover.png" width="1540" height="1113" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="Discover with the mini player on the unfolded iPhone Duo" src="/images/posts/iphone-duo/discover.webp" width="1540" height="1113" loading="lazy" decoding="async">
 <figcaption>Discover with the expanded mini player</figcaption>
 </figure>
 
 Now Playing makes use of the extra space too. Instead of stacking everything in a single column, it shows its tabs, like Transcript and Chapters, side by side with the controls, so you can follow along with the transcript while you listen.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Now Playing with the transcript on the unfolded iPhone Duo" src="/images/posts/iphone-duo/now-playing.png" width="1540" height="1113" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="Now Playing with the transcript on the unfolded iPhone Duo" src="/images/posts/iphone-duo/now-playing.webp" width="1540" height="1113" loading="lazy" decoding="async">
 <figcaption>Now Playing with the transcript side by side</figcaption>
 </figure>
 
 We also made Now Playing a bit nicer visually. The background now takes its colors from the podcast artwork, so the player adapts to each of your favorite shows, from the purple of The Vergecast to the warm orange of The Journal.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Now Playing themed with the colors of six different podcasts" src="/images/posts/iphone-duo/now-playing-themes.png" width="1540" height="1570" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="Now Playing themed with the colors of six different podcasts" src="/images/posts/iphone-duo/now-playing-themes.webp" width="1540" height="1570" loading="lazy" decoding="async">
 <figcaption>Six shows, six moods</figcaption>
 </figure>
 
@@ -82,7 +83,7 @@ The first run was deliberately quick. An agent walked the high-traffic flows on 
 Then came the full sweep of the app across iPhone, Duo, iPad, Slide Over, and other window sizes: about 1,700 screenshots in total. Watching Claude spawn dozens of agents and simulators, eating up so much RAM that 64 GB starts to feel small, never gets old.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="A gallery of 1,201 iPhone Duo screenshots grouped by area" src="/images/posts/iphone-duo/screenshot-sweep.png" width="1540" height="1320" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="A gallery of 1,201 iPhone Duo screenshots grouped by area" src="/images/posts/iphone-duo/screenshot-sweep.webp" width="1540" height="1320" loading="lazy" decoding="async">
 <figcaption>The screenshot sweep for iPhone Duo, grouped by area</figcaption>
 </figure>
 
@@ -100,7 +101,7 @@ What was left went straight into triage. Each issue has screenshots, repro steps
 The same fix loop ran on the new batch. The fix for this one is [#5394](https://github.com/Automattic/pocket-casts-ios/pull/5394), an XIB constraint change[^2]. The PR has the root cause, the test steps, and before/after screenshots, including ones from a regular iPhone showing that nothing changed there, a check I'd otherwise skip.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="Before and after screenshots in a pull request" src="/images/posts/iphone-duo/pr-screenshots.png" width="1540" height="1191" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="Before and after screenshots in a pull request" src="/images/posts/iphone-duo/pr-screenshots.webp" width="1540" height="1191" loading="lazy" decoding="async">
 <figcaption>The Edit button, finally tappable</figcaption>
 </figure>
 
@@ -123,7 +124,7 @@ setup: `--fixture up-next:5`
 The agent works out the steps itself, and the `setup` line fills Up Next with five episodes first, so it doesn't spend time getting there. Agents also flag anything else that looks off along the way, so the suite covers far more ground than XCUITests. A second agent then reads the code behind each finding, verifies or rejects it, and notes the likely cause before anything gets filed.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="A regression run with agents driving the app on several simulators" src="/images/posts/iphone-duo/qa-run.png" width="1712" height="710" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="A regression run with agents driving the app on several simulators" src="/images/posts/iphone-duo/qa-run.webp" width="1712" height="710" loading="lazy" decoding="async">
 <figcaption>A regression run: agents drive the app on several simulators in parallel, then verify the findings</figcaption>
 </figure>
 
@@ -138,7 +139,7 @@ Across all runs, it has found **more than a hundred issues**. Most are minor, bu
 Since Duo, the suite has gotten faster and gained many more scenarios and a dedicated reporter.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="A QA report for a full regression run" src="/images/posts/iphone-duo/qa-report.png" width="1310" height="770" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="A QA report for a full regression run" src="/images/posts/iphone-duo/qa-report.webp" width="1310" height="770" loading="lazy" decoding="async">
 <figcaption>The new QA reporter</figcaption>
 </figure>
 

@@ -25,7 +25,7 @@ I've been working on iOS for many years now. When Apple shipped SwiftUI, I saw i
 
 The best way to learn something is to build a project. SwiftUI has two main advantages: iteration speed and code reuse across Apple platforms. I had just the right idea for a project that could take advantage of both.
 
-<img class="NewScreenshot" alt="SwiftUI Experiment post cover" src="{{ site.url }}/images/posts/swiftui-exp/cover.png">
+<img class="NewScreenshot" alt="SwiftUI Experiment post cover" src="{{ site.url }}/images/posts/swiftui-exp/cover.webp">
 
 ## Project
 
@@ -53,7 +53,7 @@ As a QA engineer testing the app, you can view the network requests right on you
 
 ## Pulse Open Beta
 
-<a href="https://github.com/kean/Pulse"><img alt="Pulse, a structured logging system built using SwiftUI" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="180"></a>
+<a href="https://github.com/kean/Pulse"><img alt="Pulse, a structured logging system built using SwiftUI" src="{{ site.url }}/images/posts/swiftui-exp/logo.webp" width="180"></a>
 
 I'm thrilled to announce that **Pulse Open Beta** starts today. You can find the download links in a [dedicated repo](https://github.com/kean/Pulse). If you wanted to try to [make it crash](https://twitter.com/steipete/status/1364623472559857665?s=20), now is your chance.
 
@@ -65,9 +65,9 @@ I want to thank all early [sponsors](https://github.com/sponsors/kean). You are 
 
 I started with the platform I felt the most comfortable with – iOS – with the initial goal to truly learn SwiftUI by putting it through its paces. After all, before building the app, I had to design it. I wanted to avoid the distraction of having to learn a new UX paradigm.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-01-console.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.png">
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-03-share.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-01-console.webp">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-02-inspector.webp">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-03-share.webp">
 
 I built the entire app using SwiftUI with a couple of minor exceptions: `UITextView`, `UISearchBar`, and `UIActivityViewController`. But it was a simple matter of wrapping them using [`UIViewRepresentable`](https://developer.apple.com/documentation/swiftui/uiviewrepresentable). The rest of the systems: [layout]({{ site.url }}/post/swiftui-layout-system), [data flow]({{ site.url }}/post/swiftui-data-flow), and the existing SwiftUI components, worked perfectly.
 
@@ -86,7 +86,7 @@ You can integrate Pulse in practically any app, but make it available for the de
 
 The next milestone was macOS. When the time came to work on it, I was anxious. I had no idea what to expect from SwiftUI on a Mac. But thanks to the [new](https://developer.apple.com/videos/play/wwdc2020/10041/) SwiftUI APIs and the Big Sur design changes, everything just made sense!
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-01.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/pulse-01.webp">
 
 I was so excited after building the macOS version that I wrote an optimistic take on how [AppKit was done]({{ site.url }}/post/appkit-is-done), only to [correct myself]({{ site.url }}/post/not-list) later after I had spent more time on optimization. I encountered massive issues with [`List`](https://developer.apple.com/documentation/swiftui/list) performance and replaced it with an AppKit version, including AppKit-based cells and context menus. Fortunately, I was able to get it to work with the SwiftUI navigation system. And it was worth it. The optimized version is fast even when working with hundreds of thousands of messages.
 
@@ -103,7 +103,7 @@ After designing and implementing a macOS app, watchOS was a walk in the park. Sw
 
 Why bring Pulse to watchOS in the first place? Many of the watchOS apps are designed to be used outdoors, during physical activities. You won’t be carrying a computer with you to a gym, will you? Pulse is a perfect tool for this.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/promo-6.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/promo-6.webp">
 
 With Pulse, you can view network requests and logs right on your wrist. Logs are recorded persistently, and you can share them at any time, for example, to iOS. Pulse for iOS offers a great experience and a feature-set on par with a macOS version.
 
@@ -120,7 +120,7 @@ I was surprised to learn just how powerful the API for this platform is. It runs
 
 It took me four hours to build a watchOS version and about three for tvOS. I knew nothing about these platforms when I started. I wasn't always able to reuse the code, but I reused the _knowledge_ – SwiftUI APIs are essentially the same on all Apple platforms.
 
-<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/promo-7.png">
+<img alt="Pulse, a structured logging system built using SwiftUI" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse/promo-7.webp">
 
 ## Retrospective
 
@@ -199,7 +199,7 @@ UIKit and AppKit pack a lot of power. The delegate-based approach is well-positi
 
 We exchanged the gotchas from UIKit with new ones in SwiftUI. Some examples:
 
-- Forgetting a single period can cause a SwiftUI view to crash in a [less-than-obvious way](https://twitter.com/mbrandonw/status/1352321769676279813?s=20) ([screenshot]({{ site.url }}/images/posts/swiftui-exp/crash.png) in case the message gets deleted).
+- Forgetting a single period can cause a SwiftUI view to crash in a [less-than-obvious way](https://twitter.com/mbrandonw/status/1352321769676279813?s=20) ([screenshot]({{ site.url }}/images/posts/swiftui-exp/crash.webp) in case the message gets deleted).
 - SwiftUI frequently re-instantiates views and creates some of the view [hierarchy in advance](https://twitter.com/a_grebenyuk/status/1362844210207076353?s=20). It can lead to performance issues if you are not careful.
 - You can access `State` and `StateObject` values only from `body`.
 - Putting modifiers in the wrong order. The most common example is using `background` before `padding` with an unexpected result (unexpected compared to how most other UI frameworks work).

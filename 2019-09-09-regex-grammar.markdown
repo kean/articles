@@ -140,7 +140,7 @@ Let's formalize it:
 
 <img alt="Regex formal grammar: subexpression" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_expression.png" style="max-height:98px;">
 
-<img alt="Regex formal grammar: subexpression item" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_expression_item.png" style="max-height:220px;">
+<img alt="Regex formal grammar: subexpression item" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_expression_item.webp" style="max-height:220px;">
 
 ```swift
 /* Anything that can be on one side of the alternation. */
@@ -154,7 +154,7 @@ SubexpressionItem
 
 I'm not going to go through all of the possible expression items but here are a few examples. Let's start with `Group`. Group is a recursive construct – a group may contain other groups, or actually any subexpression.
 
-<img alt="Regex formal grammar: group" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_group.png" style="max-height:115px;">
+<img alt="Regex formal grammar: group" class="AdaptiveImage2" src="{{ site.url }}/images/posts/regex/grammar_group.webp" style="max-height:115px;">
 
 ```swift
 Group ::= "(" GroupNonCapturingModifier? Expression ")" Quantifier?
