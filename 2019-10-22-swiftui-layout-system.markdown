@@ -481,7 +481,7 @@ In the second example (bottom) we give the stack a little bit more space. So the
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Left3">
 <h4>Layout Priority</h4>
 
-<p>You can raise the <a href="https://developer.apple.com/documentation/swiftui/hstack/3269218-layoutpriority">layout priority</a> of views in a stack from the default of zero. A stack offers the children with the highest priority all the space offered to it minus the space required for all its lower-priority children.</p>
+<p>You can raise the <a href="https://developer.apple.com/documentation/swiftui/view/layoutpriority(_:)">layout priority</a> of views in a stack from the default of zero. A stack offers the children with the highest priority all the space offered to it minus the space required for all its lower-priority children.</p>
         </div>
         <!-- To the right: image -->
         <div class="SwiftUIExampleWithScreenshot_FlexItem SwiftUIExampleWithScreenshot_Right3">
@@ -494,7 +494,7 @@ In the second example (bottom) we give the stack a little bit more space. So the
 
 Ok, so frames and stacks are great. But what makes SwiftUI also stand out in terms of supporting adaptive cross-platform apps is the *environment*.
 
-When you add [padding](https://developer.apple.com/documentation/swiftui/image/3269708-padding) to a view, SwiftUI automatically chooses an amount of padding that's appropriate to the platform, dynamic type size, and environment. SwiftUI also automatically sets appropriate spacings between the views in a stack. SwiftUI updates a safe area according to the device. You get the idea.
+When you add [padding](https://developer.apple.com/documentation/swiftui/view/padding(_:_:)) to a view, SwiftUI automatically chooses an amount of padding that's appropriate to the platform, dynamic type size, and environment. SwiftUI also automatically sets appropriate spacings between the views in a stack. SwiftUI updates a safe area according to the device. You get the idea.
 
 When you don't pass any parameters, you get adaptive behavior in the same way that SwiftUI adaptively styles a picker or a button depending on the context it's in. And if you to customize any of these parameters, you can do that too.
 
@@ -541,7 +541,7 @@ Swift dominance didn't come from the server, it just might from the UI.
 
 [^3]: There are not a lot of options for combining multiple views in SwiftUI. You can no longer call `addSubview(_:)` and then layout the contents any way you want – you must use one of the existing container views. And, as far as I can tell, there is currently no way to create custom containers in SwiftUI.
 
-[^4]: It feels that when you talk about stacks, you must mention [Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox). This is a technology that supposedly inspired [`UIStackView`](https://developer.apple.com/documentation/uikit/uistackview) and stacks in SwiftUI. I don't know if it's true, but Flexbox is indeed a similar tool. The previews that you see in this post are [powered by Flexbox](https://github.com/kean/kean.github.io). Flexbox is somewhat more powerful than stacks in SwiftUI with support for overflow, etc. However, I find Flexbox to be much more cumbersome to use that stacks in SwiftUI.
+[^4]: It feels that when you talk about stacks, you must mention [Flexbox](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox). This is a technology that supposedly inspired [`UIStackView`](https://developer.apple.com/documentation/uikit/uistackview) and stacks in SwiftUI. I don't know if it's true, but Flexbox is indeed a similar tool. The previews that you see in this post are [powered by Flexbox](https://github.com/kean/articles/blob/main/2019-10-22-swiftui-layout-system.markdown). Flexbox is somewhat more powerful than stacks in SwiftUI with support for overflow, etc. However, I find Flexbox to be much more cumbersome to use that stacks in SwiftUI.
 
 [^5]: Stacks in SwiftUI are extremely simple, especially compared to `UIStackView` which has a lot of options, some of which I doubt anyone even uses. One of the examples is `.fillProprtionally` distribution. I've personally never used it. I did [partially implement it]({{ site.url }}/post/lets-build-uistackview#fillproportionally) when building a `UIStackView` replacement. One of the limitations was the fact that `UIStackView` uses a neat private method `_intrinsicContentSize` `invalidatedForChildView` to monitor when one of its children updates its intrinsic content size. How Apple decided that this distribution needed to be built in the first is unclear.
 

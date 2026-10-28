@@ -15,7 +15,7 @@ uuid: 543b6221-e3ec-4636-be57-6e6eb501e1f6
 
 Consuming a web service API was a major part of almost all the projects that I worked on. Each one of them had a different approach to networking.
 
-- My very first iOS project was built using [ASIHTTPRequest](https://github.com/pokeb/asi-http-request). `AFNetworking` was yet to be released. The XML responses were parsed using [TouchXML](https://github.com/TouchCode/TouchXML).
+- My very first iOS project was built using [ASIHTTPRequest](https://github.com/pokeb/asi-http-request). `AFNetworking` was yet to be released. The XML responses were parsed using [TouchXML](https://web.archive.org/web/20170423095513/https://github.com/TouchCode/TouchXML/).
 - The next major project I've worked on used [AFNetworking](https://github.com/AFNetworking/AFNetworking) – a new modern framework at the time. Later, we wrapped the API calls using our in-house [Promises/A+](https://promisesaplus.com) to make things like chaining requests easier. This was well before [PromiseKit](https://github.com/mxcl/PromiseKit) first appeared on GitHub. The JSON responses were parsed manually with a help of a simple [safe_cast](https://gist.github.com/kean/3600ad35c818a6b28caa3e0fa026d478) macro.
 - At my previous project, we had a custom API layer written on top of `NSURLSession` (no `AFNetworking`). It had some advanced stuff in it such as [batch HTTP requests](https://tools.ietf.org/id/draft-snell-http-batch-00.html#http-batch). We used a simple in-house JSON framework similar in terms of features to one of the first Swift JSON wrappers [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON).
 
@@ -293,7 +293,7 @@ Another interesting problem is how to model authorization scopes using Swift. Th
 
 I'd like to represent those concepts using Swift type system. I want to be able to "say" that "this API client is initialized with a guest token", and "that API endpoint can only be performed by customer", and the compiler should prevent me from performing endpoints with customer scope using a client initialized with a guest token.
 
-The simplest way to implement this is to create a specific type to represent each of those concepts (e.g. `GuestEndpoint`, `CustomerClient`). However, we can do something different. Another way to achieve this is by leveraging Swift generics system. What I would do is create two separate [phantom types](https://rustbyexample.com/generics/phantom.html) that represent each of authorization scopes (`Scope.Guest` and `Scope.Customer`).
+The simplest way to implement this is to create a specific type to represent each of those concepts (e.g. `GuestEndpoint`, `CustomerClient`). However, we can do something different. Another way to achieve this is by leveraging Swift generics system. What I would do is create two separate [phantom types](https://doc.rust-lang.org/rust-by-example/generics/phantom.html) that represent each of authorization scopes (`Scope.Guest` and `Scope.Customer`).
 
 > A phantom type parameter is one that doesn't show up at runtime, but is checked statically (and only) at compile time. Types can use extra generic type parameters to act as markers or to perform type checking at compile time. These extra parameters hold no storage values, and have no runtime behavior.
 {:.info}
@@ -394,7 +394,7 @@ It's hard to imagine now that there was a time when the only relatively easy-to-
 - [RxSwift](https://github.com/ReactiveX/RxSwift)
 - [JSONShootout: Compare Several Swift JSON Mappers](https://github.com/bwhiteley/JSONShootout#marshal)
 - [RxSwift: Traits](https://github.com/ReactiveX/RxSwift/blob/master/Documentation/Traits.md)
-- [Rust by Example: phantom Type Parameters](https://rustbyexample.com/generics/phantom.html)
+- [Rust by Example: phantom Type Parameters](https://doc.rust-lang.org/rust-by-example/generics/phantom.html)
 - [The Swift Programming Languages: Extensions with Generic Where Clauses](https://developer.apple.com/library/content/documentation/Swift/Conceptual/Swift_Programming_Language/Generics.html#//apple_ref/doc/uid/TP40014097-CH26-ID553)
 
 {% include references-end.html %}

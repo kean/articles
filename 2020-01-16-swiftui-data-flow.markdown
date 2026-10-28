@@ -487,7 +487,7 @@ There are two separate hierarchies in SwiftUI:
 
 When there is a change in a *view tree*, SwiftUI recomputes the state of the render tree. Each new generation of the view tree is diff-ed against the current state of the render tree. SwiftUI applies the diff as efficiently as possible, adding and removing nodes from the render tree as needed.
 
-> Never make assumptions about the lifetime of view structs (structs conforming to [View](https://developer.apple.com/documentation/swiftui/view) protocol), and never make assumptions about when and how many times [body](https://developer.apple.com/documentation/swiftui/view/body-swift.property) gets called.
+> Never make assumptions about the lifetime of view structs (structs conforming to [View](https://developer.apple.com/documentation/swiftui/view) protocol), and never make assumptions about when and how many times [body](https://developer.apple.com/documentation/swiftui/view/body-8kl5o) gets called.
 {:.warning}
 
 Now, what does it have to do with `@State`? View structs don't have an identity, but nodes in a render tree do. And that's where the backing storage for your SwiftUI views is allocated. Again, this is just speculation, but it is the most likely explanation and it is similar to the ["reconciliation"](https://reactjs.org/docs/reconciliation.html) process used by React. In fact, we can easily extend the [`_ViewRendererHost`](#_ViewRendererHost) prototype from the previous sections to support `@State`.

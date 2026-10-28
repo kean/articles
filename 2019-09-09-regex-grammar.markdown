@@ -171,7 +171,7 @@ I think you get the idea. You can find a complete regex [grammar](https://github
 
 ## What's Next
 
-In the next article I will write a parser based on [the grammar](https://kean.github.io/Regex/grammar-diagram.xhtml). There are multiple ways to do that. You can write a parser by hand or generate it. A parser can use a top-down or bottom-up approach. You can use [parser combinators](https://en.wikipedia.org/wiki/Parser_combinator), etc. I will look at all of these options.
+In the next article I will write a parser based on [the grammar]({{ site.url }}/images/misc/grammar-diagram.xhtml). There are multiple ways to do that. You can write a parser by hand or generate it. A parser can use a top-down or bottom-up approach. You can use [parser combinators](https://en.wikipedia.org/wiki/Parser_combinator), etc. I will look at all of these options.
 
 <div class="kb-vert-insets">
 <a href="{{ site.url }}/post/regex-parser">

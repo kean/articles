@@ -119,4 +119,4 @@ Cancellation tokens get the job done in Nuke, however, it does have some cons. I
 ## Resources
 
 - [Cancellation in Managed Threads](https://docs.microsoft.com/en-us/dotnet/standard/threading/cancellation-in-managed-threads)
-- [Nuke: CancellationToken](https://github.com/kean/Nuke/blob/master/Sources/CancellationToken.swift) 
+- [Nuke: CancellationToken](https://github.com/kean/Nuke/blob/6.0/Sources/CancellationToken.swift) 

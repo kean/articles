@@ -63,7 +63,7 @@ File viewer now supports more content types: PDF, Query Items, and HTML. There i
 
 <img class="NewScreenshot" alt="File viewer showing HTML" src="{{ site.url }}/images/posts/pulse-2/file-view-html.png">
 
-There are a ton of other minor fixes, tweaks and features across the app and there is no space to cover them. Many of them are thanks to the new APIs added to SwiftUI this year. For example, [custom previews](https://developer.apple.com/documentation/swiftui/form/contextmenu(menuitems:preview:)) for context menus.
+There are a ton of other minor fixes, tweaks and features across the app and there is no space to cover them. Many of them are thanks to the new APIs added to SwiftUI this year. For example, [custom previews](https://developer.apple.com/documentation/swiftui/view/contextmenu(menuitems:preview:)) for context menus.
 
 <div class="BlogVideo NewScreenshot">
 <video autoplay loop muted playsinline preload="auto" alt="Custom context menu preview">
@@ -111,9 +111,9 @@ The new features are exciting, but there are also some significant performance i
 
 ### Space Savings
 
-[LoggerStore](https://kean-docs.github.io/pulsecore/documentation/pulsecore/loggerstore) now uses up to **90% less space**. The main improvement comes from a simple yet effective change: compression. The request and response blobs are now compressed using Apple's [lzfse](https://en.wikipedia.org/wiki/LZFSE). I found it to be about 3x faster than zlib and with often better compression ratio. The same compression is also used for remote logging.
+[LoggerStore](https://kean-docs.github.io/pulse/documentation/pulse/loggerstore) now uses up to **90% less space**. The main improvement comes from a simple yet effective change: compression. The request and response blobs are now compressed using Apple's [lzfse](https://en.wikipedia.org/wiki/LZFSE). I found it to be about 3x faster than zlib and with often better compression ratio. The same compression is also used for remote logging.
 
-The small blobs (<16 KB) are now [efficiently stored](https://www.sqlite.org/intern-v-extern-blob.html) directly in SQLite. The limit might seem small, but it applies _after_ compression. If you take an example [repos.json](https://github.com/kean/Pulse/blob/master/App/Shared/Resources/repos.json) file with 3020 lines, it compresses from 161 KB to just over 11 KB which fits the inline limit.
+The small blobs (<16 KB) are now [efficiently stored](https://www.sqlite.org/intern-v-extern-blob.html) directly in SQLite. The limit might seem small, but it applies _after_ compression. If you take an example [repos.json](https://github.com/kean/Pulse/blob/2.0.0/App/Shared/Resources/repos.json) file with 3020 lines, it compresses from 161 KB to just over 11 KB which fits the inline limit.
 
 > When performing optimizations, it's crucial to measure. Make sure your test data well represents the real data. If you are working with Core Data or SQLite, you can use [DB Browser for SQLite](https://sqlitebrowser.org) to analyze the data. You can also use [sqlite3_analyzer](https://www.sqlite.org/sqlanalyze.html) to see exactly how much space each table and index takes.
 {:.info}

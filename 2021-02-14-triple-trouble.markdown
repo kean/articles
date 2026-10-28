@@ -60,7 +60,7 @@ Creating a sidebar is trivial. The key is `NavigationLink`. To make one link act
 > Don't pass `.constant(true)` in `isActive` or you'll break the list navigation.
 {:.warning}
 
-> The default selection works on macOS, but not on iOS. It might be because the sidebar is hidden by default. I was primarily focusing on macOS, but people have [suggested workarounds](https://github.com/Thomvis/Construct/blob/feature/ipad/Construct/App/ColumnNavigationView.swift#L32).
+> The default selection works on macOS, but not on iOS. It might be because the sidebar is hidden by default. I was primarily focusing on macOS, but people have [suggested workarounds](https://github.com/Thomvis/Construct/blob/ccd98f9e4775d3de0f71845437c9354152517cfd/Construct/App/ColumnNavigationView.swift#L32).
 {:.warning}
 
 ```swift

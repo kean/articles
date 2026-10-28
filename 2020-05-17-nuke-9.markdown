@@ -20,7 +20,7 @@ uuid: 3f0ab615-9905-4fb9-9480-0ffe1952422a
 
 {% include ad-hor.html %}
 
-Nuke 9 is packed with improvements across the board: [SwiftUI integration](https://github.com/kean/FetchImage), [Combine support](https://github.com/kean/ImagePublisher), new [builder API](https://github.com/kean/ImageTaskBuilder), fantastic [new API reference](https://kean-org.github.io/docs/nuke/reference/9.0.0/) generated using [SwiftDoc](https://github.com/SwiftDocOrg/swift-doc), completely reworked [documentation](https://github.com/kean/Nuke/tree/master), support for more [image formats](https://github.com/kean/Nuke/blob/9.0.0-rc.2/Documentation/Guides/image-formats.md), new advanced versions of `ImageProcessing` and `ImageDecoding` protocols, and more. However, in this post, I would like to talk about something else.
+Nuke 9 is packed with improvements across the board: [SwiftUI integration](https://kean-docs.github.io/nukeui/documentation/nukeui/fetchimage), [Combine support](https://web.archive.org/web/20201002130815/https://github.com/kean/ImagePublisher), new [builder API](https://web.archive.org/web/20201208154907/https://github.com/kean/ImageTaskBuilder), fantastic [new API reference](https://web.archive.org/web/20210206002335/https://kean-org.github.io/docs/nuke/reference/9.0.0/) generated using [SwiftDoc](https://github.com/SwiftDocOrg/swift-doc), completely reworked [documentation](https://github.com/kean/Nuke/tree/master), support for more [image formats](https://github.com/kean/Nuke/blob/9.0.0-rc.2/Documentation/Guides/image-formats.md), new advanced versions of `ImageProcessing` and `ImageDecoding` protocols, and more. However, in this post, I would like to talk about something else.
 
 What makes Nuke truly stand out? The answer is **performance**. Every feature in Nuke is engineered with performance in mind. The goal of the entire framework is to display images to the user as quickly as possible. There have been a lot of performance-related changes introduced in Nuke over the years, and I would like to give an overview of some of them.
 
@@ -130,7 +130,7 @@ And that's it, the pipeline will automatically do the right thing and deliver th
     </video>
 </div>
 
-> Please keep in mind that it's not just progressive JPEG or nothing. You could optimize the baseline JPEG by loading a thumbnails and displaying them first. It easy to do that either using [RxNuke](https://github.com/kean/RxNuke) or [ImagePublisher](https://github.com/kean/ImagePublisher).
+> Please keep in mind that it's not just progressive JPEG or nothing. You could optimize the baseline JPEG by loading a thumbnails and displaying them first. It easy to do that either using [RxNuke](https://github.com/kean/RxNuke) or [ImagePublisher](https://web.archive.org/web/20201002130815/https://github.com/kean/ImagePublisher).
 {:.info}
 
 Getting progressive decoding right was quite a challenge. It required a complete redesign of the `ImagePipeline` in [Nuke 7.0](https://github.com/kean/Nuke/releases/tag/7.0). For example, one of the important details to get right was backpressure – what happens if the data is downloaded faster than the pipeline processes it.
@@ -158,7 +158,7 @@ Here is an idea. Let's say you have a grid of images. When the user taps on an i
 
 ## Main Thread Performance
 
-Nuke is packed with performance optimizations. There a [benchmark](https://github.com/kean/Image-Frameworks-Benchmark) that I run periodically to see how it compares with other frameworks in regards to main thread performance.
+Nuke is packed with performance optimizations. There a benchmark that I run periodically to see how it compares with other frameworks in regards to main thread performance.
 
 <img alt="Nuke benchmark: comparison with other image loading frameworks" class="kb-legacy-card" src="{{ site.url }}/images/posts/nuke9/benchmark.png">
 

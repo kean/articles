@@ -178,5 +178,5 @@ With just a few phantom types I was able to add all that extra type information 
 There are more examples of phantom types in Swift available online:
 
 - [Functional Snippet #13: Phantom Types](https://www.objc.io/blog/2014/12/29/functional-snippet-13-phantom-types/)
-- [Swift: Money with Phantom Types](https://www.natashatherobot.com/swift-money-phantom-types/)
+- [Swift: Money with Phantom Types](https://web.archive.org/web/20170204002007/https://www.natashatherobot.com/swift-money-phantom-types/)
 - [Measurements and Units with Phantom Types](https://oleb.net/blog/2016/08/measurements-and-units-with-phantom-types/)

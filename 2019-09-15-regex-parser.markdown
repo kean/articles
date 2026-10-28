@@ -10,7 +10,7 @@ permalink: /post/regex-parser
 uuid: b1b60dba-0872-49ac-9120-dff4f4006f89
 ---
 
-The key for solving any problem is decomposition. [The grammar](https://kean.github.io/Regex/grammar-diagram.xhtml) defined in [the previous article]({{ site.url }}/post/regex-grammar) is composed of multiple tiny pieces chained together. The question is, how do we translate it into code?
+The key for solving any problem is decomposition. [The grammar]({{ site.url }}/images/misc/grammar-diagram.xhtml) defined in [the previous article]({{ site.url }}/post/regex-grammar) is composed of multiple tiny pieces chained together. The question is, how do we translate it into code?
 
 One of the options is to use [parser generators](https://en.wikipedia.org/wiki/Comparison_of_parser_generators). This is a great option and I will probably revisit it in the future posts. But this one, it's about something else.
 

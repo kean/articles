@@ -311,7 +311,7 @@ private func didSetupTunnel(address: String) {
 
 ### Send Traffic
 
-Now, how do you actually send the traffic from the system through the tunnel? A packet tunnel provider has a [`packetFlow`](https://developer.apple.com/documentation/networkextension/nepackettunnelprovider/1406185-packetflow) property returning a [`NEPacketTunnelFlow`](https://developer.apple.com/documentation/networkextension/nepackettunnelflow) object which is used to receive IP packets routed to the tunnel’s virtual interface and inject IP packets into the networking stack via the tunnel’s virtual interface.
+Now, how do you actually send the traffic from the system through the tunnel? A packet tunnel provider has a [`packetFlow`](https://developer.apple.com/documentation/networkextension/nepackettunnelprovider/packetflow) property returning a [`NEPacketTunnelFlow`](https://developer.apple.com/documentation/networkextension/nepackettunnelflow) object which is used to receive IP packets routed to the tunnel’s virtual interface and inject IP packets into the networking stack via the tunnel’s virtual interface.
 
 ```swift
 private func didStartTunnel() {

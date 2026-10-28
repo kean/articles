@@ -83,7 +83,7 @@ When a server is started, it typically creates a [socket](https://en.wikipedia.o
 
 When a browser needs to send a message, it also needs a socket and creates one using one of the system APIs.
 
-> On Apple platforms, there is a variety of APIs for working with ports/sockets, ranging from the Unix sockets, [`CFSocket`](https://developer.apple.com/documentation/corefoundation/cfsocket-rg7) wrapper and to recently introduced [`Network` framework](https://developer.apple.com/documentation/network/nwconnection).
+> On Apple platforms, there is a variety of APIs for working with ports/sockets, ranging from the Unix sockets, [`CFSocket`](https://developer.apple.com/documentation/corefoundation/cfsocket) wrapper and to recently introduced [`Network` framework](https://developer.apple.com/documentation/network/nwconnection).
 {:.info}
 
 Transport layer protocols, such as TCP and UDP, transfer data using protocol data units. For TCP, the PDU is a [segment](https://en.wikipedia.org/wiki/Transmission_Control_Protocol#TCP_segment_structure), and a [datagram](https://en.wikipedia.org/wiki/Datagram) for UDP. Both protocols use a header field for recording the source and destination port number.

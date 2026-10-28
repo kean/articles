@@ -95,7 +95,7 @@ By default, the toolbar displays a title in the main panel. To disable it, I use
 </video>
 </div>
 
-The "Toggle Sidebar" button does not appear by default. To add it, use [`.toolbar`](https://developer.apple.com/documentation/swiftui/rotatedshape/toolbar(content:)-53znx?changes=latest_mino_8) modifier.
+The "Toggle Sidebar" button does not appear by default. To add it, use [`.toolbar`](https://developer.apple.com/documentation/swiftui/view/toolbar(content:)) modifier.
 
 <!-- ```swift
 SidebarView(model: model)
@@ -110,7 +110,7 @@ SidebarView(model: model)
 ``` -->
 
 <div class="language-swift highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">SidebarView</span><span class="p">(</span><span class="nv">model</span><span class="p">:</span> <span class="n">model</span><span class="p">)</span>
-    <span class="o">.</span><a href="https://developer.apple.com/documentation/swiftui/rotatedshape/toolbar(content:)-53znx?changes=latest_mino_8"><span class="SwiftUIPostHighlightedCode"><span class="n">toolbar</span></span></a> <span class="p">{</span>
+    <span class="o">.</span><a href="https://developer.apple.com/documentation/swiftui/view/toolbar(content:)"><span class="SwiftUIPostHighlightedCode"><span class="n">toolbar</span></span></a> <span class="p">{</span>
         <span class="kt">Button</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="n">toggleSidebar</span><span class="p">)</span> <span class="p">{</span>
             <span class="kt">Image</span><span class="p">(</span><span class="nv">systemName</span><span class="p">:</span> <span class="s">"sidebar.left"</span><span class="p">)</span>
                 <span class="o">.</span><span class="nf">help</span><span class="p">(</span><span class="s">"Toggle Sidebar"</span><span class="p">)</span>

@@ -19,7 +19,7 @@ uuid: 7ca6cd36-1cb2-4825-93af-3c8e291b9960
 
 Loading data ahead of time in anticipation of its use ([prefetching](https://en.wikipedia.org/wiki/Prefetching)) is a great way to improve user experience. It's especially effective for images; it can give users an impression that there is no networking and the images are just magically always there.
 
-In this post, I will cover [Nuke](https://kean.github.io/Nuke/) and image prefetching in `UICollectionView` and SwiftUI `List`.
+In this post, I will cover [Nuke](https://github.com/kean/Nuke) and image prefetching in `UICollectionView` and SwiftUI `List`.
 
 ## UICollectionView
 
@@ -124,12 +124,12 @@ public extension ImagePrefetcher {
 
 ## SwiftUI
 
-SwiftUI currently doesn't provide an API for prefetching, and that's why I built [ScrollViewPrefetcher](https://github.com/kean/ScrollViewPrefetcher).
+SwiftUI currently doesn't provide an API for prefetching, and that's why I built [ScrollViewPrefetcher](https://github.com/kean/NukeDemo/blob/main/Sources/PrefetchSwiftUIDemo.swift).
 
 > `ScrollViewPrefetcher` is pre-release software, use at your own risk. The API is suboptimal and will most likely change in the future.
 {:.warning}
 
-As part of the Nuke infrastructure, the `ScrollViewPrefetcher` demo is available in the central [Nuke Demo](https://github.com/kean/NukeDemo) repository. In this repo, I create a grid of images using `LazyVGrid` and load images using [`FetchImage`](https://github.com/kean/FetchImage).
+As part of the Nuke infrastructure, the `ScrollViewPrefetcher` demo is available in the central [Nuke Demo](https://github.com/kean/NukeDemo) repository. In this repo, I create a grid of images using `LazyVGrid` and load images using [`FetchImage`](https://kean-docs.github.io/nukeui/documentation/nukeui/fetchimage).
 
 ```swift
 import FetchImage

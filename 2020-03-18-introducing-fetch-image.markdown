@@ -10,7 +10,7 @@ permalink: /post/introducing-fetch-image
 uuid: fde52716-cfda-4437-bc3f-92327d46e295
 ---
 
-[`FetchImage`](https://github.com/kean/FetchImage) makes it easy to download images using [`Nuke`](https://github.com/kean/Nuke) and display them in SwiftUI apps.
+[`FetchImage`](https://kean-docs.github.io/nukeui/documentation/nukeui/fetchimage) makes it easy to download images using [`Nuke`](https://github.com/kean/Nuke) and display them in SwiftUI apps.
 
 ## FetchImage
 
@@ -135,7 +135,7 @@ struct ImageView_Previews: PreviewProvider {
 }
 ```
 
-`FetchImage` is still in its early stages. It is currently available as a [Swift package](https://github.com/kean/FetchImage) and will eventually be integrated into the main [Nuke repository](https://github.com/kean/Nuke).
+`FetchImage` is still in its early stages. It is currently available as a [Swift package](https://kean-docs.github.io/nukeui/documentation/nukeui/fetchimage) and will eventually be integrated into the main [Nuke repository](https://github.com/kean/Nuke).
 
 ## Design
 
@@ -158,12 +158,12 @@ public struct ImageView: View {
 
 The problem with this approach is that the `ImageView` itself ended up doing almost nothing. If you look at the [complete implementation](https://gist.github.com/kean/06dbb043b65c3a22b21a0adb1bee25d6) it's just wrappers on top of wrappers. I didn't feel like it was the right approach. SwiftUI makes it super easy to create views. Maybe there wasn't a need to create a custom view at all.
 
-The final solution is [`FetchImage`](https://github.com/kean/FetchImage) presented in this post. It takes care of all of the heavy-lifting, including networking, caching, state management, and gives you full control over how to manage the download and how to display the image. As you've seen in the examples, SwiftUI makes it extremely easy to create any kind of views that you want to display the images, so I felt like there was no need to provide a "built-in" view.
+The final solution is [`FetchImage`](https://kean-docs.github.io/nukeui/documentation/nukeui/fetchimage) presented in this post. It takes care of all of the heavy-lifting, including networking, caching, state management, and gives you full control over how to manage the download and how to display the image. As you've seen in the examples, SwiftUI makes it extremely easy to create any kind of views that you want to display the images, so I felt like there was no need to provide a "built-in" view.
 
 ## Final Thoughts
 
-Implementing [`FetchImage`](https://github.com/kean/FetchImage) was a great exercise. It confirmed to me, once again, that SwiftUI is a fantastic framework that removes a need for a lot of boilerplate and makes creating views easy and fun.
+Implementing [`FetchImage`](https://kean-docs.github.io/nukeui/documentation/nukeui/fetchimage) was a great exercise. It confirmed to me, once again, that SwiftUI is a fantastic framework that removes a need for a lot of boilerplate and makes creating views easy and fun.
 
-> [**ImagePublisher**](https://github.com/kean/ImagePublisher)
+> [**ImagePublisher**](https://web.archive.org/web/20201002130815/https://github.com/kean/ImagePublisher)
 >
 > `ImagePublisher` is another Swift package that I introduced along with `FetchImage`. It is a publisher that wraps Nuke's image tasks (`ImageTask`) and enables a variety of different use cases shown in the repository.

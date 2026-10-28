@@ -35,7 +35,7 @@ There is always this friction when it comes to debugging native apps: you can’
 
 What is Pulse? It’s a persistent logger with a network inspector, but not just a tool. It’s also a framework.
 
-- **PulseCore.framework** (iOS, macOS, watchOS, tvOS) provides a logger itself and a network proxy for [automatically capturing](https://github.com/kean/Pulse/blob/master/Docs/Logging.md) network requests 
+- **PulseCore.framework** (iOS, macOS, watchOS, tvOS) provides a logger itself and a network proxy for [automatically capturing](https://github.com/kean/Pulse/blob/0.14.0/Docs/Logging.md) network requests 
 - **PulseUI.framework** (iOS, macOS, watchOS, tvOS) containing all the UI components you'll see on the screenshots
 - Document-based **Pulse apps** (iOS, macOS) to view logs shared from other devices
 
@@ -53,9 +53,9 @@ As a QA engineer testing the app, you can view the network requests right on you
 
 ## Pulse Open Beta
 
-<a href="https://github.com/kean/PulseBeta"><img alt="Pulse, a structured logging system built using SwiftUI" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="180"></a>
+<a href="https://github.com/kean/Pulse"><img alt="Pulse, a structured logging system built using SwiftUI" src="{{ site.url }}/images/posts/swiftui-exp/logo.png" width="180"></a>
 
-I'm thrilled to announce that **Pulse Open Beta** starts today. You can find the download links in a [dedicated repo](https://github.com/kean/PulseBeta). If you wanted to try to [make it crash](https://twitter.com/steipete/status/1364623472559857665?s=20), now is your chance.
+I'm thrilled to announce that **Pulse Open Beta** starts today. You can find the download links in a [dedicated repo](https://github.com/kean/Pulse). If you wanted to try to [make it crash](https://twitter.com/steipete/status/1364623472559857665?s=20), now is your chance.
 
 I want to thank all early [sponsors](https://github.com/sponsors/kean). You are the reason I was able to reach this stage! It was an exhilarating journey with so much feedback, including from SwiftUI engineers at Apple. I'm humbled and grateful.
 
@@ -90,7 +90,7 @@ The next milestone was macOS. When the time came to work on it, I was anxious. I
 
 I was so excited after building the macOS version that I wrote an optimistic take on how [AppKit was done]({{ site.url }}/post/appkit-is-done), only to [correct myself]({{ site.url }}/post/not-list) later after I had spent more time on optimization. I encountered massive issues with [`List`](https://developer.apple.com/documentation/swiftui/list) performance and replaced it with an AppKit version, including AppKit-based cells and context menus. Fortunately, I was able to get it to work with the SwiftUI navigation system. And it was worth it. The optimized version is fast even when working with hundreds of thousands of messages.
 
-I wrote the rest of the macOS apps using SwiftUI, even the more challenging aspects of macOS: commands [`Commands`](https://developer.apple.com/documentation/swiftui/commands), window management ([`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup), [`handlesExternalEvents`](https://developer.apple.com/documentation/swiftui/group/handlesexternalevents(matching:)), focus management, etc.
+I wrote the rest of the macOS apps using SwiftUI, even the more challenging aspects of macOS: commands [`Commands`](https://developer.apple.com/documentation/swiftui/commands), window management ([`WindowGroup`](https://developer.apple.com/documentation/swiftui/windowgroup), [`handlesExternalEvents`](https://developer.apple.com/documentation/swiftui/scene/handlesexternalevents(matching:)), focus management, etc.
 
 > At the core of the macOS is a triple-column navigation setup. It was hard to find accurate information about it in SwiftUI, so I covered it in ["Triple Trouble"]({{ site.url }}/post/triple-trouble).
 {:.info}
@@ -246,7 +246,7 @@ Back when the first iOS SDK hadn't even launched, Scott Forstall [told some deve
 
 This experiment proved, to me at least, that you _can_ build production-ready apps using SwiftUI. Pulse performs well. It reuses a lot of code but is optimized for each platform. It has a ton of powerful features: deep-links, document-based apps, databases, powerful search, and filters. But if you decide to use SwiftUI, proceed with caution. It's the second mouse that gets the cheese. You'll still be the first mouse.
 
-I hope you liked this series. It was meant to inspire folks to try their hand at SwiftUI and explore different Apple platforms. Some caution is still warranted. I always draw the line between the business needs and my personal passion projects. And again, the [Pulse Open Beta](https://github.com/kean/PulseBeta) is out. I hope you'll like it! And if you want to read more from this series, boy, I have posts for you.
+I hope you liked this series. It was meant to inspire folks to try their hand at SwiftUI and explore different Apple platforms. Some caution is still warranted. I always draw the line between the business needs and my personal passion projects. And again, the [Pulse Open Beta](https://github.com/kean/Pulse) is out. I hope you'll like it! And if you want to read more from this series, boy, I have posts for you.
 
 <br/>
 

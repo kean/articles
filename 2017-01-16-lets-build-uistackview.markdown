@@ -199,7 +199,7 @@ At first, this layout seems relatively simple to implement. But there are some p
 
 Also, notice that the priority of the constraints is higher than both content hugging and compression resistance priorities which both effectively get ignored (unless you change those).
 
-> I'm not sure why each constraint has a different priority (999, 998, etc). If you have an idea please <a href="#comment-section">leave a comment below</a>.
+> I'm not sure why each constraint has a different priority (999, 998, etc). If you have an idea please <a href="https://mastodon.social/@a_grebenyuk">let me know</a>.
 
 
 
@@ -371,7 +371,7 @@ Spacer's height is bounded by **UISV-spanning-fit** constraint to disambiguate i
 
 Interestingly vertical **UISV-canvas-connection** constraints pin different views to the canvas this time. The first arranged view gets pinned to the top, while the spacer (`_UILayoutSpacer`) gets pinned to the bottom.
 
-Now why is that so complicated? Why is layout spacer necessary and is it necessary at all? Couldn't you just pin all the arranged views to the stack view itself? I think that it might be excessive, but I might be missing something. If you have an idea why it's implemented this way please [share it in the comments](#comment-section).
+Now why is that so complicated? Why is layout spacer necessary and is it necessary at all? Couldn't you just pin all the arranged views to the stack view itself? I think that it might be excessive, but I might be missing something. If you have an idea why it's implemented this way please [let me know](https://mastodon.social/@a_grebenyuk).
 
 
 

@@ -81,7 +81,7 @@ For example, on the screenshot below you can find a tutorial, two guides, and mu
 
 ### API Reference
 
-The goal of a reference is to provide a complete list of the available APIs with some basic description of how these APIs work. A reference can be auto-generated from code, assuming you have inline documentation. For example, [Nuke reference](https://kean-org.github.io/docs/nuke/reference/9.2.0/) is generated using [swift-doc](https://github.com/SwiftDocOrg/swift-doc) by [mattt](https://twitter.com/mattt).
+The goal of a reference is to provide a complete list of the available APIs with some basic description of how these APIs work. A reference can be auto-generated from code, assuming you have inline documentation. For example, [Nuke reference](https://web.archive.org/web/20210301104025/https://kean-org.github.io/docs/nuke/reference/9.2.0/) is generated using [swift-doc](https://github.com/SwiftDocOrg/swift-doc) by [mattt](https://twitter.com/mattt).
 
 You often don't even need a reference as a document. To learn about APIs, you can use inline documentation in Xcode. And for a deep understanding of topics, you use guides. This is again why it's generally a good idea to separate a reference from a guide. In Apple documentation, things are more complicated.
 
@@ -97,7 +97,7 @@ And the reference? Empty.
 
 <img alt="Topics section of the NavigationView page, listing only an initializer and a link to view modifiers" class="NewScreenshot" src="{{ site.url }}/images/posts/apple-docs/09.png">
 
-This page doesn't serve as a reference. For example, there is no way of knowing from this page that you can apply a [`navigationViewStyle(_:)`](https://developer.apple.com/documentation/swiftui/navigationview/navigationviewstyle(_:)) modifier to `NavigationView`. Apple themselves made it hard to generate a good reference for SwiftUI because of the way APIs are designed using generics. This problem appears not only in the documentation, but also in code completion, and in other systems that were not updated to accommodate the SwiftUI API design.
+This page doesn't serve as a reference. For example, there is no way of knowing from this page that you can apply a [`navigationViewStyle(_:)`](https://developer.apple.com/documentation/swiftui/view/navigationviewstyle(_:)) modifier to `NavigationView`. Apple themselves made it hard to generate a good reference for SwiftUI because of the way APIs are designed using generics. This problem appears not only in the documentation, but also in code completion, and in other systems that were not updated to accommodate the SwiftUI API design.
 
 This page also doesn't serve as a good guide. `NavigationView` is one of the most complex components in SwiftUI, it requires much more than a page of text to describe. 
 

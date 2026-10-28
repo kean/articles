@@ -47,7 +47,7 @@ I knew that I was looking for a tool that was easy to set up and I didn't need a
 
 ## Travis CI
 
-Travis CI is one of the simplest ways to test projects hosted on GitHub. I'm not going to cover how to set it up, I suggest going through [Travis CI Tutorial](https://docs.travis-ci.com/user/tutorial/?utm_source=help-page&utm_medium=travisweb) instead. By the end of the tutorial, you will have a new `.travis.yml` file in your git repository which should look somewhat like this:
+Travis CI is one of the simplest ways to test projects hosted on GitHub. I'm not going to cover how to set it up, I suggest going through [Travis CI Tutorial](https://docs.travis-ci.com/user/onboarding/) instead. By the end of the tutorial, you will have a new `.travis.yml` file in your git repository which should look somewhat like this:
 
 ```yml
 language: swift
@@ -65,7 +65,7 @@ At this point a lot of people get lost: jobs, builds, matrices, stages. How do y
 
 A [**job**](https://docs.travis-ci.com/user/job-lifecycle/) is one of the primary concepts of Travis CI. For each job, a virtual machine is created with the build environment, your repository is cloned into it, optional add-ons are installed and then your build phases are run. Here is [an example](https://travis-ci.org/kean/Nuke/jobs/609788368) of one of the jobs executed for Nuke.
 
-By default, the CI actually does very little. Its primary job is to detect changes in your repository, clone it, and execute your custom scripts. So let's start by creating our first script. I'm going to use [Nuke's .travis.yml](https://github.com/kean/Nuke/blob/master/.travis.yml) as an example.
+By default, the CI actually does very little. Its primary job is to detect changes in your repository, clone it, and execute your custom scripts. So let's start by creating our first script. I'm going to use [Nuke's .travis.yml](https://github.com/kean/Nuke/blob/8.3.1/.travis.yml) as an example.
 
 ### Configuring a Job
 

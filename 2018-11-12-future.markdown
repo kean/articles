@@ -21,7 +21,7 @@ Futures are easily composable. For example, `Future<Value, Error>` in FutureX pr
 
 ## Prior Art
 
-There are plenty of great Future implementations available in Swift. I've looked at [mxcl/PromiseKit](https://github.com/mxcl/PromiseKit), [google/Promises](https://github.com/google/promises), [SwiftNIO/EventLoopFuture](https://apple.github.io/swift-nio/docs/current/NIO/Classes/EventLoopFuture.html), [BrightFutures](https://github.com/Thomvis/BrightFutures), [khanlou/Promise](https://github.com/khanlou/Promise) and many more. Most don't provide typed errors. And many are just too big which makes including them in a project a hard sell. So I still decided to continue working on Pill because none of them "were quite my tempo".
+There are plenty of great Future implementations available in Swift. I've looked at [mxcl/PromiseKit](https://github.com/mxcl/PromiseKit), [google/Promises](https://github.com/google/promises), [SwiftNIO/EventLoopFuture](https://swiftpackageindex.com/apple/swift-nio/main/documentation/niocore/eventloopfuture), [BrightFutures](https://github.com/Thomvis/BrightFutures), [khanlou/Promise](https://github.com/khanlou/Promise) and many more. Most don't provide typed errors. And many are just too big which makes including them in a project a hard sell. So I still decided to continue working on Pill because none of them "were quite my tempo".
 
 ## Future&lt;Value, Error&gt;
 

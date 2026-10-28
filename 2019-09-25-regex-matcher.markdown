@@ -183,7 +183,7 @@ Consider regex `"^(a+)+$"` with nested quantifiers. If you were to test this reg
 
 I won't cover the exact details why it happens, you can read more [here](https://www.regular-expressions.info/catastrophic.html) if you'd like. If you were to simulate the expansion of the NFA when you navigate it, you will see that the number of possible paths doubles at each step.
 
-Catastrophic backtracking is not the end of the world as many people suggest it is. In general, an NFA engine like this (which include [.NET regular expression engine](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions) and [NSRegularExpression](http://userguide.icu-project.org/strings/regexp)) places the responsibility for crafting efficient, fast regular expressions on the developer[^5]. The problem is when the regexes are not controlled by the developer, and regex can be used for [ReDoS attacks](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS).
+Catastrophic backtracking is not the end of the world as many people suggest it is. In general, an NFA engine like this (which include [.NET regular expression engine](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions) and [NSRegularExpression](http://userguide.icu-project.org/strings/regexp)) places the responsibility for crafting efficient, fast regular expressions on the developer[^5]. The problem is when the regexes are not controlled by the developer, and regex can be used for [ReDoS attacks](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS).
 
 Is there anything we can do about it? The answer is yes. And this is where the second algorithm comes in.
 
@@ -203,7 +203,7 @@ When an algorithm finds a potential match, it doesn't stop the search immediatel
 
 Both algorithms are designed to solve the same problem, but they are different in many aspects, including performance and provided features.
 
-DFS can be very fast when the pattern is well written. In many cases, it can return the result in [linear time](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions#linear-comparison-without-backtracking) and faster than the BFS version would. But it doesn't prevent [catastrophic backtracking](#catastrophic_backtracking). It places the responsibility on the developer to come up with the optimal regex pattern.
+DFS can be very fast when the pattern is well written. In many cases, it can return the result in [linear time](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions#linear-comparison-without-backtracking) and faster than the BFS version would. But it doesn't prevent [catastrophic backtracking](#catastrophic-backtracking). It places the responsibility on the developer to come up with the optimal regex pattern.
 
 BFS, on the other hand, is immune to catastrophic backtracking[^7]. One of the engines that uses a similar algorithm is [RE2](https://github.com/google/re2) created by Google. Its [goal](https://github.com/google/re2/wiki/WhyRE2) is to be able to handle regular expressions from untrusted users.
 
@@ -229,17 +229,17 @@ ARC turned out to be one of the challenging parts to optimize. ARC has a huge im
 
 <img alt="Xcode screenshot with SIL code" class="Screenshot" src="{{ site.url }}/images/posts/regex-matcher/sil.jpeg">
 
-Fortunately, Swift team is working hard on [optimizing ARC](https://github.com/apple/swift/blob/master/docs/ARCOptimization.rst). There are even more optimizations to come in the future, like [SIL ownership](https://forums.swift.org/t/proposal-sil-ownership-model-verifier/4665) model, and potentially [more control](https://github.com/apple/swift/blob/master/docs/OwnershipManifesto.md) over memory management on the Swift code level. The current version of the compiler is quite generous in terms of how many `retain` and `release` calls it adds throughout your code. I can't wait to see more improvements in that area.
+Fortunately, Swift team is working hard on [optimizing ARC](https://github.com/swiftlang/swift/blob/main/docs/SIL/ARCOptimization.md). There are even more optimizations to come in the future, like [SIL ownership](https://forums.swift.org/t/proposal-sil-ownership-model-verifier/4665) model, and potentially [more control](https://github.com/apple/swift/blob/master/docs/OwnershipManifesto.md) over memory management on the Swift code level. The current version of the compiler is quite generous in terms of how many `retain` and `release` calls it adds throughout your code. I can't wait to see more improvements in that area.
 
 ## The End
 
-That's all! I hope you enjoyed this series. I'm pretty sure I got at least some of it wrong. If you have any corrections, please feel free to open a [pull-request](https://github.com/kean/kean.github.io) or drop a comment.
+That's all! I hope you enjoyed this series. I'm pretty sure I got at least some of it wrong. If you have any corrections, please feel free to open a [pull-request](https://github.com/kean/articles) or drop a comment.
 
 {% include references-start.html %}
 
 1. Microsoft (2018), [**Backtracking in Regular Expressions**](https://docs.microsoft.com/en-us/dotnet/standard/base-types/backtracking-in-regular-expressions), Regular Expression in .NET
 2. ICU, [**Regular Expressions**](http://userguide.icu-project.org/strings/regexp)
-3. OWASP (2017), [**Regular Expression Denial of Service**](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS)
+3. OWASP (2017), [**Regular Expression Denial of Service**](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
 4. Jan Goyvaerts (2003-2019), [**Regular-Expressions.info**](https://www.regular-expressions.info/engine.html)
 5. [**Regular Expression 101 (regex101.com)**](https://regex101.com)
 6. The IEEE and The Open Group (2004), [**The Open Group Base Specifications Issue 6

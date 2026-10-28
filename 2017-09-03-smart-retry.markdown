@@ -70,8 +70,6 @@ let results = input
 
 Let's jump straight into the final implementation and then work our way down:
 
-> The complete implementation is available [here](https://gist.github.com/kean/95b69ef1a90bb62e9b81e924a0a71437)
-
 ```swift
 extension ObservableType {
     /// Retries the source observable sequence on error using a provided retry

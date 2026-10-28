@@ -174,7 +174,7 @@ Setting the supported document type was pretty easy. I just followed the [sample
 
 <img alt="A logs-2021-03-14_15-02.pulse document with a system-generated Pulse icon, above the Pulse app in the Dock" class="NewScreenshot" src="{{ site.url }}/images/posts/pulse-store/m1.png">
 
-When the user double-clicks the document, the app receives an [`onOpenURL()`](https://developer.apple.com/documentation/swiftui/menu/onopenurl(perform:)) callback.
+When the user double-clicks the document, the app receives an [`onOpenURL()`](https://developer.apple.com/documentation/swiftui/view/onopenurl(perform:)) callback.
 
 ```swift
 struct AppView: View {
@@ -187,7 +187,7 @@ struct AppView: View {
 
 Another approach is to use [DocumentGroup](https://developer.apple.com/documentation/swiftui/documentgroup), but it comes with its own caveats. For a simple scenario like this `onOpenURL()` can do.
 
-Adding a custom document type is just part of the job. I'm now also working on [`QLPreviewingController`](https://developer.apple.com/documentation/quartz/qlpreviewingcontroller) to offer previews with some store metadata, and more.
+Adding a custom document type is just part of the job. I'm now also working on [`QLPreviewingController`](https://developer.apple.com/documentation/quicklookui/qlpreviewingcontroller) to offer previews with some store metadata, and more.
 
 ## Conclusion
 
