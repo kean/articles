@@ -14,7 +14,7 @@ uuid: 7ca6cd36-1cb2-4825-93af-3c8e291b9960
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Apr 3, 2021. Replace [Preheat](https://github.com/kean/Preheat) (deprecated) with `UICollectionView` prefetching APIs. Add prefetching in SwiftUI `List`.
+- [Apr 3, 2021](https://github.com/kean/articles/commit/97f7f234f9c8ebad2b638468bd1bc37f656e60ad). Replace [Preheat](https://github.com/kean/Preheat) (deprecated) with `UICollectionView` prefetching APIs. Add prefetching in SwiftUI `List`.
 </div>
 
 Loading data ahead of time in anticipation of its use ([prefetching](https://en.wikipedia.org/wiki/Prefetching)) is a great way to improve user experience. It's especially effective for images; it can give users an impression that there is no networking and the images are just magically always there.

@@ -15,7 +15,7 @@ uuid: 424b2065-a294-4311-9bc7-f85ed82d1290
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Aug 16, 2022. Starting with [Pulse 2.0](/post/pulse-2), the ZIP archives were replaced with an SQLite-based document format in order to increase performance and remove the dependencies.
+- [Aug 16, 2022](https://github.com/kean/articles/commit/6c8403130bb23e77c1c4d12fd1936e388f339559). Starting with [Pulse 2.0](/post/pulse-2), the ZIP archives were replaced with an SQLite-based document format in order to increase performance and remove the dependencies.
 
 </div>
 

@@ -214,7 +214,7 @@ It's harder to add platform-specific code (or any conditional code really) in Sw
 <div class="UpdatesSections UpdatesSectionsInline" markdown="1">
 **Updates**
 
-- Apr 2, 2021. A [proposal](https://github.com/apple/swift-evolution/blob/main/proposals/0308-postfix-if-config-expressions.md) by [@rintaro](https://twitter.com/rintaro) to allow conditional compilation blocks (`#if`) to be used in postfix expressions was just created and scheduled for review.
+- [Apr 2, 2021](https://github.com/kean/articles/commit/6836c0d421cb63f47de1ac8f4fb464a55364c0e6). A [proposal](https://github.com/apple/swift-evolution/blob/main/proposals/0308-postfix-if-config-expressions.md) by [@rintaro](https://twitter.com/rintaro) to allow conditional compilation blocks (`#if`) to be used in postfix expressions was just created and scheduled for review.
 </div>
 
 > **View Lifetime**

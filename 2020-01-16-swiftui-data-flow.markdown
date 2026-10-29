@@ -15,7 +15,7 @@ favorite: true
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Jul 1, 2020. Add @StateObject section. Expand @State section with more speculation about the render tree. Add @SceneStorage and @AppStorage.
+- [Jul 1, 2020](https://github.com/kean/articles/commit/c0f116ceec19e7638c0a6a4218a9340b965e7b6e). Add @StateObject section. Expand @State section with more speculation about the render tree. Add @SceneStorage and @AppStorage.
 </div>
 
 

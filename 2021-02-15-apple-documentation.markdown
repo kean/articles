@@ -14,7 +14,7 @@ uuid: 97629671-7fb5-481a-a020-38e2aab4175d
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Jun 11, 2022. With the latest changes to DocC presented during WWDC22, pretty much all points from this post were addressed.
+- [Jun 11, 2022](https://github.com/kean/articles/commit/8313964a5716ec8700fa728300b74e7fd65f56b8). With the latest changes to DocC presented during WWDC22, pretty much all points from this post were addressed.
 </div>
 
 I wrote a post yesterday about [triple-column navigation](https://kean.blog/post/triple-trouble) in SwiftUI. It felt a bit awkward posting it because this really shouldn't be some obscure knowledge. This is hardly a challenging problem. But to me and to many other people, this *was* challenging.

@@ -15,7 +15,7 @@ favorite: true
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Nov 21, 2021. Add references to the new `Codable` features and rework the existing tips.
+- [Nov 21, 2021](https://github.com/kean/articles/commit/5d512f2996ec7553e2c0caf4606e21a0f2971607). Add references to the new `Codable` features and rework the existing tips.
 </div>
 
 I've just finished migrating our app to [Codable](https://developer.apple.com/documentation/swift/encoding_decoding_and_serialization) and I'd like to share some of the tips and tricks that I've come up with along the way.

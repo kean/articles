@@ -15,7 +15,7 @@ uuid: 0526798f-a074-4365-8970-cb470579c358
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Jul 12, 2022. In iOS 16, there is now a clear way to do that: [`NavigationSplitView`](https://developer.apple.com/documentation/swiftui/navigationsplitview).
+- [Jul 12, 2022](https://github.com/kean/articles/commit/cfc909af0fe9d48de11a7762a6f109e5713f06e9). In iOS 16, there is now a clear way to do that: [`NavigationSplitView`](https://developer.apple.com/documentation/swiftui/navigationsplitview).
 </div>
 
 Triple-column navigation with sidebars, so hot right now. And it's much easier to implement than one might think. The main challenge is finding accurate information.

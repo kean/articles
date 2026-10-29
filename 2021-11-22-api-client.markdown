@@ -20,7 +20,7 @@ image:
 <div class="UpdatesSections" markdown="1">
 **Updates**
 
-- Aug 19, 2022. Updated to Get 2.0
+- [Aug 19, 2022](https://github.com/kean/articles/commit/55b27e6a2a70107f85dde86bbf1a01495b95f2e3). Updated to Get 2.0
 </div>
 
 It's been more than four years since my previous [API Client in Swift](/post/api-client) (archived) post. A lot has changed since then. With the addition of Async/Await and Actors, it's now easier and more fun than ever to design custom web API clients in Swift. The new version went through a radical redesign and I can't wait to share more about it.
