@@ -84,7 +84,7 @@ You still need to understand the codebase, though – the architecture, its limi
 
 I think our goal should be finding more use cases for agents, not blindly automating what worked before. If an agent writes the code, reviewing and proving it is just part of writing it, and it all happens before the PR is open. With good enough proof, you don't even need to read every diff. What's left is for humans: deciding what gets merged and taking responsibility for it. PR reviews are for humans.
 
-Happy coding!
+Happy shipping!
 
 {% include references-start.html %}
 
