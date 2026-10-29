@@ -1,6 +1,6 @@
 ---
 layout: post
-title: PR Reviews Are for Humans
+title: Bring Receipts
 subtitle: The non-negotiables of PR review when agents write the code
 description: "The non-negotiables of PR review when agents write the code: proof that the change works before the PR is open, and a human who owns what gets merged."
 date: 2026-10-29 09:00:00 -0400
@@ -82,7 +82,7 @@ You still need to understand the codebase, though – the architecture, its limi
 
 ## Final Thoughts
 
-I think our goal should be finding more use cases for agents, not blindly automating what worked before. If an agent writes the code, reviewing and proving it is just part of writing it, and it all happens before the PR is open. With good enough proof, you don't even need to read every diff. What's left is for humans: deciding what gets merged and taking responsibility for it. PR reviews are for humans.
+I think our goal should be finding more use cases for agents, not blindly automating what worked before. If an agent writes the code, reviewing and proving it is just part of writing it, and it all happens before the PR is open. With good enough proof, you don't even need to read every diff. What's left is for humans: deciding what gets merged and taking responsibility for it.
 
 Happy shipping!
 
