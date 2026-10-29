@@ -12,13 +12,15 @@ uuid: 7c58a70f-d838-4b67-bed0-1a5018bf67df
 
 Agents write most of my code now, and they open most of my PRs too. And almost every repo I work in has an AI reviewer waiting for them, like [CodeRabbit](https://www.coderabbit.ai), [Copilot](https://github.blog/changelog/2025-04-04-copilot-code-review-now-generally-available/), or Anthropic's [Code Review](https://claude.com/blog/code-review). One agent opens a PR, and only then does another one review it. I think it's backwards.
 
-We took a process designed for humans and taught machines to mimic it. To be fair, these reviewers do find real bugs[^1], and of course every change should go through one – but why wait until the PR is open? The review should be part of creating it, before the change reaches a human or the PR is even open. By then, there's no doubt it works, and there's no point in an agent reviewing it again.
+We took a process designed for humans and taught machines to mimic it. To be fair, these reviewers do find real bugs[^1], and of course every change should go through one – but why wait until the PR is open? The review should be part of making the change, along with the proof that it works. Once you have both, there's no point in an agent reviewing it again, and the review that's left is for humans.
 
 Others have come to similar conclusions – see the [references](#references). Here's how it looks on an iOS app.
 
 ## Review Before the PR
 
-Here's how I do it now, though I'm still iterating on it. Most of my bug fixes go through a `/fix-issues` skill: it takes the next N issues from Linear and fixes each one in its own worktree and simulator. The review happens before the PR is even open: the agent runs `/code-review` on the diff, fixes whatever holds up, and retests. I keep it quick, and so far it's enough: since I added it, the repo's AI reviewer has flagged 1 of 11 PRs, and only for a nit, down from 10 of 23 on the same kind of fixes before. It's not what gives me confidence in the change, though – the proof is.
+Here's how I do it now, though I'm still iterating on it. Most of my bug fixes go through a `/fix-issues` skill: it takes the next N issues from Linear and fixes each one in its own worktree and simulator. The review happens before the PR is even open: the agent runs `/code-review` on the diff, fixes whatever holds up, and retests. I keep it quick, and so far it's enough: since I added it, the repo's AI reviewer has flagged 1 of 11 PRs, and only for a nit, down from 10 of 23 on the same kind of fixes before.
+
+But a review of the diff only sees what changed, not what's around it. So a second agent looks at how the change fits into the codebase: duplicated code, a helper it could've reused, a pattern it doesn't follow, or a caller it could break. That's what I'd otherwise read the diff for. Neither review is what gives me confidence in the change, though – the proof is.
 
 ## Prove It!
 
@@ -57,8 +59,6 @@ I'm not the only one doing this. The Claude Code team [uses](https://claude.dev/
 
 Where we differ is what can skip code review. For them, it's docs, copy, internal-only features, and additive changes behind a flag – changes that are safe by nature. For me, it also includes small fixes users can see, like the RTL one above, where the screenshots are the proof. Either way, you have to be honest with yourself and bump the rating whenever a change deserves a closer look.
 
-The second reviewer is also how the team learns what changed. That was part of why Google [introduced](https://research.google/pubs/modern-code-review-a-case-study-at-google/) code reviews in the first place; finding bugs was never the only point.
-
 ## Beyond the Diff
 
 PRs used to be a short description and a diff. Now the description matters more than the diff.
@@ -76,7 +76,7 @@ Some of this already exists, and I use a few pieces, like the Figma and Linear M
 
 ## Keeping Up
 
-Fewer code reviews also means fewer chances to share knowledge and keep the codebase consistent. Agents can help here too: have one send you a weekly brief with only the important bits, like a new pattern or an API that changed, plus a video walkthrough of what changed in the app.
+Code review is also how a team learns what changed. That was part of why Google [introduced](https://research.google/pubs/modern-code-review-a-case-study-at-google/) it in the first place; finding bugs was never the only point. So fewer code reviews means fewer chances to share knowledge and keep the codebase consistent. Agents can help here too: have one send you a weekly brief with only the important bits, like a new pattern or an API that changed, plus a video walkthrough of what changed in the app.
 
 You still need to understand the codebase, though – the architecture, its limits, the critical pieces – or you won't know what you're looking at.
 
