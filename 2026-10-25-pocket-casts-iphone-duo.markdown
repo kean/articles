@@ -139,7 +139,7 @@ Across all runs, it has found **more than a hundred issues**. Most are minor, bu
 Since Duo, the suite has gotten faster and gained many more scenarios and a dedicated reporter.
 
 <figure class="PostFigure">
-<img class="NewScreenshot" alt="A QA report for a full regression run" src="/images/posts/iphone-duo/qa-report.webp" width="1310" height="770" loading="lazy" decoding="async">
+<img class="NewScreenshot" alt="A QA report for a full regression run" src="/images/posts/iphone-duo/qa-report.webp" width="1876" height="998" loading="lazy" decoding="async">
 <figcaption>The new QA reporter</figcaption>
 </figure>
 
