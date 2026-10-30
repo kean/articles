@@ -2,7 +2,7 @@
 layout: post
 title: Bring Receipts
 subtitle: The non-negotiables of PR review when agents write the code
-description: "The non-negotiables of PR review when agents write the code: proof that the change works before the PR is open, and a human who owns what gets merged."
+description: The non-negotiables of PR review when agents write the code
 date: 2026-10-29 09:00:00 -0400
 category: programming
 tags: [tools, testing]
