@@ -60,7 +60,7 @@ Before every Pocket Casts code freeze, I run one command in Claude Code: `/pocke
 - **Small batches.** Each agent runs three scenarios, then hands over to a fresh one. Every turn re-reads the whole context, so six scenarios per agent cost 1.5× as much per scenario.
 - **Recording.** Every simulator is recorded for the whole run, so any issue can get a clip with the steps and log lines next to it.
 
-Sonnet drives and verifies, and the five simulators pack nine hours of agent time into about two. It's relatively cheap too: a full run uses about 2% of my weekly limit on the Ultra plan, or about $120 at API prices (rough estimate).
+Sonnet drives and verifies, and the five simulators pack nine hours of agent time into about two. It's relatively cheap too: a full run uses about 2% of my weekly limit on the Ultra plan.
 
 ## Trust, but Verify
 
